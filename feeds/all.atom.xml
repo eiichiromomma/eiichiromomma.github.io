@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2017-02-12T11:45:00+09:00</updated><entry><title>Hello world</title><link href="https://eiichiromomma.github.io/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2017-02-12T12:00:00+09:00</updated><entry><title>Pelicanセットアップ</title><link href="https://eiichiromomma.github.io/2017/02/12/pelican_setup/" rel="alternate"></link><published>2017-02-12T12:00:00+09:00</published><updated>2017-02-12T12:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-02-12:/2017/02/12/pelican_setup/</id><summary type="html">&lt;p&gt;setup pelican&lt;/p&gt;</summary><content type="html">&lt;h1&gt;メモ用のブログ作成&lt;/h1&gt;
+&lt;p&gt;Markdownで書き溜めて、後でgithubのwikiに上げようと思ったまま放置されてたネタ置き場の作成。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://kazukousen.github.io/python-pelican-install.html"&gt;こっちの記事&lt;/a&gt;が元ネタだがgithub.ioのところで躓いてた。&lt;/p&gt;
+&lt;p&gt;作業に関しては&lt;a href="http://blog.shigepon.info/blog/2016/03/31/migrate_octopress_github_page_to_pelican/#.WJ_ZLRKLRBw"&gt;こっち&lt;/a&gt;の方が簡潔。日付けの管理もこのサイト設定を使ってみた。&lt;/p&gt;
+&lt;h2&gt;GitHub Pages作成&lt;/h2&gt;
+&lt;p&gt;自分のアカウントでusername.github.ioのリポジトリを作成して、作業したい所にcloneしておく。以下cloneした中での作業&lt;/p&gt;
+&lt;h2&gt;Pelicanの設定と更新作業&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make html
+make serve
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;で http://localhost:8000 から作業内容を確認できる。
+確認したら&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make github
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。&lt;/p&gt;
+&lt;h2&gt;設定&lt;/h2&gt;</content><category term="pelican"></category><category term="python"></category></entry><entry><title>Hello world</title><link href="https://eiichiromomma.github.io/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;python&lt;/li&gt;
 &lt;li&gt;pelican&lt;/li&gt;

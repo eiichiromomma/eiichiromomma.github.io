@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - python</title>
+        <title>Pelicanセットアップ</title>
         <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/main.css" />
         <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
 
@@ -15,13 +15,18 @@
         <header id="banner" class="body">
                 <h1><a href="https://eiichiromomma.github.io/">eiichiro Blog </a></h1>
                 <nav><ul>
-                    <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+                    <li class="active"><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://eiichiromomma.github.io/2017/02/12/pelican_setup/" rel="bookmark"
+           title="Permalink to Pelicanセットアップ">Pelicanセットアップ</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://eiichiromomma.github.io/2017/02/12/pelican_setup/">Pelicanセットアップ</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-02-12T12:00:00+09:00">
                 Published: 日 12 2月 2017
@@ -32,7 +37,7 @@
         </address>
 <p>In <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="https://eiichiromomma.github.io/tag/pelican.html">pelican</a> <a href="https://eiichiromomma.github.io/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>メモ用のブログ作成</h1>
+</footer><!-- /.post-info -->      <h1>メモ用のブログ作成</h1>
 <p>Markdownで書き溜めて、後でgithubのwikiに上げようと思ったまま放置されてたネタ置き場の作成。</p>
 <p><a href="https://kazukousen.github.io/python-pelican-install.html">こっちの記事</a>が元ネタだがgithub.ioのところで躓いてた。</p>
 <p>作業に関しては<a href="http://blog.shigepon.info/blog/2016/03/31/migrate_octopress_github_page_to_pelican/#.WJ_ZLRKLRBw">こっち</a>の方が簡潔。日付けの管理もこのサイト設定を使ってみた。</p>
@@ -56,36 +61,11 @@ make serve
 
 
 <p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>
-<h2>設定</h2>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<h2>設定</h2>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://eiichiromomma.github.io/2017/02/12/20170212_post/" rel="bookmark"
-                           title="Permalink to Hello world">Hello world</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-02-12T11:45:00+09:00">
-                Published: 日 12 2月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://eiichiromomma.github.io/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="https://eiichiromomma.github.io/tag/pelican.html">pelican</a> <a href="https://eiichiromomma.github.io/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>Hello world</p>
-                <a class="readmore" href="https://eiichiromomma.github.io/2017/02/12/20170212_post/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
