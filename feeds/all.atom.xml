@@ -16,14 +16,42 @@ make serve
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;で http://localhost:8000 から作業内容を確認できる。
-確認したら&lt;/p&gt;
+&lt;p&gt;で http://localhost:8000 から作業内容を確認できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;02&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt; &lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt;
+&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Memo&lt;/span&gt;
+&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20170212&lt;/span&gt;&lt;span class="n"&gt;_post&lt;/span&gt;
+&lt;span class="n"&gt;Author&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;eiichiromomma&lt;/span&gt;
+&lt;span class="n"&gt;Summary&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
+
+
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;お試し&lt;/span&gt;
+
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;確認したら&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make github
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。&lt;/p&gt;
-&lt;h2&gt;設定&lt;/h2&gt;</content><category term="pelican"></category><category term="python"></category></entry><entry><title>Hello world</title><link href="https://eiichiromomma.github.io/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
+&lt;h2&gt;設定&lt;/h2&gt;
+&lt;p&gt;いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#pelicanconf.py&lt;/span&gt;
+&lt;span class="c1"&gt;#ファイル名からslugを取得&lt;/span&gt;
+&lt;span class="n"&gt;FILENAME_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;(?P&amp;lt;date&amp;gt;\d{4}-\d{2}-\d{2})-(?P&amp;lt;slug&amp;gt;.*)&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;#得られたslugからhtml生成時のurlと保存先を指定&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}/index.html&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;としておけば年月日でディレクトリを掘ってくれる。&lt;/p&gt;</content><category term="pelican"></category><category term="python"></category></entry><entry><title>Hello world</title><link href="https://eiichiromomma.github.io/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;python&lt;/li&gt;
 &lt;li&gt;pelican&lt;/li&gt;

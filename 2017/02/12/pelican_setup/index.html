@@ -54,14 +54,42 @@ make serve
 </pre></div>
 
 
-<p>で http://localhost:8000 から作業内容を確認できる。
-確認したら</p>
+<p>で http://localhost:8000 から作業内容を確認できる。</p>
+<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
+<span class="n">Date</span><span class="o">:</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span> <span class="mi">11</span><span class="o">:</span><span class="mi">45</span>
+<span class="n">Category</span><span class="o">:</span> <span class="n">Memo</span>
+<span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">python</span>
+<span class="n">Slug</span><span class="o">:</span> <span class="mi">20170212</span><span class="n">_post</span>
+<span class="n">Author</span><span class="o">:</span> <span class="n">eiichiromomma</span>
+<span class="n">Summary</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
+
+
+<span class="err">#</span> <span class="err">お試し</span>
+
+<span class="o">-</span> <span class="n">python</span>
+<span class="o">-</span> <span class="n">pelican</span>
+<span class="o">-</span> <span class="n">markdown</span>
+</pre></div>
+
+
+<p>確認したら</p>
 <div class="highlight"><pre><span></span>make github
 </pre></div>
 
 
 <p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>
 <h2>設定</h2>
+<p>いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。</p>
+<div class="highlight"><pre><span></span><span class="c1">#pelicanconf.py</span>
+<span class="c1">#ファイル名からslugを取得</span>
+<span class="n">FILENAME_METADATA</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;date&gt;\d{4}-\d{2}-\d{2})-(?P&lt;slug&gt;.*)&#39;</span>
+<span class="c1">#得られたslugからhtml生成時のurlと保存先を指定</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/index.html&#39;</span>
+</pre></div>
+
+
+<p>としておけば年月日でディレクトリを掘ってくれる。</p>
     </div><!-- /.entry-content -->
 
   </article>
