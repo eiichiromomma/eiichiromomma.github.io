@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2017-03-05T10:00:00+09:00</updated><entry><title>YouCompleteMe</title><link href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/" rel="alternate"></link><published>2017-03-05T10:00:00+09:00</published><updated>2017-03-05T10:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-03-05:/2017/03/05/youcompleteme/</id><summary type="html">&lt;p&gt;setup YouCompleteMe&lt;/p&gt;</summary><content type="html">&lt;h1&gt;YouCompleteMe&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2017-03-05T11:00:00+09:00</updated><entry><title>VSCodeとClang</title><link href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/" rel="alternate"></link><published>2017-03-05T11:00:00+09:00</published><updated>2017-03-05T11:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-03-05:/2017/03/05/vscode_clang/</id><summary type="html">&lt;p&gt;setup VSCode and clang&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VSCodeの補完&lt;/h1&gt;
+&lt;p&gt;代表的な補完拡張の中にclangを使ったものがあるが、CMakeが&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;CMAKE_EXPORT_COMPILE_COMMANDS&lt;/span&gt; &lt;span class="s"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;で吐いてくれるcompile_commands.jsonに対応していない。
+&lt;a href="https://marketplace.visualstudio.com/items?itemName=mitaki28.vscode-clang"&gt;C/C++ Clang Command Adapter&lt;/a&gt;ではsettings.jsonの"clang.cxxflags"にコンパイラへのオプションを一つずつ並べないと有効にならない。&lt;/p&gt;
+&lt;p&gt;CMakeの出力はアホみたいにオプションが多くて流石に手入力はやりたくないので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat compile_commands.json &lt;span class="p"&gt;|&lt;/span&gt; gsed -e &lt;span class="s1"&gt;&amp;#39;s/ -/&amp;quot;,\n&amp;quot;-/g&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とすると良い感じに変換できる。-oから先は不要なのでそれまでをsetting.jsonに貼り付ければ良い。&lt;/p&gt;</content><category term="VSCode"></category><category term="C++"></category></entry><entry><title>YouCompleteMe</title><link href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/" rel="alternate"></link><published>2017-03-05T10:00:00+09:00</published><updated>2017-03-05T10:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-03-05:/2017/03/05/youcompleteme/</id><summary type="html">&lt;p&gt;setup YouCompleteMe&lt;/p&gt;</summary><content type="html">&lt;h1&gt;YouCompleteMe&lt;/h1&gt;
 &lt;p&gt;C/C++の場合、clangを使ったVimの入力支援。他言語も色々ある。
 NeoBundleで使おうとして色々なサイトを漁ったが結局ycmdとの連携がよくわからない。結論としてVundleを使う。
 やり方は&lt;a href="https://github.com/Valloric/YouCompleteMe"&gt;元サイト&lt;/a&gt;に書かれている通りで、システムのclangとかは面倒になったので試していない。
