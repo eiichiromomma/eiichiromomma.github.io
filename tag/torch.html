@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog</title>
+        <title>eiichiro Blog - Torch</title>
         <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/main.css" />
         <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
 
@@ -18,30 +18,25 @@
                     <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-<section id="content" class="body">
-<h1>Archives for eiichiro Blog</h1>
 
-<dl>
-    <dt>木 18 5月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/05/18/macOSOpenCL/">macOSでOpenCL</a></dd>
-    <dt>木 18 5月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/">macOSでTensorflow</a></dd>
-    <dt>土 01 4月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/04/01/nano/">GNU nano</a></dd>
-    <dt>金 31 3月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/03/31/excelna/">NA (Excel)</a></dd>
-    <dt>日 05 3月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/">VSCodeとClang</a></dd>
-    <dt>日 05 3月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/">YouCompleteMe</a></dd>
-    <dt>水 15 2月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/02/15/fcitx-skk/">Ubuntuでの日本語入力</a></dd>
-    <dt>日 12 2月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/02/12/pelican_setup/">Pelicanセットアップ</a></dd>
-    <dt>日 12 2月 2017</dt>
-    <dd><a href="https://eiichiromomma.github.io/2017/02/12/20170212_post/">Hello world</a></dd>
-</dl>
-</section>
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="https://eiichiromomma.github.io/2017/05/18/macOSOpenCL/">macOSでOpenCL</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-18T08:00:00+09:00">
+                Published: 木 18 5月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://eiichiromomma.github.io/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="https://eiichiromomma.github.io/tag/macos.html">macOS</a> <a href="https://eiichiromomma.github.io/tag/opencl.html">OpenCL</a> <a href="https://eiichiromomma.github.io/tag/torch.html">Torch</a> </p>
+</footer><!-- /.post-info --><h1>macOSでOpenCLを頑張ってみた</h1>
+<p>折角Radeonを搭載しているiMacもあるのでOpenCLでDeep Learningのframeworkが動かないかと弄ってみた。</p>
+<p><a href="https://github.com/arrayfire/arrayfire">Arrayfire</a>とか<a href="https://github.com/BVLC/caffe/tree/opencl">CaffeのOpenCLブランチ</a>とか<a href="https://github.com/hughperkins/cltorch">cltorch</a>とか<a href="https://github.com/pyopencl/pyopencl">PyOpenCL</a>とか色々と試してみて、ArrayfireやPyOpenCLは一応GPU使って動いてる感までは得られた。</p>
+<p>が、OpenCL自体が遅くCPUより処理が遅い。おまけにArrayfireは何かやらかすとmacOSごと調子悪くなる(要再起動)。つらい</p>                </article>
+            </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
