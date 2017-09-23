@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="utf-8" />
+        <title>eiichiro Blog - Tensorflow</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">eiichiro Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/memo.html">Memo</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017/05/18/macOSTensorflow/">macOSでTensorflow</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-18T08:00:00+09:00">
+                Published: 木 18 5月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/macos.html">macOS</a> <a href="/tag/tensorflow.html">Tensorflow</a> </p>
+</footer><!-- /.post-info --><h1>macOSでTensorflowを頑張ってみた</h1>
+<p><a href="http://blog.amedama.jp/entry/2017/03/08/223308">ここ</a>の通りやってもCPUによってはまだ改善点があるようで</p>
+<div class="highlight"><pre><span></span>W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are availab
+</pre></div>
+
+
+<p>とでる。bazelでビルドする時にAVX2とFMAも加えてみる。</p>
+<div class="highlight"><pre><span></span>$ conda create --name tf35 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5 scipy numpy jupyter ipython scikit-learn scikit-image matplotlib pandas h5py
+$ activate tf35
+$ brew install bazel swig
+$ git clone https://github.com/tensorflow/tensorflow.git
+$ <span class="nb">cd</span> tensorflow
+$ git checkout v1.0.1
+$ ./configure
+$ bazel build -c opt --copt<span class="o">=</span>-mavx --copt<span class="o">=</span>-msse4.1 --copt<span class="o">=</span>-msse4.2 --copt<span class="o">=</span>-mavx2 --copt<span class="o">=</span>-mfma //tensorflow/tools/pip_package:build_pip_package
+$ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+$ pip uninstall tensorflow keras
+$ pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp35-cp35m-macosx_10_7_x86_64.whl
+$ pip install keras
+</pre></div>
+
+
+<p>で</p>
+<div class="highlight"><pre><span></span>curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py
+echo &#39;K.clear_session()&#39; &gt;&gt; mnist_cnn.py
+</pre></div>
+
+
+<p>とした後に</p>
+<div class="highlight"><pre><span></span>python mnist_cnn.py
+</pre></div>
+
+
+<p>でmnistが動く。</p>
+<div class="highlight"><pre><span></span>Using TensorFlow backend.
+x_train shape: (60000, 28, 28, 1)
+60000 train samples
+10000 test samples
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/12
+60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734
+Epoch 2/12
+60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822
+Epoch 3/12
+60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852
+</pre></div>
+
+
+<p>1epochあたり100s(Core i7のiMac)。Core i5のmac miniだと</p>
+<div class="highlight"><pre><span></span>Epoch 10/12
+60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905
+Epoch 11/12
+60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899
+Epoch 12/12
+60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909
+</pre></div>
+
+
+<p>ちなみにGeForce 970だと1 epochあたり9s。これだけ頑張っても10倍遅い。GeForce 1080だと1 epochあたり4s。つらい</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="utf-8" />
+        <title>Pelicanセットアップ</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">eiichiro Blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/memo.html">Memo</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017/02/12/pelican_setup/" rel="bookmark"
+           title="Permalink to Pelicanセットアップ">Pelicanセットアップ</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-02-12T12:00:00+09:00">
+                Published: 日 12 2月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
+</footer><!-- /.post-info -->      <h1>メモ用のブログ作成</h1>
+<p>Markdownで書き溜めて、後でgithubのwikiに上げようと思ったまま放置されてたネタ置き場の作成。</p>
+<p><a href="https://kazukousen.github.io/python-pelican-install.html">こっちの記事</a>が元ネタだがgithub.ioのところで躓いてた。</p>
+<p>作業に関しては<a href="http://blog.shigepon.info/blog/2016/03/31/migrate_octopress_github_page_to_pelican/#.WJ_ZLRKLRBw">こっち</a>の方が簡潔。日付けの管理もこのサイト設定を使ってみた。</p>
+<h2>GitHub Pages作成</h2>
+<p>自分のアカウントでusername.github.ioのリポジトリを作成して、作業したい所にcloneしておく。以下cloneした中での作業</p>
+<h2>Pelicanの設定と更新作業</h2>
+<div class="highlight"><pre><span></span>pelican-quickstart
+</pre></div>
+
+
+<p>でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから</p>
+<div class="highlight"><pre><span></span>make html
+make serve
+</pre></div>
+
+
+<p>で http://localhost:8000 から作業内容を確認できる。</p>
+<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
+<span class="n">Date</span><span class="o">:</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span> <span class="mi">11</span><span class="o">:</span><span class="mi">45</span>
+<span class="n">Category</span><span class="o">:</span> <span class="n">Memo</span>
+<span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">python</span>
+<span class="n">Slug</span><span class="o">:</span> <span class="mi">20170212</span><span class="n">_post</span>
+<span class="n">Author</span><span class="o">:</span> <span class="n">eiichiromomma</span>
+<span class="n">Summary</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
+
+
+<span class="err">#</span> <span class="err">お試し</span>
+
+<span class="o">-</span> <span class="n">python</span>
+<span class="o">-</span> <span class="n">pelican</span>
+<span class="o">-</span> <span class="n">markdown</span>
+</pre></div>
+
+
+<p>確認したら</p>
+<div class="highlight"><pre><span></span>make github
+</pre></div>
+
+
+<p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>
+<h2>設定</h2>
+<p>いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。</p>
+<div class="highlight"><pre><span></span><span class="c1">#pelicanconf.py</span>
+<span class="c1">#ファイル名からslugを取得</span>
+<span class="n">FILENAME_METADATA</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;date&gt;\d{4}-\d{2}-\d{2})-(?P&lt;slug&gt;.*)&#39;</span>
+<span class="c1">#得られたslugからhtml生成時のurlと保存先を指定</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/index.html&#39;</span>
+</pre></div>
+
+
+<p>としておけば年月日でディレクトリを掘ってくれる。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
