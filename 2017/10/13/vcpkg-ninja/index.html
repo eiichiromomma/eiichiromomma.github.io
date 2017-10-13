@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="utf-8" />
+        <title>vcpkgのninja</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">eiichiro Blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/memo.html">Memo</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017/10/13/vcpkg-ninja/" rel="bookmark"
+           title="Permalink to vcpkgのninja">vcpkgのninja</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-10-13T23:00:00+09:00">
+                Published: 金 13 10月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/vc.html">VC</a> </p>
+</footer><!-- /.post-info -->      <h1>vcpkgでハマる</h1>
+<p><a href="https://github.com/Microsoft/vcpkg">vcpkg</a>を試してみようと，とりあえずPower Shellで</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\vcpkg install opencv:x64-windows
+</pre></div>
+
+
+<p>とやったらzlibのビルドで</p>
+<div class="highlight"><pre><span></span>&quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
+2\zlib1.rc &quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&quot; CMakeFiles\zlib.dir\win32\zlib1.res &quot;: CN[h t@C:  &quot; &quot;C:/Program Files
+ (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
+DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v
+cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z
+lib-1.2.11\win32\zlib1.rc
+</pre></div>
+
+
+<p>みたいなエラーでコケる。途中変な文字化けをしているのでchcpでutf-8にしていないせいかと</p>
+<div class="highlight"><pre><span></span>chcp 65001
+</pre></div>
+
+
+<p>とやってから実行してみたが何の変化も無し。
+zlibのportsを見てみると，どうもninjaを使っているらしい。
+そして<a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d">これ</a>。
+という訳でvcpkg/ports/zlib/portfile.cmakeの</p>
+<div class="highlight"><pre><span></span>    <span class="err">PREFER</span> <span class="err">NINJA</span>
+</pre></div>
+
+
+<p>をコメントアウト。
+ようやくビルドできた。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

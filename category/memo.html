@@ -21,7 +21,63 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2017/09/23/GAS/">Google Apps ScriptでDriveとGMail連携</a></h1>
+                    <h1 class="entry-title"><a href="/2017/10/13/vcpkg-ninja/">vcpkgのninja</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-13T23:00:00+09:00">
+                Published: 金 13 10月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/vc.html">VC</a> </p>
+</footer><!-- /.post-info --><h1>vcpkgでハマる</h1>
+<p><a href="https://github.com/Microsoft/vcpkg">vcpkg</a>を試してみようと，とりあえずPower Shellで</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\vcpkg install opencv:x64-windows
+</pre></div>
+
+
+<p>とやったらzlibのビルドで</p>
+<div class="highlight"><pre><span></span>&quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
+2\zlib1.rc &quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&quot; CMakeFiles\zlib.dir\win32\zlib1.res &quot;: CN[h t@C:  &quot; &quot;C:/Program Files
+ (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
+DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v
+cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z
+lib-1.2.11\win32\zlib1.rc
+</pre></div>
+
+
+<p>みたいなエラーでコケる。途中変な文字化けをしているのでchcpでutf-8にしていないせいかと</p>
+<div class="highlight"><pre><span></span>chcp 65001
+</pre></div>
+
+
+<p>とやってから実行してみたが何の変化も無し。
+zlibのportsを見てみると，どうもninjaを使っているらしい。
+そして<a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d">これ</a>。
+という訳でvcpkg/ports/zlib/portfile.cmakeの</p>
+<div class="highlight"><pre><span></span>    <span class="err">PREFER</span> <span class="err">NINJA</span>
+</pre></div>
+
+
+<p>をコメントアウト。
+ようやくビルドできた。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017/09/23/GAS/" rel="bookmark"
+                           title="Permalink to Google Apps ScriptでDriveとGMail連携">Google Apps ScriptでDriveとGMail連携</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-09-23T21:00:00+09:00">
                 Published: 土 23 9月 2017
@@ -32,64 +88,10 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/javascript.html">Javascript</a> </p>
-</footer><!-- /.post-info --><h1>参加者が撮った写真を自動でWebアルバムみたいに表示したい</h1>
-<p>という要望があったので，この手の連携となれば<a href="https://ifttt.com">IFTTT</a>だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。</p>
-<p>GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
-取り敢えずGoogle Driveなら直ぐ出来そうなので</p>
-<div class="highlight"><pre><span></span>特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)
-</pre></div>
-
-
-<p>という処理に。</p>
-<ul>
-<li>e-mail: username+tag@gmail.com</li>
-<li>Google Driveのフォルダ: Test</li>
-</ul>
-<p>で，ググって出てきたスクリプトだと</p>
-<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">subject</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nx">subject</span><span class="o">==</span><span class="s2">&quot;Target&quot;</span><span class="p">){</span>
-</pre></div>
-
-
-<p>みたいな処理だったので，ならToでもできるだろって事で</p>
-<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="o">==</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">){</span>
-</pre></div>
-
-
-<p>としたら，Outlookが</p>
-<div class="highlight"><pre><span></span>to:&lt;username+tag@gmail.com&gt;
-</pre></div>
-
-
-<p>で送ってくるのでFalseになる。調べたら部分一致はindexOfでイケるらしいので下記で成功。</p>
-<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">gmailFileUploader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">Threads</span> <span class="o">=</span> <span class="nx">GmailApp</span><span class="p">.</span><span class="nx">getInboxThreads</span><span class="p">();</span>　
-  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">50</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>　
-    <span class="kd">var</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isUnread</span><span class="p">();</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">status</span><span class="o">==</span><span class="kc">true</span><span class="p">){</span>　
-      <span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getTo</span><span class="p">();</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">){</span>
-        <span class="kd">var</span> <span class="nx">attachments</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttachments</span><span class="p">();</span>　
-        <span class="kd">var</span> <span class="nx">folders</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">getFoldersByName</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">);</span>
-        <span class="k">while</span><span class="p">(</span><span class="nx">folders</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span>
-          <span class="kd">var</span> <span class="nx">folder</span> <span class="o">=</span> <span class="nx">folders</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-          <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">attachments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">){</span>
-            <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">createFile</span><span class="p">(</span><span class="nx">attachments</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
-            <span class="nx">folder</span><span class="p">.</span><span class="nx">addFile</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
-          <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">moveToTrash</span><span class="p">();</span> <span class="c1">//保存終了したらゴミ箱に移動</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>    
-<span class="p">}</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>GoogleDrive and GMail</p>
+                <a class="readmore" href="/2017/09/23/GAS/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -266,29 +268,11 @@
                 <a class="readmore" href="/2017/02/12/pelican_setup/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/02/12/20170212_post/" rel="bookmark"
-                           title="Permalink to Hello world">Hello world</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-02-12T11:45:00+09:00">
-                Published: 日 12 2月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>Hello world</p>
-                <a class="readmore" href="/2017/02/12/20170212_post/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 2
+        <a href="/category/memo2.html">&raquo;</a>
+</p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">

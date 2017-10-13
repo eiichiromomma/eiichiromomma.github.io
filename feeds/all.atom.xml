@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-09-23T21:00:00+09:00</updated><entry><title>Google Apps ScriptでDriveとGMail連携</title><link href="/2017/09/23/GAS/" rel="alternate"></link><published>2017-09-23T21:00:00+09:00</published><updated>2017-09-23T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-09-23:/2017/09/23/GAS/</id><summary type="html">&lt;p&gt;GoogleDrive and GMail&lt;/p&gt;</summary><content type="html">&lt;h1&gt;参加者が撮った写真を自動でWebアルバムみたいに表示したい&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-10-13T23:00:00+09:00</updated><entry><title>vcpkgのninja</title><link href="/2017/10/13/vcpkg-ninja/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/vcpkg-ninja/</id><summary type="html">&lt;p&gt;ninja in vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkgでハマる&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Microsoft/vcpkg"&gt;vcpkg&lt;/a&gt;を試してみようと，とりあえずPower Shellで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\vcpkg install opencv:x64-windows
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とやったらzlibのビルドで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
+2\zlib1.rc &amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot; CMakeFiles\zlib.dir\win32\zlib1.res &amp;quot;: CN[h t@C:  &amp;quot; &amp;quot;C:/Program Files
+ (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
+DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v
+cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z
+lib-1.2.11\win32\zlib1.rc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;みたいなエラーでコケる。途中変な文字化けをしているのでchcpでutf-8にしていないせいかと&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chcp 65001
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とやってから実行してみたが何の変化も無し。
+zlibのportsを見てみると，どうもninjaを使っているらしい。
+そして&lt;a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d"&gt;これ&lt;/a&gt;。
+という訳でvcpkg/ports/zlib/portfile.cmakeの&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="err"&gt;PREFER&lt;/span&gt; &lt;span class="err"&gt;NINJA&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;をコメントアウト。
+ようやくビルドできた。&lt;/p&gt;</content><category term="VC"></category></entry><entry><title>Google Apps ScriptでDriveとGMail連携</title><link href="/2017/09/23/GAS/" rel="alternate"></link><published>2017-09-23T21:00:00+09:00</published><updated>2017-09-23T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-09-23:/2017/09/23/GAS/</id><summary type="html">&lt;p&gt;GoogleDrive and GMail&lt;/p&gt;</summary><content type="html">&lt;h1&gt;参加者が撮った写真を自動でWebアルバムみたいに表示したい&lt;/h1&gt;
 &lt;p&gt;という要望があったので，この手の連携となれば&lt;a href="https://ifttt.com"&gt;IFTTT&lt;/a&gt;だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。&lt;/p&gt;
 &lt;p&gt;GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
 取り敢えずGoogle Driveなら直ぐ出来そうなので&lt;/p&gt;
