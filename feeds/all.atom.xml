@@ -8,6 +8,17 @@ cd vcpkg
 
 
 &lt;p&gt;とやったらzlibのビルドで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Building&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;BUILD_FAILED&lt;/span&gt;
+&lt;span class="n"&gt;Please&lt;/span&gt; &lt;span class="n"&gt;ensure&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;latest&lt;/span&gt; &lt;span class="n"&gt;portfiles&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;.\&lt;/span&gt;&lt;span class="n"&gt;vcpkg&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;issue&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/Microsoft/vcpkg/iss&lt;/span&gt;&lt;span class="n"&gt;ues&lt;/span&gt; &lt;span class="n"&gt;including&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+  &lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;
+  &lt;span class="n"&gt;Vcpkg&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;91&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;e19c24d2911ff1ef648aeed0c596e3987eafebf&lt;/span&gt;
+
+&lt;span class="n"&gt;Additionally&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attach&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;relevant&lt;/span&gt; &lt;span class="n"&gt;sections&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;みたいなエラーでコケる。エラーログを見てみると&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
 2\zlib1.rc &amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot; CMakeFiles\zlib.dir\win32\zlib1.res &amp;quot;: CN[h t@C:  &amp;quot; &amp;quot;C:/Program Files
  (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
@@ -17,7 +28,7 @@ lib-1.2.11\win32\zlib1.rc
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;みたいなエラーでコケる。途中変な文字化けをしているのでchcpでutf-8にしていないせいかと&lt;/p&gt;
+&lt;p&gt;途中変な文字化けをしているのでchcpでutf-8にしていないせいかと&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chcp 65001
 &lt;/pre&gt;&lt;/div&gt;
 
