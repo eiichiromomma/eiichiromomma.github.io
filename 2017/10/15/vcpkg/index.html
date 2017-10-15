@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - eiichiromomma</title>
+        <title>ひき続きvcpkg</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
 
@@ -15,61 +15,50 @@
         <header id="banner" class="body">
                 <h1><a href="/">eiichiro Blog </a></h1>
                 <nav><ul>
-                    <li><a href="/category/memo.html">Memo</a></li>
+                    <li class="active"><a href="/category/memo.html">Memo</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017/10/15/vcpkg/" rel="bookmark"
+           title="Permalink to ひき続きvcpkg">ひき続きvcpkg</a></h1>
+    </header>
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="9">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/02/12/pelican_setup/" rel="bookmark"
-                           title="Permalink to Pelicanセットアップ">Pelicanセットアップ</a></h1>
-                </header>
-
-                <div class="entry-content">
+    <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2017-02-12T12:00:00+09:00">
-                Published: 日 12 2月 2017
+        <abbr class="published" title="2017-10-15T23:00:00+09:00">
+                Published: 日 15 10月 2017
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>setup pelican</p>
-                <a class="readmore" href="/2017/02/12/pelican_setup/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>tags: <a href="/tag/vc.html">VC</a> </p>
+</footer><!-- /.post-info -->      <h1>vcpkg</h1>
+<p>現状でのメモ。</p>
+<ul>
+<li>FreeBSDのportsみたいなものでソースを拾ってきてビルドするシステムなので巨大ライブラリの場合はNuGetのように直ぐ使えるものではない</li>
+<li>先日のに追記した通り英語の言語パックが必要。( <a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157">英語言語パック</a> )</li>
+<li>おまじないレベルだがchcp 65001しておく</li>
+<li>buildtrees以下に展開されてビルドするがvcpkg removeでもそれらは削除されない</li>
+<li>buildtrees以下は平気で100G越えてくるので要注意</li>
+<li>buildtrees以下はインストールしてしまえば消しても実用上問題ない<ul>
+<li>各OSSのソースレベルデバッグは当然出来ない</li>
+<li>サンプルも消える</li>
+</ul>
+</li>
+<li>msmpiでコケる時はdownloadsにインストーラがあるのでそれを使ってインストールしておく</li>
+<li>必要なファイルはinstalledに配置され，手動，integrate，cmake(toolchain)で使える</li>
+<li>NativeなCMakeで使うのは<a href="https://github.com/Microsoft/vcpkg/blob/master/docs/examples/using-sqlite.md">ここ</a>の最後にあるが微妙</li>
+<li>import/export機能があるので，速いマシンでパッケージをビルド→export→他マシンでimportすれば同一環境を作れる</li>
+</ul>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/02/12/20170212_post/" rel="bookmark"
-                           title="Permalink to Hello world">Hello world</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-02-12T11:45:00+09:00">
-                Published: 日 12 2月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>Hello world</p>
-                <a class="readmore" href="/2017/02/12/20170212_post/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-        <a href="/author/eiichiromomma.html">&laquo;</a>
-    Page 2 / 2
-</p>
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

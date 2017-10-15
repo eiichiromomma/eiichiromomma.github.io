@@ -21,7 +21,48 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2017/10/13/vcpkg-ninja/">vcpkgのninja</a></h1>
+                    <h1 class="entry-title"><a href="/2017/10/15/vcpkg/">ひき続きvcpkg</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-15T23:00:00+09:00">
+                Published: 日 15 10月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/vc.html">VC</a> </p>
+</footer><!-- /.post-info --><h1>vcpkg</h1>
+<p>現状でのメモ。</p>
+<ul>
+<li>FreeBSDのportsみたいなものでソースを拾ってきてビルドするシステムなので巨大ライブラリの場合はNuGetのように直ぐ使えるものではない</li>
+<li>先日のに追記した通り英語の言語パックが必要。( <a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157">英語言語パック</a> )</li>
+<li>おまじないレベルだがchcp 65001しておく</li>
+<li>buildtrees以下に展開されてビルドするがvcpkg removeでもそれらは削除されない</li>
+<li>buildtrees以下は平気で100G越えてくるので要注意</li>
+<li>buildtrees以下はインストールしてしまえば消しても実用上問題ない<ul>
+<li>各OSSのソースレベルデバッグは当然出来ない</li>
+<li>サンプルも消える</li>
+</ul>
+</li>
+<li>msmpiでコケる時はdownloadsにインストーラがあるのでそれを使ってインストールしておく</li>
+<li>必要なファイルはinstalledに配置され，手動，integrate，cmake(toolchain)で使える</li>
+<li>NativeなCMakeで使うのは<a href="https://github.com/Microsoft/vcpkg/blob/master/docs/examples/using-sqlite.md">ここ</a>の最後にあるが微妙</li>
+<li>import/export機能があるので，速いマシンでパッケージをビルド→export→他マシンでimportすれば同一環境を作れる</li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017/10/13/vcpkg-ninja/" rel="bookmark"
+                           title="Permalink to vcpkgのninja">vcpkgのninja</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-13T23:00:00+09:00">
                 Published: 金 13 10月 2017
@@ -32,59 +73,10 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/vc.html">VC</a> </p>
-</footer><!-- /.post-info --><h1>vcpkgでハマる</h1>
-<h2>追記</h2>
-<p>↓で色々頑張ったのだが結局のところ英語以外の環境はあちこちでトラブルが発生する。
-諦めてVisual Studioの<a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157">英語言語パック</a>をインストールしたら解決した。</p>
-<h2>旧記事</h2>
-<p><a href="https://github.com/Microsoft/vcpkg">vcpkg</a>を試してみようと，とりあえずPower Shellで</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/Microsoft/vcpkg.git
-cd vcpkg
-.\vcpkg install opencv:x64-windows
-</pre></div>
-
-
-<p>とやったらzlibのビルドで</p>
-<div class="highlight"><pre><span></span><span class="n">Error</span><span class="o">:</span> <span class="n">Building</span> <span class="k">package</span> <span class="nn">zlib</span><span class="o">:</span><span class="n">x86</span><span class="o">-</span><span class="n">windows</span> <span class="n">failed</span> <span class="k">with</span><span class="o">:</span> <span class="n">BUILD_FAILED</span>
-<span class="n">Please</span> <span class="n">ensure</span> <span class="n">you</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">using</span> <span class="n">the</span> <span class="n">latest</span> <span class="n">portfiles</span> <span class="k">with</span> <span class="err">`</span><span class="o">.\</span><span class="n">vcpkg</span> <span class="n">update</span><span class="err">`</span><span class="o">,</span> <span class="n">then</span>
-<span class="n">submit</span> <span class="n">an</span> <span class="n">issue</span> <span class="n">at</span> <span class="n">https</span><span class="o">://</span><span class="n">github</span><span class="o">.</span><span class="na">com</span><span class="sr">/Microsoft/vcpkg/iss</span><span class="n">ues</span> <span class="n">including</span><span class="o">:</span>
-  <span class="n">Package</span><span class="o">:</span> <span class="n">zlib</span><span class="o">:</span><span class="n">x86</span><span class="o">-</span><span class="n">windows</span>
-  <span class="n">Vcpkg</span> <span class="n">version</span><span class="o">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">91</span><span class="o">-</span><span class="mi">2017</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">9</span><span class="n">e19c24d2911ff1ef648aeed0c596e3987eafebf</span>
-
-<span class="n">Additionally</span><span class="o">,</span> <span class="n">attach</span> <span class="n">any</span> <span class="n">relevant</span> <span class="n">sections</span> <span class="n">from</span> <span class="n">the</span> <span class="n">log</span> <span class="n">files</span> <span class="n">above</span><span class="o">.</span>
-</pre></div>
-
-
-<p>みたいなエラーでコケる。エラーログを見てみると</p>
-<div class="highlight"><pre><span></span>&quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
-2\zlib1.rc &quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&quot; CMakeFiles\zlib.dir\win32\zlib1.res &quot;: CN[h t@C:  &quot; &quot;C:/Program Files
- (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
-DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v
-cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z
-lib-1.2.11\win32\zlib1.rc
-</pre></div>
-
-
-<p>途中変な文字化けをしているのでchcpでutf-8にしていないせいかと</p>
-<div class="highlight"><pre><span></span>chcp 65001
-</pre></div>
-
-
-<p>とやってから実行してみたが何の変化も無し。
-zlibのportsを見てみると，どうもninjaを使っているらしい。
-そして<a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d">これ</a>。
-という訳でvcpkg/ports/zlib/portfile.cmakeの</p>
-<div class="highlight"><pre><span></span>    <span class="err">PREFER</span> <span class="err">NINJA</span>
-</pre></div>
-
-
-<p>をコメントアウト。
-ようやくビルドできた。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>ninja in vcpkg</p>
+                <a class="readmore" href="/2017/10/13/vcpkg-ninja/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -259,28 +251,6 @@ zlibのportsを見てみると，どうもninjaを使っているらしい。
 <p>tags: <a href="/tag/ubuntu.html">Ubuntu</a> </p>
 </footer><!-- /.post-info -->                <p>fcitx&amp;skk</p>
                 <a class="readmore" href="/2017/02/15/fcitx-skk/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/02/12/pelican_setup/" rel="bookmark"
-                           title="Permalink to Pelicanセットアップ">Pelicanセットアップ</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-02-12T12:00:00+09:00">
-                Published: 日 12 2月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>setup pelican</p>
-                <a class="readmore" href="/2017/02/12/pelican_setup/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
