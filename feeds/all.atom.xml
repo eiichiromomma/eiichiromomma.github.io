@@ -16,7 +16,46 @@
 &lt;li&gt;必要なファイルはinstalledに配置され，手動，integrate，cmake(toolchain)で使える&lt;/li&gt;
 &lt;li&gt;NativeなCMakeで使うのは&lt;a href="https://github.com/Microsoft/vcpkg/blob/master/docs/examples/using-sqlite.md"&gt;ここ&lt;/a&gt;の最後にあるが微妙&lt;/li&gt;
 &lt;li&gt;import/export機能があるので，速いマシンでパッケージをビルド→export→他マシンでimportすれば同一環境を作れる&lt;/li&gt;
-&lt;/ul&gt;</content><category term="VC"></category></entry><entry><title>vcpkgのninja</title><link href="/2017/10/13/vcpkg-ninja/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/vcpkg-ninja/</id><summary type="html">&lt;p&gt;ninja in vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkgでハマる&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="VC"></category></entry><entry><title>Google Drive File Stream</title><link href="/2017/10/13/Google-DriveFS/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/Google-DriveFS/</id><summary type="html">&lt;p&gt;Google Drive File Stream&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Google Driveからの乗り換え&lt;/h1&gt;
+&lt;p&gt;Google Driveのデスクトップアプリ(PCに同期させるアプリ)は2018年3月に廃止が決定。
+置き換えソフトであるGoogle Drive File Streamアプリは，これまで大学との契約形態については未対応だったが配布開始された模様。
+Google Driveアプリを使われていた方は乗り換えが必要で，かなり挙動が違った。
+特にCドライブの容量が厳しく他のドライブに退避させていた方は注意が必要。&lt;/p&gt;
+&lt;p&gt;・「マイドライブ」と「チームドライブ」は外付けドライブのフォルダとしてマウントされる
+・データは基本的にクラウドに保持(ネットに繋っていないと見えない)
+・オフラインでも使えるようにするにはフォルダやファイルを選択して右クリックメニューで「オフラインで使用可能にする」
+・オフライン用のキャッシュはc:\Users\username\AppData\Local\Google\DriveFSに保存される
+・Google DriveをCドライブ以外で運用していた場合には，Cドライブの容量を食い潰されるうえに設定で変更できない
+・既存のGoogleドライブからの引き継ぎは無い(インストーラorアプリがGoogleドライブの停止を推奨してくる)
+・旧GoogleドライブのフォルダはGoogle Drive File Streamに以降した後は手動で削除する必要がある(消さなくても良いが同期しないうえに容量を食う)
+・同期中はマウント状態が不安定になる(恐らく改善される)
+・特に大量のファイルを同期させようとするとエクスプローラーが応答しなくなるが，暫く放置すると同期が終わって正常な状態になる&lt;/p&gt;
+&lt;h1&gt;別ドライブにキャッシュを置く方法(無保証)&lt;/h1&gt;
+&lt;p&gt;Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)&lt;/p&gt;
+&lt;h2&gt;Windows&lt;/h2&gt;
+&lt;p&gt;大容量HDDがHドライブのとき，コマンドプロンプトで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;\&lt;/span&gt;
+&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;DFSCache&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。&lt;/p&gt;
+&lt;h2&gt;Mac&lt;/h2&gt;
+&lt;p&gt;/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo mkdir /Volumes/extdrive/DriveFS
+sudo chown username:staff DriveFS
+&lt;span class="nb"&gt;cd&lt;/span&gt; /Users/username/Library/Application&lt;span class="se"&gt;\ &lt;/span&gt;Support/Google
+ln -s /Volumes/extdrive/DriveFS DriveFS
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;でextdrive上に逃がせる。&lt;/p&gt;</content><category term="GoogleDrive"></category></entry><entry><title>vcpkgのninja</title><link href="/2017/10/13/vcpkg-ninja/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/vcpkg-ninja/</id><summary type="html">&lt;p&gt;ninja in vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkgでハマる&lt;/h1&gt;
 &lt;h2&gt;追記&lt;/h2&gt;
 &lt;p&gt;↓で色々頑張ったのだが結局のところ英語以外の環境はあちこちでトラブルが発生する。
 諦めてVisual Studioの&lt;a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157"&gt;英語言語パック&lt;/a&gt;をインストールしたら解決した。&lt;/p&gt;

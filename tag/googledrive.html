@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="utf-8" />
+        <title>eiichiro Blog - GoogleDrive</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">eiichiro Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/memo.html">Memo</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017/10/13/Google-DriveFS/">Google Drive File Stream</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-13T23:00:00+09:00">
+                Published: 金 13 10月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/googledrive.html">GoogleDrive</a> </p>
+</footer><!-- /.post-info --><h1>Google Driveからの乗り換え</h1>
+<p>Google Driveのデスクトップアプリ(PCに同期させるアプリ)は2018年3月に廃止が決定。
+置き換えソフトであるGoogle Drive File Streamアプリは，これまで大学との契約形態については未対応だったが配布開始された模様。
+Google Driveアプリを使われていた方は乗り換えが必要で，かなり挙動が違った。
+特にCドライブの容量が厳しく他のドライブに退避させていた方は注意が必要。</p>
+<p>・「マイドライブ」と「チームドライブ」は外付けドライブのフォルダとしてマウントされる
+・データは基本的にクラウドに保持(ネットに繋っていないと見えない)
+・オフラインでも使えるようにするにはフォルダやファイルを選択して右クリックメニューで「オフラインで使用可能にする」
+・オフライン用のキャッシュはc:\Users\username\AppData\Local\Google\DriveFSに保存される
+・Google DriveをCドライブ以外で運用していた場合には，Cドライブの容量を食い潰されるうえに設定で変更できない
+・既存のGoogleドライブからの引き継ぎは無い(インストーラorアプリがGoogleドライブの停止を推奨してくる)
+・旧GoogleドライブのフォルダはGoogle Drive File Streamに以降した後は手動で削除する必要がある(消さなくても良いが同期しないうえに容量を食う)
+・同期中はマウント状態が不安定になる(恐らく改善される)
+・特に大量のファイルを同期させようとするとエクスプローラーが応答しなくなるが，暫く放置すると同期が終わって正常な状態になる</p>
+<h1>別ドライブにキャッシュを置く方法(無保証)</h1>
+<p>Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)</p>
+<h2>Windows</h2>
+<p>大容量HDDがHドライブのとき，コマンドプロンプトで</p>
+<div class="highlight"><pre><span></span><span class="n">h</span><span class="o">:</span>
+<span class="n">cd</span> <span class="o">\</span>
+<span class="n">mkdir</span> <span class="n">DFSCache</span>
+</pre></div>
+
+
+<p>でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)</p>
+<div class="highlight"><pre><span></span>mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
+</pre></div>
+
+
+<p>としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。</p>
+<h2>Mac</h2>
+<p>/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。</p>
+<div class="highlight"><pre><span></span>sudo mkdir /Volumes/extdrive/DriveFS
+sudo chown username:staff DriveFS
+<span class="nb">cd</span> /Users/username/Library/Application<span class="se">\ </span>Support/Google
+ln -s /Volumes/extdrive/DriveFS DriveFS
+</pre></div>
+
+
+<p>でextdrive上に逃がせる。</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
