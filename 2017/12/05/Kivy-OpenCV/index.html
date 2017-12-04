@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - eiichiromomma</title>
+        <title>KivyでOpenCV</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
 
@@ -15,13 +15,18 @@
         <header id="banner" class="body">
                 <h1><a href="/">eiichiro Blog </a></h1>
                 <nav><ul>
-                    <li><a href="/category/memo.html">Memo</a></li>
+                    <li class="active"><a href="/category/memo.html">Memo</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017/12/05/Kivy-OpenCV/" rel="bookmark"
+           title="Permalink to KivyでOpenCV">KivyでOpenCV</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/2017/12/05/Kivy-OpenCV/">KivyでOpenCV</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-05T08:00:00+09:00">
                 Published: 火 05 12月 2017
@@ -32,7 +37,7 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/kivy.html">Kivy</a> <a href="/tag/opencv.html">OpenCV</a> <a href="/tag/python.html">Python</a> </p>
-</footer><!-- /.post-info --><h1>他のGUIで表示してみる</h1>
+</footer><!-- /.post-info -->      <h1>他のGUIで表示してみる</h1>
 <p>OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
 ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
 という訳でQt抜きのパッケージになるケースが非常に多い。</p>
@@ -102,216 +107,11 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">CvCamera</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</pre></div>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/10/17/Google-DriveFS/" rel="bookmark"
-                           title="Permalink to Google Drive File Stream">Google Drive File Stream</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-10-17T22:00:00+09:00">
-                Published: 火 17 10月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/googledrive.html">GoogleDrive</a> </p>
-</footer><!-- /.post-info -->                <p>Google Drive File Stream</p>
-                <a class="readmore" href="/2017/10/17/Google-DriveFS/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/10/15/vcpkg/" rel="bookmark"
-                           title="Permalink to ひき続きvcpkg">ひき続きvcpkg</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-10-15T23:00:00+09:00">
-                Published: 日 15 10月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/vc.html">VC</a> </p>
-</footer><!-- /.post-info -->                <p>vcpkg</p>
-                <a class="readmore" href="/2017/10/15/vcpkg/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/10/13/vcpkg-ninja/" rel="bookmark"
-                           title="Permalink to vcpkgのninja">vcpkgのninja</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-10-13T23:00:00+09:00">
-                Published: 金 13 10月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/vc.html">VC</a> </p>
-</footer><!-- /.post-info -->                <p>ninja in vcpkg</p>
-                <a class="readmore" href="/2017/10/13/vcpkg-ninja/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/09/23/GAS/" rel="bookmark"
-                           title="Permalink to Google Apps ScriptでDriveとGMail連携">Google Apps ScriptでDriveとGMail連携</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-09-23T21:00:00+09:00">
-                Published: 土 23 9月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/javascript.html">Javascript</a> </p>
-</footer><!-- /.post-info -->                <p>GoogleDrive and GMail</p>
-                <a class="readmore" href="/2017/09/23/GAS/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/07/03/macOSOpenCL/" rel="bookmark"
-                           title="Permalink to macOSでOpenCL">macOSでOpenCL</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-07-03T22:00:00+09:00">
-                Published: 月 03 7月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/macos.html">macOS</a> <a href="/tag/opencl.html">OpenCL</a> <a href="/tag/torch.html">Torch</a> </p>
-</footer><!-- /.post-info -->                <p>macOSでOpenCL</p>
-                <a class="readmore" href="/2017/07/03/macOSOpenCL/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/05/18/macOSTensorflow/" rel="bookmark"
-                           title="Permalink to macOSでTensorflow">macOSでTensorflow</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-18T08:00:00+09:00">
-                Published: 木 18 5月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/macos.html">macOS</a> <a href="/tag/tensorflow.html">Tensorflow</a> </p>
-</footer><!-- /.post-info -->                <p>macOSでTensorflow</p>
-                <a class="readmore" href="/2017/05/18/macOSTensorflow/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/04/01/nano/" rel="bookmark"
-                           title="Permalink to GNU nano">GNU nano</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-01T09:00:00+09:00">
-                Published: 土 01 4月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/nano.html">nano</a> </p>
-</footer><!-- /.post-info -->                <p>GNU nano</p>
-                <a class="readmore" href="/2017/04/01/nano/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/03/31/excelna/" rel="bookmark"
-                           title="Permalink to NA (Excel)">NA (Excel)</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-03-31T23:00:00+09:00">
-                Published: 金 31 3月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/excel.html">Excel</a> </p>
-</footer><!-- /.post-info -->                <p>Excel NA()</p>
-                <a class="readmore" href="/2017/03/31/excelna/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/03/05/vscode_clang/" rel="bookmark"
-                           title="Permalink to VSCodeとClang">VSCodeとClang</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-03-05T11:00:00+09:00">
-                Published: 日 05 3月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/vscode.html">VSCode</a> <a href="/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info -->                <p>setup VSCode and clang</p>
-                <a class="readmore" href="/2017/03/05/vscode_clang/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 2
-        <a href="/author/eiichiromomma2.html">&raquo;</a>
-</p>
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

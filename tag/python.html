@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - python</title>
+        <title>eiichiro Blog - Python</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
 
@@ -21,7 +21,101 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2017/02/12/pelican_setup/">Pelicanセットアップ</a></h1>
+                    <h1 class="entry-title"><a href="/2017/12/05/Kivy-OpenCV/">KivyでOpenCV</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-12-05T08:00:00+09:00">
+                Published: 火 05 12月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/kivy.html">Kivy</a> <a href="/tag/opencv.html">OpenCV</a> <a href="/tag/python.html">Python</a> </p>
+</footer><!-- /.post-info --><h1>他のGUIで表示してみる</h1>
+<p>OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
+ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
+という訳でQt抜きのパッケージになるケースが非常に多い。</p>
+<p><a href="https://riverbankcomputing.com/software/pyqt/intro">PyQt</a>か<a href="https://wiki.qt.io/PySide/ja">PySide</a>かという選択肢もあるが，試しにKivyを使ってみたら結構簡単だった。
+頑張ればOpenCVでのQt-highguiみたいにSaveボタンを付けたり(これは簡単)，拡大して画素値を出したりも出来そうだ。</p>
+<h1>サンプル</h1>
+<p><img alt="こんな感じ" src="/images/20171205-1.png"></p>
+<p>こんな感じでWebCAM-スライダ-ボタンという並び。KivyのSliderは何故かラベルが無いのでちょっと工夫して付け足してる。</p>
+<p>構造としてはAppを継承したメインのクラスがあり，buildでUIの構築(と初期設定)，SliderとButtonにbindしたコールバック，Clock.schedule_intervalで指定してるupdateで更新。
+update内でOpenCV周りの処理を行なってImageのtextureを書き換えて表示といった流れになる。</p>
+<div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.slider</span> <span class="kn">import</span> <span class="n">Slider</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics.texture</span> <span class="kn">import</span> <span class="n">Texture</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="k">class</span> <span class="nc">CvCamera</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#UIの構築等</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># ButtonやSlider等は基本size_hintでサイズ比率を指定(絶対値の時はNoneでsize=)</span>
+        <span class="c1"># Verticalの中に置くhorizontalなBoxLayout (ここだけ2column)</span>
+        <span class="n">layout2</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">halign</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+        <span class="n">slider1</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+        <span class="n">slider1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">slideCallback</span><span class="p">)</span>
+        <span class="c1"># 日本語フォントを使いたいときはfont_nameでフォントへのパス</span>
+        <span class="n">button1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;ボタン&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">font_name</span><span class="o">=</span><span class="s1">&#39;/usr/local/texlive/texmf-local/fonts/truetype/cjk-gs-integrate/ipag.ttf&#39;</span><span class="p">)</span>
+        <span class="n">button1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttonCallback</span><span class="p">)</span> <span class="c1">#bindでイベントごとにコールバック指定</span>
+        <span class="c1"># Imageに後で画像を描く</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">))</span>
+        <span class="c1"># Layoutを作ってadd_widgetで順次モノを置いていく(並びは置いた順)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="p">)</span>
+        <span class="c1"># ここだけ2columnでLabelとSliderを並べる</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">slider1</span><span class="p">)</span>
+        <span class="c1"># 1columnに戻る</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">button1</span><span class="p">)</span>
+        <span class="c1">#カメラ待ち</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span> 
+            <span class="k">pass</span>
+        <span class="c1"># 更新スケジュールとコールバックの指定</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+    <span class="k">def</span> <span class="nf">slideCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># Slider横のLabelをSliderの値に</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">buttonCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="c1"># 何かのフラグに使える</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Buttn &lt;</span><span class="si">%s</span><span class="s1">&gt; is pressed.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="c1"># 基本的にここでOpenCV周りの処理を行なってtextureを更新する</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">texture1</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">)</span>
+        <span class="n">texture1</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">tostring</span><span class="p">(),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">,</span> <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">&#39;ubyte&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture1</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">CvCamera</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017/02/12/pelican_setup/" rel="bookmark"
+                           title="Permalink to Pelicanセットアップ">Pelicanセットアップ</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-02-12T12:00:00+09:00">
                 Published: 日 12 2月 2017
@@ -32,64 +126,10 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>メモ用のブログ作成</h1>
-<p>Markdownで書き溜めて、後でgithubのwikiに上げようと思ったまま放置されてたネタ置き場の作成。</p>
-<p><a href="https://kazukousen.github.io/python-pelican-install.html">こっちの記事</a>が元ネタだがgithub.ioのところで躓いてた。</p>
-<p>作業に関しては<a href="http://blog.shigepon.info/blog/2016/03/31/migrate_octopress_github_page_to_pelican/#.WJ_ZLRKLRBw">こっち</a>の方が簡潔。日付けの管理もこのサイト設定を使ってみた。</p>
-<h2>GitHub Pages作成</h2>
-<p>自分のアカウントでusername.github.ioのリポジトリを作成して、作業したい所にcloneしておく。以下cloneした中での作業</p>
-<h2>Pelicanの設定と更新作業</h2>
-<div class="highlight"><pre><span></span>pelican-quickstart
-</pre></div>
-
-
-<p>でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから</p>
-<div class="highlight"><pre><span></span>make html
-make serve
-</pre></div>
-
-
-<p>で http://localhost:8000 から作業内容を確認できる。</p>
-<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
-<span class="n">Date</span><span class="o">:</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span> <span class="mi">11</span><span class="o">:</span><span class="mi">45</span>
-<span class="n">Category</span><span class="o">:</span> <span class="n">Memo</span>
-<span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">python</span>
-<span class="n">Slug</span><span class="o">:</span> <span class="mi">20170212</span><span class="n">_post</span>
-<span class="n">Author</span><span class="o">:</span> <span class="n">eiichiromomma</span>
-<span class="n">Summary</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
-
-
-<span class="err">#</span> <span class="err">お試し</span>
-
-<span class="o">-</span> <span class="n">python</span>
-<span class="o">-</span> <span class="n">pelican</span>
-<span class="o">-</span> <span class="n">markdown</span>
-</pre></div>
-
-
-<p>確認したら</p>
-<div class="highlight"><pre><span></span>make github
-</pre></div>
-
-
-<p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>
-<h2>設定</h2>
-<p>いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。</p>
-<div class="highlight"><pre><span></span><span class="c1">#pelicanconf.py</span>
-<span class="c1">#ファイル名からslugを取得</span>
-<span class="n">FILENAME_METADATA</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;date&gt;\d{4}-\d{2}-\d{2})-(?P&lt;slug&gt;.*)&#39;</span>
-<span class="c1">#得られたslugからhtml生成時のurlと保存先を指定</span>
-<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/&#39;</span>
-<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/index.html&#39;</span>
-</pre></div>
-
-
-<p>としておけば年月日でディレクトリを掘ってくれる。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>setup pelican</p>
+                <a class="readmore" href="/2017/02/12/pelican_setup/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
