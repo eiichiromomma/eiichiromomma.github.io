@@ -21,7 +21,573 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2017/12/05/Kivy-OpenCV/">KivyでOpenCV</a></h1>
+                    <h1 class="entry-title"><a href="/2017/12/28/librealsense/">KivyでOpenCV</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-12-28T19:00:00+09:00">
+                Published: 木 28 12月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+<p>tags: <a href="/tag/realsense.html">Realsense</a> <a href="/tag/opencv.html">OpenCV</a> <a href="/tag/python.html">Python</a> <a href="/tag/pcl.html">PCL</a> </p>
+</footer><!-- /.post-info --><p>CreativeのSenz3dがmacOSでも使えるらしいので試してみた。</p>
+<h1>インストール(macOS)</h1>
+<p><a href="https://github.com/IntelRealSense/librealsense">librealsense</a>は公式サポートではないがIntel謹製のライブラリらしい。
+Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/IntelRealSense/librealsense.git
+mkdir build
+<span class="nb">cd</span> build
+ccmake ..
+</pre></div>
+
+
+<p>で</p>
+<ul>
+<li>BUILD_CV_EXAMPLES: OpenCVの実装例</li>
+<li>BUILD_PCL_EXAMPLES: PCL(Point Cloud Library)の実装例</li>
+<li>BUILD_PYTHON_BINDINGS: Python用のpackage(Python3)</li>
+</ul>
+<p>をONにして，</p>
+<ul>
+<li>BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと</li>
+</ul>
+<p>をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。</p>
+<div class="highlight"><pre><span></span>-- Installing: /usr/local/lib/librealsense-file.a
+-- Installing: /usr/local/bin/rs-capture
+-- Installing: /usr/local/bin/rs-save-to-disk
+-- Installing: /usr/local/bin/rs-multicam
+-- Installing: /usr/local/bin/rs-pointcloud
+-- Installing: /usr/local/bin/rs-align
+-- Installing: /usr/local/bin/rs-sensor-control
+-- Installing: /usr/local/bin/rs-depth
+-- Installing: /usr/local/bin/rs-color
+-- Installing: /usr/local/bin/rs-distance
+-- Installing: /usr/local/bin/rs-terminal
+-- Installing: /usr/local/bin/rs-enumerate-devices
+-- Installing: /usr/local/bin/realsense-viewer
+-- Installing: /usr/local/bin/rs-data-collect
+-- Installing: /usr/local/bin/rs-depth-quality
+-- Installing: /usr/local/bin/live-test
+-- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so
+-- Installing: /usr/local/bin/rs-imshow
+-- Installing: /usr/local/bin/rs-grabcuts
+-- Installing: /usr/local/bin/rs-latency-tool
+-- Installing: /usr/local/bin/rs-dnn
+-- Installing: /usr/local/bin/rs-pcl
+</pre></div>
+
+
+<p>という感じに面白いサンプルも入る。</p>
+<h1>サンプル</h1>
+<p>下のWrapperのサンプル以外のrs-*がそれ。名前のまんまなのでそれぞれ実行すると分かる。
+realsense-viewerは至れり尽せり。</p>
+<h1>Pythonパッケージ</h1>
+<p>pythonのpyrealsense2は適切な場所に置く必要がある。例えば</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> /usr/local/lib/python3.6/site-packages/
+ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
+ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
+</pre></div>
+
+
+<p>のような感じで使える。</p>
+<h1>Wrapperのサンプル</h1>
+<ul>
+<li>rs-imshow: OpenCVのサンプル(imshow)</li>
+<li>rs-grabcuts: OpenCVのサンプル(Grabcutsの実装)</li>
+<li>rs-latency-tool: OpenCVのサンプルだがmacOSが白画面で応答しなくなった</li>
+<li>rs-dnn: OpenCVのサンプル(SSD+距離計測, build/wrappers/opencv/dnnへ移動して実行)</li>
+<li>rs-pcl: PCLのサンプル</li>
+</ul>
+<h1>Pythonパッケージの使用例</h1>
+<p><a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python">ここ</a>のを少し弄って動くようにした。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyrealsense2</span> <span class="kn">as</span> <span class="nn">rs</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">wait_for_frames</span><span class="p">()</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">frames</span><span class="o">.</span><span class="n">get_depth_frame</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">depth</span><span class="p">:</span> <span class="k">continue</span>
+    <span class="n">coverage</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">64</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">480</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">640</span><span class="p">):</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">depth</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">dist</span> <span class="ow">and</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">coverage</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">y</span><span class="o">%</span><span class="mi">20</span> <span class="ow">is</span> <span class="mi">19</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coverage</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; .:nhBXWW&quot;</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="mi">25</span><span class="p">)]</span>
+            <span class="n">coverage</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">64</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+
+
+<p>で距離画像をASCII Art化して表示してくれる。
+ローテク加減が面白い。</p>
+<div class="highlight"><pre><span></span>                                    .
+                                  nWBnBWWX:
+                               h :WWWWWWWWWn.
+                               WnWWWWWWWWWWWB
+                             .nXhWWWWWWWWWWWW:
+                         .:hWWWWhWWWWWWWWWWWW:
+                    :WXBXXWWWWWW:hWWWWWWWWWWn n: .
+                   nWWWWWWWWWWWWX.:hhBXXh:n. XWWXX
+                  hWWWWWWWWWWWWWWX: hWBh: .:WWWWWBB
+                 :WWWWWWWWWWWWWWXWWB:.. :BWWWWWXnXX
+                 XWWWWWBhWWWWWWWWWWWWWWWWWWWWWW:hB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  nWX:hWWX:
+                               B :WWWWWWWWWn.
+                               WnWWWWWWWWWWWB
+                             .:XhWWWWWWWWWWWW.
+                          .hWWWWnWWWWWWWWWWWW:
+                    :XBhBXWWWWWW:hWWWWWWWWWWn n.
+                   hWWWWWWWWWWWWB :BhBXXh:n: XWWXB
+                  hWWWWWWWWWWWXWWX: hWXhn .:WWWWWhX
+                 .WWWWWWWWWWWWWWWWWB:.  :BWWWWWWnBh
+                 BWWWWXBhWWWWWWWXWWWWWWWWWWWWWWhXB:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  BWnnBWWB
+                              :. hWWWWWWWWX.
+                               WnWWWWWWWWWWXh
+                              :XBWWWWWWWWWWWX.
+                          .BWWWXnWWWWWWWWWWWW
+                    nXBhBBWWWWWW.XWWWWWWWWWW..n.
+                   hWWWWWWWWWWWWn hhBBXXhnh.:WWWXB
+                  hWWWWWWWWWWWXWWh  WWXh: .nWWWWXBh
+                 :WWWWWWWWWWWWWXWWWh..  nXWWWWWXhWB.
+                 XWWWWWBhWWWWWWWXWWWWWWWWWWWWWXnBBn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  XW.nBWWB
+                              n. BWWWWWWWWh:
+                              :WnWWWWWWWWWWXn
+                              hWBWWWWWWWWWWWX
+                          :BWWWBnWWWWWWWWWWWW
+                    nBhhBXWWWWWW:XWWWWWWWWWW.:n..
+                   BWWWWWWWWWWWWn hBBXXXnnh :WWWBB
+                  hWWWWWWWWWWWXWWh. WWXh. .nWWWWXBn
+                 .WWWWWWWWWWWWWXWWWh..  nBWWWWWXhXh
+                 XWWWWWXBWWWWWWWXWWWWWWWWWWWWWWnhn
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       .
+                                 :WhnXWWW:
+                              n :WWWWWWWWWBn.
+                              BhBWWWWWWWWWWX:
+                              hhWWWWWWWWWWWWh
+                          :BWWXnBWWWWWWWXWWWn
+                    :BBhhWWWWWWX:XWWWWWWWWWB :n:
+                   hWWWWWWWWWWWWn hnBBXX::: hWWWBB
+                  hWWWWWWWWWWWXWWB..WWhn. nBWWWWWBh
+                 :WWWWWWWWWWWWWXWWWB:...hXWWWWWXhXh.
+                 XWWWWWXXWWWWWWWXWWWWWWWWWWWWWXhXB.
+
+
+
+
+
+
+
+
+
+
+
+                                  BB:
+                              .hhWWWWWBn.
+                              XWWWWWWWWXh
+                            ..WWWWWWWWWWWW
+                            nBWWWWWWWWWWWW
+                             hBWWWWWWWWWWX
+                           :hB.nXXhXWWXnn
+                        :XWWWWX:. WWWWWn  XWB.
+                   .XWWWWWWWWWXWB. ::. .nWWWWWXh.
+                  .WWWWWWWWWWWXWWWWBhBXWWWWWWWWWWn.
+                 .WWWWWWWWWWWWWXWWWWWXWWWWWWWWWWWWX
+                 BWWWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWh.
+                 XWWWWh:BWWWWWWWWWWWWWWWWWWBhh:XWn
+
+
+
+
+
+
+
+
+
+
+
+                               nXX.
+                            :hXWWWWWBnn
+                            WWWWWWWWWWB:
+                          :nWWWWWWWWWWWW
+                           BWWWWWWWWWWWW
+                           nBWWWWWWWWWWX
+                         .nB.nWBXWWWBn:  :
+                      .hWWWWX: .WWWWW: .XWWXn.
+                  .XWWWXWWWWWWB:.::. :BBWWWWWWWn
+                 :WWWWWWWWWWXWWWWBBXWWWBWWWWWWWWWh
+                .WWWWWWWWWWWWWXWWWWXXWWWWWWWWWWWWW:
+                hWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWB
+                XWWWXnnXWWWWWWWWWWWWWWWWWWWXhhXWBh
+
+
+
+
+
+
+
+
+
+
+
+                              :Bh:
+                           .nBWWWWWXhh:
+                           BWWWWWWWWWXh
+                          :XWWWWWWWWWWWh
+                          .BWWWWWWWWWWWh
+                           :WWWWWWWWWWW:
+                         nBB.BBhXWWXB:  nh:
+                     .:hWWWWh. BWWWWh .BWWWXh:.
+                  .XWWWWWWWWXWB..:.  BWWWWWWWWWB
+                 :WWWWWWWWWWWWWWWBBBXWXWWWWWWWWWWh
+                .WWWWWWWWWWWWhXWWWWXXWWWWWWWWWWWWWh
+                hWWWWWWWWWWWWWWWWXWWWWWWWWWWWWWWWXh
+                BWWWX: hBWWWWWWWWWWWWWWWWWWX:hXWhn:
+
+
+
+
+
+
+
+
+
+
+
+                                :B:
+                              :hXWWWWh
+                             .hWWWWWWWX
+                             nhWWWWWWWW.
+                               nBBXXBn.
+                            . .. hWXX
+                        hB...XXWBn...nWh:. .n.
+                      hWWWWXWWWBWWWWWWWWWhBWW.
+                     :WWWWWWWWWWWWWWWWWWWWXWXn:
+                     hWWWWWWWWWWWWWWWWWWWWWhBXh
+                     nWWWWWWWWWWWWWWWWWWWXh.nBB
+                     BXBn :WWWWWWWXWWWXXWWWWB:
+                           nBhWWWWWWWXBWWWXhn:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               .  .h:..   .
+                            .   BXWWWB: .nBhn
+                           n:.   .:       ::.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 hXWh..    .
+                                   :.      .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                :WWWn:.  ..
+                                  :.       .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                .BBX:.:.  ..
+                                  ::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                .hBX       .
+                                  nn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 n :.
+                                .:n:      .
+                                .hXh
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                hW:.:
+                               nXWWWXh:
+                               WWWWWWWn
+                               nWXXXXB.
+                           .   : .Bh: :B
+                         hhW: BWnn..:BWX
+                        .nXWnhWWWWWWWWWh.. ..
+                        nWWhBWWWWWWWWWX:nn
+                         :B:hWWWWWWWWWWhnn  .
+                             hhhXWWWWWWhn:
+                                .BXhBnh  ..
+
+
+
+
+
+
+
+
+
+
+
+
+                               :Bn.
+                              nXWWWWXh.
+                             nWWWWWWWWW
+                             :WWWWWWWWX
+                            ..:BXXXBhh. :
+                           :BWn .WBXn n:::.
+                       nBXBXWWWWh:.:nXWXnXWXW
+                      nWXWWWWWWhXWWWWWWWWWWXB:
+                     .WWWWWWWWWWWWWWWWWWWWXhWX:
+                     :WWWXXWWWWWWWWWWWWWWX nBn.
+                      BWBh:hWWWWWWWWWWWWWB.nnh.
+                        .   :hBBWWWWWWW::    .
+
+
+
+
+
+
+
+
+
+
+
+                               nn
+                            .nWWWWhhnh:
+                            BWWWWWWWWXX
+                            WWWWWWWWWWWn
+                           .BWWWWWWWWWW
+                            .XWWWWWXXWn .
+                         nWWX ::WWWWn  :WB .
+                    .::hhWWWWXn.hhhn nWBWWWWXBn
+                    XWWWWWWWWWWWBhhBWWWBWWWWWWB:
+                   :WWWWWWWWWWXWWWWWWWWWWWWWWXWW
+                   hWWWWWWWWWWWWWWWWWWWWWWWXWWWX.
+                   nWXWh:WWWWWWWWWWWWWWWWWX.WWWX.
+                   :XXXn nBWWWWWWWWWWWWWWX.BWX:.
+
+
+
+
+
+
+
+
+
+
+
+                              hXB:
+                           :hWWWWWBBnhn
+                           WWWWWWWWWWWXh
+                           WWWWWWWWWWWWB
+                           WWWWWWWWWWWWn
+                           hWWWWWWWWWWW.
+                        nXWn:XBXWWXBhn  Xh:
+                     ::WWWWWn :WWWWW..nWWWWXh::
+                  :WWWWWWWWXWWn::...nWWXWWWWWWWB
+                  WWWWWWWWWWWWWWWWWWWWWXWWWWWWWWB
+                 nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
+                 :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
+                  BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017/12/05/Kivy-OpenCV/" rel="bookmark"
+                           title="Permalink to KivyでOpenCV">KivyでOpenCV</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-05T08:00:00+09:00">
                 Published: 火 05 12月 2017
@@ -32,82 +598,10 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/kivy.html">Kivy</a> <a href="/tag/opencv.html">OpenCV</a> <a href="/tag/python.html">Python</a> </p>
-</footer><!-- /.post-info --><h1>他のGUIで表示してみる</h1>
-<p>OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
-ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
-という訳でQt抜きのパッケージになるケースが非常に多い。</p>
-<p><a href="https://riverbankcomputing.com/software/pyqt/intro">PyQt</a>か<a href="https://wiki.qt.io/PySide/ja">PySide</a>かという選択肢もあるが，試しにKivyを使ってみたら結構簡単だった。
-頑張ればOpenCVでのQt-highguiみたいにSaveボタンを付けたり(これは簡単)，拡大して画素値を出したりも出来そうだ。</p>
-<h1>サンプル</h1>
-<p><img alt="こんな感じ" src="/images/20171205-1.png"></p>
-<p>こんな感じでWebCAM-スライダ-ボタンという並び。KivyのSliderは何故かラベルが無いのでちょっと工夫して付け足してる。</p>
-<p>構造としてはAppを継承したメインのクラスがあり，buildでUIの構築(と初期設定)，SliderとButtonにbindしたコールバック，Clock.schedule_intervalで指定してるupdateで更新。
-update内でOpenCV周りの処理を行なってImageのtextureを書き換えて表示といった流れになる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.slider</span> <span class="kn">import</span> <span class="n">Slider</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.texture</span> <span class="kn">import</span> <span class="n">Texture</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-
-<span class="k">class</span> <span class="nc">CvCamera</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#UIの構築等</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="c1"># ButtonやSlider等は基本size_hintでサイズ比率を指定(絶対値の時はNoneでsize=)</span>
-        <span class="c1"># Verticalの中に置くhorizontalなBoxLayout (ここだけ2column)</span>
-        <span class="n">layout2</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">halign</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
-        <span class="n">slider1</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-        <span class="n">slider1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">slideCallback</span><span class="p">)</span>
-        <span class="c1"># 日本語フォントを使いたいときはfont_nameでフォントへのパス</span>
-        <span class="n">button1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;ボタン&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">font_name</span><span class="o">=</span><span class="s1">&#39;/usr/local/texlive/texmf-local/fonts/truetype/cjk-gs-integrate/ipag.ttf&#39;</span><span class="p">)</span>
-        <span class="n">button1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttonCallback</span><span class="p">)</span> <span class="c1">#bindでイベントごとにコールバック指定</span>
-        <span class="c1"># Imageに後で画像を描く</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">))</span>
-        <span class="c1"># Layoutを作ってadd_widgetで順次モノを置いていく(並びは置いた順)</span>
-        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="p">)</span>
-        <span class="c1"># ここだけ2columnでLabelとSliderを並べる</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
-        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="p">)</span>
-        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">slider1</span><span class="p">)</span>
-        <span class="c1"># 1columnに戻る</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">button1</span><span class="p">)</span>
-        <span class="c1">#カメラ待ち</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span> 
-            <span class="k">pass</span>
-        <span class="c1"># 更新スケジュールとコールバックの指定</span>
-        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">layout</span>
-
-    <span class="k">def</span> <span class="nf">slideCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># Slider横のLabelをSliderの値に</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">buttonCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
-        <span class="c1"># 何かのフラグに使える</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Buttn &lt;</span><span class="si">%s</span><span class="s1">&gt; is pressed.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-        <span class="c1"># 基本的にここでOpenCV周りの処理を行なってtextureを更新する</span>
-        <span class="n">ret</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">texture1</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">)</span>
-        <span class="n">texture1</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">tostring</span><span class="p">(),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">,</span> <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">&#39;ubyte&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture1</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">CvCamera</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>OpenCV with Kivy</p>
+                <a class="readmore" href="/2017/12/05/Kivy-OpenCV/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -282,28 +776,6 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 <p>tags: <a href="/tag/excel.html">Excel</a> </p>
 </footer><!-- /.post-info -->                <p>Excel NA()</p>
                 <a class="readmore" href="/2017/03/31/excelna/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/03/05/vscode_clang/" rel="bookmark"
-                           title="Permalink to VSCodeとClang">VSCodeとClang</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-03-05T11:00:00+09:00">
-                Published: 日 05 3月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/vscode.html">VSCode</a> <a href="/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info -->                <p>setup VSCode and clang</p>
-                <a class="readmore" href="/2017/03/05/vscode_clang/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

@@ -1,5 +1,547 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-12-05T08:00:00+09:00</updated><entry><title>KivyでOpenCV</title><link href="/2017/12/05/Kivy-OpenCV/" rel="alternate"></link><published>2017-12-05T08:00:00+09:00</published><updated>2017-12-05T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-05:/2017/12/05/Kivy-OpenCV/</id><summary type="html">&lt;p&gt;OpenCV with Kivy&lt;/p&gt;</summary><content type="html">&lt;h1&gt;他のGUIで表示してみる&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-12-28T19:00:00+09:00</updated><entry><title>KivyでOpenCV</title><link href="/2017/12/28/librealsense/" rel="alternate"></link><published>2017-12-28T19:00:00+09:00</published><updated>2017-12-28T19:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-28:/2017/12/28/librealsense/</id><summary type="html">&lt;p&gt;Realsense on macOS&lt;/p&gt;</summary><content type="html">&lt;p&gt;CreativeのSenz3dがmacOSでも使えるらしいので試してみた。&lt;/p&gt;
+&lt;h1&gt;インストール(macOS)&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/IntelRealSense/librealsense"&gt;librealsense&lt;/a&gt;は公式サポートではないがIntel謹製のライブラリらしい。
+Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/IntelRealSense/librealsense.git
+mkdir build
+&lt;span class="nb"&gt;cd&lt;/span&gt; build
+ccmake ..
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;で&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;BUILD_CV_EXAMPLES: OpenCVの実装例&lt;/li&gt;
+&lt;li&gt;BUILD_PCL_EXAMPLES: PCL(Point Cloud Library)の実装例&lt;/li&gt;
+&lt;li&gt;BUILD_PYTHON_BINDINGS: Python用のpackage(Python3)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;をONにして，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Installing: /usr/local/lib/librealsense-file.a
+-- Installing: /usr/local/bin/rs-capture
+-- Installing: /usr/local/bin/rs-save-to-disk
+-- Installing: /usr/local/bin/rs-multicam
+-- Installing: /usr/local/bin/rs-pointcloud
+-- Installing: /usr/local/bin/rs-align
+-- Installing: /usr/local/bin/rs-sensor-control
+-- Installing: /usr/local/bin/rs-depth
+-- Installing: /usr/local/bin/rs-color
+-- Installing: /usr/local/bin/rs-distance
+-- Installing: /usr/local/bin/rs-terminal
+-- Installing: /usr/local/bin/rs-enumerate-devices
+-- Installing: /usr/local/bin/realsense-viewer
+-- Installing: /usr/local/bin/rs-data-collect
+-- Installing: /usr/local/bin/rs-depth-quality
+-- Installing: /usr/local/bin/live-test
+-- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so
+-- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so
+-- Installing: /usr/local/bin/rs-imshow
+-- Installing: /usr/local/bin/rs-grabcuts
+-- Installing: /usr/local/bin/rs-latency-tool
+-- Installing: /usr/local/bin/rs-dnn
+-- Installing: /usr/local/bin/rs-pcl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;という感じに面白いサンプルも入る。&lt;/p&gt;
+&lt;h1&gt;サンプル&lt;/h1&gt;
+&lt;p&gt;下のWrapperのサンプル以外のrs-*がそれ。名前のまんまなのでそれぞれ実行すると分かる。
+realsense-viewerは至れり尽せり。&lt;/p&gt;
+&lt;h1&gt;Pythonパッケージ&lt;/h1&gt;
+&lt;p&gt;pythonのpyrealsense2は適切な場所に置く必要がある。例えば&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python3.6/site-packages/
+ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
+ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;のような感じで使える。&lt;/p&gt;
+&lt;h1&gt;Wrapperのサンプル&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;rs-imshow: OpenCVのサンプル(imshow)&lt;/li&gt;
+&lt;li&gt;rs-grabcuts: OpenCVのサンプル(Grabcutsの実装)&lt;/li&gt;
+&lt;li&gt;rs-latency-tool: OpenCVのサンプルだがmacOSが白画面で応答しなくなった&lt;/li&gt;
+&lt;li&gt;rs-dnn: OpenCVのサンプル(SSD+距離計測, build/wrappers/opencv/dnnへ移動して実行)&lt;/li&gt;
+&lt;li&gt;rs-pcl: PCLのサンプル&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Pythonパッケージの使用例&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python"&gt;ここ&lt;/a&gt;のを少し弄って動くようにした。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyrealsense2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;rs&lt;/span&gt;
+&lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;frames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wait_for_frames&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;depth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_depth_frame&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;continue&lt;/span&gt;
+    &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;480&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;640&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;depth&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_distance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;coverage&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; .:nhBXWW&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+            &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;で距離画像をASCII Art化して表示してくれる。
+ローテク加減が面白い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;                                    .
+                                  nWBnBWWX:
+                               h :WWWWWWWWWn.
+                               WnWWWWWWWWWWWB
+                             .nXhWWWWWWWWWWWW:
+                         .:hWWWWhWWWWWWWWWWWW:
+                    :WXBXXWWWWWW:hWWWWWWWWWWn n: .
+                   nWWWWWWWWWWWWX.:hhBXXh:n. XWWXX
+                  hWWWWWWWWWWWWWWX: hWBh: .:WWWWWBB
+                 :WWWWWWWWWWWWWWXWWB:.. :BWWWWWXnXX
+                 XWWWWWBhWWWWWWWWWWWWWWWWWWWWWW:hB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  nWX:hWWX:
+                               B :WWWWWWWWWn.
+                               WnWWWWWWWWWWWB
+                             .:XhWWWWWWWWWWWW.
+                          .hWWWWnWWWWWWWWWWWW:
+                    :XBhBXWWWWWW:hWWWWWWWWWWn n.
+                   hWWWWWWWWWWWWB :BhBXXh:n: XWWXB
+                  hWWWWWWWWWWWXWWX: hWXhn .:WWWWWhX
+                 .WWWWWWWWWWWWWWWWWB:.  :BWWWWWWnBh
+                 BWWWWXBhWWWWWWWXWWWWWWWWWWWWWWhXB:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  BWnnBWWB
+                              :. hWWWWWWWWX.
+                               WnWWWWWWWWWWXh
+                              :XBWWWWWWWWWWWX.
+                          .BWWWXnWWWWWWWWWWWW
+                    nXBhBBWWWWWW.XWWWWWWWWWW..n.
+                   hWWWWWWWWWWWWn hhBBXXhnh.:WWWXB
+                  hWWWWWWWWWWWXWWh  WWXh: .nWWWWXBh
+                 :WWWWWWWWWWWWWXWWWh..  nXWWWWWXhWB.
+                 XWWWWWBhWWWWWWWXWWWWWWWWWWWWWXnBBn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  XW.nBWWB
+                              n. BWWWWWWWWh:
+                              :WnWWWWWWWWWWXn
+                              hWBWWWWWWWWWWWX
+                          :BWWWBnWWWWWWWWWWWW
+                    nBhhBXWWWWWW:XWWWWWWWWWW.:n..
+                   BWWWWWWWWWWWWn hBBXXXnnh :WWWBB
+                  hWWWWWWWWWWWXWWh. WWXh. .nWWWWXBn
+                 .WWWWWWWWWWWWWXWWWh..  nBWWWWWXhXh
+                 XWWWWWXBWWWWWWWXWWWWWWWWWWWWWWnhn
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       .
+                                 :WhnXWWW:
+                              n :WWWWWWWWWBn.
+                              BhBWWWWWWWWWWX:
+                              hhWWWWWWWWWWWWh
+                          :BWWXnBWWWWWWWXWWWn
+                    :BBhhWWWWWWX:XWWWWWWWWWB :n:
+                   hWWWWWWWWWWWWn hnBBXX::: hWWWBB
+                  hWWWWWWWWWWWXWWB..WWhn. nBWWWWWBh
+                 :WWWWWWWWWWWWWXWWWB:...hXWWWWWXhXh.
+                 XWWWWWXXWWWWWWWXWWWWWWWWWWWWWXhXB.
+
+
+
+
+
+
+
+
+
+
+
+                                  BB:
+                              .hhWWWWWBn.
+                              XWWWWWWWWXh
+                            ..WWWWWWWWWWWW
+                            nBWWWWWWWWWWWW
+                             hBWWWWWWWWWWX
+                           :hB.nXXhXWWXnn
+                        :XWWWWX:. WWWWWn  XWB.
+                   .XWWWWWWWWWXWB. ::. .nWWWWWXh.
+                  .WWWWWWWWWWWXWWWWBhBXWWWWWWWWWWn.
+                 .WWWWWWWWWWWWWXWWWWWXWWWWWWWWWWWWX
+                 BWWWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWh.
+                 XWWWWh:BWWWWWWWWWWWWWWWWWWBhh:XWn
+
+
+
+
+
+
+
+
+
+
+
+                               nXX.
+                            :hXWWWWWBnn
+                            WWWWWWWWWWB:
+                          :nWWWWWWWWWWWW
+                           BWWWWWWWWWWWW
+                           nBWWWWWWWWWWX
+                         .nB.nWBXWWWBn:  :
+                      .hWWWWX: .WWWWW: .XWWXn.
+                  .XWWWXWWWWWWB:.::. :BBWWWWWWWn
+                 :WWWWWWWWWWXWWWWBBXWWWBWWWWWWWWWh
+                .WWWWWWWWWWWWWXWWWWXXWWWWWWWWWWWWW:
+                hWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWB
+                XWWWXnnXWWWWWWWWWWWWWWWWWWWXhhXWBh
+
+
+
+
+
+
+
+
+
+
+
+                              :Bh:
+                           .nBWWWWWXhh:
+                           BWWWWWWWWWXh
+                          :XWWWWWWWWWWWh
+                          .BWWWWWWWWWWWh
+                           :WWWWWWWWWWW:
+                         nBB.BBhXWWXB:  nh:
+                     .:hWWWWh. BWWWWh .BWWWXh:.
+                  .XWWWWWWWWXWB..:.  BWWWWWWWWWB
+                 :WWWWWWWWWWWWWWWBBBXWXWWWWWWWWWWh
+                .WWWWWWWWWWWWhXWWWWXXWWWWWWWWWWWWWh
+                hWWWWWWWWWWWWWWWWXWWWWWWWWWWWWWWWXh
+                BWWWX: hBWWWWWWWWWWWWWWWWWWX:hXWhn:
+
+
+
+
+
+
+
+
+
+
+
+                                :B:
+                              :hXWWWWh
+                             .hWWWWWWWX
+                             nhWWWWWWWW.
+                               nBBXXBn.
+                            . .. hWXX
+                        hB...XXWBn...nWh:. .n.
+                      hWWWWXWWWBWWWWWWWWWhBWW.
+                     :WWWWWWWWWWWWWWWWWWWWXWXn:
+                     hWWWWWWWWWWWWWWWWWWWWWhBXh
+                     nWWWWWWWWWWWWWWWWWWWXh.nBB
+                     BXBn :WWWWWWWXWWWXXWWWWB:
+                           nBhWWWWWWWXBWWWXhn:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               .  .h:..   .
+                            .   BXWWWB: .nBhn
+                           n:.   .:       ::.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 hXWh..    .
+                                   :.      .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                :WWWn:.  ..
+                                  :.       .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                .BBX:.:.  ..
+                                  ::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                .hBX       .
+                                  nn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 n :.
+                                .:n:      .
+                                .hXh
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                hW:.:
+                               nXWWWXh:
+                               WWWWWWWn
+                               nWXXXXB.
+                           .   : .Bh: :B
+                         hhW: BWnn..:BWX
+                        .nXWnhWWWWWWWWWh.. ..
+                        nWWhBWWWWWWWWWX:nn
+                         :B:hWWWWWWWWWWhnn  .
+                             hhhXWWWWWWhn:
+                                .BXhBnh  ..
+
+
+
+
+
+
+
+
+
+
+
+
+                               :Bn.
+                              nXWWWWXh.
+                             nWWWWWWWWW
+                             :WWWWWWWWX
+                            ..:BXXXBhh. :
+                           :BWn .WBXn n:::.
+                       nBXBXWWWWh:.:nXWXnXWXW
+                      nWXWWWWWWhXWWWWWWWWWWXB:
+                     .WWWWWWWWWWWWWWWWWWWWXhWX:
+                     :WWWXXWWWWWWWWWWWWWWX nBn.
+                      BWBh:hWWWWWWWWWWWWWB.nnh.
+                        .   :hBBWWWWWWW::    .
+
+
+
+
+
+
+
+
+
+
+
+                               nn
+                            .nWWWWhhnh:
+                            BWWWWWWWWXX
+                            WWWWWWWWWWWn
+                           .BWWWWWWWWWW
+                            .XWWWWWXXWn .
+                         nWWX ::WWWWn  :WB .
+                    .::hhWWWWXn.hhhn nWBWWWWXBn
+                    XWWWWWWWWWWWBhhBWWWBWWWWWWB:
+                   :WWWWWWWWWWXWWWWWWWWWWWWWWXWW
+                   hWWWWWWWWWWWWWWWWWWWWWWWXWWWX.
+                   nWXWh:WWWWWWWWWWWWWWWWWX.WWWX.
+                   :XXXn nBWWWWWWWWWWWWWWX.BWX:.
+
+
+
+
+
+
+
+
+
+
+
+                              hXB:
+                           :hWWWWWBBnhn
+                           WWWWWWWWWWWXh
+                           WWWWWWWWWWWWB
+                           WWWWWWWWWWWWn
+                           hWWWWWWWWWWW.
+                        nXWn:XBXWWXBhn  Xh:
+                     ::WWWWWn :WWWWW..nWWWWXh::
+                  :WWWWWWWWXWWn::...nWWXWWWWWWWB
+                  WWWWWWWWWWWWWWWWWWWWWXWWWWWWWWB
+                 nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
+                 :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
+                  BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Realsense"></category><category term="OpenCV"></category><category term="Python"></category><category term="PCL"></category></entry><entry><title>KivyでOpenCV</title><link href="/2017/12/05/Kivy-OpenCV/" rel="alternate"></link><published>2017-12-05T08:00:00+09:00</published><updated>2017-12-05T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-05:/2017/12/05/Kivy-OpenCV/</id><summary type="html">&lt;p&gt;OpenCV with Kivy&lt;/p&gt;</summary><content type="html">&lt;h1&gt;他のGUIで表示してみる&lt;/h1&gt;
 &lt;p&gt;OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
 ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
 という訳でQt抜きのパッケージになるケースが非常に多い。&lt;/p&gt;
