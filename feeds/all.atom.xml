@@ -97,7 +97,8 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 &lt;p&gt;で距離画像をASCII Art化して表示してくれる。
-ローテク加減が面白い。&lt;/p&gt;
+ローテク加減が面白い。
+※固定長フォントでお楽しみ下さい&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;                                    .
                                   nWBnBWWX:
                                h :WWWWWWWWWn.
