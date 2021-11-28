@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description></description><lastBuildDate>Sun, 28 Nov 2021 10:59:00 +0900</lastBuildDate><item><title>研究室への問い合わせと2020-2021の状況について</title><link>https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
+&lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
+質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;12/4(土) 11:00-12:00 &lt;/li&gt;
+&lt;li&gt;12/6(月) 17:00-18:00 &lt;/li&gt;
+&lt;li&gt;12/7(火) 12:00-13:00 &lt;/li&gt;
+&lt;li&gt;時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;近況&lt;/h2&gt;
+&lt;p&gt;コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
+写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。&lt;/p&gt;
+&lt;p&gt;緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;学生の研究室への登校は任意(要事前申請)&lt;/li&gt;
+&lt;li&gt;連絡はコロナ禍の前からSlack …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 28 Nov 2021 10:59:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</guid><category>News</category></item><item><title>Wordpress to Pelican</title><link>https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/</link><description>&lt;p&gt;WordpressからPelicanへの移行メモ&lt;/p&gt;
+&lt;h2&gt;前置き&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。&lt;/li&gt;
+&lt;li&gt;本体は持ち運び可能なNUC&lt;/li&gt;
+&lt;li&gt;IPは固定のグローバル&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;サーバが起動してるうちにバックアップ&lt;/h2&gt;
+&lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
+&lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
+&lt;h3&gt;嘘吐きサーバと嘘吐きクライアント&lt;/h3&gt;
+&lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
+&lt;li&gt;クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。&lt;/p&gt;
+&lt;h3&gt;xmlをエクスポート&lt;/h3&gt;
+&lt;p&gt;Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 27 Nov 2021 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2021-11-27:/2021/11/27/wordpress-to-pelican/</guid><category>Memo</category></item><item><title>前期が終わりました</title><link>https://eiichiromomma.github.io/2020/07/31/%E5%89%8D%E6%9C%9F%E3%81%8C%E7%B5%82%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;コロナ禍で久々の更新です。卒業式もなく学位記伝達のみだったり，学部生は4正式に配属されてから一度も研究室に来てなかったりと特殊な状況ですが，M1, M2は入構可となってから1ヶ月くらいでリカバリーしてもらうところです。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:jetpack/slideshow {"ids":["791","792","793","794"],"sizeSlug":"full"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone size-medium wp-image-507" src="https://eiichiromomma.github.io/images/uploads/2020/07/SDIM0634_Original-1-scaled.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone size-medium wp-image-507" src="https://eiichiromomma.github.io/images/uploads/2020/07/IMG_1581-1-scaled.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone size-medium wp-image-507" src="https://eiichiromomma.github.io/images/uploads/2020/07/IMG_1585-1-scaled.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone size-medium wp-image-507" src="https://eiichiromomma.github.io/images/uploads/2020/07/0cd864550951e7111ba9ae1c4ab7c82a-1-scaled.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:jetpack/slideshow --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;講義は全てオンデマンド式の講義で曜日無関係な収録の日々ではあるものの，そこは画像が専門なので，タダでは転ばず&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%88%E8%AC%9B%E7%BE%A9"&gt;ノウハウを溜めました&lt;/a&gt;ので，皆さんも参考にして下さい。お陰で自宅にクロマキー環境まで作ってYoutuber状態ですが。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;まだタワー・スコラに来たことすら無い2年生もいるかも知れませんので(?)，3Dモデルを噂の3D Scanner Appで作ってみました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:video --&gt;
+
+&lt;iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="640" height="476" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;!-- /wp:video --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 31 Jul 2020 08:48:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2020-07-31:/2020/07/31/前期が終わりました/</guid><category>News</category></item><item><title>卒研発表会2020</title><link>https://eiichiromomma.github.io/2020/02/27/%E5%8D%92%E7%A0%94%E7%99%BA%E8%A1%A8%E4%BC%9A2020/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;例年だとB3と師匠の名誉教授にご参加頂き開催するところですが，例の肺炎対策ということで門馬とのポスターを使った試問ということにしました(距離は取ってます)。B3はネットでポスターを確認して Sli.do で質疑という試みもしました。今年度は上から水が降ったせいでリソースを大幅に取られたり色々ありましたが，どうにかM0の2名が研究会にも出せたし何とかなりました。皆様お疲れ様でした。Cavaで乾杯だけして解散。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":782,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" src="https://eiichiromomma.github.io/images/uploads/2020/03/IMG_1545.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 27 Feb 2020 18:15:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2020-02-27:/2020/02/27/卒研発表会2020/</guid><category>ゼミ</category></item><item><title>卒論下見発表会</title><link>https://eiichiromomma.github.io/2020/01/30/%E5%8D%92%E8%AB%96%E4%B8%8B%E8%A6%8B%E7%99%BA%E8%A1%A8%E4%BC%9A/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;卒論も大詰めということで下見発表会を開催しました。打ち上げも開催したいところですが，テストに追われていたり前日まで無理をしている人もいたりということで，昼にピザを差し入れするだけにしておきました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":777,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00529.jpeg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":778,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00531.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":779,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00534.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 30 Jan 2020 17:12:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2020-01-30:/2020/01/30/卒論下見発表会/</guid><category>ゼミ</category></item><item><title>忘年会</title><link>https://eiichiromomma.github.io/2019/12/19/%E5%BF%98%E5%B9%B4%E4%BC%9A/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;数日前に飲み会をやったばかりですが，今度はB4+院生の忘年会。たまたまM1の誕生日ということでケーキでお祝い。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":773,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00524.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":774,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00528.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 19 Dec 2019 20:10:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-12-19:/2019/12/19/忘年会/</guid><category>News</category></item><item><title>B3自己紹介LT飲み会</title><link>https://eiichiromomma.github.io/2019/12/16/B3/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;仮配属が決定した3年生を集めて，自己紹介LT飲み会を開催しました。例年誰かしら欠けてて何度も自己紹介LTをやってますが，今度の3年生は集りが良く全員揃いました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":768,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00504.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":769,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00513.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":770,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00515.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 16 Dec 2019 20:08:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-12-16:/2019/12/16/B3/</guid><category>ゼミ</category></item><item><title>進捗報告+飲み会2019-11</title><link>https://eiichiromomma.github.io/2019/11/21/%E9%80%B2%E6%8D%97%E5%A0%B1%E5%91%8A%E9%A3%B2%E3%81%BF%E4%BC%9A2019-11/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;研究の進捗報告会+飲み会でした。飲み会は人が少なく院生+M0で。ペプシが24本当たったとかでM1が配布中。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":763,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/0cd864550951e7111ba9ae1c4ab7c82a.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":764,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00499.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":765,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00502.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 21 Nov 2019 19:02:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-11-21:/2019/11/21/進捗報告飲み会2019-11/</guid><category>ゼミ</category></item><item><title>研究室見学について</title><link>https://eiichiromomma.github.io/2019/09/20/%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;仮着手の季節が来ました。見学は以下の時間に受付けています。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:list --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;9/21(土) -16:00&lt;/li&gt;
+&lt;li&gt;9/25(水) 11:30-13:00&lt;/li&gt;
+&lt;li&gt;9/27(金) 11:30-13:00&lt;/li&gt;
+&lt;li&gt;9/28(土) 11:00-12:30&lt;/li&gt;
+&lt;li&gt;10/6(土) 電気工学科オープンラボ 9:30-17:00&lt;/li&gt;
+&lt;li&gt;10/9(水) 11:30-13:00&lt;/li&gt;
+&lt;li&gt;10/11(金) 11:30-13:00&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /wp:list --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;これら以外の場合は事前にアポイントを取ってくれると助かります&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 20 Sep 2019 18:42:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-09-20:/2019/09/20/研究室見学について/</guid><category>ゼミ</category></item><item><title>研修旅行2019</title><link>https://eiichiromomma.github.io/2019/09/10/%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C2019/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;今年の研修旅行は日帰りで恵比須の東京都写真美術館を見た後にヱビスビール記念館に行って，夜はバーベキューでした。外で飲み食いするのもたまには良いもんです。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":760,"sizeSlug":"large"} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00473.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 10 Sep 2019 19:56:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-09-10:/2019/09/10/研修旅行2019/</guid><category>ゼミ</category></item><item><title>研究会+部門優秀論文発表賞 表彰</title><link>https://eiichiromomma.github.io/2019/08/28/%E7%A0%94%E7%A9%B6%E4%BC%9A%E9%83%A8%E9%96%80%E5%84%AA%E7%A7%80%E8%AB%96%E6%96%87%E7%99%BA%E8%A1%A8%E8%B3%9E-%E8%A1%A8%E5%BD%B0/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;徳島大学で開催の知覚情報/次世代産業システム合同研究会に参加してきました。研究発表に加えて昨年度 現M2の木鉛君が受賞した部門優秀論文発表賞の表彰も実施され，「非整備環境におけるセンシングとAI技術調査専門委員会」 委員長の谷口先生から表彰状を授与されました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:gallery {"ids":[751,752]} --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1208-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1209-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /wp:gallery --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 28 Aug 2019 18:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-08-28:/2019/08/28/研究会部門優秀論文発表賞-表彰/</guid><category>News</category></item><item><title>デモ大会その2+自己紹介LT飲み会</title><link>https://eiichiromomma.github.io/2019/06/20/%E3%83%87%E3%83%A2%E5%A4%A7%E4%BC%9A%E3%81%9D%E3%81%AE2%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;前回に引続きデモ大会です。UE4+ViveProでちゃんと作り込んできてました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":746} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00436-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;その後打上げを兼ねた自己紹介LT飲み会(全員揃うまで続きます)です。写真は誕生日で浮かれる田久保君。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:gallery {"ids":[747,748]} --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00454-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00464-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /wp:gallery --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 20 Jun 2019 18:17:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-06-20:/2019/06/20/デモ大会その2自己紹介lt飲み会/</guid><category>ゼミ</category></item><item><title>デモ大会その1</title><link>https://eiichiromomma.github.io/2019/06/06/%E3%83%87%E3%83%A2%E5%A4%A7%E4%BC%9A%E3%81%9D%E3%81%AE1/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;こちらから指定した機器やアルゴリズムを使ったデモ大会です。残念なCNNのプレゼンが秀逸でした。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":743} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00426-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 06 Jun 2019 18:16:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-06-06:/2019/06/06/デモ大会その1/</guid><category>ゼミ</category></item><item><title>輪講2019-5-16</title><link>https://eiichiromomma.github.io/2019/05/16/%E8%BC%AA%E8%AC%9B2019-5-16/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;進学や就活で忙しいところですが輪講を開催しました。思いの外しっかり資料を作ってきてくれてました。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":740} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00416-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 16 May 2019 18:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-05-16:/2019/05/16/輪講2019-5-16/</guid><category>ゼミ</category></item><item><title>自己紹介LT飲み会2019-4</title><link>https://eiichiromomma.github.io/2019/04/25/%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A2019-4/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;恒例の自己紹介LT飲み会を開催しました．ちょっと酒が回ったところでの自己紹介プレゼンはリラックスできて楽しいものです．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;これから1年間頑張りましょう．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":735} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00405-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":736} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00407-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 25 Apr 2019 21:54:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-04-25:/2019/04/25/自己紹介lt飲み会2019-4/</guid><category>ゼミ</category></item><item><title>部門優秀論文発表賞</title><link>https://eiichiromomma.github.io/2019/03/31/%E9%83%A8%E9%96%80%E5%84%AA%E7%A7%80%E8%AB%96%E6%96%87%E7%99%BA%E8%A1%A8%E8%B3%9E/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;大学院生の木鉛君が電気学会D部門で部門優秀論文発表賞を受賞しました．おめでとう!&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":731} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/SDIM5076-1024x683.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 31 Mar 2019 17:44:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-03-31:/2019/03/31/部門優秀論文発表賞/</guid><category>News</category></item><item><title>卒業・修了</title><link>https://eiichiromomma.github.io/2019/03/25/%E5%8D%92%E6%A5%AD%E4%BF%AE%E4%BA%86/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;今年も学部生，大学院生が巣立って行きました．卒業・修了おめでとうございます．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":724} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/SDIM4971-1024x683.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":725} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/SDIM4972-1024x683.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":726} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/SDIM5023-1024x683.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":727} --&gt;
+
+&lt;p&gt;&lt;img alt="エレベータを諦めて12階分登った後で乾杯 (女性陣は着替えに出発済)" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00299-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 25 Mar 2019 18:04:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-03-25:/2019/03/25/卒業修了/</guid><category>ゼミ</category></item><item><title>卒研発表会2019</title><link>https://eiichiromomma.github.io/2019/02/28/%E5%8D%92%E7%A0%94%E7%99%BA%E8%A1%A8%E4%BC%9A2019/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;新しい研究室で初の卒研発表会を実施しました．人が多過ぎて酸欠になりそうだったので来年からは発表会は実験室を借ります．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":719} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/SDIM4642-1024x683.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;優秀研究発表賞の投票の結果，三澤さん，彦坂君，小網さんが受賞となりました．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":720} --&gt;
+
+&lt;p&gt;&lt;img alt="副賞の寿司と" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00290-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":721} --&gt;
+
+&lt;p&gt;&lt;img alt="机を一つ借りて何とか全員座れた" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00296-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 28 Feb 2019 17:59:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-02-28:/2019/02/28/卒研発表会2019/</guid><category>ゼミ</category></item><item><title>授業アンケート結果(電気回路I及び演習)</title><link>https://eiichiromomma.github.io/2019/02/12/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E7%B5%90%E6%9E%9C%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;データの加工が割と面倒なのでここ数年サボっていましたが，下図のような集計となりました．今年は諸事情によりABクラス1部屋で160名でしたのでうるさくならないか心配でしたが大丈夫でした．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":716} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/44c23b6b15d70994d766716b66bcaf1c.png" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;それなりに好意的な回答かなと思います．自由記述欄については幾つかピックアップします．(コメントありがとうございます)&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:list --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;解答を示してくれる・ポータルにスライドを置いてくれるのは助かった&lt;/li&gt;
+&lt;li&gt;課題が多いです&lt;/li&gt;
+&lt;li&gt;スライド配布資料へのメモ書きの時間が欲しい&lt;/li&gt;
+&lt;li&gt;授業のスピードが速い&lt;/li&gt;
+&lt;li&gt;マグロウヒルが難しい&lt;/li&gt;
+&lt;li&gt;もっと，やる気のない生徒との差別化をしてほしい&lt;/li&gt;
+&lt;li&gt;わかりやすかった&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /wp:list --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;時間に関しては最後の総復習とのバランスの問題なのでもう少し見直す予定です．マグロウヒルが難しいのは確かですが解説付きの基本問題を解いていると分かってくるものです(他に丁度良い問題集がなかなか無いという理由もあります)．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;ちなみに上記のグラフは今回はPythonのpandasで自動生成できるようにしました．来年からは楽になるかも．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/eiichiromomma/CVMLAB/blob/master/notebooks/201904%20QA.ipynb"&gt;https://github.com/eiichiromomma/CVMLAB/blob/master/notebooks/201904%20QA.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 12 Feb 2019 17:45:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2019-02-12:/2019/02/12/授業アンケート結果電気回路i及び演習/</guid><category>講義</category></item><item><title>進捗報告飲み会2018-12</title><link>https://eiichiromomma.github.io/2018/12/20/%E9%80%B2%E6%8D%97%E5%A0%B1%E5%91%8A%E9%A3%B2%E3%81%BF%E4%BC%9A2018-12/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;卒研での進捗報告をして貰いました．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;その後は恒例の飲み会です．&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":712} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00241-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":713} --&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/04/DSC00245-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 20 Dec 2018 20:42:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-12-20:/2018/12/20/進捗報告飲み会2018-12/</guid><category>ゼミ</category></item><item><title>B3自己紹介LT飲み会</title><link>https://eiichiromomma.github.io/2018/11/30/b3%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;恒例の仮配属者の懇親Lightning Talk+飲み会です。皆プレゼン上手いですね。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":707} --&gt;
+
+&lt;p&gt;&lt;img alt="写真にはありませんが，どぶろくが目玉(?)でした" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/12/IMG_0878-768x1024.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 30 Nov 2018 20:48:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-11-30:/2018/11/30/b3自己紹介lt飲み会/</guid><category>ゼミ</category></item><item><title>進捗報告+飲み会2018-11</title><link>https://eiichiromomma.github.io/2018/11/08/%E9%80%B2%E6%8D%97%E5%A0%B1%E5%91%8A%E9%A3%B2%E3%81%BF%E4%BC%9A2018-11/</link><description>&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;記事のアップロードが遅くなりましたが進捗報告+飲み会です。&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:image {"id":703} --&gt;
+
+&lt;p&gt;&lt;img alt="(ブレブレですが)乾杯" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/12/DSC00192-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;
+
+&lt;!-- wp:image {"id":704} --&gt;
+
+&lt;p&gt;&lt;img alt="今回の目玉(?)のレモンサワー飲み比べセット" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/12/DSC00219-1024x768.jpg" width="600"&gt;&lt;/p&gt;
+&lt;!-- /wp:image --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 08 Nov 2018 20:43:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-11-08:/2018/11/08/進捗報告飲み会2018-11/</guid><category>ゼミ</category></item><item><title>研究室の見学について</title><link>https://eiichiromomma.github.io/2018/09/22/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AE%E8%A6%8B%E5%AD%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;p&gt;卒研の仮配属の季節になりました。見学を希望される方は下記の時間に来て下さい。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[9/22(土) -16:00]&lt;/li&gt;
+&lt;li&gt;[9/24(月) 16:00-17:00]&lt;/li&gt;
+&lt;li&gt;[9/26(水) 12:00-13:00]&lt;/li&gt;
+&lt;li&gt;[9/29(土) 11:00-12:30]&lt;/li&gt;
+&lt;li&gt;[10/5(金) &lt;strong&gt;11:30-13:00&lt;/strong&gt;]&lt;/li&gt;
+&lt;li&gt;[10/6(土) 電気工学科オープンラボ 9:30-17:00]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;これら以外を希望される場合は事前にメール等頂けると助かります。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 22 Sep 2018 15:24:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-09-22:/2018/09/22/研究室の見学について/</guid><category>講義</category></item><item><title>2018年度(第51回)照明学会全国大会</title><link>https://eiichiromomma.github.io/2018/09/12/2018%E5%B9%B4%E5%BA%A6%E7%AC%AC51%E5%9B%9E%E7%85%A7%E6%98%8E%E5%AD%A6%E4%BC%9A%E5%85%A8%E5%9B%BD%E5%A4%A7%E4%BC%9A/</link><description>&lt;p&gt;M2程君とM1中澤君が神戸大学で発表してきました。神戸といえば牛。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/SDIM0940.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/image-4.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/image-2-2.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 12 Sep 2018 18:53:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-09-12:/2018/09/12/2018年度第51回照明学会全国大会/</guid><category>News</category></item><item><title>研究室旅行</title><link>https://eiichiromomma.github.io/2018/09/03/%E7%A0%94%E7%A9%B6%E5%AE%A4%E6%97%85%E8%A1%8C/</link><description>&lt;p&gt;ワインと肉の旅行でした。晴れて良かった。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/DSC00171.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/DSC00172.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/09/DSC00177.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 03 Sep 2018 18:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-09-03:/2018/09/03/研究室旅行/</guid><category>News</category></item><item><title>Roomba</title><link>https://eiichiromomma.github.io/2018/08/10/roomba/</link><description>&lt;p&gt;来ました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0613-e1533892095842.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 10 Aug 2018 18:08:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-08-10:/2018/08/10/roomba/</guid><category>News</category></item><item><title>引越しほぼ完了</title><link>https://eiichiromomma.github.io/2018/08/02/%E5%BC%95%E8%B6%8A%E3%81%97%E3%81%BB%E3%81%BC%E5%AE%8C%E4%BA%86/</link><description>&lt;p&gt;ダンボール20箱以上持ち込んだ書籍ですが、新規に設置した本棚にほぼぴったり納まりました。これで引越しも一段落。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0583.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;という訳で引越し祝となりました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0584.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0585.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0586.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 02 Aug 2018 23:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-08-02:/2018/08/02/引越しほぼ完了/</guid><category>News</category></item><item><title>電気学会 知覚情報/次世代産業システム合同研究会(広島工業大学)</title><link>https://eiichiromomma.github.io/2018/07/30/%E9%9B%BB%E6%B0%97%E5%AD%A6%E4%BC%9A-%E7%9F%A5%E8%A6%9A%E6%83%85%E5%A0%B1%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%94%A3%E6%A5%AD%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E5%90%88%E5%90%8C%E7%A0%94%E7%A9%B6%E4%BC%9A%E5%BA%83%E5%B3%B6%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%AD%A6/</link><description>&lt;p&gt;M2天野君、M1木鉛君、中島君と研究会に行ってきました。&lt;/p&gt;
+&lt;p&gt;広島ということでお好み焼きも堪能しました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0571.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;ちゃんと発表も。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0575.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0576.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/08/IMG_0577.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 30 Jul 2018 22:51:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-07-30:/2018/07/30/電気学会-知覚情報次世代産業システム合同研究会広島工業大学/</guid><category>News</category></item><item><title>MESH</title><link>https://eiichiromomma.github.io/2018/07/20/mesh/</link><description>&lt;p&gt;タワー・スコラでの研究室在室状況をMESH+Slack(+IFTTT+iruca)で確認できるようにしました。グラフィカルなプログラミングで，動きタグの倒し方で在室状況，明かりタグで部屋の照明状況を常時Slackで確認できます。写真には無いけどボタンタグで呼び鈴機能も追加。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/07/IMG_0529.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 20 Jul 2018 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-07-20:/2018/07/20/mesh/</guid><category>ゼミ</category></item><item><title>デモ大会2と移転準備</title><link>https://eiichiromomma.github.io/2018/07/12/%E3%83%87%E3%83%A2%E5%A4%A7%E4%BC%9A2%E3%81%A8%E7%A7%BB%E8%BB%A2%E6%BA%96%E5%82%99/</link><description>&lt;p&gt;デモ大会その2と，タワー・スコラ移転準備をしたので，そのまま酒類のストック減らしでピザをとっての飲み会です。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/07/DSC00132.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/07/DSC00140.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/07/DSC00155.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 12 Jul 2018 19:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-07-12:/2018/07/12/デモ大会2と移転準備/</guid><category>ゼミ</category></item><item><title>Turtlebot3</title><link>https://eiichiromomma.github.io/2018/06/21/turtlebot3/</link><description>&lt;p&gt;ROSやSLAM関係が面白いのでTurtlebot3を入手しました&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/06/IMG_0469.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 21 Jun 2018 17:34:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-06-21:/2018/06/21/turtlebot3/</guid><category>ゼミ</category></item><item><title>デモ大会</title><link>https://eiichiromomma.github.io/2018/06/07/%E3%83%87%E3%83%A2%E5%A4%A7%E4%BC%9A/</link><description>&lt;p&gt;一人20分と長めの持ち時間で各研究テーマにちなんだデモということで，SLAMやAR等をやって貰いました。ただのプレゼンとは違う面白さがあります。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/06/DSC00125.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 07 Jun 2018 17:29:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-06-07:/2018/06/07/デモ大会/</guid><category>ゼミ</category></item><item><title>自己紹介LT飲み会2018-5</title><link>https://eiichiromomma.github.io/2018/05/12/%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A2018-5/</link><description>&lt;p&gt;恒例の自己紹介LT飲み会を開催しました。食事と酒が進んだところで自己紹介Lightning Talk(数分のプレゼン)をやって貰っています。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/05/DSC00082.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;今年も面白いメンバーが揃いました。今回は全員揃わなかったのでまた開催します。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/05/DSC00083.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/05/DSC00087.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 12 May 2018 21:17:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-05-12:/2018/05/12/自己紹介lt飲み会2018-5/</guid><category>ゼミ</category></item><item><title>新しい研究室</title><link>https://eiichiromomma.github.io/2018/04/20/%E6%96%B0%E3%81%97%E3%81%84%E7%A0%94%E7%A9%B6%E5%AE%A4/</link><description>&lt;p&gt;今日は内覧でした。↓こんな感じの景色です。&lt;/p&gt;
+&lt;p&gt;[cardboard id="636"]&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 20 Apr 2018 20:26:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-04-20:/2018/04/20/新しい研究室/</guid><category>ゼミ</category></item><item><title>卒業</title><link>https://eiichiromomma.github.io/2018/03/25/%E5%8D%92%E6%A5%AD/</link><description>&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/04/DSC00063.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;更新遅くなりましたが，M2が3名，B4が7名巣立って行きました(うち3名は進学)。いつでも遊びに来て下さい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2018/04/DSC00063.jpg"&gt;[cardboard id="633"]&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 25 Mar 2018 20:44:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-03-25:/2018/03/25/卒業/</guid><category>ゼミ</category></item><item><title>ピザ祭</title><link>https://eiichiromomma.github.io/2018/03/12/%E3%83%94%E3%82%B6%E7%A5%AD/</link><description>&lt;p&gt;照明学会東京支部の技術セミナーでした。参加したメンバーでピザ祭。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/03/DSC00027.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 12 Mar 2018 22:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-03-12:/2018/03/12/ピザ祭/</guid><category>News</category></item><item><title>卒研発表会2018</title><link>https://eiichiromomma.github.io/2018/02/27/%E5%8D%92%E7%A0%94%E7%99%BA%E8%A1%A8%E4%BC%9A2018/</link><description>&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/03/IMG_0210-2-e1519909038477.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/03/IMG_0211-e1519909018807.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;今年は7名の発表でした。恒例の投票の結果，進学予定の3名が1, 2, 3フィニッシュでした。副賞はステーキと大トロ・中トロ・赤身の高級寿司。来年のメンバーも頑張りましょう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 27 Feb 2018 21:54:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-02-27:/2018/02/27/卒研発表会2018/</guid><category>ゼミ</category></item><item><title>卒研報告会</title><link>https://eiichiromomma.github.io/2018/01/18/%E5%8D%92%E7%A0%94%E5%A0%B1%E5%91%8A%E4%BC%9A/</link><description>&lt;p&gt;一昨日にB3の自己紹介LT兼新年会をやったのですが撮り忘れました。&lt;/p&gt;
+&lt;p&gt;今日はB4の報告会です。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/01/IMG_0138-e1516285943491.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;無限cheezaの筈が全部食われました&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 18 Jan 2018 23:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2018-01-18:/2018/01/18/卒研報告会/</guid><category>ゼミ</category></item><item><title>Micro-CAPの意外(?)な使い方</title><link>https://eiichiromomma.github.io/2017/12/28/micro-cap%E3%81%AE%E6%84%8F%E5%A4%96%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9/</link><description>&lt;p&gt;4年次設置の電子回路CADで使っているMicro-CAPですが，他のSPICE系回路シミュレータには(たぶん)無いDynamic AC解析機能があります。
+&lt;img alt="None" class="alignnone size-full wp-image-604" height="641" src="https://eiichiromomma.github.io/images/uploads/2017/12/78a2175f380937da70f79e81cf54fca5.png" width="661"&gt;&lt;/p&gt;
+&lt;p&gt;こんな感じです。簡単に言うと電気回路理論の問題が解けます。&lt;/p&gt;
+&lt;p&gt;青い四角形が複素電流で最初の数字が大きさ，カンマの後の数字が偏角です。これは相互インダクタンスの回路で下がT型等価回路へ変換した回路で，同じ枝電流になっています。で，ピンクの楕円の方が複素電圧です。グランドの位置を変えているのは節点電圧法で解いた場合の電位を出すためです。電圧と電流は直角座標系での表示も出来ます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;電源はVoltage SourceのSineを使いAC解析の方に実効値を入れて初期位相はdegree&lt;/li&gt;
+&lt;li&gt;計算が楽なのでω=1000として扱う&lt;ul&gt;
+&lt;li&gt;Lの値はインピーダンス表記から1/1000&lt;/li&gt;
+&lt;li&gt;Cの値はインピーダンス表記の逆数の1/1000&lt;/li&gt;
+&lt;li&gt;Analysis-Dynamic ACで出てくるダイヤログで周波数を1000/6.28&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;相互インダクタンスはAnalog Primitives-Passive ComponentsのKを使う(磁気結合)&lt;ul&gt;
+&lt;li&gt;k=M/√(L1・L2)でkを決める&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という感じで演習の解答の確認にも使ってます。&lt;/p&gt;
+&lt;p&gt;ちなみにMicro-CAP 11は&lt;a href="http://www.spectrum-soft.com/demoform.shtm"&gt;評価版&lt;/a&gt;を制限付きですが使えます。日本語のマニュアルとUIが欲しい人はCQ出版のMicro-CAP 9を買いましょう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 28 Dec 2017 19:29:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-12-28:/2017/12/28/micro-capの意外な使い方/</guid><category>講義</category></item><item><title>Oculus</title><link>https://eiichiromomma.github.io/2017/12/15/oculus/</link><description>&lt;p&gt;新しいやつが来ました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2018/01/IMG_0047-e1516285743501.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;新しい研究室で全員これ被って仮想空間を広く使うのも悪くない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 15 Dec 2017 13:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-12-15:/2017/12/15/oculus/</guid><category>News</category></item><item><title>ドローン作業中</title><link>https://eiichiromomma.github.io/2017/12/09/%E3%83%89%E3%83%AD%E3%83%BC%E3%83%B3%E4%BD%9C%E6%A5%AD%E4%B8%AD/</link><description>&lt;p&gt;&lt;img alt="None" class="alignnone size-full wp-image-609" height="480" src="https://eiichiromomma.github.io/images/uploads/2018/01/Mambo_2017-12-09T0950530900_A93A3A.jpg" width="640"&gt;&lt;/p&gt;
+&lt;p&gt;この後プロペラ破損&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 09 Dec 2017 13:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-12-09:/2017/12/09/ドローン作業中/</guid><category>News</category></item><item><title>受賞</title><link>https://eiichiromomma.github.io/2017/12/05/%E5%8F%97%E8%B3%9E/</link><description>&lt;p&gt;共同研究をしている本学歯学部の古市先生が「光学印象機器の3Dデータを活用した窩洞形成評価システムの研究．」と題した発表で，第10回 日本総合歯科学会 総会・学術大会で優秀口演賞を受賞されました。おめでとうございます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 05 Dec 2017 21:21:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-12-05:/2017/12/05/受賞/</guid><category>News</category></item><item><title>PCLのサンプル</title><link>https://eiichiromomma.github.io/2017/10/24/pcl%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB/</link><description>&lt;p&gt;講義でも紹介したPoint Cloud Libraryのサンプル置き場です。PCL, CMake, Qtのある環境が必要です。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/eiichiromomma/pcl_samples"&gt;https://github.com/eiichiromomma/pcl_samples&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 24 Oct 2017 22:24:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-10-24:/2017/10/24/pclのサンプル/</guid><category>講義</category></item><item><title>研究室見学の受付時間について2017</title><link>https://eiichiromomma.github.io/2017/09/21/%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AE%E5%8F%97%E4%BB%98%E6%99%82%E9%96%93%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A62017/</link><description>&lt;p&gt;仮配属の季節になりました。下記が研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;9/23(土) 15:30-17:00&lt;/li&gt;
+&lt;li&gt;9/25(月) 15:30-17:00&lt;/li&gt;
+&lt;li&gt;9/27(水) 16:00-17:30&lt;/li&gt;
+&lt;li&gt;9/30(土) [16:15]{style="color: #ff0000;"}-17:00&lt;/li&gt;
+&lt;li&gt;10/5(木) 15:30-17:00&lt;/li&gt;
+&lt;li&gt;10/6(金) 16:30-18 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 21 Sep 2017 09:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-09-21:/2017/09/21/研究室見学の受付時間について2017/</guid><category>News</category></item><item><title>電気学会 知覚情報 次世代産業システム 合同研究会</title><link>https://eiichiromomma.github.io/2017/09/02/%E9%9B%BB%E6%B0%97%E5%AD%A6%E4%BC%9A-%E7%9F%A5%E8%A6%9A%E6%83%85%E5%A0%B1-%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%94%A3%E6%A5%AD%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0-%E5%90%88%E5%90%8C%E7%A0%94%E7%A9%B6%E4%BC%9A/</link><description>&lt;p&gt;&lt;a href="https://workshop.iee.or.jp/sbtk/cgi-bin/sbtk-showprogram.cgi?workshopid=SBW00004D74"&gt;電気学会の研究会&lt;/a&gt;に参加してきました。会場の千歳科学技術大学はうちの船橋キャンパスどころではない広大な敷地で，大自然に囲まれた環境でした。(雪で閉じ込められたこともあるとか)&lt;/p&gt;
+&lt;p&gt;今回はM2吉瀬君，M1天野君(今回デビュー戦)の発表がありました。思ったより落ち着いて発表できていたかと思います。私も発表+座長でしんどかったです。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/IMG_0756.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/IMG_0757.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/IMG_0758.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/IMG_0759.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;美味しいビールを飲んだ翌日は，&lt;a href="https://www.chitose.ac.jp/~h-aoki/"&gt;青木研&lt;/a&gt;の見学会でした。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/IMG_0761.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;泳ぐ天野君&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 02 Sep 2017 23:22:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-09-02:/2017/09/02/電気学会-知覚情報-次世代産業システム-合同研究会/</guid><category>News</category></item><item><title>中間報告+自己紹介LT飲み会</title><link>https://eiichiromomma.github.io/2017/08/08/%E4%B8%AD%E9%96%93%E5%A0%B1%E5%91%8A%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;盆前に中間報告+自己紹介LT飲み会開催です。これで全員揃ったかなというところで10月にまた新メンバーが来そうですね。&lt;/p&gt;
+&lt;p&gt;1名遅刻を待ったので，結構飲んでからスタートとなり面白い報告会でした。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/CIMG2755.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/CIMG2756.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/09/CIMG2766.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 08 Aug 2017 23:21:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-08-08:/2017/08/08/中間報告自己紹介lt飲み会/</guid><category>ゼミ</category></item><item><title>学部連携ポスターセッション</title><link>https://eiichiromomma.github.io/2017/07/22/%E5%AD%A6%E9%83%A8%E9%80%A3%E6%90%BA%E3%83%9D%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3/</link><description>&lt;p&gt;歯学部との共同研究の発表があり、優秀ポスター賞を共著の村山先生が受賞されました。皆も頑張って旨いもの食べましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/07/IMG_0673.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 22 Jul 2017 19:54:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-07-22:/2017/07/22/学部連携ポスターセッション/</guid><category>News</category></item><item><title>イベント参加者で飲み会</title><link>https://eiichiromomma.github.io/2017/06/17/%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%8F%82%E5%8A%A0%E8%80%85%E3%81%A7%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;公開イベントに参加したメンバーで軽く打上げ。。。の筈がいつもの通りでした。食事はイベント前に食べたのでつまみは軽め。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/CIMG2595.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 17 Jun 2017 17:57:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-06-17:/2017/06/17/イベント参加者で飲み会/</guid><category>ゼミ</category></item><item><title>輪講その2</title><link>https://eiichiromomma.github.io/2017/06/16/%E8%BC%AA%E8%AC%9B%E3%81%9D%E3%81%AE2/</link><description>&lt;p&gt;今回の輪講は「やってみた」系です。決められた時間内にデモをやるのは結構難しいので良い経験かと思います。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/image-1.jpeg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/Image-uploaded-from-iOS.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/image.jpeg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 16 Jun 2017 17:51:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-06-16:/2017/06/16/輪講その2/</guid><category>ゼミ</category></item><item><title>授業評価</title><link>https://eiichiromomma.github.io/2017/05/22/%E6%8E%88%E6%A5%AD%E8%A9%95%E4%BE%A1/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2017/05/20170522105823.pdf"&gt;埼玉大での「プログラミング演習」の授業評価&lt;/a&gt;が送られてきました。&lt;/p&gt;
+&lt;p&gt;自由記述で「難しかった」が3件、「説明不足」が2件。内容に関する高評価が3件。回答が62/86とやや少なかったのが残念ですが、遠慮無く書いてくれとお願いしたり、ダメな授業に対する効果的な悪評価の付け方を指南した割には、まずまずの評価といった所でしょうか。今後のプログラミングの機会に役立ってくれると嬉しいです。&lt;/p&gt;
+&lt;p&gt;そういえばサーバ移転のゴタゴタで電気回路の評価を載せ忘れてましたね。今度載せます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 22 May 2017 18:29:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-05-22:/2017/05/22/授業評価/</guid><category>講義</category></item><item><title>輪講その1</title><link>https://eiichiromomma.github.io/2017/05/19/%E8%BC%AA%E8%AC%9B%E3%81%9D%E3%81%AE1/</link><description>&lt;p&gt;ゼミで輪講をやりました。今回は調査中心です。プレゼンテーションI, IIをやったせいか皆プレゼンは上手いです。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/CIMG2574.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 19 May 2017 17:46:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-05-19:/2017/05/19/輪講その1/</guid><category>ゼミ</category></item><item><title>Openpose</title><link>https://eiichiromomma.github.io/2017/05/05/openpose/</link><description>&lt;p&gt;前の投稿の&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/CMU-Perceptual-Computing-Lab/caffe_rtpose"&gt;https://github.com/CMU-Perceptual-Computing-Lab/caffe_rtpose&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;がPython, MATLABにwrapされたのが&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation"&gt;https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;でC++の方は&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose"&gt;https://github.com/CMU-Perceptual-Computing-Lab/openpose&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;として正式公開?&lt;/p&gt;
+&lt;p&gt;Body + Hands + Face Estimation、Body + Face Estimation、Body + Handsも面白そう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 05 May 2017 15:54:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-05-05:/2017/05/05/openpose/</guid><category>News</category></item><item><title>例のアレ</title><link>https://eiichiromomma.github.io/2017/05/01/%E4%BE%8B%E3%81%AE%E3%82%A2%E3%83%AC/</link><description>&lt;p&gt;作業してる裏で3月の研究会で見て面白そうだったアレを動かしてみました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/05/RT01.png" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/05/RT02.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;たまに誰も居ない筈のところの地縛霊に応答するけど、チューニングせずに動かしたせいかは不明。取り敢えず楽しい。Web Camでも確認。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 01 May 2017 19:59:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-05-01:/2017/05/01/例のアレ/</guid><category>News</category></item><item><title>サーバーを入れ替えました</title><link>https://eiichiromomma.github.io/2017/04/27/%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E5%85%A5%E3%82%8C%E6%9B%BF%E3%81%88%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;遊びで入れたMac OS X Serverでズルズルと続けてましたが、飽きたのでLinuxでサーバーを立て直しました。&lt;/p&gt;
+&lt;p&gt;WordpressもMigrationツールのお陰でいまのところトラブル無く移行できたかも?&lt;/p&gt;
+&lt;p&gt;研究室の飲み会の投稿は消えてしまったので今度写真付きでアップします。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 27 Apr 2017 19:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-04-27:/2017/04/27/サーバーを入れ替えました/</guid><category>ゼミ</category></item><item><title>自己紹介LT飲み会2017-4</title><link>https://eiichiromomma.github.io/2017/04/26/%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A2017-4/</link><description>&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/CIMG2492.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;今年度のメンバーでの自己紹介LT飲み会を開催しました。今年は寿司がダメな人もいるのでピザやらピンチョスやらも追加してます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 26 Apr 2017 17:40:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-04-26:/2017/04/26/自己紹介lt飲み会2017-4/</guid><category>ゼミ</category></item><item><title>FacebookとWordpressの連携テスト</title><link>https://eiichiromomma.github.io/2017/04/08/facebook%E3%81%A8wordpress%E3%81%AE%E9%80%A3%E6%90%BA%E3%83%86%E3%82%B9%E3%83%88/</link><description>&lt;p&gt;Wordpress公式のJetpackを使うと良いらしい。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone size-medium wp-image-535" height="200" src="https://eiichiromomma.github.io/images/uploads/2017/04/SDIM0743-300x200.jpg" width="300"&gt;
+&lt;img alt="None" class="alignnone size-medium wp-image-536" height="200" src="https://eiichiromomma.github.io/images/uploads/2017/04/SDIM0745-300x200.jpg" width="300"&gt;
+&lt;img alt="None" class="alignnone size-medium wp-image-537" height="200" src="https://eiichiromomma.github.io/images/uploads/2017/04/SDIM0750-300x200.jpg" width="300"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 08 Apr 2017 23:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-04-08:/2017/04/08/facebookとwordpressの連携テスト/</guid><category>News</category></item><item><title>Conway's Game of Life</title><link>https://eiichiromomma.github.io/2017/02/18/conways-game-of-life/</link><description>&lt;p&gt;9月から今年2月にかけて埼玉大で非常勤をやってきました。プログラミング演習ということでC言語の講義です。&lt;/p&gt;
+&lt;p&gt;使った環境はコマンドラインベースでということで同大演習室に導入済みのcygwinのgccでしたがセキュリティの関係でgdbが使えないという問題もありやや苦労しました。デバッガの話はCode::Blocksでカバーしましたが、デバッガが使えない公式環境になってしまったのは申し訳なかったですね。&lt;/p&gt;
+&lt;p&gt;講義・演習の方はMoodleのOnline Judgeプラグインを活用しました。2.4までしか対応していないプラグインだったものの、三重大の大山先生からパッチを頂きMoodle2.8で無事動作。課題も常時受け入れられるようさくらVPSで環境を立ち上げての運用でした。来年度はうちのプログラミングの授業でも活躍するかも?&lt;/p&gt;
+&lt;p&gt;Online Judgeは&lt;a href="http://judge.u-aizu.ac.jp/onlinejudge/index.jsp?lang=ja"&gt;会津大のAOJ&lt;/a&gt;が有名です。プログラミングの習得にも役立ちます。独学には&lt;a href="https://paiza.jp/works"&gt;paizaラーニング&lt;/a&gt;もお薦めです。こっちは来年度のメンバーに受講して貰っています。&lt;/p&gt;
+&lt;p&gt;で、課題の方はタイトルにも書いたライフゲーム、魔方陣のbrute-force解法、アスキー文字だけのシューティングゲーム、同じくアスキー文字だけのSnakeゲームとしました。雛形を渡してそれを弄るような感じです。OSSや標準以外のライブラリに触れて貰う目的もあり後者はncursesライブラリを使ったプログラミングです。ライフゲームについてはlibpngを使ってのPNG画像出力+imagemagickでのアニメーション化とかもやりました。↓みたいなアニメーションが作れます。&lt;/p&gt;
+&lt;iframe src="https://player.vimeo.com/video/650717726?h=20b12243be" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 18 Feb 2017 10:22:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2017-02-18:/2017/02/18/conways-game-of-life/</guid><category>講義</category></item><item><title>9月~12月</title><link>https://eiichiromomma.github.io/2016/12/06/9%E6%9C%8812%E6%9C%88/</link><description>&lt;p&gt;学会関係やら講義関係やら、あとサーバのSSLの問題で更新を止めていました。写真は上から照明学会全国大会で演奏して頂いた&lt;a href="http://elegantpeoplemusic.web.fc2.com/"&gt;清水雅人GROUP&lt;/a&gt;の皆様、半期の学生さんの歓迎飲み会&amp;amp;自己紹介LT、来年度の研究室メンバーの顔合せ飲み会&amp;amp;自己紹介LTです。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/SDIM0129.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/CIMG2210.jpg" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/CIMG2284.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 06 Dec 2016 20:52:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-12-06:/2016/12/06/9月12月/</guid><category>ゼミ</category></item><item><title>隅田川からの夜景</title><link>https://eiichiromomma.github.io/2016/10/14/%E9%9A%85%E7%94%B0%E5%B7%9D%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%9C%E6%99%AF/</link><description>&lt;p&gt;照明学会東京支部で企画・開催した見学会です。&lt;/p&gt;
+&lt;p&gt;[cardboard id="516"]&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/02/SDIM1008.jpg" width="600"&gt;
+&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/02/SDIM1021.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 14 Oct 2016 20:43:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-10-14:/2016/10/14/隅田川からの夜景/</guid><category>News</category></item><item><title>研究室見学の受付時間について2016</title><link>https://eiichiromomma.github.io/2016/09/20/%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AE%E5%8F%97%E4%BB%98%E6%99%82%E9%96%93%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A62016/</link><description>&lt;p&gt;仮配属の季節になりました。下記が研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。&lt;/p&gt;
+&lt;p&gt;9/24(土) 15:00-17:00&lt;br&gt;
+9/26(月) 15:00-16:30&lt;br&gt;
+9/29(木) 15:00-17:00&lt;br&gt;
+10/1(土) 12:00-13:00, 15:00-17:00&lt;br&gt;
+10/3(月) 15:00-16:30&lt;br&gt;
+10/6(木) 15:00-17:00 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 20 Sep 2016 21:46:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-09-20:/2016/09/20/研究室見学の受付時間について2016/</guid><category>ゼミ</category></item><item><title>おみやげです</title><link>https://eiichiromomma.github.io/2016/09/07/%E3%81%8A%E3%81%BF%E3%82%84%E3%81%92%E3%81%A7%E3%81%99/</link><description>&lt;p&gt;コテコテですがうなぎパイです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/IMG_0328-e1473219725524.jpg"&gt;&lt;img alt="IMG_0328" class="alignnone size-medium wp-image-507" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/09/IMG_0328-e1473219725524-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 07 Sep 2016 12:42:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-09-07:/2016/09/07/おみやげです/</guid><category>ゼミ</category></item><item><title>電気学会研究会</title><link>https://eiichiromomma.github.io/2016/09/05/%E9%9B%BB%E6%B0%97%E5%AD%A6%E4%BC%9A%E7%A0%94%E7%A9%B6%E4%BC%9A/</link><description>&lt;p&gt;電気学会知覚情報・次世代産業システム合同研究会の座長で静岡大学浜松キャンパスにお邪魔してきました。&lt;/p&gt;
+&lt;p&gt;そして，M1吉瀬君のデビュー戦でもありました。緊張してスッ飛ばしてましたが，質疑はかなり頑張ってくれたかと思います。頑張った人には。。。ということで創業明治40年のうなぎ「あつみ」で打ち上げ。これだけのうなぎは滅多に食べられません。学生のうちからこういう味を知っておくことが大事です。(うちのモットー)&lt;/p&gt;
+&lt;p&gt;次回は3/27, 28に宮崎大学で開催です。地鶏に宮崎牛と旨いものいっぱいなので研究頑張りましょう。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322.jpg"&gt;&lt;img alt="IMG_0322" class="alignnone size-medium wp-image-502" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320.jpg"&gt;&lt;img alt="IMG_0320" class="alignnone size-medium wp-image-503" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 05 Sep 2016 21:52:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-09-05:/2016/09/05/電気学会研究会/</guid><category>ゼミ</category></item><item><title>研修旅行2016</title><link>https://eiichiromomma.github.io/2016/08/24/%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C2016/</link><description>&lt;p&gt;今年は日帰り研修旅行ということで，サッポロビール千葉工場の見学と，ビール園でジンギスカン食べ放題やってきました。&lt;/p&gt;
+&lt;p&gt;工場見学では思った以上にガッツリとビールを頂きましたが，その後も怯まず羊をひたすら食す会となりました。&lt;/p&gt;
+&lt;p&gt;工場見学はなかなか面白かったので次のネタを探したいところです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157.jpg"&gt;&lt;img alt="CIMG2157" class="alignnone size-medium wp-image-498" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168.jpg"&gt;&lt;img alt="CIMG2168" class="alignnone size-medium wp-image-499" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 24 Aug 2016 21:41:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-08-24:/2016/08/24/研修旅行2016/</guid><category>ゼミ</category></item><item><title>HTC Vive来ました</title><link>https://eiichiromomma.github.io/2016/07/20/htc-vive%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;新たなHMDのHTC Vive来ました。早速セットアップして貰って皆で試しているところです。思ったより視野が狭いかなと。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131.jpg"&gt;&lt;img alt="CIMG2131" class="alignnone size-medium wp-image-495" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;傍から見るとかなりおマヌーです。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 20 Jul 2016 21:36:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-07-20:/2016/07/20/htc-vive来ました/</guid><category>News</category></item><item><title>ゼミ&amp;自己紹介Lightning Talk&amp;飲み会</title><link>https://eiichiromomma.github.io/2016/07/07/%E3%82%BC%E3%83%9F%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blightning-talk%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;真面目にゼミ発表が終わったところで全員集合するまでの飲み会&amp;amp;自己紹介Lightning Talk大会も2回目で達成です。写真は散々食い散らかした後の酷い有様。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2077.jpg"&gt;&lt;img alt="CIMG2077" class="alignnone size-medium wp-image-491" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2077-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2101.jpg"&gt;&lt;img alt="CIMG2101" class="alignnone size-medium wp-image-492" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2101-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 07 Jul 2016 21:31:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-07-07:/2016/07/07/ゼミ自己紹介lightning-talk飲み会/</guid><category>ゼミ</category></item><item><title>SSII2016に参加してきました</title><link>https://eiichiromomma.github.io/2016/06/14/ssii2016%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;今年もSSII2016に運営として参加してきました。これだけチュートリアルの充実している学会も国内では珍しいかと思います。資料も一部公開されているので参照して下さい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://confit.atlas.jp/guide/event/ssii2016/static/tutorial"&gt;https://confit.atlas.jp/guide/event/ssii2016/static/tutorial&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 14 Jun 2016 14:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-06-14:/2016/06/14/ssii2016に参加してきました/</guid><category>News</category></item><item><title>自己紹介LT飲み会2016-4</title><link>https://eiichiromomma.github.io/2016/04/27/%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A2016-4/</link><description>&lt;p&gt;サーバのトラブル等立て込んでいて更新しそびれてました。&lt;/p&gt;
+&lt;p&gt;今年度のメンバーでの自己紹介LT飲み会です。M2の川野君が就活でお休みでしたのでまた開催します。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/06/CIMG1970.jpg"&gt;&lt;img alt="CIMG1970" class="alignnone size-medium wp-image-481" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/06/CIMG1970-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/06/CIMG1974.jpg"&gt;&lt;img alt="CIMG1974" class="alignnone size-medium wp-image-482" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/06/CIMG1974-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 27 Apr 2016 20:28:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-04-27:/2016/04/27/自己紹介lt飲み会2016-4/</guid><category>ゼミ</category></item><item><title>研究会に参加</title><link>https://eiichiromomma.github.io/2016/03/31/%E7%A0%94%E7%A9%B6%E4%BC%9A%E3%81%AB%E5%8F%82%E5%8A%A0/</link><description>&lt;p&gt;学部4年の木村君，中野君と知覚情報・次世代産業システム合同研究会「画像応用および画像処理一般」に参加して来ました。&lt;/p&gt;
+&lt;p&gt;二人のデビュー戦は口頭25分の長丁場でしたが良い発表だったと思います。活発な質疑となりこれからの課題等も見えてきたかと思います。大学院でも頑張りましょう。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/03/SDIM0508.jpg"&gt;&lt;img alt="SDIM0508" class="alignnone size-medium wp-image-476" height="200" src="https://eiichiromomma.github.io/images/uploads/2016/03/SDIM0508-300x200.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 31 Mar 2016 15:43:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-03-31:/2016/03/31/研究会に参加/</guid><category>News</category></item><item><title>1年間お疲れ様でした</title><link>https://eiichiromomma.github.io/2016/03/25/1%E5%B9%B4%E9%96%93%E3%81%8A%E7%96%B2%E3%82%8C%E6%A7%98%E3%81%A7%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;卒業式から謝恩会まで慌しい一日となりましたが巣立って行きました。いつでも遊びに来て下さい。&lt;/p&gt;
+&lt;p&gt;[sphere 473 autoload]&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 25 Mar 2016 23:59:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-03-25:/2016/03/25/1年間お疲れ様でした/</guid><category>ゼミ</category></item><item><title>お疲れ様でした</title><link>https://eiichiromomma.github.io/2016/03/01/%E3%81%8A%E7%96%B2%E3%82%8C%E6%A7%98%E3%81%A7%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;今年度の総まとめでした。&lt;/p&gt;
+&lt;p&gt;写真は投票で選ばれたBest Paperの木村君、小林君(副賞は特上寿司)。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/03/CIMG1938-1.jpg"&gt;&lt;img alt="CIMG1938" class="alignnone size-medium wp-image-467" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/03/CIMG1938-1-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 01 Mar 2016 20:41:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-03-01:/2016/03/01/お疲れ様でした/</guid><category>ゼミ</category></item><item><title>本が来ました</title><link>https://eiichiromomma.github.io/2016/02/04/%E6%9C%AC%E3%81%8C%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;Deep Learningや機械学習関係，あとPythonが主ですね。Gems JP 2015もやっと買いました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/02/IMG_0114.jpg"&gt;&lt;img alt="IMG_0114" class="alignnone size-medium wp-image-461" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/02/IMG_0114-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 04 Feb 2016 21:45:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-02-04:/2016/02/04/本が来ました/</guid><category>ゼミ</category></item><item><title>授業アンケート結果</title><link>https://eiichiromomma.github.io/2016/01/21/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E7%B5%90%E6%9E%9C/</link><description>&lt;p&gt;今年度の「電気回路I及び演習」の授業アンケート結果がほぼ出ました(回答率95%)。回答形式，質問が変わったので単純に比較はできませんが去年より若干下がった項目もありますね。&lt;/p&gt;
+&lt;p&gt;今年はスライドの縮小版を試しに配布して講義したので講義の説明が速いという指摘はかなり減りましたが，自由記述欄に「演習の解説が速い」との指摘も。解答のスライドは後でPDFでも配布していますがそれも紙ベースで配布した方が良いのか悩みます。その他は概ね好評で安心しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ.png"&gt;&lt;img alt="2015ImageQ" class="alignnone size-medium wp-image-455" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA.png"&gt;&lt;img alt="2015ImageQA" class="alignnone size-medium wp-image-456" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB.png"&gt;&lt;img alt="2015ImageQB" class="alignnone size-medium wp-image-457" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB-287x300.png" width="287"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 21 Jan 2016 22:09:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-01-21:/2016/01/21/授業アンケート結果/</guid><category>講義</category></item><item><title>GitHub Education</title><link>https://eiichiromomma.github.io/2016/01/12/github-education/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0.png"&gt;&lt;img alt="スクリーンショット 2016-01-12 21.44.48" class="alignnone size-medium wp-image-451" height="128" src="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0-300x128.png" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;GitHub Educationの申請が通りました。これで研究単位でプライベートリポジトリが立てられます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 12 Jan 2016 21:46:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2016-01-12:/2016/01/12/github-education/</guid><category>ゼミ</category></item><item><title>大掃除+納会</title><link>https://eiichiromomma.github.io/2015/12/28/%E5%A4%A7%E6%8E%83%E9%99%A4%E7%B4%8D%E4%BC%9A/</link><description>&lt;p&gt;急遽ですが大掃除で書籍類とカメラ関係の整理をしてもらいました。その後納会です。急な呼び掛けにも関わらず多数参加して貰えました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902.jpg"&gt;&lt;img alt="CIMG1902" class="alignnone size-medium wp-image-445" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901.jpg"&gt;&lt;img alt="CIMG1901" class="alignnone size-medium wp-image-446" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903.jpg"&gt;&lt;img alt="CIMG1903" class="alignnone size-medium wp-image-447" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 28 Dec 2015 17:05:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-12-28:/2015/12/28/大掃除納会/</guid><category>ゼミ</category></item><item><title>お土産2015-12</title><link>https://eiichiromomma.github.io/2015/12/28/%E3%81%8A%E5%9C%9F%E7%94%A32015-12/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/image.jpeg"&gt;&lt;img alt="image" class="alignnone size-medium wp-image-442" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/image-300x225.jpeg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;共同研究先から頂きました差し入れです&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 28 Dec 2015 15:08:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-12-28:/2015/12/28/お土産2015-12/</guid><category>ゼミ</category></item><item><title>仮着手者の自己紹介LT飲み会</title><link>https://eiichiromomma.github.io/2015/12/13/%E4%BB%AE%E7%9D%80%E6%89%8B%E8%80%85%E3%81%AE%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;ちょっと前ですが現3年生メインの仮着手者で本格的な顔合せをしました。恒例の自己紹介Lightning Talk飲み会です。今度のメンバーは飲み過ぎ注意ですね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809.jpg"&gt;&lt;img alt="CIMG1809" class="alignnone size-medium wp-image-437" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849.jpg"&gt;&lt;img alt="CIMG1849" class="alignnone size-medium wp-image-438" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 13 Dec 2015 16:48:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-12-13:/2015/12/13/仮着手者の自己紹介lt飲み会/</guid><category>ゼミ</category></item><item><title>Theta S来ました</title><link>https://eiichiromomma.github.io/2015/11/27/theta-s%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;実験環境の記録にも役立ちそうです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW"&gt;https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 27 Nov 2015 22:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-11-27:/2015/11/27/theta-s来ました/</guid><category>ゼミ</category></item><item><title>仮着手者への連絡です</title><link>https://eiichiromomma.github.io/2015/11/04/%E4%BB%AE%E7%9D%80%E6%89%8B%E8%80%85%E3%81%B8%E3%81%AE%E9%80%A3%E7%B5%A1%E3%81%A7%E3%81%99/</link><description>&lt;p&gt;門馬研に仮着手が決定した者は、11/12(木) 15:30に812室に集合して下さい。面談も行ないますので&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;成績表&lt;/li&gt;
+&lt;li&gt;履修確認表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;を持参して下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 04 Nov 2015 15:19:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-11-04:/2015/11/04/仮着手者への連絡です/</guid><category>ゼミ</category></item><item><title>石井弘允名誉教授が瑞宝小綬章をご受章</title><link>https://eiichiromomma.github.io/2015/11/04/%E7%9F%B3%E4%BA%95%E5%BC%98%E5%85%81%E5%90%8D%E8%AA%89%E6%95%99%E6%8E%88%E3%81%8C%E7%91%9E%E5%AE%9D%E5%B0%8F%E7%B6%AC%E7%AB%A0%E3%82%92%E3%81%94%E5%8F%97%E7%AB%A0/</link><description>&lt;p&gt;平成27年 秋の叙勲にて、師である石井弘允名誉教授が瑞宝小綬章をご受章されました。誠におめでとうございます。&lt;/p&gt;
+&lt;p&gt;(&lt;a href="http://www8.cao.go.jp/shokun/hatsurei/27aki/meibo_jokun/zuiho-12chiba.pdf"&gt;内閣府発表PDF&lt;/a&gt;)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 04 Nov 2015 11:06:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-11-04:/2015/11/04/石井弘允名誉教授が瑞宝小綬章をご受章/</guid><category>News</category></item><item><title>9月以降の研究室見学および質問対応について(変更あり)</title><link>https://eiichiromomma.github.io/2015/08/25/9%E6%9C%88%E4%BB%A5%E9%99%8D%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%8A%E3%82%88%E3%81%B3%E8%B3%AA%E5%95%8F%E5%AF%BE%E5%BF%9C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E5%A4%89%E6%9B%B4%E3%81%82%E3%82%8A/</link><description>&lt;p&gt;9月以降の研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;9/2(水) 16:00-17:00&lt;/li&gt;
+&lt;li&gt;9/7(月) 14:00-15:00&lt;/li&gt;
+&lt;li&gt;~~9/17(木) 15:30-16:30~~&lt;/li&gt;
+&lt;li&gt;9/24(木) 16:30-17:30&lt;/li&gt;
+&lt;li&gt;9/28(月) 15:30-17:00&lt;/li&gt;
+&lt;li&gt;9/29(火) 17:00-18:00&lt;/li&gt;
+&lt;li&gt;9/30(水) 13 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 25 Aug 2015 22:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-08-25:/2015/08/25/9月以降の研究室見学および質問対応について変更あり/</guid><category>News</category></item><item><title>暑気払い</title><link>https://eiichiromomma.github.io/2015/08/25/%E6%9A%91%E6%B0%97%E6%89%95%E3%81%84/</link><description>&lt;p&gt;寒くなっちゃいましたが暑気払いです。ゲーマーが多いのでゲーム談義に花が咲きましたね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/08/CIMG1530.jpg"&gt;&lt;img alt="CIMG1530" class="alignnone size-medium wp-image-416" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/08/CIMG1530-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 25 Aug 2015 20:05:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-08-25:/2015/08/25/暑気払い/</guid><category>ゼミ</category></item><item><title>お土産2015-8</title><link>https://eiichiromomma.github.io/2015/08/19/%E3%81%8A%E5%9C%9F%E7%94%A32015-8/</link><description>&lt;p&gt;岩手大学で喋ってきました。南部せんべい詰め合せです。&lt;/p&gt;
+&lt;p&gt;[caption id="attachment_413" align="alignnone" width="225"]&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/08/IMG_20150819_094235-e1439946668732.jpg"&gt;&lt;img alt="Jpeg" class="size-medium wp-image-413" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/08/IMG_20150819_094235-e1439946668732-225x300.jpg" width="225"&gt;&lt;/a&gt; お土産[/caption]&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 19 Aug 2015 10:11:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-08-19:/2015/08/19/お土産2015-8/</guid><category>ゼミ</category></item><item><title>Pythonソース読み会飲み会2</title><link>https://eiichiromomma.github.io/2015/07/16/python%E3%82%BD%E3%83%BC%E3%82%B9%E8%AA%AD%E3%81%BF%E4%BC%9A%E9%A3%B2%E3%81%BF%E4%BC%9A2/</link><description>&lt;p&gt;第2回目を開催しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150716_203425.jpg"&gt;&lt;img alt="P_20150716_203425" class="alignnone size-medium wp-image-409" height="169" src="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150716_203425-300x169.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 16 Jul 2015 22:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-07-16:/2015/07/16/pythonソース読み会飲み会2/</guid><category>ゼミ</category></item><item><title>Pythonソース読み会飲み会</title><link>https://eiichiromomma.github.io/2015/07/14/python%E3%82%BD%E3%83%BC%E3%82%B9%E8%AA%AD%E3%81%BF%E4%BC%9A%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;Pythonのソースを解説する会を開催しました。&lt;/p&gt;
+&lt;p&gt;結構ちゃんと説明しようとすると上手く出来ないところがあったりしますが，そこは皆で読んで行く感じです。&lt;/p&gt;
+&lt;p&gt;プログラミングは定石が多いので構造のパターンを見付けられればかなり速くソースを読めるようになります。ピザと寿司を食べつつ明後日も頑張りましょう。&lt;/p&gt;
+&lt;p&gt;終ったら定番の飲み会です。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150714_181548.jpg"&gt;&lt;img alt="P_20150714_181548" class="alignnone size-medium wp-image-403" height="169" src="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150714_181548-300x169.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150714_181543.jpg"&gt;&lt;img alt="P_20150714_181543" class="alignnone size-medium wp-image-404" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/07/P_20150714_181543-169x300.jpg" width="169"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 14 Jul 2015 22:57:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-07-14:/2015/07/14/pythonソース読み会飲み会/</guid><category>ゼミ</category></item><item><title>7月と8月前半の研究室見学について</title><link>https://eiichiromomma.github.io/2015/07/07/7%E6%9C%88%E3%81%A88%E6%9C%88%E5%89%8D%E5%8D%8A%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;p&gt;7月と8月前半の研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;7/13(月) 15:00-16:00&lt;/li&gt;
+&lt;li&gt;7/16(木) 15:30-16:30&lt;/li&gt;
+&lt;li&gt;7/18(土) 15:00-16:00&lt;/li&gt;
+&lt;li&gt;7/20(月) 15:00-16:00&lt;/li&gt;
+&lt;li&gt;7/29(水) 9:30-10:30&lt;/li&gt;
+&lt;li&gt;8/4(火) 13:00-14:00&lt;/li&gt;
+&lt;li&gt;8/6(木) 13 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 07 Jul 2015 18:49:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-07-07:/2015/07/07/7月と8月前半の研究室見学について/</guid><category>News</category></item><item><title>お土産2015-6(先着18名)</title><link>https://eiichiromomma.github.io/2015/06/26/%E3%81%8A%E5%9C%9F%E7%94%A32015-6%E5%85%88%E7%9D%8018%E5%90%8D/</link><description>&lt;p&gt;仙台に行ってませんが仙台土産です。&lt;/p&gt;
+&lt;p&gt;今日はバタバタしてて持って行くのをすっかり忘れてました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/06/P_20150626_224847.jpg"&gt;&lt;img alt="P_20150626_224847" class="alignnone size-medium wp-image-396" height="169" src="https://eiichiromomma.github.io/images/uploads/2015/06/P_20150626_224847-300x169.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 26 Jun 2015 22:58:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-06-26:/2015/06/26/お土産2015-6先着18名/</guid><category>ゼミ</category></item><item><title>輪講2015-5-23</title><link>https://eiichiromomma.github.io/2015/05/23/%E8%BC%AA%E8%AC%9B2015-5-23/</link><description>&lt;p&gt;輪講として同じテーマを4分版(先週)と8分版(今週)で発表してもらいました。4分版で発表できた人は8分版でより良くなっていたかと思います。&lt;/p&gt;
+&lt;p&gt;流石に8分版は長いので発表の後は打ち上げです。余興として参加者による投票で最優秀プレゼンテータ(副賞: 特選寿司)を決めました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/05/CIMG1485.jpg"&gt;&lt;img alt="CIMG1485" class="alignnone size-medium wp-image-391" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/05/CIMG1485-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 23 May 2015 11:39:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-05-23:/2015/05/23/輪講2015-5-23/</guid><category>ゼミ</category></item><item><title>お土産(先着?名)</title><link>https://eiichiromomma.github.io/2015/05/13/%E3%81%8A%E5%9C%9F%E7%94%A3%E5%85%88%E7%9D%80%E5%90%8D/</link><description>&lt;p&gt;お土産頂きましたが院生が大分食い散らかしたので残り僅かです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/05/IMG_20150513_190508.jpg"&gt;&lt;img alt="IMG_20150513_190508" class="alignnone size-medium wp-image-386" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/05/IMG_20150513_190508-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 13 May 2015 20:14:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-05-13:/2015/05/13/お土産先着名/</guid><category>News</category></item><item><title>お土産2015-5(先着18名)</title><link>https://eiichiromomma.github.io/2015/05/10/%E3%81%8A%E5%9C%9F%E7%94%A32015-5%E5%85%88%E7%9D%8018%E5%90%8D/</link><description>&lt;p&gt;金曜にお土産頂きました。もう半分くらい無くなってましたのでお早めに。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/05/P_20150508_185828-1-e1431261212952.jpg"&gt;&lt;img alt="P_20150508_185828 (1)" class="alignnone size-medium wp-image-383" height="221" src="https://eiichiromomma.github.io/images/uploads/2015/05/P_20150508_185828-1-e1431261191635-300x221.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 10 May 2015 21:34:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-05-10:/2015/05/10/お土産2015-5先着18名/</guid><category>News</category></item><item><title>顔合わせ会</title><link>https://eiichiromomma.github.io/2015/04/22/%E9%A1%94%E5%90%88%E3%82%8F%E3%81%9B%E4%BC%9A/</link><description>&lt;p&gt;年度も明けたので新メンバーの顔合せ会を開きました。寿司+酒+自己紹介Lightning Talkで，気が付いたら21時過ぎになってました。1年間一緒に頑張りましょう。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/CIMG1432.jpg"&gt;&lt;img alt="CIMG1432" class="alignnone wp-image-374 size-medium" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/04/CIMG1432-e1429706115840-289x300.jpg" width="289"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5956.jpg"&gt;&lt;img alt="IMG_5956" class="alignnone size-medium wp-image-375" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5956-300x200.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5966.jpg"&gt;&lt;img alt="IMG_5966" class="alignnone size-medium wp-image-376" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5966-300x200.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5972.jpg"&gt;&lt;img alt="IMG_5972" class="alignnone size-medium wp-image-377" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5972-300x200.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5989.jpg"&gt;&lt;img alt="IMG_5989" class="alignnone size-medium wp-image-378" height="190" src="https://eiichiromomma.github.io/images/uploads/2015/04/IMG_5989-300x190.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 22 Apr 2015 21:36:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-04-22:/2015/04/22/顔合わせ会/</guid><category>ゼミ</category></item><item><title>USB充電器</title><link>https://eiichiromomma.github.io/2015/04/10/usb%E5%85%85%E9%9B%BB%E5%99%A8/</link><description>&lt;p&gt;6口60W充電できるUSB充電器を3台買っておきました。1台据え置きで2台可搬な状態です。仲良く使って下さい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/P_20150410_121210.jpg"&gt;&lt;img alt="P_20150410_121210" class="alignnone size-medium wp-image-370" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/04/P_20150410_121210-253x300.jpg" width="253"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 10 Apr 2015 17:56:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-04-10:/2015/04/10/usb充電器/</guid><category>ゼミ</category></item><item><title>機材投入</title><link>https://eiichiromomma.github.io/2015/04/07/%E6%A9%9F%E6%9D%90%E6%8A%95%E5%85%A5/</link><description>&lt;p&gt;年度も明けたので812の右の部屋へASUS RT-AC68Uをリピータモードで増強しました。電波が怪しかった5G環境がかなり快適です。&lt;/p&gt;
+&lt;p&gt;USBプリンタのように使えるテプラも購入しときました。これで連射できます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 07 Apr 2015 22:49:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-04-07:/2015/04/07/機材投入/</guid><category>ゼミ</category></item><item><title>電卓</title><link>https://eiichiromomma.github.io/2015/04/04/%E9%9B%BB%E5%8D%93/</link><description>&lt;p&gt;新年度になりました。新年度と言えば新入生に配られる関数電卓ですが，SHARPからCASIOに変わりました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4年生: SHARP EL-520F&lt;/li&gt;
+&lt;li&gt;3年生: SHARP EL-520J&lt;/li&gt;
+&lt;li&gt;2年生: SHARP EL-520J&lt;/li&gt;
+&lt;li&gt;1年生: CASIO fx-915ES&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;スタインメッツ交流理論の要である複素数の計算にはEL-520Jがかなり良い出来だったのですが仕方ありません。&lt;/p&gt;
+&lt;p&gt;fx-915ESはと言うと直角座標形式とスタインメッツ形式の切替えが[SHIFT]-[SETUP]-[↓]-[3]-[1 or 2]と面倒です(一時的な変換なら[SHIFT]-[2]-[3 or 4]でも出来ますが)。degree, radianの切替えも▶DRGだと変換だけです。良い点としてはナチュラルディスプレイ(分数とかルートが見た目通りになる)で複素数が扱えるところかなと。SHARPと違って名前の登録が出来ないので1年生には名前シールを今度配る予定です。&lt;/p&gt;
+&lt;p&gt;という訳でTAの方々は大変ですが受け持ち学年の関数電卓をマスターしておきましょう。&lt;/p&gt;
+&lt;p&gt;関係ないですがスタインメッツは結構ゴツいヒゲおっさんです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/04/Charles_Proteus_Steinmetz.jpg"&gt;&lt;img alt="Charles_Proteus_Steinmetz" class="alignnone size-medium wp-image-364" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/04/Charles_Proteus_Steinmetz-219x300.jpg" width="219"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(Source: Wikipedia)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 04 Apr 2015 22:08:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-04-04:/2015/04/04/電卓/</guid><category>講義</category></item><item><title>お土産2015-3(先着18名)</title><link>https://eiichiromomma.github.io/2015/03/28/%E3%81%8A%E5%9C%9F%E7%94%A32015-3%E5%85%88%E7%9D%8018%E5%90%8D/</link><description>&lt;p&gt;長崎県立大学シーボルト校で開催された電気学会 知覚情報・次世代産業システム合同研究会に参加・発表して来ました。B4(M0)の学生さんも発表していましたので新B4の皆さんも来年度末には学会参加できるよう頑張りましょう。&lt;/p&gt;
+&lt;p&gt;頑張れば美味しい食べ物とお酒にありつけます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/P_20150328_105110.jpg"&gt;&lt;img alt="P_20150328_105110" class="alignnone size-medium wp-image-359" height="169" src="https://eiichiromomma.github.io/images/uploads/2015/03/P_20150328_105110-300x169.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/P_20150328_105204.jpg"&gt;&lt;img alt="P_20150328_105204" class="alignnone size-medium wp-image-360" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/03/P_20150328_105204-169x300.jpg" width="169"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 28 Mar 2015 11:02:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-03-28:/2015/03/28/お土産2015-3先着18名/</guid><category>ゼミ</category></item><item><title>卒業式</title><link>https://eiichiromomma.github.io/2015/03/25/%E5%8D%92%E6%A5%AD%E5%BC%8F/</link><description>&lt;p&gt;毎年恒例ですが本日が卒業式でした。&lt;/p&gt;
+&lt;p&gt;無事全員進路も決まっての卒業，おめでとうございます。後輩にご馳走しに来て下さい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1391.jpg"&gt;&lt;img alt="CIMG1391" class="alignnone size-medium wp-image-356" height="251" src="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1391-300x251.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 25 Mar 2015 22:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-03-25:/2015/03/25/卒業式/</guid><category>ゼミ</category></item><item><title>卒業者発表</title><link>https://eiichiromomma.github.io/2015/03/11/%E5%8D%92%E6%A5%AD%E8%80%85%E7%99%BA%E8%A1%A8/</link><description>&lt;p&gt;卒業者が発表されました。(電気事務室前に掲示してあります)&lt;/p&gt;
+&lt;p&gt;門馬研の3月卒業予定者は無事に全員卒業です。おめでとうございます。加えて全員の進路も確定しました。各々の進路で頑張りましょう。&lt;/p&gt;
+&lt;p&gt;写真は先日の打ち上げの様子と特上寿司コンビです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1361.jpg"&gt;&lt;img alt="CIMG1361" class="alignnone size-medium wp-image-350" height="222" src="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1361-300x222.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1381.jpg"&gt;&lt;img alt="CIMG1381" class="alignnone size-medium wp-image-351" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/03/CIMG1381-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 11 Mar 2015 18:30:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-03-11:/2015/03/11/卒業者発表/</guid><category>ゼミ</category></item><item><title>卒研発表会2015</title><link>https://eiichiromomma.github.io/2015/03/04/2015-03-04/</link><description>&lt;p&gt;卒研発表会を実施しました。解禁後だったので来られない3年生が数名いたので来年から少し早めたいですね。&lt;/p&gt;
+&lt;p&gt;なんだかんだでちゃんと仕上げて来たところは流石だなと思いました。それをコンスタントに出せれば良かったのですが(笑)&lt;/p&gt;
+&lt;p&gt;ベストプレゼンテーション賞ということで特上寿司を用意したのですが，トップ2テーマが同数→ジャンケンで→どうせなら全員参加で→門馬に勝ち続けた人で→発表していない9月卒生と3年生が勝ち残る，という流れが面白かったです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0112.jpg"&gt;&lt;img alt="SDIM0112" class="alignnone size-medium wp-image-344" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0112-300x200.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0091.jpg"&gt;&lt;img alt="SDIM0091" class="alignnone size-medium wp-image-345" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0091-300x200.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0100.jpg"&gt;&lt;img alt="SDIM0100" class="alignnone size-medium wp-image-346" height="200" src="https://eiichiromomma.github.io/images/uploads/2015/03/SDIM0100-300x200.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 04 Mar 2015 07:57:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-03-04:/2015/03/04/2015-03-04/</guid><category>ゼミ</category></item><item><title>購入図書</title><link>https://eiichiromomma.github.io/2015/02/25/%E8%B3%BC%E5%85%A5%E5%9B%B3%E6%9B%B8/</link><description>&lt;p&gt;申請してた図書が届きました。今回はCG関連と.Net Framework(ほとんどC#)がメインです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/02/P_20150225_100244.jpg"&gt;&lt;img alt="P_20150225_100244" class="alignnone size-medium wp-image-341" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/02/P_20150225_100244-227x300.jpg" width="227"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 25 Feb 2015 12:35:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-02-25:/2015/02/25/購入図書/</guid><category>ゼミ</category></item><item><title>SSII2015</title><link>https://eiichiromomma.github.io/2015/02/11/ssii2015/</link><description>&lt;p&gt;画像センシングシンポジウム SSII2015 が6月10日-12日に開催されます。&lt;/p&gt;
+&lt;p&gt;http://www.ssii.jp/&lt;/p&gt;
+&lt;p&gt;本シンポジウムには私も運営委員として参加させて頂いています。奮ってご参加下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 11 Feb 2015 23:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-02-11:/2015/02/11/ssii2015/</guid><category>News</category></item><item><title>授業アンケート(電気回路I及び演習)</title><link>https://eiichiromomma.github.io/2015/02/10/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92/</link><description>&lt;p&gt;授業アンケートの結果が上がってきたので帯グラフにしてみました。無記名でお願いしたので率直な意見も貰えて良かったです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/02/imageQ.png"&gt;&lt;img alt="アンケート結果" class="alignnone size-medium wp-image-334" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/02/imageQ-287x300.png" width="287"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;自由記述でポジティブな意見が多かった点&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;講義内容・進め方&lt;/li&gt;
+&lt;li&gt;スライドを使った講義&lt;/li&gt;
+&lt;li&gt;ポータルでの講義前の全スライド(解答除く)公開&lt;/li&gt;
+&lt;li&gt;演習の後の解説&lt;/li&gt;
+&lt;li&gt;演習と課題の解説のスライド公開&lt;/li&gt;
+&lt;li&gt;わかりにくい所を板書説明&lt;/li&gt;
+&lt;li&gt;講義と演習の組合せ&lt;/li&gt;
+&lt;li&gt;前回の復習&lt;/li&gt;
+&lt;li&gt;質問への対応&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;自由記述での要望と返答&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;講義・解答のスピードが早い。難しい内容の時は時間を掛けて欲しい。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;講義時間が限られているのでバランスが難しいところです。授業計画を工夫して時間に余裕を作りたいと思っています。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;質問したい時に先生やTAが他の人の質問に答えてる場合が多い。TAを増やして欲しい。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;駿河台設置学科なので難しいところですが要望としておきます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;講義資料が携帯で見られなかった&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;情報教育研究センターへ要望を出していて調査中とのことです。DropBoxの共有URLをメインにすることも検討しています。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;マグロウヒルの補充問題が難しい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;加点対象なので難易度が高いものを選んでいますが類題やヒントの提示等で調整します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;講義の難易度が高かった。基礎的なところから始めて欲しい。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前期の直流理論が理解できていないと難しいところもあったかと思います。大学の講義では致し方ないところもありますが積極的に質問して貰えると助かります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;紙の資料が欲しい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;スライドが1講義あたり100枚近い場合もあるので難しいです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解答のスライドの字が細かくて見づらい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;複数枚に跨がらないよう1枚にしていますが，もう少し工夫します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;課題の提出期限は朝ではなく講義後にして欲しい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;講義中に課題をやる人が出るので変えません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;スクリーンが小さい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;私の力ではどうにもなりません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1限はやめて欲しい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;私の力ではどうにもなりません。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 10 Feb 2015 18:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-02-10:/2015/02/10/授業アンケート電気回路i及び演習/</guid><category>講義</category></item><item><title>新年会</title><link>https://eiichiromomma.github.io/2015/01/22/%E6%96%B0%E5%B9%B4%E4%BC%9A/</link><description>&lt;p&gt;急遽開催となったので出席者は少なめですがMYOで少し遊んだ後に新年会となりました。卒研発表に向けて頑張りましょう。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/CIMG1271s.jpg"&gt;&lt;img alt="CIMG1271s" class="alignnone size-medium wp-image-330" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/01/CIMG1271s-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 22 Jan 2015 20:52:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-01-22:/2015/01/22/新年会/</guid><category>ゼミ</category></item><item><title>おもちゃ</title><link>https://eiichiromomma.github.io/2015/01/21/%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83/</link><description>&lt;p&gt;ようやっとKickstarterでオーダーしていた&lt;a href="https://www.thalmic.com/en/myo/"&gt;MYO&lt;/a&gt;が届きました。明日持って行きます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-21-22.54.09.jpg"&gt;&lt;img alt="2015-01-21 22.54.09" class="alignnone size-medium wp-image-327" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-21-22.54.09-230x300.jpg" width="230"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;明日は新年会です。飲み過ぎに注意しましょう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 21 Jan 2015 23:01:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-01-21:/2015/01/21/おもちゃ/</guid><category>ゼミ</category></item><item><title>Wordで数式…を若干更新</title><link>https://eiichiromomma.github.io/2015/01/11/word%E3%81%A7%E6%95%B0%E5%BC%8F%E3%82%92%E8%8B%A5%E5%B9%B2%E6%9B%B4%E6%96%B0/</link><description>&lt;p&gt;一箇所のスペルミスと数式番号について追記しました。Wordでの番号入力はまだ無理そうですがPowerPointでは取り敢えず入力だけはできるようになってました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/WordEqn31.pdf"&gt;Wordで数式を楽に作る&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/WordEqn.png"&gt;&lt;img alt="WordEqn" class="alignnone size-medium wp-image-323" height="77" src="https://eiichiromomma.github.io/images/uploads/2015/01/WordEqn-300x77.png" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;こんな感じです。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 11 Jan 2015 17:28:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-01-11:/2015/01/11/wordで数式を若干更新/</guid><category>講義</category></item><item><title>神田明神その2</title><link>https://eiichiromomma.github.io/2015/01/06/%E7%A5%9E%E7%94%B0%E6%98%8E%E7%A5%9E%E3%81%9D%E3%81%AE2/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.08.14.jpg"&gt;&lt;img alt="2015-01-06 19.08.14" class="alignnone size-medium wp-image-314" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.08.14-169x300.jpg" width="169"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;という訳で，18時半ごろが狙い目と聞いたので行って来ました。&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-18.48.51.jpg"&gt;&lt;img alt="2015-01-06 18.48.51" class="alignnone size-medium wp-image-315" height="169" src="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-18.48.51-300x169.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.01.51.jpg"&gt;&lt;img alt="2015-01-06 19.01.51" class="alignnone size-medium wp-image-316" height="300" src="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.01.51-169x300.jpg" width="169"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;無事ITお守りも買えました。これで今年は大丈夫?&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.51.45.jpg"&gt;&lt;img alt="2015-01-06 19.51.45" class="alignnone size-medium wp-image-317" height="197" src="https://eiichiromomma.github.io/images/uploads/2015/01/2015-01-06-19.51.45-300x197.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 06 Jan 2015 20:44:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-01-06:/2015/01/06/神田明神その2/</guid><category>News</category></item><item><title>神田明神</title><link>https://eiichiromomma.github.io/2015/01/05/%E7%A5%9E%E7%94%B0%E6%98%8E%E7%A5%9E/</link><description>&lt;p&gt;あけましておめでとうございます。&lt;/p&gt;
+&lt;p&gt;以前神主さんにご講演頂いた縁があるのとIT御守りがあるということで神田明神へ行ってみました。が，仕事始めのせいか大行列で断念。また今度行きます。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 05 Jan 2015 23:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2015-01-05:/2015/01/05/神田明神/</guid><category>News</category></item><item><title>未来博士工房成果報告会</title><link>https://eiichiromomma.github.io/2014/11/30/%E6%9C%AA%E6%9D%A5%E5%8D%9A%E5%A3%AB%E5%B7%A5%E6%88%BF%E6%88%90%E6%9E%9C%E5%A0%B1%E5%91%8A%E4%BC%9A/</link><description>&lt;p&gt;11/29は船橋キャンパスで未来博士工房の成果報告会でした。電気工学科はその中で電気エネルギー環境工房として学部1年後期(または2年)から，正課ではない自主参加型で各自が企画した研究に取り組むシステムで運営しています。その未来博士工房へご支援頂いている校友会(OB会)への成果報告と懇親を兼ねた会です。&lt;/p&gt;
+&lt;p&gt;今回は工房生のうち今年度に学生博士賞の審査を受ける3年生の4名が発表しました。プレゼンもそうですが研究も結構追い込みを掛けたようで先週先々週の練習よりかなり良く仕上がっていて感心しました。&lt;/p&gt;
+&lt;p&gt;お世事抜きでうちの発表が一番良かったですよ。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-16.58.40.jpg"&gt;&lt;img alt="2014-11-29 16.58.40" class="alignnone size-medium wp-image-301" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-16.58.40-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.16.30.jpg"&gt;&lt;img alt="2014-11-29 17.16.30" class="alignnone size-medium wp-image-302" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.16.30-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;そして後の懇親会。電気のOBの方々も多数来て頂き，工房メンバーを激励して頂きました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.34.19.jpg"&gt;&lt;img alt="2014-11-29 17.34.19" class="alignnone size-medium wp-image-303" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.34.19-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.34.59.jpg"&gt;&lt;img alt="2014-11-29 17.34.59" class="alignnone size-medium wp-image-304" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.34.59-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.49.43.jpg"&gt;&lt;img alt="2014-11-29 17.49.43" class="alignnone size-medium wp-image-305" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-17.49.43-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-18.54.46.jpg"&gt;&lt;img alt="2014-11-29 18.54.46" class="alignnone size-medium wp-image-306" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-18.54.46-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-18.54.51.jpg"&gt;&lt;img alt="2014-11-29 18.54.51" class="alignnone size-medium wp-image-307" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/2014-11-29-18.54.51-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;その後の2次会もお疲れ様でした。楽しかったです。でも飲み過ぎましたね。(未成年メンバーはソフトドリンクです)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 30 Nov 2014 20:27:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-11-30:/2014/11/30/未来博士工房成果報告会/</guid><category>News</category></item><item><title>B3飲み会</title><link>https://eiichiromomma.github.io/2014/11/19/b3%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;プレゼミも始まったので3年生の自己紹介Lightning Talk+飲み会を開催しました。1年生の時にクラス担任を務めた学年なので不思議な感じもしましたね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1232.jpg"&gt;&lt;img alt="CIMG1232" class="alignnone size-medium wp-image-296" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1232-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1247.jpg"&gt;&lt;img alt="CIMG1247" class="alignnone size-medium wp-image-297" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1247-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 19 Nov 2014 09:05:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-11-19:/2014/11/19/b3飲み会/</guid><category>ゼミ</category></item><item><title>照明フォーラム</title><link>https://eiichiromomma.github.io/2014/11/05/%E7%85%A7%E6%98%8E%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A9%E3%83%A0/</link><description>&lt;p&gt;昨日(11/4)，照明学会東京支部 照明フォーラムをCSTホールで開催しました。&lt;/p&gt;
+&lt;p&gt;学内での宣伝はあまりしていなかったのですが，照明学会会員の皆様や今回の分野に興味のある100名超の方々にお越し頂き盛況となりました。講師の方々の話は当然とても面白かったです。石多未知行氏(一般財団法人プロジェクションマッピング協会 代表理事)からはプロジェクションマッピングを巡る世界や日本での動向に加え"その後"をどうするのかという講演を頂き，小松宏誠氏(アーティスト)からは光を含む素材としての羽根の話やルーツの建築から発展した空間を広げるアート，藤原工氏(美術照明家 照明デザイナー / (株)灯工舎 代表)からは美術品という凝縮された世界の更に凝縮した情報に目を向けた美術品照明についてご講演頂き，意図せず"その後"への解が示されていたのが印象的でした。&lt;/p&gt;
+&lt;p&gt;また，オブザーバとしてはの委員企画でのプロジェクションマッピングが無事に成功するかが非常に心配でした。心配をよそに完成度を高めたスタッフのおかげで非常に面白いイベントが出来たかと思います。&lt;/p&gt;
+&lt;p&gt;お越し頂き誠に有り難うございました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG11621.jpg"&gt;&lt;img alt="CIMG1162" class="alignnone size-medium wp-image-289" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG11621-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;リハーサル中&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1208.jpg"&gt;&lt;img alt="CIMG1208" class="alignnone size-medium wp-image-290" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG1208-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;講演中&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG12241.jpg"&gt;&lt;img alt="CIMG1224" class="alignnone size-medium wp-image-291" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/11/CIMG12241-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;座談会&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 05 Nov 2014 07:29:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-11-05:/2014/11/05/照明フォーラム/</guid><category>News</category></item><item><title>オープンゼミ</title><link>https://eiichiromomma.github.io/2014/11/02/%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%82%BC%E3%83%9F/</link><description>&lt;p&gt;門馬研では仮着手者(3年生)対象に， 新カリキュラムの電気工学プレゼンテーションIで門馬が担当した講義「プレゼンテーションのコツ」&lt;wbr&gt;&lt;/wbr&gt;をプレゼミで実施します。&lt;br&gt;
+実施にあたり他研究室着手予定の3年生からも講義を受けたいとの要望がありましたのでどうせやるならオープンにということで聴講者を3年生以上(院生も可)として広く募集することとしました。&lt;br&gt;
+つきましては教室の規模の都合もありますので11/4までに参加希望数を門馬までご連絡下さい。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;11月6日(木) 10:40-12:10&lt;/li&gt;
+&lt;li&gt;場所: 50名程度の教室を確保中(希望者数に合わせて変更予定)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;場所については前日には連絡します。&lt;/p&gt;
+&lt;p&gt;※11月11日か12日の16:40-18:10にも同内容を実施予定です&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 02 Nov 2014 22:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-11-02:/2014/11/02/オープンゼミ/</guid><category>ゼミ</category></item><item><title>9月卒生歓迎会</title><link>https://eiichiromomma.github.io/2014/10/23/9%E6%9C%88%E5%8D%92%E7%94%9F%E6%AD%93%E8%BF%8E%E4%BC%9A/</link><description>&lt;p&gt;新規に9月卒生として加わった大峡君を迎えて歓迎飲み会+自己紹介LT大会を実施しました。&lt;/p&gt;
+&lt;p&gt;なかなか多芸なようで今後が楽しみです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-17.35.01.jpg"&gt;&lt;img alt="2014-10-23 17.35.01" class="alignnone size-medium wp-image-278" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-17.35.01-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-18.01.46.jpg"&gt;&lt;img alt="2014-10-23 18.01.46" class="alignnone size-medium wp-image-279" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-18.01.46-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-18.35.21.jpg"&gt;&lt;img alt="2014-10-23 18.35.21" class="alignnone size-medium wp-image-280" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/2014-10-23-18.35.21-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 23 Oct 2014 21:31:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-23:/2014/10/23/9月卒生歓迎会/</guid><category>ゼミ</category></item><item><title>AUBE'14</title><link>https://eiichiromomma.github.io/2014/10/17/aube14/</link><description>&lt;p&gt;AUBE'14に参加してました。会場はDuisburgのDie Wolfsburgだったのですが，写真は毎回寄ってるDusseldorfのBrauerei Schumacher。グラスを空けたら何も言わずに次が出てきます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1208.jpg"&gt;&lt;img alt="IMG_1208" class="alignnone size-medium wp-image-271" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1208-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;仕事の証拠写真も。今回はChairmanを務められた小野教授と参加しました。(門馬はOral Presentation)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1192.jpg"&gt;&lt;img alt="IMG_1192" class="alignnone size-medium wp-image-272" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1192-225x300.jpg" width="225"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1194.jpg"&gt;&lt;img alt="IMG_1194" class="alignnone size-medium wp-image-273" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1194-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;カソリック系の施設という事で宿泊施設も完備していて学会会場と宿泊が一緒の良い環境でした。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1211.jpg"&gt;&lt;img alt="IMG_1211" class="alignnone size-medium wp-image-274" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1211-225x300.jpg" width="225"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1181.jpg"&gt;&lt;img alt="IMG_1181" class="alignnone size-medium wp-image-275" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMG_1181-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(肉はDusseldorfで食べたSchweinehaxe)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 17 Oct 2014 04:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-17:/2014/10/17/aube14/</guid><category>News</category></item><item><title>台風19号の接近に伴う10月14日の授業について</title><link>https://eiichiromomma.github.io/2014/10/11/%E5%8F%B0%E9%A2%A819%E5%8F%B7%E3%81%AE%E6%8E%A5%E8%BF%91%E3%81%AB%E4%BC%B4%E3%81%8610%E6%9C%8814%E6%97%A5%E3%81%AE%E6%8E%88%E6%A5%AD%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;p&gt;台風19号に関連してポータルに情報が出ました。今回は早めに決定が下されるようですのでチェックしておいて下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 11 Oct 2014 08:52:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-11:/2014/10/11/台風19号の接近に伴う10月14日の授業について/</guid><category>News</category></item><item><title>月蝕</title><link>https://eiichiromomma.github.io/2014/10/08/%E6%9C%88%E8%9D%95/</link><description>&lt;p&gt;今日は月蝕でした。画像処理の講義の際に「盗撮じゃねーか」と総ツッコミをされたPentax Q10+Q-Kマウントコンバータ+Kマウント300mmレンズで35mm比5.5倍の1650mmズームで月を撮影しました。1枚目はシャッタースピード速めなので様子が分かります。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMGP1108.jpg"&gt;&lt;img alt="IMGP1108" class="alignnone size-medium wp-image-262" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMGP1108-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2枚目は2.5sで撮影。月が動いているのと分解能の限界で若干ブレてますが4000x3000でこのサイズの月が撮れました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/10/IMGP1109.jpg"&gt;&lt;img alt="IMGP1109" class="alignnone size-medium wp-image-263" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/10/IMGP1109-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;カメラで遊びたい人は研究室に遊びに来て下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 08 Oct 2014 19:52:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-08:/2014/10/08/月蝕/</guid><category>News</category></item><item><title>10/6は終日休講です</title><link>https://eiichiromomma.github.io/2014/10/06/106%E3%81%AF%E7%B5%82%E6%97%A5%E4%BC%91%E8%AC%9B%E3%81%A7%E3%81%99/</link><description>&lt;p&gt;CSTポータルにアナウンスが出ましたが，本日は大型台風接近のため終日休講になりました。不要な外出は避けて下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 06 Oct 2014 09:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-06:/2014/10/06/106は終日休講です/</guid><category>講義</category></item><item><title>10月6日の電気回路Iは休講にします</title><link>https://eiichiromomma.github.io/2014/10/06/10%E6%9C%886%E6%97%A5%E3%81%AE%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E3%81%AF%E4%BC%91%E8%AC%9B%E3%81%AB%E3%81%97%E3%81%BE%E3%81%99/</link><description>&lt;p&gt;午前6時現在，休講の要件を満たす電車の運休はありませんが，勢力の強い台風の接近につき，10月6日の電気回路I及び演習(門馬)は休講にします&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 06 Oct 2014 06:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-10-06:/2014/10/06/10月6日の電気回路iは休講にします/</guid><category>講義</category></item><item><title>9月卒業</title><link>https://eiichiromomma.github.io/2014/09/24/9%E6%9C%88%E5%8D%92%E6%A5%AD/</link><description>&lt;p&gt;本日2名が巣立って行きました。&lt;/p&gt;
+&lt;p&gt;軽くで申し訳ないですが乾杯。たまたま居た小野研の9月卒業生も巻き添えに乾杯。&lt;/p&gt;
+&lt;p&gt;皆の活躍を祈っています。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0959.jpg"&gt;&lt;img alt="CIMG0959" class="alignnone size-medium wp-image-250" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0959-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0960.jpg"&gt;&lt;img alt="CIMG0960" class="alignnone size-medium wp-image-251" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0960-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0962.jpg"&gt;&lt;img alt="CIMG0962" class="alignnone size-medium wp-image-252" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/CIMG0962-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 24 Sep 2014 18:30:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-24:/2014/09/24/9月卒業/</guid><category>ゼミ</category></item><item><title>東京実験</title><link>https://eiichiromomma.github.io/2014/09/21/%E6%9D%B1%E4%BA%AC%E5%AE%9F%E9%A8%93/</link><description>&lt;p&gt;9月17, 19日に荒天で何度も流れた実験がようやく実施できました。&lt;/p&gt;
+&lt;p&gt;ご協力頂いた皆様，ありがとうございました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/2014-09-19-19.44.00.jpg"&gt;&lt;img alt="2014-09-19 19.44.00" class="alignnone size-medium wp-image-246" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/2014-09-19-19.44.00-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/2014-09-17-19.47.11.jpg"&gt;&lt;img alt="2014-09-17 19.47.11" class="alignnone size-medium wp-image-247" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/2014-09-17-19.47.11-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 21 Sep 2014 07:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-21:/2014/09/21/東京実験/</guid><category>News</category></item><item><title>Free版のUnityがOculus Riftに対応</title><link>https://eiichiromomma.github.io/2014/09/21/free%E7%89%88%E3%81%AEunity%E3%81%8Coculus-rift%E3%81%AB%E5%AF%BE%E5%BF%9C/</link><description>&lt;p&gt;ようやくと言うべきかUnity Pro版のみのサポートだったOculus Riftが，Free版にも拡張されることが発表されました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blogs.unity3d.com/2014/09/20/expanded-oculus-rift-support-in-unity/"&gt;Expanded Oculus Rift Support in Unity&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Wikiの方にもぼちぼち記事を書くつもりです。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 21 Sep 2014 07:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-21:/2014/09/21/free版のunityがoculus-riftに対応/</guid><category>News</category></item><item><title>今年度の"電気回路I及び演習"について(2,3,4年生向け)</title><link>https://eiichiromomma.github.io/2014/09/19/%E4%BB%8A%E5%B9%B4%E5%BA%A6%E3%81%AE%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6234%E5%B9%B4%E7%94%9F%E5%90%91%E3%81%91/</link><description>&lt;p&gt;[2,3,4年生で受講を希望する方への連絡です。]{style="line-height: 1.5em;"}&lt;/p&gt;
+&lt;p&gt;[例年10名程度受け入れていますので履修登録して構いません。]{style="line-height: 1.5em;"}今年度はABクラス両方を担当しますので月曜火曜のどちらでも良いです。1回目から講義をしますので必ず出席して下さい。&lt;/p&gt;
+&lt;p&gt;後期に履修登録を変更して受講する予定の方は事前にメール等で連絡して頂けると助かります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;スライド中心の講義&lt;/li&gt;
+&lt;li&gt;CSTポータルで事前に講義資料配布(過去の記事に資料を残していますので参考にして下さい)&lt;/li&gt;
+&lt;li&gt;講義中は講義資料を紙媒体・タブレット端末・スマートフォン・PCで参照可&lt;/li&gt;
+&lt;li&gt;課題の提出は紙媒体か電子媒体で、どちらも次回講義当日の9:00〆切&lt;/li&gt;
+&lt;li&gt;電子媒体の提出先はCSTポータルで事前提出可&lt;/li&gt;
+&lt;li&gt;評価基準はシラバス参照&lt;/li&gt;
+&lt;li&gt;演習中の周囲との相談は可&lt;/li&gt;
+&lt;li&gt;2年生以上の受講希望者が多過ぎる場合は1年生を優先&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;といった条件です。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 19 Sep 2014 09:50:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-19:/2014/09/19/今年度の電気回路i及び演習について234年生向け/</guid><category>講義</category></item><item><title>Wordで楽に数式を作る</title><link>https://eiichiromomma.github.io/2014/09/19/word%E3%81%A7%E6%A5%BD%E3%81%AB%E6%95%B0%E5%BC%8F%E3%82%92%E4%BD%9C%E3%82%8B/</link><description>&lt;p&gt;前から配布しているサーバは廃止の方針なのでこちらでも公開します。(githubにも置いてます)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/01/WordEqn31.pdf"&gt;Wordで楽に数式を作る&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 19 Sep 2014 09:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-19:/2014/09/19/wordで楽に数式を作る/</guid><category>講義</category></item><item><title>8月後半と9月の研究室見学について</title><link>https://eiichiromomma.github.io/2014/09/17/8%E6%9C%88%E5%BE%8C%E5%8D%8A%E3%81%A89%E6%9C%88%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;p&gt;8月後半と9月の研究室見学並びに質問の受付時間です。立て込んでいるので週1のペースになりますが希望する方は下記日時に8号館812室へ来て下さい。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;8/22: 14:00〜15:00, 17:00〜18:00&lt;/li&gt;
+&lt;li&gt;8/28: 14:00〜15:00&lt;/li&gt;
+&lt;li&gt;[9/1: 13:00〜14:00]{style="text-decoration: underline;"}&lt;/li&gt;
+&lt;li&gt;9/12: 14:00〜15:00&lt;/li&gt;
+&lt;li&gt;9/17: 11:00〜12:00&lt;/li&gt;
+&lt;li&gt;9/18: 船橋キャンパスで1年生ガイダンスのため不在&lt;/li&gt;
+&lt;li&gt;[9/19: 午前中〜13:00まで (3, 4限は実験なので質問対応，5限は931で講義 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 17 Sep 2014 23:01:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-17:/2014/09/17/8月後半と9月の研究室見学について/</guid><category>News</category></item><item><title>研修旅行2014</title><link>https://eiichiromomma.github.io/2014/09/11/%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C2014/</link><description>&lt;p&gt;八海山セミナーハウスでの研修旅行でした。1名が電車の遅延のせいでタクシー移動になりましたが全員無事到着。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0121.jpg"&gt;&lt;img alt="雨" class="alignnone size-medium wp-image-226" height="224" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0121-300x224.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;メインイベントの9月卒の2名の卒研発表&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1024.jpg"&gt;&lt;img alt="ポスター発表1" class="alignnone size-medium wp-image-227" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1024-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1029.jpg"&gt;&lt;img alt="ポスター発表2" class="alignnone size-medium wp-image-228" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1029-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;質疑応答&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1035.jpg"&gt;&lt;img alt="質疑" class="alignnone size-medium wp-image-229" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1035-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;おつかれさまでした。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1036.jpg"&gt;&lt;img alt="おつかれさまでした" class="alignnone size-medium wp-image-230" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1036-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;いつもと違う場所での飲みだったせいか変に盛り上ってゲームやってました。飲み過ぎましたね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1040.jpg"&gt;&lt;img alt="変なノリだった飲み会" class="alignnone size-medium wp-image-231" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1040-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 11 Sep 2014 22:13:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-11:/2014/09/11/研修旅行2014/</guid><category>ゼミ</category></item><item><title>照明学会全国大会</title><link>https://eiichiromomma.github.io/2014/09/08/%E7%85%A7%E6%98%8E%E5%AD%A6%E4%BC%9A%E5%85%A8%E5%9B%BD%E5%A4%A7%E4%BC%9A/</link><description>&lt;p&gt;先週末は副支部長を勤めている照明学会東京支部が中心となって動いた照明学会全国大会が埼玉大学で開催されました。雨の予報が続いたものの土曜日にパラついた程度で良かったです。&lt;/p&gt;
+&lt;p&gt;今回は情報交流会が埼玉スタジアム2○○2ということでサッカー好きの人にはかなり好評だったようです。VIP席での受賞者講演聴講とかプレスルーム(?)での食事会の他，ピッチの目の前まで行けるツアー等々，実施までは大変でしたが成功してホッとしてるところです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0999.jpg"&gt;&lt;img alt="柱その2" class="alignnone size-medium wp-image-221" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0999-225x300.jpg" width="225"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1009.jpg"&gt;&lt;img alt="オーロラビジョンでの受賞者講演" class="alignnone size-medium wp-image-222" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1009-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="皆写真撮ってた柱" class="alignnone size-medium wp-image-220" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0983-300x225.jpg" width="300"&gt;&lt;/p&gt;
+&lt;p&gt;あと，COEDOビール全種類飲み放題が自分には何より良かった。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="COEDOビール飲み放題" class="alignnone size-medium wp-image-219" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_0984-300x225.jpg" width="300"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1012.jpg"&gt;&lt;img alt="左のVIPゲートから入ってみました" class="alignnone size-medium wp-image-223" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/09/IMG_1012-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;学会発表するとこういう良いこともあるので研究頑張りましょう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 08 Sep 2014 21:07:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-09-08:/2014/09/08/照明学会全国大会/</guid><category>News</category></item><item><title>進捗LT+飲み会</title><link>https://eiichiromomma.github.io/2014/08/27/%E9%80%B2%E6%8D%97lt%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;8月の進捗報告Lightning Talk+飲み会を開催しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0942.jpg"&gt;&lt;img alt="CIMG0942" class="alignnone size-medium wp-image-208" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0942-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0944.jpg"&gt;&lt;img alt="CIMG0944" class="alignnone size-medium wp-image-209" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0944-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;いつもの寿司+酒で、本人達が意識してかしないか分かりませんが、設定した時間通りの発表ができているようでした。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0947.jpg"&gt;&lt;img alt="CIMG0947" class="alignnone size-medium wp-image-210" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0947-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0949.jpg"&gt;&lt;img alt="CIMG0949" class="alignnone size-medium wp-image-211" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0949-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;テンパる9月卒業コンビ&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0951.jpg"&gt;&lt;img alt="CIMG0951" class="alignnone size-medium wp-image-212" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0951-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0952.jpg"&gt;&lt;img alt="CIMG0952" class="alignnone size-medium wp-image-213" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0952-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;9月卒業コンビから奥義を伝授されて大騒ぎな学部生達&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0954.jpg"&gt;&lt;img alt="CIMG0954" class="alignnone size-medium wp-image-214" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/CIMG0954-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 27 Aug 2014 20:36:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-27:/2014/08/27/進捗lt飲み会/</guid><category>ゼミ</category></item><item><title>日程決まりました</title><link>https://eiichiromomma.github.io/2014/08/23/%E6%97%A5%E7%A8%8B%E6%B1%BA%E3%81%BE%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;27日に決定しました。各自準備をしておいて下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 23 Aug 2014 12:34:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-23:/2014/08/23/日程決まりました/</guid><category>ゼミ</category></item><item><title>お土産頂きました(先着16名)</title><link>https://eiichiromomma.github.io/2014/08/19/%E3%81%8A%E5%9C%9F%E7%94%A3%E9%A0%82%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F%E5%85%88%E7%9D%8016%E5%90%8D/</link><description>&lt;p&gt;小野研院卒のOBからお土産頂きました。先着16名です。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0953.jpg"&gt;&lt;img alt="IMG_0953" class="alignnone size-medium wp-image-199" height="300" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0953-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 19 Aug 2014 11:09:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-19:/2014/08/19/お土産頂きました先着16名/</guid><category>News</category></item><item><title>飲み会+進捗LT</title><link>https://eiichiromomma.github.io/2014/08/18/%E9%A3%B2%E3%81%BF%E4%BC%9A%E9%80%B2%E6%8D%97lt/</link><description>&lt;p&gt;チャットでも投げました通り，調整さんへ8月末の飲み会+進捗LTの日程希望を入力して下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 18 Aug 2014 09:27:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-18:/2014/08/18/飲み会進捗lt/</guid><category>ゼミ</category></item><item><title>OpenCV情報を更新中</title><link>https://eiichiromomma.github.io/2014/08/11/opencv%E6%83%85%E5%A0%B1%E3%82%92%E6%9B%B4%E6%96%B0%E4%B8%AD/</link><description>&lt;p&gt;各所で名刺交換の度に「OpenCVのページで存じてます」と言って頂くのはありがたいのですが，最近全く更新しておらず申し訳なかったので&lt;a href="http://www.eml.ele.cst.nihon-u.ac.jp/~momma/wiki/wiki.cgi/OpenCV.html"&gt;Pythonのcv2 packageと2.4.x C++ I/F近辺を更新&lt;/a&gt;しています。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 11 Aug 2014 20:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-11:/2014/08/11/opencv情報を更新中/</guid><category>Wiki</category></item><item><title>研究会に行ってきました</title><link>https://eiichiromomma.github.io/2014/08/05/%E7%A0%94%E7%A9%B6%E4%BC%9A%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0949.jpg"&gt;&lt;img alt="IMG_0949" class="alignnone size-medium wp-image-182" height="275" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0949-300x275.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;知覚情報/次世代産業システム合同研究会「画像処理応用および画像処理一般」で発表してきました。&lt;/p&gt;
+&lt;p&gt;お土産は明日研究室に持って行きます。先着50枚。3年生にもあげちゃいますのでお早めに。&lt;/p&gt;
+&lt;p&gt;研究会の後，北海道電力総合研究所を見学させて貰いました。実験機材をキッカリ作っていて非常に参考になりました。ライフラインを支える研究所だけに素晴しかったです。大変お世話になりました。&lt;/p&gt;
+&lt;p&gt;[caption id="attachment_183" align="alignnone" width="300"]&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0939.jpg"&gt;&lt;img alt="電線の捻れ対策" class="wp-image-183 size-medium" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0939-300x225.jpg" width="300"&gt;&lt;/a&gt; 電線の捻れ対策[/caption]&lt;/p&gt;
+&lt;p&gt;[caption id="attachment_184" align="alignnone" width="300"]&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0940.jpg"&gt;&lt;img alt="陶器のがいしからシリコン製になったとのこと" class="wp-image-184 size-medium" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0940-300x225.jpg" width="300"&gt;&lt;/a&gt; ギャロップ防止策。陶器のがいしからシリコン製になったとのこと[/caption]&lt;/p&gt;
+&lt;p&gt;[caption id="attachment_185" align="alignnone" width="300"]&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0941.jpg"&gt;&lt;img alt="雷で破損したがいし" class="wp-image-185 size-medium" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0941-300x225.jpg" width="300"&gt;&lt;/a&gt; 雷で破損したがいし[/caption]&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 05 Aug 2014 19:43:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-05:/2014/08/05/研究会に行ってきました/</guid><category>News</category></item><item><title>オープンキャンパスでした</title><link>https://eiichiromomma.github.io/2014/08/05/%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%91%E3%82%B9%E3%81%A7%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0937.jpg"&gt;&lt;img alt="IMG_0937" class="alignnone size-medium wp-image-179" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/08/IMG_0937-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;8月2, 3日はオープンキャンパスでした。&lt;/p&gt;
+&lt;p&gt;勢いで作ったD-Imagerを使ったデモも小学生から教授まで遊んでいたようで良かったです。&lt;/p&gt;
+&lt;p&gt;原理に食い付いてくる高校生が居ると嬉しいですね。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 05 Aug 2014 19:30:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-05:/2014/08/05/オープンキャンパスでした/</guid><category>News</category></item><item><title>研究室見学・質問の受付(8月前半)</title><link>https://eiichiromomma.github.io/2014/08/01/%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E8%B3%AA%E5%95%8F%E3%81%AE%E5%8F%97%E4%BB%988%E6%9C%88%E5%89%8D%E5%8D%8A/</link><description>&lt;p&gt;8月前半の研究室見学並びに質問の受付時間です。希望する方は8/6〜8/8の下記日時に8号館812室へ来て下さい。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;8/1, 2, 3: オープンキャンパスで不在&lt;/li&gt;
+&lt;li&gt;8/4, 5: 研究会(北海道)で不在&lt;/li&gt;
+&lt;li&gt;8/6: 11:00〜12:00, 14:00〜15:00, 17:00〜18:00&lt;/li&gt;
+&lt;li&gt;8/7: 11:00〜12:00, 17:00〜18:00&lt;/li&gt;
+&lt;li&gt;8/8: 11:00〜12:00, 14:00〜15:00 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 01 Aug 2014 12:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-08-01:/2014/08/01/研究室見学質問の受付8月前半/</guid><category>News</category></item><item><title>Lightning Talk&amp;飲み会</title><link>https://eiichiromomma.github.io/2014/07/15/lightning-talk%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;7月3日に研究紹介Lightning Talk、10日に自己紹介Lightning Talk+飲み会を開催しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0911.jpg"&gt;&lt;img alt="CIMG0911" class="alignnone size-medium wp-image-169" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0911-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0912.jpg"&gt;&lt;img alt="CIMG0912" class="alignnone size-medium wp-image-170" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0912-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;10日は台風が心配されましたが、寿司も酒も無事配達され、電車も止まらず無事帰れました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0923.jpg"&gt;&lt;img alt="CIMG0923" class="alignnone size-medium wp-image-171" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/07/CIMG0923-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;短時間で要領良く話をする力がついて来たようです。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 15 Jul 2014 11:36:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-07-15:/2014/07/15/lightning-talk飲み会/</guid><category>ゼミ</category></item><item><title>輪講2014-6-28</title><link>https://eiichiromomma.github.io/2014/06/28/%E8%BC%AA%E8%AC%9B2014-6-28/</link><description>&lt;p&gt;6/19, 26と雑誌(学会誌)の特集記事を選んで貰っての輪講を実施しました。発表12分+質疑の長丁場ながら結構上手く纏めていたと思います。&lt;/p&gt;
+&lt;p&gt;次回は研究紹介Lightning Talk、次々回は再び飲み会+自己紹介LTです。飲み会に向けて体調を整えておきましょう。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0888s.jpg"&gt;&lt;img alt="CIMG0888s" class="alignnone size-medium wp-image-159" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0888s-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0895s.jpg"&gt;&lt;img alt="CIMG0895s" class="alignnone size-medium wp-image-160" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0895s-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0896s.jpg"&gt;&lt;img alt="CIMG0896s" class="alignnone size-medium wp-image-161" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0896s-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0899s.jpg"&gt;&lt;img alt="CIMG0899s" class="alignnone size-medium wp-image-162" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0899s-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 28 Jun 2014 11:27:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-06-28:/2014/06/28/輪講2014-6-28/</guid><category>ゼミ</category></item><item><title>若干高速化しました</title><link>https://eiichiromomma.github.io/2014/06/23/%E8%8B%A5%E5%B9%B2%E9%AB%98%E9%80%9F%E5%8C%96%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;今回の輪講終了者のPCのHDDをSSHDに置き換えました。&lt;/p&gt;
+&lt;p&gt;若干速くなったかと思います。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 23 Jun 2014 19:23:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-06-23:/2014/06/23/若干高速化しました/</guid><category>ゼミ</category></item><item><title>ゼミ飲み会</title><link>https://eiichiromomma.github.io/2014/06/02/%E3%82%BC%E3%83%9F%E9%A3%B2%E3%81%BF%E4%BC%9A/</link><description>&lt;p&gt;少々遅くなりましたが先週の木曜にゼミ飲み会を開催しました。&lt;/p&gt;
+&lt;p&gt;寿司とお酒を楽しんだ後でLigitning Talk大会としたせいか皆緊張することなく上手かったです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0848.jpg"&gt;&lt;img alt="CIMG0848" class="alignnone size-medium wp-image-151" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0848-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0849.jpg"&gt;&lt;img alt="CIMG0849" class="alignnone size-medium wp-image-152" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0849-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;少し飲み過ぎましたね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0847.jpg"&gt;&lt;img alt="CIMG0847" class="alignnone size-medium wp-image-150" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/06/CIMG0847-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 02 Jun 2014 22:11:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-06-02:/2014/06/02/ゼミ飲み会/</guid><category>ゼミ</category></item><item><title>CSTポータルIIの「お知らせ」転送について</title><link>https://eiichiromomma.github.io/2014/05/22/cst%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%ABii%E3%81%AE%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E8%BB%A2%E9%80%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;p&gt;4月からスタートしたCSTポータルIIで、講義連絡の転送先に各自のメールアドレスが設定可能になりました。&lt;/p&gt;
+&lt;p&gt;課題等の連絡はポータルで行ないますので、受講者は必ず連絡が受け取れる状態にしておいて下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 22 May 2014 13:31:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-05-22:/2014/05/22/cstポータルiiのお知らせ転送について/</guid><category>講義</category></item><item><title>サイボウズLiveへの招待状を送りました</title><link>https://eiichiromomma.github.io/2014/04/04/%E3%82%B5%E3%82%A4%E3%83%9C%E3%82%A6%E3%82%BAlive%E3%81%B8%E3%81%AE%E6%8B%9B%E5%BE%85%E7%8A%B6%E3%82%92%E9%80%81%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;研究室グループへの招待状を送りましたので登録作業をお願いします。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 04 Apr 2014 21:56:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-04-04:/2014/04/04/サイボウズliveへの招待状を送りました/</guid><category>ゼミ</category></item><item><title>CSTポータルが新しくなりました</title><link>https://eiichiromomma.github.io/2014/04/01/cst%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%AB%E3%81%8C%E6%96%B0%E3%81%97%E3%81%8F%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;下のリンクも変更しました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://newportal.cst.nihon-u.ac.jp/cst/top.do" title="CSTポータル"&gt;CST ポータル&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 01 Apr 2014 17:50:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-04-01:/2014/04/01/cstポータルが新しくなりました/</guid><category>News</category></item><item><title>MATLAB2014aに対応しました</title><link>https://eiichiromomma.github.io/2014/03/31/matlab2014a%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;ライセンスサーバをMATLAB2014aに対応させました。&lt;/p&gt;
+&lt;p&gt;IMAQ Toolbox無しでUSBカメラが使えるようになります。Wikiに使い方を書いておきました。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 31 Mar 2014 12:14:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-03-31:/2014/03/31/matlab2014aに対応しました/</guid><category>Wiki</category></item><item><title>学位記伝達式</title><link>https://eiichiromomma.github.io/2014/03/30/%E5%AD%A6%E4%BD%8D%E8%A8%98%E4%BC%9D%E9%81%94%E5%BC%8F/</link><description>&lt;p&gt;無事卒業、学位記を授与されてほっとしました。新天地でも頑張って下さい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/IMG_0831s.jpg"&gt;&lt;img alt="学位記伝達式" class="alignnone size-medium wp-image-122" height="113" src="https://eiichiromomma.github.io/images/uploads/2014/03/IMG_0831s-300x113.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 30 Mar 2014 10:28:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-03-30:/2014/03/30/学位記伝達式/</guid><category>News</category></item><item><title>カップ麺貰いました</title><link>https://eiichiromomma.github.io/2014/03/17/%E3%82%AB%E3%83%83%E3%83%97%E9%BA%BA%E8%B2%B0%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;研究室に置いておきます。先着12個です。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 17 Mar 2014 16:32:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-03-17:/2014/03/17/カップ麺貰いました/</guid><category>News</category></item><item><title>卒業研究発表会+懇親会</title><link>https://eiichiromomma.github.io/2014/03/04/%E5%8D%92%E6%A5%AD%E7%A0%94%E7%A9%B6%E7%99%BA%E8%A1%A8%E4%BC%9A%E6%87%87%E8%A6%AA%E4%BC%9A/</link><description>&lt;p&gt;1年間の卒業研究の集大成として発表会を開催しました。&lt;br&gt;
+ギリギリの人も居ましたが活発なポスター発表セッションだったと思います。&lt;br&gt;
+お疲れ様でした。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0687.jpg"&gt;&lt;img alt="ポスターセッション1" class="alignnone size-medium wp-image-112" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0687-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0689.jpg"&gt;&lt;img alt="ポスターセッション2" class="alignnone size-medium wp-image-110" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0689-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0680.jpg"&gt;&lt;img alt="ポスターセッション3" class="alignnone size-medium wp-image-111" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/03/IMGP0680-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;懇親会では久々に研究室で寿司を囲んで乾杯となりました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/P3040028.jpg"&gt;&lt;img alt="懇親会2" class="alignnone size-medium wp-image-108" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/03/P3040028-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/03/P3040029.jpg"&gt;&lt;img alt="懇親会1" class="alignnone size-medium wp-image-109" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/03/P3040029-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 04 Mar 2014 22:47:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-03-04:/2014/03/04/卒業研究発表会懇親会/</guid><category>ゼミ</category></item><item><title>週末の予定</title><link>https://eiichiromomma.github.io/2014/02/20/%E9%80%B1%E6%9C%AB%E3%81%AE%E4%BA%88%E5%AE%9A/</link><description>&lt;p&gt;明日金曜は午前のみ研究室に居ます。午後は船橋で会議です。&lt;br&gt;
+土曜も研究室に居ますので質問のある人は来て下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 20 Feb 2014 19:45:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-02-20:/2014/02/20/週末の予定/</guid><category>ゼミ</category></item><item><title>卒研発表会2014</title><link>https://eiichiromomma.github.io/2014/02/10/%E5%8D%92%E7%A0%94%E7%99%BA%E8%A1%A8%E4%BC%9A2014/</link><description>&lt;p&gt;3月3日に決定しました。&lt;br&gt;
+詳細は連絡の通りです。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 10 Feb 2014 12:21:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-02-10:/2014/02/10/卒研発表会2014/</guid><category>ゼミ</category></item><item><title>お土産を頂きました</title><link>https://eiichiromomma.github.io/2014/01/11/%E3%81%8A%E5%9C%9F%E7%94%A3%E3%82%92%E9%A0%82%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/</link><description>&lt;p&gt;昨日、OBが遊びに来てくれました。&lt;br&gt;
+お土産置き場に置いてあります。先着15名くらい。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2014/01/IMG_0774.jpg"&gt;&lt;img alt="カステラサブレ" class="alignnone size-medium wp-image-96" height="225" src="https://eiichiromomma.github.io/images/uploads/2014/01/IMG_0774-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 11 Jan 2014 07:47:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2014-01-11:/2014/01/11/お土産を頂きました/</guid><category>News</category></item><item><title>電気回路I及び演習 講義資料</title><link>https://eiichiromomma.github.io/2013/12/24/%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92-%E8%AC%9B%E7%BE%A9%E8%B3%87%E6%96%99/</link><description>&lt;p&gt;CSTポータルが不調のため2013年度の講義資料を配布します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_01_Introduction.pdf"&gt;2013_01_Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_02_components.pdf"&gt;2013_02_components&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_03_sRLC.pdf"&gt;2013_03_sRLC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_04_Power.pdf"&gt;2013_04_Power&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_05_ImagNum_Phasor.pdf"&gt;2013_05_ImagNum_Phasor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_06_sImagNum.pdf"&gt;2013_06_sImagNum&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_07_pImagNumRLC.pdf"&gt;2013_07_pImagNumRLC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_08_cmplx.pdf"&gt;2013_08_cmplx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_09_Resonance.pdf"&gt;2013_09_Resonance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_11_CircuitAnalysis.pdf"&gt;2013_11_CircuitAnalysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_12_MutInd.pdf"&gt;2013_12_MutInd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/2013_13_Bridge.pdf"&gt;2013_13_Bridge&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;演習問題の解説も別途アップロードします。年度末に削除する予定なので注意して下さい。&lt;/p&gt;
+&lt;p&gt;※内容についての質問は門馬までお願いします&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 24 Dec 2013 15:59:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-24:/2013/12/24/電気回路i及び演習-講義資料/</guid><category>講義</category></item><item><title>またCSTポータルが落ちてます</title><link>https://eiichiromomma.github.io/2013/12/24/%E3%81%BE%E3%81%9Fcst%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%AB%E3%81%8C%E8%90%BD%E3%81%A1%E3%81%A6%E3%81%BE%E3%81%99/</link><description>&lt;p&gt;昨日の定期停電後に先週障害が発生したデバイスと、新たに別の装置が故障したとのことです。課題の提出期限を延長します。各科目の対応予定は下記の通り。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;電子回路CAD: 課題提出の期限を延期&lt;/li&gt;
+&lt;li&gt;[画像処理: 課題提出の期限を延期、講義資料を当日配布]{style="line-height: 1.5em;"}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;電気回路I及び演習については講義資料をここで公開する予定です。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 24 Dec 2013 13:30:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-24:/2013/12/24/またcstポータルが落ちてます/</guid><category>講義</category></item><item><title>ノロウィルスに注意して下さい</title><link>https://eiichiromomma.github.io/2013/12/16/%E3%83%8E%E3%83%AD%E3%82%A6%E3%82%A3%E3%83%AB%E3%82%B9%E3%81%AB%E6%B3%A8%E6%84%8F%E3%81%97%E3%81%A6%E4%B8%8B%E3%81%95%E3%81%84/</link><description>&lt;p&gt;ノロウィルスが流行していますので、下記の点に注意して下さい。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;下痢や嘔吐等、罹患の疑いがある場合は無理をせず、経口補水液や炭酸の抜けたコーラ等で水分と糖分補給し安静にする&lt;/li&gt;
+&lt;li&gt;罹患の疑いがあることを研究室(電話あるいは門馬までメール)へ連絡する&lt;/li&gt;
+&lt;li&gt;他人の嘔吐物に触れない&lt;/li&gt;
+&lt;li&gt;カーペット等に嘔吐した場合は廃棄する(乾燥に強いウィルスで、乾燥したウィルスが塵として空中に舞うことで新たな感染経路になる)&lt;/li&gt;
+&lt;li&gt;触れざるを得ない場合には手袋、マスク等を使い、必ず水(お湯)で手洗いし物理的にウィルスを流すことで二次感染を防ぐ&lt;/li&gt;
+&lt;li&gt;外出後、食事前等には水(お湯)で手洗いする&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Mon, 16 Dec 2013 18:38:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-16:/2013/12/16/ノロウィルスに注意して下さい/</guid><category>News</category></item><item><title>CSTポータルが落ちてます</title><link>https://eiichiromomma.github.io/2013/12/15/cst%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%AB%E3%81%8C%E8%90%BD%E3%81%A1%E3%81%A6%E3%81%BE%E3%81%99/</link><description>&lt;p&gt;CSTポータルが落ちてるようですので課題の提出期限を延長します。各科目の対応予定は下記の通り。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;電子回路CAD: 課題提出の期限を延期&lt;/li&gt;
+&lt;li&gt;電気回路I及び演習: 明日も落ちていたら期限延期&amp;amp; 講義資料をこちらで配布&lt;/li&gt;
+&lt;li&gt;画像処理: 講義資料を当日配布&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;※12/16に復旧したので電子回路CADのみ期限を延期しました。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 15 Dec 2013 22:08:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-15:/2013/12/15/cstポータルが落ちてます/</guid><category>講義</category></item><item><title>門馬 英一郎/ Eiichiro Momma</title><link>https://eiichiromomma.github.io/2013/12/13/%E9%96%80%E9%A6%AC-%E8%8B%B1%E4%B8%80%E9%83%8E-eiichiro-momma/</link><description>&lt;p&gt;&lt;img alt="Manchesterで親友のChris Kennyと(本人左)" class="size-medium wp-image-9" height="225" src="https://eiichiromomma.github.io/images/uploads/2013/12/photo-300x225.jpg" width="300"&gt;&lt;/p&gt;
+&lt;p&gt;Eiichiro Momma/門馬 英一郎&lt;/p&gt;
+&lt;h2&gt;所属&lt;/h2&gt;
+&lt;p&gt;日本大学理工学部 電気工学科 准教授&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://kenkyu-web.cin.nihon-u.ac.jp/Profiles/41/0004047/profile.html"&gt;研究者情報&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;担当科目&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;電気回路I及び演習&lt;/li&gt;
+&lt;li&gt;応用計測&lt;/li&gt;
+&lt;li&gt;画像処理&lt;/li&gt;
+&lt;li&gt;コンピュータプログラミング&lt;/li&gt;
+&lt;li&gt;電子回路CAD&lt;/li&gt;
+&lt;li&gt;電気工学実験I, III&lt;/li&gt;
+&lt;li&gt;電気工学演習I, II&lt;/li&gt;
+&lt;li&gt;卒業研究&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;資料&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/eiichiromomma/CVMLAB/raw/master/other/WordEqn3x.pdf"&gt;Wordで数式を楽に作る&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/RSJ2011"&gt;Introducing OpenCV for Developers&lt;/a&gt; (RSJ2011でのOpenCVの紹介)&lt;/li&gt;
+&lt;li&gt;(古) &lt;a href="https://github.com/eiichiromomma/CVMLAB/raw/master/other/201103Momma_2.pdf"&gt;OpenCVのリリース動向&amp;amp;Yahoo! Groups&lt;/a&gt; (コンピュータビジョン勉強会\@関東 OpenCV祭り)&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 13 Dec 2013 00:11:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-13:/2013/12/13/門馬-英一郎-eiichiro-momma/</guid><category>このBlog</category></item><item><title>お問い合わせ</title><link>https://eiichiromomma.github.io/2013/12/13/%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B/</link><description>&lt;p&gt;講義、研究に関する問い合わせ、見学の申し込みは下記へお願いします。&lt;/p&gt;
+&lt;p&gt;e-mail: momma.eiichiro@nihon-u.ac.jp&lt;/p&gt;
+&lt;p&gt;tel: 03-3259-0784&lt;/p&gt;
+&lt;p&gt;オフィスアワー: 水曜12:00-13:00 駿河台キャンパス タワー・スコラ15階 S1503室(コロナ禍中はZoomです)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 13 Dec 2013 00:10:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-13:/2013/12/13/お問い合わせ/</guid><category>このBlog</category></item><item><title>研究</title><link>https://eiichiromomma.github.io/2013/12/13/%E7%A0%94%E7%A9%B6/</link><description>&lt;h2&gt;燻焼火災検知&lt;/h2&gt;
+&lt;p&gt;炎を画像から検知する場合、その色や明るさがヒントになります。いっぽうで、煙がうっすらと発生するだけの燻焼火災もあります。本研究ではそのような燻焼火災を迅速かつシンプルに検知する方法を研究しています。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/ps1.png"&gt;&lt;img alt="ps1" height="200" src="https://eiichiromomma.github.io/images/uploads/2013/12/ps1.png" width="300"&gt;&lt;/a&gt; &lt;img alt="ps2" class="alignnone size-full wp-image-90" height="176" src="https://eiichiromomma.github.io/images/uploads/2013/12/ps2.png" width="300"&gt; 燻焼火災と特徴を抽出した結果&lt;/p&gt;
+&lt;h2&gt;鋼構造物の劣化診断&lt;/h2&gt;
+&lt;p&gt;写真は看板の支柱で、風雨などで錆びて徐々に弱りますが、私たちは知識や経験からいとも簡単に壊れそうだと見て判断できます。それがなぜか？　を考えて、コンピュータに教えることで、錆の程度を自動評価しています。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/13_b.gif"&gt;&lt;img alt="13_b" height="131" src="https://eiichiromomma.github.io/images/uploads/2013/12/13_b.gif" width="178"&gt;&lt;/a&gt; &lt;img alt="13_c" class="alignnone size-full wp-image-88" height="132" src="https://eiichiromomma.github.io/images/uploads/2013/12/13_c.gif" width="178"&gt;  左:錆びた鋼構造物、右: 総合的な評価の結果&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 13 Dec 2013 00:10:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-13:/2013/12/13/研究/</guid><category>このBlog</category></item><item><title>研究室について</title><link>https://eiichiromomma.github.io/2013/12/13/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h1&gt;Computer Vision and Measurement Lab.&lt;/h1&gt;
+&lt;h2&gt;計測と画像処理&lt;/h2&gt;
+&lt;p&gt;卒業研究で日本大学理工学部電気工学科 計測工学研究室へ配属となり、石井弘允先生(現名誉教授)と小野先生に師事しました。与えられたテーマはダム建築現場でボーリング孔内を撮影した映像から岩盤の境界を自動抽出し、その傾斜と方向を算出する事でした。&lt;/p&gt;
+&lt;p&gt;プログラミングと画像処理を手探りで学び、奇麗な対象物ではない"in the wild"での画像計測には悩まされました。講義の時間以外は図書館の書庫に潜って信学論や電学論を読み漁り(当時はciniiもGoogle Scholarも無かった)、面白そうな論文を見つけては実装してテストをする繰り返しでした(その甲斐あってか離散的なSnakesを使った輪郭抽出処理を円筒に適用する手法を考え、全国大会で発表しその後論文になりました)。&lt;/p&gt;
+&lt;p&gt;博士前期課程に進学してからは主に人が感覚で測っていた物事の画像解析による自動化が主体のテーマを任され、コンピュータ内で完結してしまいがちな画像を扱う分野にも関わらず、"in the wild"な対象物を扱い、実世界への出力が求められる計測の面白さを教わりました。&lt;/p&gt;
+&lt;h2&gt;Computer Vision&lt;/h2&gt;
+&lt;p&gt;その後画像処理の分野は様々な分野と融合して急激な発展を遂げ、今はコンピュータビジョンというコンピュータに「目」だけでなく脳の機能を併せた「視覚」についての研究がさかんに行われています。&lt;/p&gt;
+&lt;p&gt;そんな「視覚」と計測の分野を融合するような研究を目指してComputer Vision and Measurement Lab.としました。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 13 Dec 2013 00:10:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-13:/2013/12/13/研究室について/</guid><category>このBlog</category></item><item><title>優秀研究発表賞</title><link>https://eiichiromomma.github.io/2013/12/06/%E5%84%AA%E7%A7%80%E7%A0%94%E7%A9%B6%E7%99%BA%E8%A1%A8%E8%B3%9E/</link><description>&lt;p&gt;お世話になっている人もいる小野研M1の千田君が、12/5に開催された照明学会東京支部大会で優秀研究発表賞を受賞しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/-1.jpg"&gt;&lt;img alt="千田君" class="alignnone size-medium wp-image-37" height="300" src="https://eiichiromomma.github.io/images/uploads/2013/12/-1-208x300.jpg" width="208"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 06 Dec 2013 00:04:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-06:/2013/12/06/優秀研究発表賞/</guid><category>News</category></item><item><title>お土産(先着12名)</title><link>https://eiichiromomma.github.io/2013/12/01/%E3%81%8A%E5%9C%9F%E7%94%A3%E5%85%88%E7%9D%8012%E5%90%8D/</link><description>&lt;p&gt;小野研のOBからお土産を貰いました。先着12名です。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 01 Dec 2013 00:03:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-12-01:/2013/12/01/お土産先着12名/</guid><category>News</category></item><item><title>全員の進路が確定</title><link>https://eiichiromomma.github.io/2013/11/30/%E5%85%A8%E5%93%A1%E3%81%AE%E9%80%B2%E8%B7%AF%E3%81%8C%E7%A2%BA%E5%AE%9A/</link><description>&lt;p&gt;無事に9月卒業、3月卒業予定の学部生メンバー全員の進路が確定しました。&lt;/p&gt;
+&lt;p&gt;卒業目指して頑張りましょう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 30 Nov 2013 00:02:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-11-30:/2013/11/30/全員の進路が確定/</guid><category>News</category></item><item><title>MATLABライセンスサーバのリプレース</title><link>https://eiichiromomma.github.io/2013/11/17/matlab%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E3%82%B5%E3%83%BC%E3%83%90%E3%81%AE%E3%83%AA%E3%83%97%E3%83%AC%E3%83%BC%E3%82%B9/</link><description>&lt;p&gt;11月23日(土) (月曜授業日)にMATLABのライセンスサーバのリプレースを予定しています。&lt;/p&gt;
+&lt;p&gt;当日はMATLABが使えなくなりますので気を付けて下さい。&lt;/p&gt;
+&lt;p&gt;※延期になりました&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 17 Nov 2013 00:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-11-17:/2013/11/17/matlabライセンスサーバのリプレース/</guid><category>ゼミ</category></item><item><title>電気工学科スポーツ大会</title><link>https://eiichiromomma.github.io/2013/10/30/%E9%9B%BB%E6%B0%97%E5%B7%A5%E5%AD%A6%E7%A7%91%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E5%A4%A7%E4%BC%9A/</link><description>&lt;p&gt;クラス担任として1年生の応援+研究室メンバーの応援(誰も居なかった。。。)で参加したのですが133+160で5位になっちゃいました。教員なのに申し訳ない。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/IMGP0666_s.jpg"&gt;&lt;img alt="IMGP0666_s" class="alignnone size-medium wp-image-8" height="300" src="https://eiichiromomma.github.io/images/uploads/2013/12/IMGP0666_s-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 30 Oct 2013 23:58:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-10-30:/2013/10/30/電気工学科スポーツ大会/</guid><category>News</category></item><item><title>卒研着手予定者への連絡</title><link>https://eiichiromomma.github.io/2013/10/30/%E5%8D%92%E7%A0%94%E7%9D%80%E6%89%8B%E4%BA%88%E5%AE%9A%E8%80%85%E3%81%B8%E3%81%AE%E9%80%A3%E7%B5%A1/</link><description>&lt;p&gt;門馬研の卒業研究着手予定者は 11月6日(水)までに電気事務室前に掲示されている門馬のアドレスへ連絡先を送って下さい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 30 Oct 2013 23:57:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-10-30:/2013/10/30/卒研着手予定者への連絡/</guid><category>News</category></item><item><title>9月卒業生の卒業式</title><link>https://eiichiromomma.github.io/2013/09/25/9%E6%9C%88%E5%8D%92%E6%A5%AD%E7%94%9F%E3%81%AE%E5%8D%92%E6%A5%AD%E5%BC%8F/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5654.jpg"&gt;&lt;img alt="IMG_5654" class="alignnone size-medium wp-image-7" height="200" src="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5654-300x200.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;卒業の2名が無事卒業。社会へ巣立って行きました。二人の今後に期待しています。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 25 Sep 2013 10:54:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-09-25:/2013/09/25/9月卒業生の卒業式/</guid><category>News</category></item><item><title>2013年度 研修旅行</title><link>https://eiichiromomma.github.io/2013/09/04/2013%E5%B9%B4%E5%BA%A6-%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C/</link><description>&lt;h1&gt;研修旅行に行ってきました&lt;/h1&gt;
+&lt;h2&gt;9月卒業者の卒研発表会&lt;/h2&gt;
+&lt;p&gt;9月3日から1泊2日で軽井沢研修所へ研修旅行に行ってきました。メインイベントは9月卒業者の川崎君、日吉君の卒研発表会で、二人ともしっかり成果発表をしてくれました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5622.jpg"&gt;&lt;img alt="IMG_5622" class="alignnone size-medium wp-image-6" height="176" src="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5622-300x176.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5454.jpg"&gt;&lt;img alt="IMG_5454" class="alignnone size-medium wp-image-5" height="200" src="https://eiichiromomma.github.io/images/uploads/2013/12/IMG_5454-300x200.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 04 Sep 2013 23:51:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2013-09-04:/2013/09/04/2013年度-研修旅行/</guid><category>ゼミ</category></item></channel></rss>

@@ -10,8 +10,7 @@ article { padding-left:1em; }
 
 /* Base.html - top navigation */
 .top-bar {
-/* 2BA6E3 #2B0034 */
-background: #2B0034; /* Header color */
+background: #2BA6E3; /* Header color */
 height: 100%; 
 margin-bottom: 1em; 
 }
@@ -62,16 +61,12 @@ hr.gradient {
 
 /* Syntax Highlighting */
 .highlight > pre {
-	word-wrap: normal;
-	white-space: pre;
-	margin-top: 1em;
-	margin-bottom: 1em;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	background: #e0e0e0;
-	padding: 1em;
-	overflow: auto;
-	font-weight:normal;
+word-wrap: normal;
+white-space: pre;
+margin-top: 1em;
+margin-bottom: 1em;
+border: 1px solid #ccc;
+background: #073642;
+padding: 1em;
+overflow: auto;
 }
-
-body { background-color: #fffff9; }
