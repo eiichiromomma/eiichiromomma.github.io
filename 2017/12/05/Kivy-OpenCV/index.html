@@ -2,20 +2,23 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
         <title>KivyでOpenCV</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
+        <meta name="description" content="OpenCV with Kivy" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">eiichiro Blog </a></h1>
+                <h1><a href="/">CVMLAB Blog</a></h1>
                 <nav><ul>
                     <li class="active"><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
@@ -29,7 +32,7 @@
     <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-05T08:00:00+09:00">
-                Published: 火 05 12月 2017
+                Published: 2017-12-05(火)
         </abbr>
 
         <address class="vcard author">
@@ -48,7 +51,7 @@
 <p>こんな感じでWebCAM-スライダ-ボタンという並び。KivyのSliderは何故かラベルが無いのでちょっと工夫して付け足してる。</p>
 <p>構造としてはAppを継承したメインのクラスがあり，buildでUIの構築(と初期設定)，SliderとButtonにbindしたコールバック，Clock.schedule_intervalで指定してるupdateで更新。
 update内でOpenCV周りの処理を行なってImageのtextureを書き換えて表示といった流れになる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
@@ -95,7 +98,7 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
     <span class="k">def</span> <span class="nf">buttonCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="c1"># 何かのフラグに使える</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Buttn &lt;</span><span class="si">%s</span><span class="s1">&gt; is pressed.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Buttn &lt;</span><span class="si">%s</span><span class="s1">&gt; is pressed.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># 基本的にここでOpenCV周りの処理を行なってtextureを更新する</span>
@@ -107,7 +110,7 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">CvCamera</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>
@@ -120,7 +123,9 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
                             <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
-                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
@@ -135,10 +140,10 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>CVMLAB Blog - momma</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">CVMLAB Blog</a></h1>
+                <nav><ul>
+                    <li><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2021/11/28/研究室への問い合わせと2020-2021の状況について/">研究室への問い合わせと2020-2021の状況について</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2021-11-28T10:59:00+09:00">
+                Published: 2021-11-28(日)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/news.html">News</a>.</p>
+
+</footer><!-- /.post-info --><h2>研究室への問い合わせ</h2>
+<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマセン。
+質問受け付けは<strong>全てZoomで実施します</strong>。(Zoom URLはドライブの方に掲示)</p>
+<ul>
+<li>12/4(土) 11:00-12:00 </li>
+<li>12/6(月) 17:00-18:00 </li>
+<li>12/7(火) 12:00-13:00 </li>
+<li>時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡</li>
+</ul>
+<h2>近況</h2>
+<p>コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
+写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。</p>
+<p>緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。</p>
+<ul>
+<li>学生の研究室への登校は任意(要事前申請)</li>
+<li>連絡はコロナ禍の前からSlack (<a href="https://slack.com/intl/ja-jp/help/articles/206646877-Slack-%E3%81%AE%E6%95%99%E8%82%B2%E6%94%AF%E6%8F%B4%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AE%E5%89%B2%E5%BC%95%E3%81%AB%E7%94%B3%E3%81%97%E8%BE%BC%E3%82%80">教育支援プログラム</a>をありがたく使わせて貰ってます)</li>
+<li>ゼミはZoomでのリモート</li>
+<li>個別のミーティングは研究室で対面だったりZoomだったり</li>
+</ul>
+<h2>研究室Webサーバー(Wordpress)の移設</h2>
+<p>先日サーバーPCの置いてあった建屋で停電が起き，再起動出来たり出来なかったりと不安定な状況になりました。
+厄介なことに研究室や自宅にサーバPCを持って帰って検証しようとすると起動して，建屋で再開させようとすると起動しない。
+Wordpressで運用してるのですが，過去のサーバー移設の際もかなり面倒だったのと，放置してたgithubioのブログでの<a href="https://github.com/getpelican/pelican">Pelican</a>がmarkdown記述でかなり楽なのもあってこれを機会にWordpressを辞めてPelican運用に変更しました。(移設については別記事で)</p>
+<p>という訳で技術メモも含めた研究室のWebページという扱いで運用して行きます。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2021/11/27/wordpress-to-pelican/" rel="bookmark"
+                           title="Permalink to Wordpress to Pelican">Wordpress to Pelican</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-11-27T19:20:00+09:00">
+                Published: 2021-11-27(土)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+
+</footer><!-- /.post-info -->                <p>WordpressからPelicanへの移行メモ</p>
+<h2>前置き</h2>
+<ul>
+<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
+<li>本体は持ち運び可能なNUC</li>
+<li>IPは固定のグローバル</li>
+</ul>
+<h2>サーバが起動してるうちにバックアップ</h2>
+<h3>IPの取得をDHCPに</h3>
+<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。</p>
+<h3>嘘吐きサーバと嘘付きクライアント</h3>
+<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
+<ol>
+<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
+<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
+</ol>
+<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
+<h3>xmlをエクスポート</h3>
+<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var …</p>
+                <a class="readmore" href="/2021/11/27/wordpress-to-pelican/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2020/07/31/前期が終わりました/" rel="bookmark"
+                           title="Permalink to 前期が終わりました">前期が終わりました</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2020-07-31T08:48:00+09:00">
+                Published: 2020-07-31(金)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/news.html">News</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>コロナ禍で久々の更新です。卒業式もなく学位記伝達のみだったり，学部生は4正式に配属されてから一度も研究室に来てなかったりと特殊な状況ですが，M1, M2は入構可となってから1ヶ月くらいでリカバリーしてもらうところです。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+
+<!-- wp:jetpack/slideshow {"ids":["791","792","793","794"],"sizeSlug":"full"} -->
+
+<p><img alt="None" class="alignnone size-medium wp-image-507" src="/images/uploads/2020/07/SDIM0634_Original-1-scaled.jpeg" width="600"></p>
+<p><img alt="None" class="alignnone size-medium wp-image-507" src="/images/uploads/2020/07/IMG_1581-1-scaled.jpeg" width="600"></p>
+<p><img alt="None" class="alignnone size-medium wp-image-507" src="/images/uploads/2020/07/IMG_1585-1-scaled.jpeg" width="600"></p>
+<p><img alt="None" class="alignnone size-medium wp-image-507" src="/images/uploads/2020/07/0cd864550951e7111ba9ae1c4ab7c82a-1-scaled.jpeg" width="600"></p>
+<!-- /wp:jetpack/slideshow -->
+
+<!-- wp:paragraph -->
+
+<p>講義は全てオンデマンド式の講義で曜日無関係な収録の日々ではあるものの，そこは画像が専門なので，タダでは転ばず<a href="https://github.com/eiichiromomma/CVMLAB/wiki/%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%88%E8%AC%9B%E7%BE%A9">ノウハウを溜めました</a>ので，皆さんも参考にして下さい。お陰で自宅にクロマキー環境まで作ってYoutuber状態ですが。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>まだタワー・スコラに来たことすら無い2年生もいるかも知れませんので(?)，3Dモデルを噂の3D Scanner Appで作ってみました。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:video -->
+
+<iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="640" height="476" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<!-- /wp:video -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+                <a class="readmore" href="/2020/07/31/前期が終わりました/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2020/02/27/卒研発表会2020/" rel="bookmark"
+                           title="Permalink to 卒研発表会2020">卒研発表会2020</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2020-02-27T18:15:00+09:00">
+                Published: 2020-02-27(木)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>例年だとB3と師匠の名誉教授にご参加頂き開催するところですが，例の肺炎対策ということで門馬とのポスターを使った試問ということにしました(距離は取ってます)。B3はネットでポスターを確認して Sli.do で質疑という試みもしました。今年度は上から水が降ったせいでリソースを大幅に取られたり色々ありましたが，どうにかM0の2名が研究会にも出せたし何とかなりました。皆様お疲れ様でした。Cavaで乾杯だけして解散。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":782,"sizeSlug":"large"} -->
+
+<p><img alt="None" src="/images/uploads/2020/03/IMG_1545.jpeg" width="600"></p>
+<!-- /wp:image -->
+                <a class="readmore" href="/2020/02/27/卒研発表会2020/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2020/01/30/卒論下見発表会/" rel="bookmark"
+                           title="Permalink to 卒論下見発表会">卒論下見発表会</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2020-01-30T17:12:00+09:00">
+                Published: 2020-01-30(木)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>卒論も大詰めということで下見発表会を開催しました。打ち上げも開催したいところですが，テストに追われていたり前日まで無理をしている人もいたりということで，昼にピザを差し入れするだけにしておきました。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":777,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00529.jpeg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":778,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00531.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":779,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00534.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+                <a class="readmore" href="/2020/01/30/卒論下見発表会/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2019/12/19/忘年会/" rel="bookmark"
+                           title="Permalink to 忘年会">忘年会</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-12-19T20:10:00+09:00">
+                Published: 2019-12-19(木)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/news.html">News</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>数日前に飲み会をやったばかりですが，今度はB4+院生の忘年会。たまたまM1の誕生日ということでケーキでお祝い。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":773,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00524.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":774,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00528.jpg" width="600"></p>
+<!-- /wp:image -->
+                <a class="readmore" href="/2019/12/19/忘年会/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2019/12/16/B3/" rel="bookmark"
+                           title="Permalink to B3自己紹介LT飲み会">B3自己紹介LT飲み会</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-12-16T20:08:00+09:00">
+                Published: 2019-12-16(月)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>仮配属が決定した3年生を集めて，自己紹介LT飲み会を開催しました。例年誰かしら欠けてて何度も自己紹介LTをやってますが，今度の3年生は集りが良く全員揃いました。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":768,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00504.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":769,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00513.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":770,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00515.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+                <a class="readmore" href="/2019/12/16/B3/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2019/11/21/進捗報告飲み会2019-11/" rel="bookmark"
+                           title="Permalink to 進捗報告+飲み会2019-11">進捗報告+飲み会2019-11</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-11-21T19:02:00+09:00">
+                Published: 2019-11-21(木)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>研究の進捗報告会+飲み会でした。飲み会は人が少なく院生+M0で。ペプシが24本当たったとかでM1が配布中。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":763,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/0cd864550951e7111ba9ae1c4ab7c82a.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":764,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00499.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":765,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00502.jpg" width="600"></p>
+<!-- /wp:image -->
+                <a class="readmore" href="/2019/11/21/進捗報告飲み会2019-11/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2019/09/20/研究室見学について/" rel="bookmark"
+                           title="Permalink to 研究室見学について">研究室見学について</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-09-20T18:42:00+09:00">
+                Published: 2019-09-20(金)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>仮着手の季節が来ました。見学は以下の時間に受付けています。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>9/21(土) -16:00</li>
+<li>9/25(水) 11:30-13:00</li>
+<li>9/27(金) 11:30-13:00</li>
+<li>9/28(土) 11:00-12:30</li>
+<li>10/6(土) 電気工学科オープンラボ 9:30-17:00</li>
+<li>10/9(水) 11:30-13:00</li>
+<li>10/11(金) 11:30-13:00</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>これら以外の場合は事前にアポイントを取ってくれると助かります</p>
+<!-- /wp:paragraph -->
+                <a class="readmore" href="/2019/09/20/研究室見学について/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2019/09/10/研修旅行2019/" rel="bookmark"
+                           title="Permalink to 研修旅行2019">研修旅行2019</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-09-10T19:56:00+09:00">
+                Published: 2019-09-10(火)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/ゼミ.html">ゼミ</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>今年の研修旅行は日帰りで恵比須の東京都写真美術館を見た後にヱビスビール記念館に行って，夜はバーベキューでした。外で飲み食いするのもたまには良いもんです。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":760,"sizeSlug":"large"} -->
+
+<p><img alt="None" class="alignnone" src="/images/uploads/2020/03/DSC00473.jpg" width="600"></p>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+                <a class="readmore" href="/2019/09/10/研修旅行2019/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 17
+        <a href="/author/momma2.html">&raquo;</a>
+        <a href="/author/momma17.html">&#8649;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -2,29 +2,134 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - Memo</title>
+        <meta name="generator" content="Pelican" />
+        <title>CVMLAB Blog - Memo</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">eiichiro Blog </a></h1>
+                <h1><a href="/">CVMLAB Blog</a></h1>
                 <nav><ul>
                     <li class="active"><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2017/12/28/librealsense/">macOSでRealsense</a></h1>
+                    <h1 class="entry-title"><a href="/2021/11/27/wordpress-to-pelican/">Wordpress to Pelican</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2021-11-27T19:20:00+09:00">
+                Published: 2021-11-27(土)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/momma.html">momma</a>
+        </address>
+<p>In <a href="/category/memo.html">Memo</a>.</p>
+
+</footer><!-- /.post-info --><p>WordpressからPelicanへの移行メモ</p>
+<h2>前置き</h2>
+<ul>
+<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
+<li>本体は持ち運び可能なNUC</li>
+<li>IPは固定のグローバル</li>
+</ul>
+<h2>サーバが起動してるうちにバックアップ</h2>
+<h3>IPの取得をDHCPに</h3>
+<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。</p>
+<h3>嘘吐きサーバと嘘付きクライアント</h3>
+<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
+<ol>
+<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
+<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
+</ol>
+<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
+<h3>xmlをエクスポート</h3>
+<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)</p>
+<h3>pelican-import</h3>
+<p>python環境でpelicanが使える前提。importツールも勝手に入る。</p>
+<div class="highlight"><pre><span></span><code><span class="n">pelican</span><span class="o">-</span><span class="kn">import</span> <span class="o">--</span><span class="nb">dir</span><span class="o">-</span><span class="n">cat</span> <span class="o">--</span><span class="n">wpfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">wpoutput</span> <span class="o">-</span><span class="n">m</span> <span class="n">markdown</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">slugs</span> <span class="o">../</span><span class="n">cvmlab</span><span class="o">.</span><span class="n">WordPress</span><span class="o">.</span><span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mf">27.</span><span class="n">xml</span>
+</code></pre></div>
+
+<ul>
+<li>--dir-cat: Wordpressでのカテゴリごとにフォルダを掘って出力</li>
+<li>--wpfile: Wordpressからのコンバート</li>
+<li>-o wpoutput: wpoutputフォルダに出力</li>
+<li>-m markdown: Markdown形式で出力</li>
+<li>--disable-slugs: Pelicanはslugをファイル名やフォルダ名に使うのでWordpressのは使わないよう指定しないと後でカオスになる</li>
+</ul>
+<p>という感じでカテゴリごとにフォルダが掘られ，mdファイルが配置される。
+エラーが出たらipythonを起動し，</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">run</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">pelican</span><span class="o">-</span><span class="kn">import</span> <span class="o">--</span><span class="n">wpfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span> <span class="o">-</span><span class="n">m</span> <span class="n">markdown</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">slugs</span> <span class="o">../</span><span class="n">cvmlab</span><span class="o">.</span><span class="n">WordPress</span><span class="o">.</span><span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mf">27.</span><span class="n">xml</span>
+</code></pre></div>
+
+<p>という感じで実行し，その後で</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">debug</span>
+</code></pre></div>
+
+<p>とするとデバッガに入れる。大抵itemsに詰まったデータのitemを処理してる最中に起きるので，</p>
+<div class="highlight"><pre><span></span><code><span class="n">item</span>
+</code></pre></div>
+
+<p>でエラーが発生したitemの中身を表示して，Visual Studio Code等のエディタでxmlを開き該当箇所を探すと変な文字が紛れてたりするので消す。また実行してエラーが出なくなるまで繰り返し。</p>
+<h3>整形諸々</h3>
+<p>一応出力できたが問題は山積み</p>
+<ul>
+<li>-e0----.mdみたいなファイル名になりコマンド実行時にオプション扱いされる<ul>
+<li>multi-byteな文字の問題だろうが以後コマンドでファイル名を指定する作業の際に--(ハイフン二つ)を前に置くとファイル名として扱ってくれる</li>
+<li>pelicanで変換する際は問題にならないので放置</li>
+</ul>
+</li>
+<li>Pelicanはカテゴリは1つだけという制限<ul>
+<li>色々手はあるが組合せが面倒なので全部開いて手作業で一つにした</li>
+<li>Tagsは複数指定できるらしいが今後1つだけにすれば良いやということでそのまま</li>
+</ul>
+</li>
+<li>画像のリンクはwordpress内へのリンクのまま(当たり前)<ul>
+<li>gsedで一気に置換する</li>
+<li>sedでは"/"の代わりに別のセパレータ("|"とか)を指定すればURLをそのまま置換できる<ul>
+<li>Pelicanで使うcotnents/imagesの中にuploadsフォルダをまんまコピーしておく</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>find . -type f <span class="p">|</span> xargs gsed -i.bak -e <span class="s2">&quot;s|https://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/|{static}/images/|g&quot;</span>
+</code></pre></div>
+
+<p>で後は全ページチェックしておかしなところを直していくしか無いのだが，過去記事なので致命的な問題の指摘が来たら直すってことで。</p>
+<h3>あとはPelicanの通常作業</h3>
+<div class="highlight"><pre><span></span><code>make html
+make serve
+</code></pre></div>
+
+<p>でlocalhost:8000を開いて確認。</p>
+<p>問題無ければリリースする。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017/12/28/librealsense/" rel="bookmark"
+                           title="Permalink to macOSでRealsense">macOSでRealsense</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-28T19:00:00+09:00">
-                Published: 木 28 12月 2017
+                Published: 2017-12-28(木)
         </abbr>
 
         <address class="vcard author">
@@ -32,555 +137,10 @@
         </address>
 <p>In <a href="/category/memo.html">Memo</a>.</p>
 <p>tags: <a href="/tag/realsense.html">Realsense</a> <a href="/tag/opencv.html">OpenCV</a> <a href="/tag/python.html">Python</a> <a href="/tag/pcl.html">PCL</a> </p>
-</footer><!-- /.post-info --><p>CreativeのSenz3dがmacOSでも使えるらしいので試してみた。</p>
-<h1>インストール(macOS)</h1>
-<p><a href="https://github.com/IntelRealSense/librealsense">librealsense</a>は公式サポートではないがIntel謹製のライブラリらしい。
-Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/IntelRealSense/librealsense.git
-mkdir build
-<span class="nb">cd</span> build
-ccmake ..
-</pre></div>
-
-
-<p>で</p>
-<ul>
-<li>BUILD_CV_EXAMPLES: OpenCVの実装例</li>
-<li>BUILD_PCL_EXAMPLES: PCL(Point Cloud Library)の実装例</li>
-<li>BUILD_PYTHON_BINDINGS: Python用のpackage(Python3)</li>
-</ul>
-<p>をONにして，</p>
-<ul>
-<li>BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと</li>
-</ul>
-<p>をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。</p>
-<div class="highlight"><pre><span></span>-- Installing: /usr/local/lib/librealsense-file.a
--- Installing: /usr/local/bin/rs-capture
--- Installing: /usr/local/bin/rs-save-to-disk
--- Installing: /usr/local/bin/rs-multicam
--- Installing: /usr/local/bin/rs-pointcloud
--- Installing: /usr/local/bin/rs-align
--- Installing: /usr/local/bin/rs-sensor-control
--- Installing: /usr/local/bin/rs-depth
--- Installing: /usr/local/bin/rs-color
--- Installing: /usr/local/bin/rs-distance
--- Installing: /usr/local/bin/rs-terminal
--- Installing: /usr/local/bin/rs-enumerate-devices
--- Installing: /usr/local/bin/realsense-viewer
--- Installing: /usr/local/bin/rs-data-collect
--- Installing: /usr/local/bin/rs-depth-quality
--- Installing: /usr/local/bin/live-test
--- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so
--- Installing: /usr/local/bin/rs-imshow
--- Installing: /usr/local/bin/rs-grabcuts
--- Installing: /usr/local/bin/rs-latency-tool
--- Installing: /usr/local/bin/rs-dnn
--- Installing: /usr/local/bin/rs-pcl
-</pre></div>
-
-
-<p>という感じに面白いサンプルも入る。</p>
-<h1>サンプル</h1>
-<p>下のWrapperのサンプル以外のrs-*がそれ。名前のまんまなのでそれぞれ実行すると分かる。
-realsense-viewerは至れり尽せり。</p>
-<h1>Pythonパッケージ</h1>
-<p>pythonのpyrealsense2は適切な場所に置く必要がある。例えば</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> /usr/local/lib/python3.6/site-packages/
-ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
-ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
-</pre></div>
-
-
-<p>のような感じで使える。</p>
-<h1>Wrapperのサンプル</h1>
-<ul>
-<li>rs-imshow: OpenCVのサンプル(imshow)</li>
-<li>rs-grabcuts: OpenCVのサンプル(Grabcutsの実装)</li>
-<li>rs-latency-tool: OpenCVのサンプルだがmacOSが白画面で応答しなくなった</li>
-<li>rs-dnn: OpenCVのサンプル(SSD+距離計測, build/wrappers/opencv/dnnへ移動して実行)</li>
-<li>rs-pcl: PCLのサンプル</li>
-</ul>
-<h1>Pythonパッケージの使用例</h1>
-<p><a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python">ここ</a>のを少し弄って動くようにした。</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyrealsense2</span> <span class="kn">as</span> <span class="nn">rs</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
-<span class="n">pipeline</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">wait_for_frames</span><span class="p">()</span>
-    <span class="n">depth</span> <span class="o">=</span> <span class="n">frames</span><span class="o">.</span><span class="n">get_depth_frame</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">depth</span><span class="p">:</span> <span class="k">continue</span>
-    <span class="n">coverage</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">64</span>
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">480</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">640</span><span class="p">):</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="n">depth</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">dist</span> <span class="ow">and</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">coverage</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">y</span><span class="o">%</span><span class="mi">20</span> <span class="ow">is</span> <span class="mi">19</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coverage</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; .:nhBXWW&quot;</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="mi">25</span><span class="p">)]</span>
-            <span class="n">coverage</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">64</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</pre></div>
-
-
-<p>で距離画像をASCII Art化して表示してくれる。
-ローテク加減が面白い。
-※固定長フォントでお楽しみ下さい</p>
-<div class="highlight"><pre><span></span>                                    .
-                                  nWBnBWWX:
-                               h :WWWWWWWWWn.
-                               WnWWWWWWWWWWWB
-                             .nXhWWWWWWWWWWWW:
-                         .:hWWWWhWWWWWWWWWWWW:
-                    :WXBXXWWWWWW:hWWWWWWWWWWn n: .
-                   nWWWWWWWWWWWWX.:hhBXXh:n. XWWXX
-                  hWWWWWWWWWWWWWWX: hWBh: .:WWWWWBB
-                 :WWWWWWWWWWWWWWXWWB:.. :BWWWWWXnXX
-                 XWWWWWBhWWWWWWWWWWWWWWWWWWWWWW:hB.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                  nWX:hWWX:
-                               B :WWWWWWWWWn.
-                               WnWWWWWWWWWWWB
-                             .:XhWWWWWWWWWWWW.
-                          .hWWWWnWWWWWWWWWWWW:
-                    :XBhBXWWWWWW:hWWWWWWWWWWn n.
-                   hWWWWWWWWWWWWB :BhBXXh:n: XWWXB
-                  hWWWWWWWWWWWXWWX: hWXhn .:WWWWWhX
-                 .WWWWWWWWWWWWWWWWWB:.  :BWWWWWWnBh
-                 BWWWWXBhWWWWWWWXWWWWWWWWWWWWWWhXB:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                  BWnnBWWB
-                              :. hWWWWWWWWX.
-                               WnWWWWWWWWWWXh
-                              :XBWWWWWWWWWWWX.
-                          .BWWWXnWWWWWWWWWWWW
-                    nXBhBBWWWWWW.XWWWWWWWWWW..n.
-                   hWWWWWWWWWWWWn hhBBXXhnh.:WWWXB
-                  hWWWWWWWWWWWXWWh  WWXh: .nWWWWXBh
-                 :WWWWWWWWWWWWWXWWWh..  nXWWWWWXhWB.
-                 XWWWWWBhWWWWWWWXWWWWWWWWWWWWWXnBBn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                  XW.nBWWB
-                              n. BWWWWWWWWh:
-                              :WnWWWWWWWWWWXn
-                              hWBWWWWWWWWWWWX
-                          :BWWWBnWWWWWWWWWWWW
-                    nBhhBXWWWWWW:XWWWWWWWWWW.:n..
-                   BWWWWWWWWWWWWn hBBXXXnnh :WWWBB
-                  hWWWWWWWWWWWXWWh. WWXh. .nWWWWXBn
-                 .WWWWWWWWWWWWWXWWWh..  nBWWWWWXhXh
-                 XWWWWWXBWWWWWWWXWWWWWWWWWWWWWWnhn
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                       .
-                                 :WhnXWWW:
-                              n :WWWWWWWWWBn.
-                              BhBWWWWWWWWWWX:
-                              hhWWWWWWWWWWWWh
-                          :BWWXnBWWWWWWWXWWWn
-                    :BBhhWWWWWWX:XWWWWWWWWWB :n:
-                   hWWWWWWWWWWWWn hnBBXX::: hWWWBB
-                  hWWWWWWWWWWWXWWB..WWhn. nBWWWWWBh
-                 :WWWWWWWWWWWWWXWWWB:...hXWWWWWXhXh.
-                 XWWWWWXXWWWWWWWXWWWWWWWWWWWWWXhXB.
-
-
-
-
-
-
-
-
-
-
-
-                                  BB:
-                              .hhWWWWWBn.
-                              XWWWWWWWWXh
-                            ..WWWWWWWWWWWW
-                            nBWWWWWWWWWWWW
-                             hBWWWWWWWWWWX
-                           :hB.nXXhXWWXnn
-                        :XWWWWX:. WWWWWn  XWB.
-                   .XWWWWWWWWWXWB. ::. .nWWWWWXh.
-                  .WWWWWWWWWWWXWWWWBhBXWWWWWWWWWWn.
-                 .WWWWWWWWWWWWWXWWWWWXWWWWWWWWWWWWX
-                 BWWWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWh.
-                 XWWWWh:BWWWWWWWWWWWWWWWWWWBhh:XWn
-
-
-
-
-
-
-
-
-
-
-
-                               nXX.
-                            :hXWWWWWBnn
-                            WWWWWWWWWWB:
-                          :nWWWWWWWWWWWW
-                           BWWWWWWWWWWWW
-                           nBWWWWWWWWWWX
-                         .nB.nWBXWWWBn:  :
-                      .hWWWWX: .WWWWW: .XWWXn.
-                  .XWWWXWWWWWWB:.::. :BBWWWWWWWn
-                 :WWWWWWWWWWXWWWWBBXWWWBWWWWWWWWWh
-                .WWWWWWWWWWWWWXWWWWXXWWWWWWWWWWWWW:
-                hWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWB
-                XWWWXnnXWWWWWWWWWWWWWWWWWWWXhhXWBh
-
-
-
-
-
-
-
-
-
-
-
-                              :Bh:
-                           .nBWWWWWXhh:
-                           BWWWWWWWWWXh
-                          :XWWWWWWWWWWWh
-                          .BWWWWWWWWWWWh
-                           :WWWWWWWWWWW:
-                         nBB.BBhXWWXB:  nh:
-                     .:hWWWWh. BWWWWh .BWWWXh:.
-                  .XWWWWWWWWXWB..:.  BWWWWWWWWWB
-                 :WWWWWWWWWWWWWWWBBBXWXWWWWWWWWWWh
-                .WWWWWWWWWWWWhXWWWWXXWWWWWWWWWWWWWh
-                hWWWWWWWWWWWWWWWWXWWWWWWWWWWWWWWWXh
-                BWWWX: hBWWWWWWWWWWWWWWWWWWX:hXWhn:
-
-
-
-
-
-
-
-
-
-
-
-                                :B:
-                              :hXWWWWh
-                             .hWWWWWWWX
-                             nhWWWWWWWW.
-                               nBBXXBn.
-                            . .. hWXX
-                        hB...XXWBn...nWh:. .n.
-                      hWWWWXWWWBWWWWWWWWWhBWW.
-                     :WWWWWWWWWWWWWWWWWWWWXWXn:
-                     hWWWWWWWWWWWWWWWWWWWWWhBXh
-                     nWWWWWWWWWWWWWWWWWWWXh.nBB
-                     BXBn :WWWWWWWXWWWXXWWWWB:
-                           nBhWWWWWWWXBWWWXhn:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                               .  .h:..   .
-                            .   BXWWWB: .nBhn
-                           n:.   .:       ::.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                 hXWh..    .
-                                   :.      .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                :WWWn:.  ..
-                                  :.       .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                .BBX:.:.  ..
-                                  ::
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                .hBX       .
-                                  nn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                 n :.
-                                .:n:      .
-                                .hXh
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                hW:.:
-                               nXWWWXh:
-                               WWWWWWWn
-                               nWXXXXB.
-                           .   : .Bh: :B
-                         hhW: BWnn..:BWX
-                        .nXWnhWWWWWWWWWh.. ..
-                        nWWhBWWWWWWWWWX:nn
-                         :B:hWWWWWWWWWWhnn  .
-                             hhhXWWWWWWhn:
-                                .BXhBnh  ..
-
-
-
-
-
-
-
-
-
-
-
-
-                               :Bn.
-                              nXWWWWXh.
-                             nWWWWWWWWW
-                             :WWWWWWWWX
-                            ..:BXXXBhh. :
-                           :BWn .WBXn n:::.
-                       nBXBXWWWWh:.:nXWXnXWXW
-                      nWXWWWWWWhXWWWWWWWWWWXB:
-                     .WWWWWWWWWWWWWWWWWWWWXhWX:
-                     :WWWXXWWWWWWWWWWWWWWX nBn.
-                      BWBh:hWWWWWWWWWWWWWB.nnh.
-                        .   :hBBWWWWWWW::    .
-
-
-
-
-
-
-
-
-
-
-
-                               nn
-                            .nWWWWhhnh:
-                            BWWWWWWWWXX
-                            WWWWWWWWWWWn
-                           .BWWWWWWWWWW
-                            .XWWWWWXXWn .
-                         nWWX ::WWWWn  :WB .
-                    .::hhWWWWXn.hhhn nWBWWWWXBn
-                    XWWWWWWWWWWWBhhBWWWBWWWWWWB:
-                   :WWWWWWWWWWXWWWWWWWWWWWWWWXWW
-                   hWWWWWWWWWWWWWWWWWWWWWWWXWWWX.
-                   nWXWh:WWWWWWWWWWWWWWWWWX.WWWX.
-                   :XXXn nBWWWWWWWWWWWWWWX.BWX:.
-
-
-
-
-
-
-
-
-
-
-
-                              hXB:
-                           :hWWWWWBBnhn
-                           WWWWWWWWWWWXh
-                           WWWWWWWWWWWWB
-                           WWWWWWWWWWWWn
-                           hWWWWWWWWWWW.
-                        nXWn:XBXWWXBhn  Xh:
-                     ::WWWWWn :WWWWW..nWWWWXh::
-                  :WWWWWWWWXWWn::...nWWXWWWWWWWB
-                  WWWWWWWWWWWWWWWWWWWWWXWWWWWWWWB
-                 nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
-                 :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
-                  BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Realsense on macOS</p>
+                <a class="readmore" href="/2017/12/28/librealsense/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -591,7 +151,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-05T08:00:00+09:00">
-                Published: 火 05 12月 2017
+                Published: 2017-12-05(火)
         </abbr>
 
         <address class="vcard author">
@@ -613,7 +173,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-17T22:00:00+09:00">
-                Published: 火 17 10月 2017
+                Published: 2017-10-17(火)
         </abbr>
 
         <address class="vcard author">
@@ -635,7 +195,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-15T23:00:00+09:00">
-                Published: 日 15 10月 2017
+                Published: 2017-10-15(日)
         </abbr>
 
         <address class="vcard author">
@@ -657,7 +217,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-13T23:00:00+09:00">
-                Published: 金 13 10月 2017
+                Published: 2017-10-13(金)
         </abbr>
 
         <address class="vcard author">
@@ -679,7 +239,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-09-23T21:00:00+09:00">
-                Published: 土 23 9月 2017
+                Published: 2017-09-23(土)
         </abbr>
 
         <address class="vcard author">
@@ -701,7 +261,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-07-03T22:00:00+09:00">
-                Published: 月 03 7月 2017
+                Published: 2017-07-03(月)
         </abbr>
 
         <address class="vcard author">
@@ -723,7 +283,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-18T08:00:00+09:00">
-                Published: 木 18 5月 2017
+                Published: 2017-05-18(木)
         </abbr>
 
         <address class="vcard author">
@@ -745,7 +305,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-04-01T09:00:00+09:00">
-                Published: 土 01 4月 2017
+                Published: 2017-04-01(土)
         </abbr>
 
         <address class="vcard author">
@@ -757,32 +317,11 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <a class="readmore" href="/2017/04/01/nano/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2017/03/31/excelna/" rel="bookmark"
-                           title="Permalink to NA (Excel)">NA (Excel)</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-03-31T23:00:00+09:00">
-                Published: 金 31 3月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/eiichiromomma.html">eiichiromomma</a>
-        </address>
-<p>In <a href="/category/memo.html">Memo</a>.</p>
-<p>tags: <a href="/tag/excel.html">Excel</a> </p>
-</footer><!-- /.post-info -->                <p>Excel NA()</p>
-                <a class="readmore" href="/2017/03/31/excelna/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 2
         <a href="/category/memo2.html">&raquo;</a>
+        <a href="/category/memo2.html">&#8649;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
@@ -793,7 +332,9 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
                             <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
-                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
@@ -808,10 +349,10 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>

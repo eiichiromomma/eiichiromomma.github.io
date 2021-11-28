@@ -2,20 +2,22 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - eiichiromomma</title>
+        <meta name="generator" content="Pelican" />
+        <title>CVMLAB Blog - eiichiromomma</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">eiichiro Blog </a></h1>
+                <h1><a href="/">CVMLAB Blog</a></h1>
                 <nav><ul>
                     <li><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
@@ -24,7 +26,7 @@
                     <h1 class="entry-title"><a href="/2017/12/28/librealsense/">macOSでRealsense</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2017-12-28T19:00:00+09:00">
-                Published: 木 28 12月 2017
+                Published: 2017-12-28(木)
         </abbr>
 
         <address class="vcard author">
@@ -36,12 +38,11 @@
 <h1>インストール(macOS)</h1>
 <p><a href="https://github.com/IntelRealSense/librealsense">librealsense</a>は公式サポートではないがIntel謹製のライブラリらしい。
 Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/IntelRealSense/librealsense.git
+<div class="highlight"><pre><span></span><code>git clone https://github.com/IntelRealSense/librealsense.git
 mkdir build
 <span class="nb">cd</span> build
 ccmake ..
-</pre></div>
-
+</code></pre></div>
 
 <p>で</p>
 <ul>
@@ -54,35 +55,34 @@ ccmake ..
 <li>BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと</li>
 </ul>
 <p>をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。</p>
-<div class="highlight"><pre><span></span>-- Installing: /usr/local/lib/librealsense-file.a
--- Installing: /usr/local/bin/rs-capture
--- Installing: /usr/local/bin/rs-save-to-disk
--- Installing: /usr/local/bin/rs-multicam
--- Installing: /usr/local/bin/rs-pointcloud
--- Installing: /usr/local/bin/rs-align
--- Installing: /usr/local/bin/rs-sensor-control
--- Installing: /usr/local/bin/rs-depth
--- Installing: /usr/local/bin/rs-color
--- Installing: /usr/local/bin/rs-distance
--- Installing: /usr/local/bin/rs-terminal
--- Installing: /usr/local/bin/rs-enumerate-devices
--- Installing: /usr/local/bin/realsense-viewer
--- Installing: /usr/local/bin/rs-data-collect
--- Installing: /usr/local/bin/rs-depth-quality
--- Installing: /usr/local/bin/live-test
--- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so
--- Installing: /usr/local/bin/rs-imshow
--- Installing: /usr/local/bin/rs-grabcuts
--- Installing: /usr/local/bin/rs-latency-tool
--- Installing: /usr/local/bin/rs-dnn
--- Installing: /usr/local/bin/rs-pcl
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">-- Installing: /usr/local/lib/librealsense-file.a</span>
+<span class="err">-- Installing: /usr/local/bin/rs-capture</span>
+<span class="err">-- Installing: /usr/local/bin/rs-save-to-disk</span>
+<span class="err">-- Installing: /usr/local/bin/rs-multicam</span>
+<span class="err">-- Installing: /usr/local/bin/rs-pointcloud</span>
+<span class="err">-- Installing: /usr/local/bin/rs-align</span>
+<span class="err">-- Installing: /usr/local/bin/rs-sensor-control</span>
+<span class="err">-- Installing: /usr/local/bin/rs-depth</span>
+<span class="err">-- Installing: /usr/local/bin/rs-color</span>
+<span class="err">-- Installing: /usr/local/bin/rs-distance</span>
+<span class="err">-- Installing: /usr/local/bin/rs-terminal</span>
+<span class="err">-- Installing: /usr/local/bin/rs-enumerate-devices</span>
+<span class="err">-- Installing: /usr/local/bin/realsense-viewer</span>
+<span class="err">-- Installing: /usr/local/bin/rs-data-collect</span>
+<span class="err">-- Installing: /usr/local/bin/rs-depth-quality</span>
+<span class="err">-- Installing: /usr/local/bin/live-test</span>
+<span class="err">-- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so</span>
+<span class="err">-- Installing: /usr/local/bin/rs-imshow</span>
+<span class="err">-- Installing: /usr/local/bin/rs-grabcuts</span>
+<span class="err">-- Installing: /usr/local/bin/rs-latency-tool</span>
+<span class="err">-- Installing: /usr/local/bin/rs-dnn</span>
+<span class="err">-- Installing: /usr/local/bin/rs-pcl</span>
+</code></pre></div>
 
 <p>という感じに面白いサンプルも入る。</p>
 <h1>サンプル</h1>
@@ -90,11 +90,10 @@ ccmake ..
 realsense-viewerは至れり尽せり。</p>
 <h1>Pythonパッケージ</h1>
 <p>pythonのpyrealsense2は適切な場所に置く必要がある。例えば</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> /usr/local/lib/python3.6/site-packages/
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/lib/python3.6/site-packages/
 ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
 ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
-</pre></div>
-
+</code></pre></div>
 
 <p>のような感じで使える。</p>
 <h1>Wrapperのサンプル</h1>
@@ -107,10 +106,10 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 </ul>
 <h1>Pythonパッケージの使用例</h1>
 <p><a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python">ここ</a>のを少し弄って動くようにした。</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyrealsense2</span> <span class="kn">as</span> <span class="nn">rs</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyrealsense2</span> <span class="k">as</span> <span class="nn">rs</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
 <span class="n">pipeline</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">wait_for_frames</span><span class="p">()</span>
     <span class="n">depth</span> <span class="o">=</span> <span class="n">frames</span><span class="o">.</span><span class="n">get_depth_frame</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">depth</span><span class="p">:</span> <span class="k">continue</span>
@@ -125,14 +124,13 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coverage</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; .:nhBXWW&quot;</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="mi">25</span><span class="p">)]</span>
             <span class="n">coverage</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">64</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</pre></div>
-
+            <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre></div>
 
 <p>で距離画像をASCII Art化して表示してくれる。
 ローテク加減が面白い。
 ※固定長フォントでお楽しみ下さい</p>
-<div class="highlight"><pre><span></span>                                    .
+<div class="highlight"><pre><span></span><code>                                    .
                                   nWBnBWWX:
                                h :WWWWWWWWWn.
                                WnWWWWWWWWWWWB
@@ -575,7 +573,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                  nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
                  :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
                   BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
-</pre></div>                </article>
+</code></pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
@@ -591,7 +589,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-12-05T08:00:00+09:00">
-                Published: 火 05 12月 2017
+                Published: 2017-12-05(火)
         </abbr>
 
         <address class="vcard author">
@@ -613,7 +611,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-17T22:00:00+09:00">
-                Published: 火 17 10月 2017
+                Published: 2017-10-17(火)
         </abbr>
 
         <address class="vcard author">
@@ -635,7 +633,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-15T23:00:00+09:00">
-                Published: 日 15 10月 2017
+                Published: 2017-10-15(日)
         </abbr>
 
         <address class="vcard author">
@@ -657,7 +655,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-13T23:00:00+09:00">
-                Published: 金 13 10月 2017
+                Published: 2017-10-13(金)
         </abbr>
 
         <address class="vcard author">
@@ -679,7 +677,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-09-23T21:00:00+09:00">
-                Published: 土 23 9月 2017
+                Published: 2017-09-23(土)
         </abbr>
 
         <address class="vcard author">
@@ -701,7 +699,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-07-03T22:00:00+09:00">
-                Published: 月 03 7月 2017
+                Published: 2017-07-03(月)
         </abbr>
 
         <address class="vcard author">
@@ -723,7 +721,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-18T08:00:00+09:00">
-                Published: 木 18 5月 2017
+                Published: 2017-05-18(木)
         </abbr>
 
         <address class="vcard author">
@@ -745,7 +743,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-04-01T09:00:00+09:00">
-                Published: 土 01 4月 2017
+                Published: 2017-04-01(土)
         </abbr>
 
         <address class="vcard author">
@@ -767,7 +765,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-03-31T23:00:00+09:00">
-                Published: 金 31 3月 2017
+                Published: 2017-03-31(金)
         </abbr>
 
         <address class="vcard author">
@@ -783,6 +781,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 <p class="paginator">
     Page 1 / 2
         <a href="/author/eiichiromomma2.html">&raquo;</a>
+        <a href="/author/eiichiromomma2.html">&#8649;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
@@ -793,7 +792,9 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
                             <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
-                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
@@ -808,10 +809,10 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>

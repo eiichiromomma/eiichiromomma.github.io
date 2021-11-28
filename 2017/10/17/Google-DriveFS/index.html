@@ -2,20 +2,23 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
         <title>Google Drive File Stream</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
+        <meta name="description" content="Google Drive File Stream" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">eiichiro Blog </a></h1>
+                <h1><a href="/">CVMLAB Blog</a></h1>
                 <nav><ul>
                     <li class="active"><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
@@ -29,7 +32,7 @@
     <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-10-17T22:00:00+09:00">
-                Published: 火 17 10月 2017
+                Published: 2017-10-17(火)
         </abbr>
 
         <address class="vcard author">
@@ -57,26 +60,23 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 <p>Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)</p>
 <h2>Windows</h2>
 <p>大容量HDDがHドライブのとき，コマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><span class="n">h</span><span class="o">:</span>
+<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span>
 <span class="n">cd</span> <span class="o">\</span>
 <span class="n">mkdir</span> <span class="n">DFSCache</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)</p>
-<div class="highlight"><pre><span></span>mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache</span>
+</code></pre></div>
 
 <p>としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。</p>
 <h2>Mac</h2>
 <p>/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。</p>
-<div class="highlight"><pre><span></span>sudo mkdir /Volumes/extdrive/DriveFS
+<div class="highlight"><pre><span></span><code>sudo mkdir /Volumes/extdrive/DriveFS
 sudo chown username:staff DriveFS
 <span class="nb">cd</span> /Users/username/Library/Application<span class="se">\ </span>Support/Google
 ln -s /Volumes/extdrive/DriveFS DriveFS
-</pre></div>
-
+</code></pre></div>
 
 <p>でextdrive上に逃がせる。</p>
     </div><!-- /.entry-content -->
@@ -91,7 +91,9 @@ ln -s /Volumes/extdrive/DriveFS DriveFS
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
                             <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
-                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
@@ -106,10 +108,10 @@ ln -s /Volumes/extdrive/DriveFS DriveFS
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>

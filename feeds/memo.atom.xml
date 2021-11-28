@@ -1,14 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>eiichiro Blog - Memo</title><link href="/" rel="alternate"></link><link href="/feeds/memo.atom.xml" rel="self"></link><id>/</id><updated>2017-12-28T19:00:00+09:00</updated><entry><title>macOSでRealsense</title><link href="/2017/12/28/librealsense/" rel="alternate"></link><published>2017-12-28T19:00:00+09:00</published><updated>2017-12-28T19:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-28:/2017/12/28/librealsense/</id><summary type="html">&lt;p&gt;Realsense on macOS&lt;/p&gt;</summary><content type="html">&lt;p&gt;CreativeのSenz3dがmacOSでも使えるらしいので試してみた。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - Memo</title><link href="/" rel="alternate"></link><link href="/feeds/memo.atom.xml" rel="self"></link><id>/</id><updated>2021-11-27T19:20:00+09:00</updated><entry><title>Wordpress to Pelican</title><link href="/2021/11/27/wordpress-to-pelican/" rel="alternate"></link><published>2021-11-27T19:20:00+09:00</published><updated>2021-11-27T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:None,2021-11-27:/2021/11/27/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;WordpressからPelicanへの移行メモ&lt;/p&gt;
+&lt;h2&gt;前置き&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。&lt;/li&gt;
+&lt;li&gt;本体は持ち運び可能なNUC&lt;/li&gt;
+&lt;li&gt;IPは固定のグローバル&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;サーバが起動してるうちにバックアップ&lt;/h2&gt;
+&lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
+&lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
+&lt;h3&gt;嘘吐きサーバと嘘付きクライアント&lt;/h3&gt;
+&lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
+&lt;li&gt;クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。&lt;/p&gt;
+&lt;h3&gt;xmlをエクスポート&lt;/h3&gt;
+&lt;p&gt;Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var …&lt;/p&gt;</summary><content type="html">&lt;p&gt;WordpressからPelicanへの移行メモ&lt;/p&gt;
+&lt;h2&gt;前置き&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。&lt;/li&gt;
+&lt;li&gt;本体は持ち運び可能なNUC&lt;/li&gt;
+&lt;li&gt;IPは固定のグローバル&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;サーバが起動してるうちにバックアップ&lt;/h2&gt;
+&lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
+&lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
+&lt;h3&gt;嘘吐きサーバと嘘付きクライアント&lt;/h3&gt;
+&lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
+&lt;li&gt;クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。&lt;/p&gt;
+&lt;h3&gt;xmlをエクスポート&lt;/h3&gt;
+&lt;p&gt;Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)&lt;/p&gt;
+&lt;h3&gt;pelican-import&lt;/h3&gt;
+&lt;p&gt;python環境でpelicanが使える前提。importツールも勝手に入る。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;wpfile&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;wpoutput&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;slugs&lt;/span&gt; &lt;span class="o"&gt;../&lt;/span&gt;&lt;span class="n"&gt;cvmlab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WordPress&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2021&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;27.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;--dir-cat: Wordpressでのカテゴリごとにフォルダを掘って出力&lt;/li&gt;
+&lt;li&gt;--wpfile: Wordpressからのコンバート&lt;/li&gt;
+&lt;li&gt;-o wpoutput: wpoutputフォルダに出力&lt;/li&gt;
+&lt;li&gt;-m markdown: Markdown形式で出力&lt;/li&gt;
+&lt;li&gt;--disable-slugs: Pelicanはslugをファイル名やフォルダ名に使うのでWordpressのは使わないよう指定しないと後でカオスになる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という感じでカテゴリごとにフォルダが掘られ，mdファイルが配置される。
+エラーが出たらipythonを起動し，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;wpfile&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;slugs&lt;/span&gt; &lt;span class="o"&gt;../&lt;/span&gt;&lt;span class="n"&gt;cvmlab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WordPress&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2021&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;27.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;という感じで実行し，その後で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とするとデバッガに入れる。大抵itemsに詰まったデータのitemを処理してる最中に起きるので，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;item&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でエラーが発生したitemの中身を表示して，Visual Studio Code等のエディタでxmlを開き該当箇所を探すと変な文字が紛れてたりするので消す。また実行してエラーが出なくなるまで繰り返し。&lt;/p&gt;
+&lt;h3&gt;整形諸々&lt;/h3&gt;
+&lt;p&gt;一応出力できたが問題は山積み&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-e0----.mdみたいなファイル名になりコマンド実行時にオプション扱いされる&lt;ul&gt;
+&lt;li&gt;multi-byteな文字の問題だろうが以後コマンドでファイル名を指定する作業の際に--(ハイフン二つ)を前に置くとファイル名として扱ってくれる&lt;/li&gt;
+&lt;li&gt;pelicanで変換する際は問題にならないので放置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pelicanはカテゴリは1つだけという制限&lt;ul&gt;
+&lt;li&gt;色々手はあるが組合せが面倒なので全部開いて手作業で一つにした&lt;/li&gt;
+&lt;li&gt;Tagsは複数指定できるらしいが今後1つだけにすれば良いやということでそのまま&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;画像のリンクはwordpress内へのリンクのまま(当たり前)&lt;ul&gt;
+&lt;li&gt;gsedで一気に置換する&lt;/li&gt;
+&lt;li&gt;sedでは"/"の代わりに別のセパレータ("|"とか)を指定すればURLをそのまま置換できる&lt;ul&gt;
+&lt;li&gt;Pelicanで使うcotnents/imagesの中にuploadsフォルダをまんまコピーしておく&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;find . -type f &lt;span class="p"&gt;|&lt;/span&gt; xargs gsed -i.bak -e &lt;span class="s2"&gt;&amp;quot;s|https://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/|{static}/images/|g&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で後は全ページチェックしておかしなところを直していくしか無いのだが，過去記事なので致命的な問題の指摘が来たら直すってことで。&lt;/p&gt;
+&lt;h3&gt;あとはPelicanの通常作業&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make html
+make serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でlocalhost:8000を開いて確認。&lt;/p&gt;
+&lt;p&gt;問題無ければリリースする。&lt;/p&gt;</content><category term="Memo"></category></entry><entry><title>macOSでRealsense</title><link href="/2017/12/28/librealsense/" rel="alternate"></link><published>2017-12-28T19:00:00+09:00</published><updated>2017-12-28T19:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-28:/2017/12/28/librealsense/</id><summary type="html">&lt;p&gt;Realsense on macOS&lt;/p&gt;</summary><content type="html">&lt;p&gt;CreativeのSenz3dがmacOSでも使えるらしいので試してみた。&lt;/p&gt;
 &lt;h1&gt;インストール(macOS)&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://github.com/IntelRealSense/librealsense"&gt;librealsense&lt;/a&gt;は公式サポートではないがIntel謹製のライブラリらしい。
 Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/IntelRealSense/librealsense.git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/IntelRealSense/librealsense.git
 mkdir build
 &lt;span class="nb"&gt;cd&lt;/span&gt; build
 ccmake ..
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で&lt;/p&gt;
 &lt;ul&gt;
@@ -21,35 +119,34 @@ ccmake ..
 &lt;li&gt;BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Installing: /usr/local/lib/librealsense-file.a
--- Installing: /usr/local/bin/rs-capture
--- Installing: /usr/local/bin/rs-save-to-disk
--- Installing: /usr/local/bin/rs-multicam
--- Installing: /usr/local/bin/rs-pointcloud
--- Installing: /usr/local/bin/rs-align
--- Installing: /usr/local/bin/rs-sensor-control
--- Installing: /usr/local/bin/rs-depth
--- Installing: /usr/local/bin/rs-color
--- Installing: /usr/local/bin/rs-distance
--- Installing: /usr/local/bin/rs-terminal
--- Installing: /usr/local/bin/rs-enumerate-devices
--- Installing: /usr/local/bin/realsense-viewer
--- Installing: /usr/local/bin/rs-data-collect
--- Installing: /usr/local/bin/rs-depth-quality
--- Installing: /usr/local/bin/live-test
--- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so
--- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so
--- Installing: /usr/local/bin/rs-imshow
--- Installing: /usr/local/bin/rs-grabcuts
--- Installing: /usr/local/bin/rs-latency-tool
--- Installing: /usr/local/bin/rs-dnn
--- Installing: /usr/local/bin/rs-pcl
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-- Installing: /usr/local/lib/librealsense-file.a&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-capture&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-save-to-disk&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-multicam&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-pointcloud&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-align&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-sensor-control&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-depth&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-color&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-distance&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-terminal&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-enumerate-devices&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/realsense-viewer&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-data-collect&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-depth-quality&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/live-test&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-imshow&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-grabcuts&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-latency-tool&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-dnn&lt;/span&gt;
+&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-pcl&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;という感じに面白いサンプルも入る。&lt;/p&gt;
 &lt;h1&gt;サンプル&lt;/h1&gt;
@@ -57,11 +154,10 @@ ccmake ..
 realsense-viewerは至れり尽せり。&lt;/p&gt;
 &lt;h1&gt;Pythonパッケージ&lt;/h1&gt;
 &lt;p&gt;pythonのpyrealsense2は適切な場所に置く必要がある。例えば&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python3.6/site-packages/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python3.6/site-packages/
 ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
 ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;のような感じで使える。&lt;/p&gt;
 &lt;h1&gt;Wrapperのサンプル&lt;/h1&gt;
@@ -74,10 +170,10 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 &lt;/ul&gt;
 &lt;h1&gt;Pythonパッケージの使用例&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python"&gt;ここ&lt;/a&gt;のを少し弄って動くようにした。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyrealsense2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;rs&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyrealsense2&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;rs&lt;/span&gt;
 &lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;frames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pipeline&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wait_for_frames&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
     &lt;span class="n"&gt;depth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_depth_frame&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;continue&lt;/span&gt;
@@ -92,14 +188,13 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
             &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
                 &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; .:nhBXWW&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
             &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
-            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+            &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で距離画像をASCII Art化して表示してくれる。
 ローテク加減が面白い。
 ※固定長フォントでお楽しみ下さい&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;                                    .
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;                                    .
                                   nWBnBWWX:
                                h :WWWWWWWWWn.
                                WnWWWWWWWWWWWB
@@ -542,7 +637,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
                  nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
                  :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
                   BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
-&lt;/pre&gt;&lt;/div&gt;</content><category term="Realsense"></category><category term="OpenCV"></category><category term="Python"></category><category term="PCL"></category></entry><entry><title>KivyでOpenCV</title><link href="/2017/12/05/Kivy-OpenCV/" rel="alternate"></link><published>2017-12-05T08:00:00+09:00</published><updated>2017-12-05T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-05:/2017/12/05/Kivy-OpenCV/</id><summary type="html">&lt;p&gt;OpenCV with Kivy&lt;/p&gt;</summary><content type="html">&lt;h1&gt;他のGUIで表示してみる&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Realsense"></category><category term="OpenCV"></category><category term="Python"></category><category term="PCL"></category></entry><entry><title>KivyでOpenCV</title><link href="/2017/12/05/Kivy-OpenCV/" rel="alternate"></link><published>2017-12-05T08:00:00+09:00</published><updated>2017-12-05T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-12-05:/2017/12/05/Kivy-OpenCV/</id><summary type="html">&lt;p&gt;OpenCV with Kivy&lt;/p&gt;</summary><content type="html">&lt;h1&gt;他のGUIで表示してみる&lt;/h1&gt;
 &lt;p&gt;OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
 ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
 という訳でQt抜きのパッケージになるケースが非常に多い。&lt;/p&gt;
@@ -553,7 +648,7 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 &lt;p&gt;こんな感じでWebCAM-スライダ-ボタンという並び。KivyのSliderは何故かラベルが無いのでちょっと工夫して付け足してる。&lt;/p&gt;
 &lt;p&gt;構造としてはAppを継承したメインのクラスがあり，buildでUIの構築(と初期設定)，SliderとButtonにbindしたコールバック，Clock.schedule_intervalで指定してるupdateで更新。
 update内でOpenCV周りの処理を行なってImageのtextureを書き換えて表示といった流れになる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;App&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.boxlayout&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.button&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
@@ -600,7 +695,7 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;buttonCallback&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="c1"&gt;# 何かのフラグに使える&lt;/span&gt;
-        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Buttn &amp;lt;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;&amp;gt; is pressed.&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Buttn &amp;lt;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;&amp;gt; is pressed.&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dt&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="c1"&gt;# 基本的にここでOpenCV周りの処理を行なってtextureを更新する&lt;/span&gt;
@@ -612,7 +707,7 @@ update内でOpenCV周りの処理を行なってImageのtextureを書き換え�
 
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;CvCamera&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="Kivy"></category><category term="OpenCV"></category><category term="Python"></category></entry><entry><title>Google Drive File Stream</title><link href="/2017/10/17/Google-DriveFS/" rel="alternate"></link><published>2017-10-17T22:00:00+09:00</published><updated>2017-10-17T22:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-17:/2017/10/17/Google-DriveFS/</id><summary type="html">&lt;p&gt;Google Drive File Stream&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Google Driveからの乗り換え&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Kivy"></category><category term="OpenCV"></category><category term="Python"></category></entry><entry><title>Google Drive File Stream</title><link href="/2017/10/17/Google-DriveFS/" rel="alternate"></link><published>2017-10-17T22:00:00+09:00</published><updated>2017-10-17T22:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-17:/2017/10/17/Google-DriveFS/</id><summary type="html">&lt;p&gt;Google Drive File Stream&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Google Driveからの乗り換え&lt;/h1&gt;
 &lt;p&gt;Google Driveのデスクトップアプリ(PCに同期させるアプリ)は2018年3月に廃止が決定。
 置き換えソフトであるGoogle Drive File Streamアプリは，これまで大学との契約形態については未対応だったが配布開始された模様。
 Google Driveアプリを使われていた方は乗り換えが必要で，かなり挙動が違った。
@@ -632,28 +727,25 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 &lt;p&gt;Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)&lt;/p&gt;
 &lt;h2&gt;Windows&lt;/h2&gt;
 &lt;p&gt;大容量HDDがHドライブのとき，コマンドプロンプトで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;\&lt;/span&gt;
 &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;DFSCache&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。&lt;/p&gt;
 &lt;h2&gt;Mac&lt;/h2&gt;
 &lt;p&gt;/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo mkdir /Volumes/extdrive/DriveFS
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo mkdir /Volumes/extdrive/DriveFS
 sudo chown username:staff DriveFS
 &lt;span class="nb"&gt;cd&lt;/span&gt; /Users/username/Library/Application&lt;span class="se"&gt;\ &lt;/span&gt;Support/Google
 ln -s /Volumes/extdrive/DriveFS DriveFS
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;でextdrive上に逃がせる。&lt;/p&gt;</content><category term="GoogleDrive"></category></entry><entry><title>ひき続きvcpkg</title><link href="/2017/10/15/vcpkg/" rel="alternate"></link><published>2017-10-15T23:00:00+09:00</published><updated>2017-10-15T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-15:/2017/10/15/vcpkg/</id><summary type="html">&lt;p&gt;vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkg&lt;/h1&gt;
+&lt;p&gt;でextdrive上に逃がせる。&lt;/p&gt;</content><category term="Memo"></category><category term="GoogleDrive"></category></entry><entry><title>ひき続きvcpkg</title><link href="/2017/10/15/vcpkg/" rel="alternate"></link><published>2017-10-15T23:00:00+09:00</published><updated>2017-10-15T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-15:/2017/10/15/vcpkg/</id><summary type="html">&lt;p&gt;vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkg&lt;/h1&gt;
 &lt;p&gt;現状でのメモ。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;FreeBSDのportsみたいなものでソースを拾ってきてビルドするシステムなので巨大ライブラリの場合はNuGetのように直ぐ使えるものではない&lt;/li&gt;
@@ -670,60 +762,54 @@ ln -s /Volumes/extdrive/DriveFS DriveFS
 &lt;li&gt;必要なファイルはinstalledに配置され，手動，integrate，cmake(toolchain)で使える&lt;/li&gt;
 &lt;li&gt;NativeなCMakeで使うのは&lt;a href="https://github.com/Microsoft/vcpkg/blob/master/docs/examples/using-sqlite.md"&gt;ここ&lt;/a&gt;の最後にあるが微妙&lt;/li&gt;
 &lt;li&gt;import/export機能があるので，速いマシンでパッケージをビルド→export→他マシンでimportすれば同一環境を作れる&lt;/li&gt;
-&lt;/ul&gt;</content><category term="VC"></category></entry><entry><title>vcpkgのninja</title><link href="/2017/10/13/vcpkg-ninja/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/vcpkg-ninja/</id><summary type="html">&lt;p&gt;ninja in vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkgでハマる&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="Memo"></category><category term="VC"></category></entry><entry><title>vcpkgのninja</title><link href="/2017/10/13/vcpkg-ninja/" rel="alternate"></link><published>2017-10-13T23:00:00+09:00</published><updated>2017-10-13T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-10-13:/2017/10/13/vcpkg-ninja/</id><summary type="html">&lt;p&gt;ninja in vcpkg&lt;/p&gt;</summary><content type="html">&lt;h1&gt;vcpkgでハマる&lt;/h1&gt;
 &lt;h2&gt;追記&lt;/h2&gt;
 &lt;p&gt;↓で色々頑張ったのだが結局のところ英語以外の環境はあちこちでトラブルが発生する。
 諦めてVisual Studioの&lt;a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157"&gt;英語言語パック&lt;/a&gt;をインストールしたら解決した。&lt;/p&gt;
 &lt;h2&gt;旧記事&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/Microsoft/vcpkg"&gt;vcpkg&lt;/a&gt;を試してみようと，とりあえずPower Shellで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/Microsoft/vcpkg.git
-cd vcpkg
-.\vcpkg install opencv:x64-windows
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;git clone https://github.com/Microsoft/vcpkg.git&lt;/span&gt;
+&lt;span class="err"&gt;cd vcpkg&lt;/span&gt;
+&lt;span class="err"&gt;.\vcpkg install opencv:x64-windows&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とやったらzlibのビルドで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Building&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;BUILD_FAILED&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Building&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;BUILD_FAILED&lt;/span&gt;
 &lt;span class="n"&gt;Please&lt;/span&gt; &lt;span class="n"&gt;ensure&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;latest&lt;/span&gt; &lt;span class="n"&gt;portfiles&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;.\&lt;/span&gt;&lt;span class="n"&gt;vcpkg&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
 &lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;issue&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/Microsoft/vcpkg/iss&lt;/span&gt;&lt;span class="n"&gt;ues&lt;/span&gt; &lt;span class="n"&gt;including&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
   &lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;
   &lt;span class="n"&gt;Vcpkg&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;91&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;e19c24d2911ff1ef648aeed0c596e3987eafebf&lt;/span&gt;
 
 &lt;span class="n"&gt;Additionally&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attach&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;relevant&lt;/span&gt; &lt;span class="n"&gt;sections&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;みたいなエラーでコケる。エラーログを見てみると&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3
-2\zlib1.rc &amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot; CMakeFiles\zlib.dir\win32\zlib1.res &amp;quot;: CN[h t@C:  &amp;quot; &amp;quot;C:/Program Files
- (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_
-DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v
-cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z
-lib-1.2.11\win32\zlib1.rc
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3&lt;/span&gt;
+&lt;span class="err"&gt;2\zlib1.rc &amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot; CMakeFiles\zlib.dir\win32\zlib1.res &amp;quot;: CN[h t@C:  &amp;quot; &amp;quot;C:/Program Files&lt;/span&gt;
+&lt;span class="err"&gt; (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_&lt;/span&gt;
+&lt;span class="err"&gt;DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v&lt;/span&gt;
+&lt;span class="err"&gt;cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z&lt;/span&gt;
+&lt;span class="err"&gt;lib-1.2.11\win32\zlib1.rc&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;途中変な文字化けをしているのでchcpでutf-8にしていないせいかと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chcp 65001
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;chcp 65001&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とやってから実行してみたが何の変化も無し。
 zlibのportsを見てみると，どうもninjaを使っているらしい。
 そして&lt;a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d"&gt;これ&lt;/a&gt;。
 という訳でvcpkg/ports/zlib/portfile.cmakeの&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="err"&gt;PREFER&lt;/span&gt; &lt;span class="err"&gt;NINJA&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="err"&gt;PREFER&lt;/span&gt; &lt;span class="err"&gt;NINJA&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;をコメントアウト。
-ようやくビルドできた。&lt;/p&gt;</content><category term="VC"></category></entry><entry><title>Google Apps ScriptでDriveとGMail連携</title><link href="/2017/09/23/GAS/" rel="alternate"></link><published>2017-09-23T21:00:00+09:00</published><updated>2017-09-23T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-09-23:/2017/09/23/GAS/</id><summary type="html">&lt;p&gt;GoogleDrive and GMail&lt;/p&gt;</summary><content type="html">&lt;h1&gt;参加者が撮った写真を自動でWebアルバムみたいに表示したい&lt;/h1&gt;
+ようやくビルドできた。&lt;/p&gt;</content><category term="Memo"></category><category term="VC"></category></entry><entry><title>Google Apps ScriptでDriveとGMail連携</title><link href="/2017/09/23/GAS/" rel="alternate"></link><published>2017-09-23T21:00:00+09:00</published><updated>2017-09-23T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-09-23:/2017/09/23/GAS/</id><summary type="html">&lt;p&gt;GoogleDrive and GMail&lt;/p&gt;</summary><content type="html">&lt;h1&gt;参加者が撮った写真を自動でWebアルバムみたいに表示したい&lt;/h1&gt;
 &lt;p&gt;という要望があったので，この手の連携となれば&lt;a href="https://ifttt.com"&gt;IFTTT&lt;/a&gt;だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。&lt;/p&gt;
 &lt;p&gt;GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
 取り敢えずGoogle Driveなら直ぐ出来そうなので&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;という処理に。&lt;/p&gt;
 &lt;ul&gt;
@@ -731,24 +817,21 @@ zlibのportsを見てみると，どうもninjaを使っているらしい。
 &lt;li&gt;Google Driveのフォルダ: Test&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;で，ググって出てきたスクリプトだと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;subject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;subject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;subject&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Target&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;みたいな処理だったので，ならToでもできるだろって事で&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username+tag@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としたら，Outlookが&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;to:&amp;lt;username+tag@gmail.com&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c"&gt;to:&amp;lt;username+tag@gmail.com&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で送ってくるのでFalseになる。調べたら部分一致はindexOfでイケるらしいので下記で成功。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;gmailFileUploader&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;gmailFileUploader&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;GmailApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getInboxThreads&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;　
   &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;　
     &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;isUnread&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
@@ -769,18 +852,17 @@ zlibのportsを見てみると，どうもninjaを使っているらしい。
     &lt;span class="p"&gt;}&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;    
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="Javascript"></category></entry><entry><title>macOSでOpenCL</title><link href="/2017/07/03/macOSOpenCL/" rel="alternate"></link><published>2017-07-03T22:00:00+09:00</published><updated>2017-07-03T22:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-07-03:/2017/07/03/macOSOpenCL/</id><summary type="html">&lt;p&gt;macOSでOpenCL&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでOpenCLを頑張ってみた&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Javascript"></category></entry><entry><title>macOSでOpenCL</title><link href="/2017/07/03/macOSOpenCL/" rel="alternate"></link><published>2017-07-03T22:00:00+09:00</published><updated>2017-07-03T22:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-07-03:/2017/07/03/macOSOpenCL/</id><summary type="html">&lt;p&gt;macOSでOpenCL&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでOpenCLを頑張ってみた&lt;/h1&gt;
 &lt;p&gt;折角Radeonを搭載しているiMacもあるのでOpenCLでDeep Learningのframeworkが動かないかと弄ってみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/arrayfire/arrayfire"&gt;Arrayfire&lt;/a&gt;とか&lt;a href="https://github.com/BVLC/caffe/tree/opencl"&gt;CaffeのOpenCLブランチ&lt;/a&gt;とか&lt;a href="https://github.com/hughperkins/cltorch"&gt;cltorch&lt;/a&gt;とか&lt;a href="https://github.com/pyopencl/pyopencl"&gt;PyOpenCL&lt;/a&gt;とか色々と試してみて、ArrayfireやPyOpenCLは一応GPU使って動いてる感までは得られた。&lt;/p&gt;
-&lt;p&gt;が、OpenCL自体が遅くCPUより処理が遅い。おまけにArrayfireは何かやらかすとmacOSごと調子悪くなる(要再起動)。つらい&lt;/p&gt;</content><category term="macOS"></category><category term="OpenCL"></category><category term="Torch"></category></entry><entry><title>macOSでTensorflow</title><link href="/2017/05/18/macOSTensorflow/" rel="alternate"></link><published>2017-05-18T08:00:00+09:00</published><updated>2017-05-18T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-05-18:/2017/05/18/macOSTensorflow/</id><summary type="html">&lt;p&gt;macOSでTensorflow&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでTensorflowを頑張ってみた&lt;/h1&gt;
+&lt;p&gt;が、OpenCL自体が遅くCPUより処理が遅い。おまけにArrayfireは何かやらかすとmacOSごと調子悪くなる(要再起動)。つらい&lt;/p&gt;</content><category term="Memo"></category><category term="macOS"></category><category term="OpenCL"></category><category term="Torch"></category></entry><entry><title>macOSでTensorflow</title><link href="/2017/05/18/macOSTensorflow/" rel="alternate"></link><published>2017-05-18T08:00:00+09:00</published><updated>2017-05-18T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-05-18:/2017/05/18/macOSTensorflow/</id><summary type="html">&lt;p&gt;macOSでTensorflow&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでTensorflowを頑張ってみた&lt;/h1&gt;
 &lt;p&gt;&lt;a href="http://blog.amedama.jp/entry/2017/03/08/223308"&gt;ここ&lt;/a&gt;の通りやってもCPUによってはまだ改善点があるようで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
-W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use FMA instructions, but these are availab
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.&lt;/span&gt;
+&lt;span class="err"&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use FMA instructions, but these are availab&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とでる。bazelでビルドする時にAVX2とFMAも加えてみる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ conda create --name tf35 &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.5 scipy numpy jupyter ipython scikit-learn scikit-image matplotlib pandas h5py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ conda create --name tf35 &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.5 scipy numpy jupyter ipython scikit-learn scikit-image matplotlib pandas h5py
 $ activate tf35
 $ brew install bazel swig
 $ git clone https://github.com/tensorflow/tensorflow.git
@@ -792,91 +874,82 @@ $ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 $ pip uninstall tensorflow keras
 $ pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp35-cp35m-macosx_10_7_x86_64.whl
 $ pip install keras
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py
-echo &amp;#39;K.clear_session()&amp;#39; &amp;gt;&amp;gt; mnist_cnn.py
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py&lt;/span&gt;
+&lt;span class="err"&gt;echo &amp;#39;K.clear_session()&amp;#39; &amp;gt;&amp;gt; mnist_cnn.py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とした後に&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python mnist_cnn.py
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;python mnist_cnn.py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でmnistが動く。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Using TensorFlow backend.
-x_train shape: (60000, 28, 28, 1)
-60000 train samples
-10000 test samples
-Train on 60000 samples, validate on 10000 samples
-Epoch 1/12
-60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734
-Epoch 2/12
-60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822
-Epoch 3/12
-60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;Using TensorFlow backend.&lt;/span&gt;
+&lt;span class="err"&gt;x_train shape: (60000, 28, 28, 1)&lt;/span&gt;
+&lt;span class="err"&gt;60000 train samples&lt;/span&gt;
+&lt;span class="err"&gt;10000 test samples&lt;/span&gt;
+&lt;span class="err"&gt;Train on 60000 samples, validate on 10000 samples&lt;/span&gt;
+&lt;span class="err"&gt;Epoch 1/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734&lt;/span&gt;
+&lt;span class="err"&gt;Epoch 2/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822&lt;/span&gt;
+&lt;span class="err"&gt;Epoch 3/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;1epochあたり100s(Core i7のiMac)。Core i5のmac miniだと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Epoch 10/12
-60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905
-Epoch 11/12
-60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899
-Epoch 12/12
-60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;Epoch 10/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905&lt;/span&gt;
+&lt;span class="err"&gt;Epoch 11/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899&lt;/span&gt;
+&lt;span class="err"&gt;Epoch 12/12&lt;/span&gt;
+&lt;span class="err"&gt;60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;ちなみにGeForce 970だと1 epochあたり9s。これだけ頑張っても10倍遅い。GeForce 1080だと1 epochあたり4s。つらい&lt;/p&gt;</content><category term="macOS"></category><category term="Tensorflow"></category></entry><entry><title>GNU nano</title><link href="/2017/04/01/nano/" rel="alternate"></link><published>2017-04-01T09:00:00+09:00</published><updated>2017-04-01T09:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-04-01:/2017/04/01/nano/</id><summary type="html">&lt;p&gt;GNU nano&lt;/p&gt;</summary><content type="html">&lt;h1&gt;GNU nano&lt;/h1&gt;
+&lt;p&gt;ちなみにGeForce 970だと1 epochあたり9s。これだけ頑張っても10倍遅い。GeForce 1080だと1 epochあたり4s。つらい&lt;/p&gt;</content><category term="Memo"></category><category term="macOS"></category><category term="Tensorflow"></category></entry><entry><title>GNU nano</title><link href="/2017/04/01/nano/" rel="alternate"></link><published>2017-04-01T09:00:00+09:00</published><updated>2017-04-01T09:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-04-01:/2017/04/01/nano/</id><summary type="html">&lt;p&gt;GNU nano&lt;/p&gt;</summary><content type="html">&lt;h1&gt;GNU nano&lt;/h1&gt;
 &lt;p&gt;自分では滅多に使わないが、とりあえずUnix系の環境を触らせるときにオススメのエディタ&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/nano"&gt;GNU nanoの紹介記事&lt;/a&gt;を更新。&lt;/p&gt;
-&lt;p&gt;.nanorcについては思い切り勘違いしてた。というか初期設定ファイルがソースパッケージにしか無いのは変だ。&lt;/p&gt;</content><category term="nano"></category></entry><entry><title>NA (Excel)</title><link href="/2017/03/31/excelna/" rel="alternate"></link><published>2017-03-31T23:00:00+09:00</published><updated>2017-03-31T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-31:/2017/03/31/excelna/</id><summary type="html">&lt;p&gt;Excel NA()&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Excelで欠損値のグラフ&lt;/h1&gt;
+&lt;p&gt;.nanorcについては思い切り勘違いしてた。というか初期設定ファイルがソースパッケージにしか無いのは変だ。&lt;/p&gt;</content><category term="Memo"></category><category term="nano"></category></entry><entry><title>NA (Excel)</title><link href="/2017/03/31/excelna/" rel="alternate"></link><published>2017-03-31T23:00:00+09:00</published><updated>2017-03-31T23:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-31:/2017/03/31/excelna/</id><summary type="html">&lt;p&gt;Excel NA()&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Excelで欠損値のグラフ&lt;/h1&gt;
 &lt;p&gt;Excelで欠損値のあるデータのグラフを描こうとすると線が切れる。
 &lt;img alt="こんな感じ" src="/images/20170331-1.png"&gt;&lt;/p&gt;
 &lt;p&gt;欠損値のところに=NA()を入れておくと補完してくれるらしい。
-&lt;img alt="こんな感じ" src="/images/20170331-2.png"&gt;&lt;/p&gt;</content><category term="Excel"></category></entry><entry><title>VSCodeとClang</title><link href="/2017/03/05/vscode_clang/" rel="alternate"></link><published>2017-03-05T11:00:00+09:00</published><updated>2017-03-05T11:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-05:/2017/03/05/vscode_clang/</id><summary type="html">&lt;p&gt;setup VSCode and clang&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VSCodeの補完&lt;/h1&gt;
+&lt;img alt="こんな感じ" src="/images/20170331-2.png"&gt;&lt;/p&gt;</content><category term="Memo"></category><category term="Excel"></category></entry><entry><title>VSCodeとClang</title><link href="/2017/03/05/vscode_clang/" rel="alternate"></link><published>2017-03-05T11:00:00+09:00</published><updated>2017-03-05T11:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-05:/2017/03/05/vscode_clang/</id><summary type="html">&lt;p&gt;setup VSCode and clang&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VSCodeの補完&lt;/h1&gt;
 &lt;p&gt;代表的な補完拡張の中にclangを使ったものがあるが、CMakeが&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;CMAKE_EXPORT_COMPILE_COMMANDS&lt;/span&gt; &lt;span class="s"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;CMAKE_EXPORT_COMPILE_COMMANDS&lt;/span&gt; &lt;span class="s"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で吐いてくれるcompile_commands.jsonに対応していない。
 &lt;a href="https://marketplace.visualstudio.com/items?itemName=mitaki28.vscode-clang"&gt;C/C++ Clang Command Adapter&lt;/a&gt;ではsettings.jsonの"clang.cxxflags"にコンパイラへのオプションを一つずつ並べないと有効にならない。&lt;/p&gt;
 &lt;p&gt;CMakeの出力はアホみたいにオプションが多くて流石に手入力はやりたくないので&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat compile_commands.json &lt;span class="p"&gt;|&lt;/span&gt; gsed -e &lt;span class="s1"&gt;&amp;#39;s/ -/&amp;quot;,\n&amp;quot;-/g&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat compile_commands.json &lt;span class="p"&gt;|&lt;/span&gt; gsed -e &lt;span class="s1"&gt;&amp;#39;s/ -/&amp;quot;,\n&amp;quot;-/g&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;とすると良い感じに変換できる。-oから先は不要なのでそれまでをsetting.jsonに貼り付ければ良い。&lt;/p&gt;</content><category term="VSCode"></category><category term="C++"></category></entry><entry><title>YouCompleteMe</title><link href="/2017/03/05/youcompleteme/" rel="alternate"></link><published>2017-03-05T10:00:00+09:00</published><updated>2017-03-05T10:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-05:/2017/03/05/youcompleteme/</id><summary type="html">&lt;p&gt;setup YouCompleteMe&lt;/p&gt;</summary><content type="html">&lt;h1&gt;YouCompleteMe&lt;/h1&gt;
+&lt;p&gt;とすると良い感じに変換できる。-oから先は不要なのでそれまでをsetting.jsonに貼り付ければ良い。&lt;/p&gt;</content><category term="Memo"></category><category term="VSCode"></category><category term="C++"></category></entry><entry><title>YouCompleteMe</title><link href="/2017/03/05/youcompleteme/" rel="alternate"></link><published>2017-03-05T10:00:00+09:00</published><updated>2017-03-05T10:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-03-05:/2017/03/05/youcompleteme/</id><summary type="html">&lt;p&gt;setup YouCompleteMe&lt;/p&gt;</summary><content type="html">&lt;h1&gt;YouCompleteMe&lt;/h1&gt;
 &lt;p&gt;C/C++の場合、clangを使ったVimの入力支援。他言語も色々ある。
 NeoBundleで使おうとして色々なサイトを漁ったが結局ycmdとの連携がよくわからない。結論としてVundleを使う。
 やり方は&lt;a href="https://github.com/Valloric/YouCompleteMe"&gt;元サイト&lt;/a&gt;に書かれている通りで、システムのclangとかは面倒になったので試していない。
-ユーザごとにclangをビルドする羽目になるが確実に動く。&lt;/p&gt;</content><category term="Vim"></category><category term="C++"></category></entry><entry><title>Ubuntuでの日本語入力</title><link href="/2017/02/15/fcitx-skk/" rel="alternate"></link><published>2017-02-15T21:00:00+09:00</published><updated>2017-02-15T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-15:/2017/02/15/fcitx-skk/</id><summary type="html">&lt;p&gt;fcitx&amp;amp;skk&lt;/p&gt;</summary><content type="html">&lt;h1&gt;fcitx+skk&lt;/h1&gt;
+ユーザごとにclangをビルドする羽目になるが確実に動く。&lt;/p&gt;</content><category term="Memo"></category><category term="Vim"></category><category term="C++"></category></entry><entry><title>Ubuntuでの日本語入力</title><link href="/2017/02/15/fcitx-skk/" rel="alternate"></link><published>2017-02-15T21:00:00+09:00</published><updated>2017-02-15T21:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-15:/2017/02/15/fcitx-skk/</id><summary type="html">&lt;p&gt;fcitx&amp;amp;skk&lt;/p&gt;</summary><content type="html">&lt;h1&gt;fcitx+skk&lt;/h1&gt;
 &lt;p&gt;skkを愛用している訳だがUbuntuでfcitx+skkの環境だと謎のタイミングでskkのオンオフが切り変わる。&lt;/p&gt;
 &lt;p&gt;設定をよくよく確認してみると「入力メソッド起動のその他のキー」なる項目があってデフォルトで左SHIFTが設定されていた。&lt;/p&gt;
 &lt;p&gt;WindowsのCapsをIMEのオンオフに割り当ててるように(これも極めて迷惑だが)、確かに左SHIFTを押す度に切り替わる。&lt;/p&gt;
-&lt;p&gt;という訳で「無効」にすると余計な動作が収まった。&lt;/p&gt;</content><category term="Ubuntu"></category></entry><entry><title>Pelicanセットアップ</title><link href="/2017/02/12/pelican_setup/" rel="alternate"></link><published>2017-02-12T12:00:00+09:00</published><updated>2017-02-12T12:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-12:/2017/02/12/pelican_setup/</id><summary type="html">&lt;p&gt;setup pelican&lt;/p&gt;</summary><content type="html">&lt;h1&gt;メモ用のブログ作成&lt;/h1&gt;
+&lt;p&gt;という訳で「無効」にすると余計な動作が収まった。&lt;/p&gt;</content><category term="Memo"></category><category term="Ubuntu"></category></entry><entry><title>Pelicanセットアップ</title><link href="/2017/02/12/pelican_setup/" rel="alternate"></link><published>2017-02-12T12:00:00+09:00</published><updated>2017-02-12T12:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-12:/2017/02/12/pelican_setup/</id><summary type="html">&lt;p&gt;setup pelican&lt;/p&gt;</summary><content type="html">&lt;h1&gt;メモ用のブログ作成&lt;/h1&gt;
 &lt;p&gt;Markdownで書き溜めて、後でgithubのwikiに上げようと思ったまま放置されてたネタ置き場の作成。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://kazukousen.github.io/python-pelican-install.html"&gt;こっちの記事&lt;/a&gt;が元ネタだがgithub.ioのところで躓いてた。&lt;/p&gt;
 &lt;p&gt;作業に関しては&lt;a href="http://blog.shigepon.info/blog/2016/03/31/migrate_octopress_github_page_to_pelican/#.WJ_ZLRKLRBw"&gt;こっち&lt;/a&gt;の方が簡潔。日付けの管理もこのサイト設定を使ってみた。&lt;/p&gt;
 &lt;h2&gt;GitHub Pages作成&lt;/h2&gt;
 &lt;p&gt;自分のアカウントでusername.github.ioのリポジトリを作成して、作業したい所にcloneしておく。以下cloneした中での作業&lt;/p&gt;
 &lt;h2&gt;Pelicanの設定と更新作業&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pelican-quickstart
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pelican-quickstart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make html
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make html
 make serve
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で http://localhost:8000 から作業内容を確認できる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
 &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;02&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt; &lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt;
 &lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Memo&lt;/span&gt;
 &lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
@@ -890,31 +963,28 @@ make serve
 &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
 &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;
 &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;確認したら&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make github
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make github
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。&lt;/p&gt;
 &lt;h2&gt;設定&lt;/h2&gt;
 &lt;p&gt;いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#pelicanconf.py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#pelicanconf.py&lt;/span&gt;
 &lt;span class="c1"&gt;#ファイル名からslugを取得&lt;/span&gt;
-&lt;span class="n"&gt;FILENAME_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;(?P&amp;lt;date&amp;gt;\d{4}-\d{2}-\d{2})-(?P&amp;lt;slug&amp;gt;.*)&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;FILENAME_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;(?P&amp;lt;date&amp;gt;\d&lt;/span&gt;&lt;span class="si"&gt;{4}&lt;/span&gt;&lt;span class="s1"&gt;-\d&lt;/span&gt;&lt;span class="si"&gt;{2}&lt;/span&gt;&lt;span class="s1"&gt;-\d&lt;/span&gt;&lt;span class="si"&gt;{2}&lt;/span&gt;&lt;span class="s1"&gt;)-(?P&amp;lt;slug&amp;gt;.*)&amp;#39;&lt;/span&gt;
 &lt;span class="c1"&gt;#得られたslugからhtml生成時のurlと保存先を指定&lt;/span&gt;
-&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}/&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}/index.html&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/&lt;/span&gt;&lt;span class="si"&gt;{slug}&lt;/span&gt;&lt;span class="s1"&gt;/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/&lt;/span&gt;&lt;span class="si"&gt;{slug}&lt;/span&gt;&lt;span class="s1"&gt;/index.html&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;としておけば年月日でディレクトリを掘ってくれる。&lt;/p&gt;</content><category term="pelican"></category><category term="python"></category></entry><entry><title>Hello world</title><link href="/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
+&lt;p&gt;としておけば年月日でディレクトリを掘ってくれる。&lt;/p&gt;</content><category term="Memo"></category><category term="pelican"></category><category term="python"></category></entry><entry><title>Hello world</title><link href="/2017/02/12/20170212_post/" rel="alternate"></link><published>2017-02-12T11:45:00+09:00</published><updated>2017-02-12T11:45:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:None,2017-02-12:/2017/02/12/20170212_post/</id><summary type="html">&lt;p&gt;Hello world&lt;/p&gt;</summary><content type="html">&lt;h1&gt;お試し&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;python&lt;/li&gt;
 &lt;li&gt;pelican&lt;/li&gt;
 &lt;li&gt;markdown&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello World!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="pelican"></category><category term="python"></category></entry></feed>
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello World!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="pelican"></category><category term="python"></category></entry></feed>

@@ -2,20 +2,22 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>eiichiro Blog - pelican</title>
+        <meta name="generator" content="Pelican" />
+        <title>CVMLAB Blog - pelican</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="eiichiro Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">eiichiro Blog </a></h1>
+                <h1><a href="/">CVMLAB Blog</a></h1>
                 <nav><ul>
                     <li><a href="/category/memo.html">Memo</a></li>
+                    <li><a href="/category/news.html">News</a></li>
+                    <li><a href="/category/wiki.html">Wiki</a></li>
+                    <li><a href="/category/このblog.html">このBlog</a></li>
+                    <li><a href="/category/ゼミ.html">ゼミ</a></li>
+                    <li><a href="/category/講義.html">講義</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
@@ -24,7 +26,7 @@
                     <h1 class="entry-title"><a href="/2017/02/12/pelican_setup/">Pelicanセットアップ</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2017-02-12T12:00:00+09:00">
-                Published: 日 12 2月 2017
+                Published: 2017-02-12(日)
         </abbr>
 
         <address class="vcard author">
@@ -39,18 +41,16 @@
 <h2>GitHub Pages作成</h2>
 <p>自分のアカウントでusername.github.ioのリポジトリを作成して、作業したい所にcloneしておく。以下cloneした中での作業</p>
 <h2>Pelicanの設定と更新作業</h2>
-<div class="highlight"><pre><span></span>pelican-quickstart
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>pelican-quickstart
+</code></pre></div>
 
 <p>でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから</p>
-<div class="highlight"><pre><span></span>make html
+<div class="highlight"><pre><span></span><code>make html
 make serve
-</pre></div>
-
+</code></pre></div>
 
 <p>で http://localhost:8000 から作業内容を確認できる。</p>
-<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
+<div class="highlight"><pre><span></span><code><span class="n">Title</span><span class="o">:</span> <span class="n">Hello</span> <span class="n">world</span>
 <span class="n">Date</span><span class="o">:</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span> <span class="mi">11</span><span class="o">:</span><span class="mi">45</span>
 <span class="n">Category</span><span class="o">:</span> <span class="n">Memo</span>
 <span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">python</span>
@@ -64,25 +64,22 @@ make serve
 <span class="o">-</span> <span class="n">python</span>
 <span class="o">-</span> <span class="n">pelican</span>
 <span class="o">-</span> <span class="n">markdown</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>確認したら</p>
-<div class="highlight"><pre><span></span>make github
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>make github
+</code></pre></div>
 
 <p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>
 <h2>設定</h2>
 <p>いちいちslugにタイムスタンプを埋め込むのも面倒なので、上のサイトの受け売りでディレクトリを掘るようにpelicanconf.pyを設定。ちなみにファイル名は無関係らしい。</p>
-<div class="highlight"><pre><span></span><span class="c1">#pelicanconf.py</span>
+<div class="highlight"><pre><span></span><code><span class="c1">#pelicanconf.py</span>
 <span class="c1">#ファイル名からslugを取得</span>
-<span class="n">FILENAME_METADATA</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;date&gt;\d{4}-\d{2}-\d{2})-(?P&lt;slug&gt;.*)&#39;</span>
+<span class="n">FILENAME_METADATA</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;date&gt;\d</span><span class="si">{4}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">)-(?P&lt;slug&gt;.*)&#39;</span>
 <span class="c1">#得られたslugからhtml生成時のurlと保存先を指定</span>
-<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/&#39;</span>
-<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}/index.html&#39;</span>
-</pre></div>
-
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/</span><span class="si">{slug}</span><span class="s1">/&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/</span><span class="si">{slug}</span><span class="s1">/index.html&#39;</span>
+</code></pre></div>
 
 <p>としておけば年月日でディレクトリを掘ってくれる。</p>                </article>
             </aside><!-- /#featured -->
@@ -100,7 +97,7 @@ make serve
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-02-12T11:45:00+09:00">
-                Published: 日 12 2月 2017
+                Published: 2017-02-12(日)
         </abbr>
 
         <address class="vcard author">
@@ -122,7 +119,9 @@ make serve
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
                             <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
-                            <li><a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/">CVMLAB</a></li>
+                            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+                            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+                            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
@@ -137,10 +136,10 @@ make serve
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>
