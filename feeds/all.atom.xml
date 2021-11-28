@@ -80,7 +80,7 @@ ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
 あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)&lt;/p&gt;
 &lt;h3&gt;pelican-import&lt;/h3&gt;
 &lt;p&gt;python環境でpelicanが使える前提。importツールも勝手に入る。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;wpfile&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;wpoutput&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;slugs&lt;/span&gt; &lt;span class="o"&gt;../&lt;/span&gt;&lt;span class="n"&gt;cvmlab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WordPress&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2021&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;27.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pelican-import --dir-cat --wpfile -o wpoutput -m markdown --disable-slugs ../cvmlab.WordPress.2021-11-27.xml
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -136,7 +136,38 @@ make serve
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でlocalhost:8000を開いて確認。&lt;/p&gt;
-&lt;p&gt;問題無ければリリースする。&lt;/p&gt;</content><category term="Memo"></category></entry><entry><title>前期が終わりました</title><link href="https://eiichiromomma.github.io/2020/07/31/%E5%89%8D%E6%9C%9F%E3%81%8C%E7%B5%82%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2020-07-31T08:48:00+09:00</published><updated>2020-07-31T08:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2020-07-31:/2020/07/31/前期が終わりました/</id><content type="html">&lt;!-- wp:paragraph --&gt;
+&lt;p&gt;問題無ければリリースする。&lt;/p&gt;
+&lt;h3&gt;theme&lt;/h3&gt;
+&lt;p&gt;あちこちに載ってるので大した話は無いが適当な場所で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone --recursive https://github.com/getpelican/pelican-themes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でpelicanconf.pyに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;THEME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/path/to/zurb-F5-basic&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のような感じで書いて&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make html
+make serve
+&lt;span class="sb"&gt;```&lt;/span&gt;でlocalhost:8000を開いて確認する。
+
+このままでも良いのだが
+&lt;span class="sb"&gt;```&lt;/span&gt;bash
+pelican-themes -i /path/to/theme
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;としてインストールすると，THEMEの記述をパス不要で名前だけにもできる。&lt;/p&gt;
+&lt;h3&gt;落とし穴&lt;/h3&gt;
+&lt;p&gt;Makefileが古く&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pelican-quickstart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行し直してMakefileを作り直せと言われたので実行したら，githubのmaster→mainの名称変更があって以後mainのbranchに投げられるように変わってた。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;リポジトリの設定でデフォルトのbranchをmainに変更&lt;/li&gt;
+&lt;li&gt;同じくSitesの設定でgithub ioのサイトに反映させるbranchをmainに変更&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;が必要だった。&lt;/p&gt;</content><category term="Memo"></category></entry><entry><title>前期が終わりました</title><link href="https://eiichiromomma.github.io/2020/07/31/%E5%89%8D%E6%9C%9F%E3%81%8C%E7%B5%82%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2020-07-31T08:48:00+09:00</published><updated>2020-07-31T08:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2020-07-31:/2020/07/31/前期が終わりました/</id><content type="html">&lt;!-- wp:paragraph --&gt;
 
 &lt;p&gt;コロナ禍で久々の更新です。卒業式もなく学位記伝達のみだったり，学部生は4正式に配属されてから一度も研究室に来てなかったりと特殊な状況ですが，M1, M2は入構可となってから1ヶ月くらいでリカバリーしてもらうところです。&lt;/p&gt;
 &lt;!-- /wp:paragraph --&gt;

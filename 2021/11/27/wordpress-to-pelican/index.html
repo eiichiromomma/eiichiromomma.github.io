@@ -75,7 +75,7 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)</p>
 <h3>pelican-import</h3>
 <p>python環境でpelicanが使える前提。importツールも勝手に入る。</p>
-<div class="highlight"><pre><span></span><code><span class="n">pelican</span><span class="o">-</span><span class="kn">import</span> <span class="o">--</span><span class="nb">dir</span><span class="o">-</span><span class="n">cat</span> <span class="o">--</span><span class="n">wpfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">wpoutput</span> <span class="o">-</span><span class="n">m</span> <span class="n">markdown</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">slugs</span> <span class="o">../</span><span class="n">cvmlab</span><span class="o">.</span><span class="n">WordPress</span><span class="o">.</span><span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mf">27.</span><span class="n">xml</span>
+<div class="highlight"><pre><span></span><code>pelican-import --dir-cat --wpfile -o wpoutput -m markdown --disable-slugs ../cvmlab.WordPress.2021-11-27.xml
 </code></pre></div>
 
 <ul>
@@ -132,6 +132,37 @@ make serve
 
 <p>でlocalhost:8000を開いて確認。</p>
 <p>問題無ければリリースする。</p>
+<h3>theme</h3>
+<p>あちこちに載ってるので大した話は無いが適当な場所で</p>
+<div class="highlight"><pre><span></span><code>git clone --recursive https://github.com/getpelican/pelican-themes
+</code></pre></div>
+
+<p>でpelicanconf.pyに</p>
+<div class="highlight"><pre><span></span><code><span class="n">THEME</span><span class="o">=</span><span class="s1">&#39;/path/to/zurb-F5-basic&#39;</span>
+</code></pre></div>
+
+<p>のような感じで書いて</p>
+<div class="highlight"><pre><span></span><code>make html
+make serve
+<span class="sb">```</span>でlocalhost:8000を開いて確認する。
+
+このままでも良いのだが
+<span class="sb">```</span>bash
+pelican-themes -i /path/to/theme
+</code></pre></div>
+
+<p>としてインストールすると，THEMEの記述をパス不要で名前だけにもできる。</p>
+<h3>落とし穴</h3>
+<p>Makefileが古く</p>
+<div class="highlight"><pre><span></span><code>pelican-quickstart
+</code></pre></div>
+
+<p>を実行し直してMakefileを作り直せと言われたので実行したら，githubのmaster→mainの名称変更があって以後mainのbranchに投げられるように変わってた。</p>
+<ol>
+<li>リポジトリの設定でデフォルトのbranchをmainに変更</li>
+<li>同じくSitesの設定でgithub ioのサイトに反映させるbranchをmainに変更</li>
+</ol>
+<p>が必要だった。</p>
 <p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
 </p>
