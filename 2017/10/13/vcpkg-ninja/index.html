@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>vcpkgのninja</title>
+
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/" rel="bookmark"
+        title="Permalink to vcpkgのninja">vcpkgのninja</a></h3>
+    </header>
+
+<h6 class="subheader" title="2017-10-13T23:00:00+09:00">2017-10-13(金)
+</h6>
+
+
+    <h1>vcpkgでハマる</h1>
+<h2>追記</h2>
+<p>↓で色々頑張ったのだが結局のところ英語以外の環境はあちこちでトラブルが発生する。
+諦めてVisual Studioの<a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157">英語言語パック</a>をインストールしたら解決した。</p>
+<h2>旧記事</h2>
+<p><a href="https://github.com/Microsoft/vcpkg">vcpkg</a>を試してみようと，とりあえずPower Shellで</p>
+<div class="highlight"><pre><span></span><code><span class="err">git clone https://github.com/Microsoft/vcpkg.git</span>
+<span class="err">cd vcpkg</span>
+<span class="err">.\vcpkg install opencv:x64-windows</span>
+</code></pre></div>
+
+<p>とやったらzlibのビルドで</p>
+<div class="highlight"><pre><span></span><code><span class="n">Error</span><span class="o">:</span> <span class="n">Building</span> <span class="k">package</span> <span class="nn">zlib</span><span class="o">:</span><span class="n">x86</span><span class="o">-</span><span class="n">windows</span> <span class="n">failed</span> <span class="k">with</span><span class="o">:</span> <span class="n">BUILD_FAILED</span>
+<span class="n">Please</span> <span class="n">ensure</span> <span class="n">you</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">using</span> <span class="n">the</span> <span class="n">latest</span> <span class="n">portfiles</span> <span class="k">with</span> <span class="err">`</span><span class="o">.\</span><span class="n">vcpkg</span> <span class="n">update</span><span class="err">`</span><span class="o">,</span> <span class="n">then</span>
+<span class="n">submit</span> <span class="n">an</span> <span class="n">issue</span> <span class="n">at</span> <span class="n">https</span><span class="o">://</span><span class="n">github</span><span class="o">.</span><span class="na">com</span><span class="sr">/Microsoft/vcpkg/iss</span><span class="n">ues</span> <span class="n">including</span><span class="o">:</span>
+  <span class="n">Package</span><span class="o">:</span> <span class="n">zlib</span><span class="o">:</span><span class="n">x86</span><span class="o">-</span><span class="n">windows</span>
+  <span class="n">Vcpkg</span> <span class="n">version</span><span class="o">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">91</span><span class="o">-</span><span class="mi">2017</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">9</span><span class="n">e19c24d2911ff1ef648aeed0c596e3987eafebf</span>
+
+<span class="n">Additionally</span><span class="o">,</span> <span class="n">attach</span> <span class="n">any</span> <span class="n">relevant</span> <span class="n">sections</span> <span class="n">from</span> <span class="n">the</span> <span class="n">log</span> <span class="n">files</span> <span class="n">above</span><span class="o">.</span>
+</code></pre></div>
+
+<p>みたいなエラーでコケる。エラーログを見てみると</p>
+<div class="highlight"><pre><span></span><code><span class="err">&quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3</span>
+<span class="err">2\zlib1.rc &quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&quot; CMakeFiles\zlib.dir\win32\zlib1.res &quot;: CN[h t@C:  &quot; &quot;C:/Program Files</span>
+<span class="err"> (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_</span>
+<span class="err">DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v</span>
+<span class="err">cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z</span>
+<span class="err">lib-1.2.11\win32\zlib1.rc</span>
+</code></pre></div>
+
+<p>途中変な文字化けをしているのでchcpでutf-8にしていないせいかと</p>
+<div class="highlight"><pre><span></span><code><span class="err">chcp 65001</span>
+</code></pre></div>
+
+<p>とやってから実行してみたが何の変化も無し。
+zlibのportsを見てみると，どうもninjaを使っているらしい。
+そして<a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d">これ</a>。
+という訳でvcpkg/ports/zlib/portfile.cmakeの</p>
+<div class="highlight"><pre><span></span><code>    <span class="err">PREFER</span> <span class="err">NINJA</span>
+</code></pre></div>
+
+<p>をコメントアウト。
+ようやくビルドできた。</p>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by momma</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

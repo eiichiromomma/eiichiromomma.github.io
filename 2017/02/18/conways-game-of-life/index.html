@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Conway's Game of Life</title>
+
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2017/02/18/conways-game-of-life/" rel="bookmark"
+        title="Permalink to Conway's Game of Life">Conway's Game of Life</a></h3>
+    </header>
+
+<h6 class="subheader" title="2017-02-18T10:22:00+09:00">2017-02-18(土)
+</h6>
+
+
+    <p>9月から今年2月にかけて埼玉大で非常勤をやってきました。プログラミング演習ということでC言語の講義です。</p>
+<p>使った環境はコマンドラインベースでということで同大演習室に導入済みのcygwinのgccでしたがセキュリティの関係でgdbが使えないという問題もありやや苦労しました。デバッガの話はCode::Blocksでカバーしましたが、デバッガが使えない公式環境になってしまったのは申し訳なかったですね。</p>
+<p>講義・演習の方はMoodleのOnline Judgeプラグインを活用しました。2.4までしか対応していないプラグインだったものの、三重大の大山先生からパッチを頂きMoodle2.8で無事動作。課題も常時受け入れられるようさくらVPSで環境を立ち上げての運用でした。来年度はうちのプログラミングの授業でも活躍するかも?</p>
+<p>Online Judgeは<a href="http://judge.u-aizu.ac.jp/onlinejudge/index.jsp?lang=ja">会津大のAOJ</a>が有名です。プログラミングの習得にも役立ちます。独学には<a href="https://paiza.jp/works">paizaラーニング</a>もお薦めです。こっちは来年度のメンバーに受講して貰っています。</p>
+<p>で、課題の方はタイトルにも書いたライフゲーム、魔方陣のbrute-force解法、アスキー文字だけのシューティングゲーム、同じくアスキー文字だけのSnakeゲームとしました。雛形を渡してそれを弄るような感じです。OSSや標準以外のライブラリに触れて貰う目的もあり後者はncursesライブラリを使ったプログラミングです。ライフゲームについてはlibpngを使ってのPNG画像出力+imagemagickでのアニメーション化とかもやりました。↓みたいなアニメーションが作れます。</p>
+<iframe src="https://player.vimeo.com/video/650717726?h=20b12243be" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/講義.html">講義</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by momma</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>
