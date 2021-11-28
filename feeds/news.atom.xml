@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - News</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/news.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2021-11-28T10:59:00+09:00</updated><entry><title>研究室への問い合わせと2020-2021の状況について</title><link href="https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" rel="alternate"></link><published>2021-11-28T10:59:00+09:00</published><updated>2021-11-28T10:59:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</id><summary type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
-&lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので、この分野を覗いてみたい人は是非参加してみてください。)
+&lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;12/4(土) 11:00-12:00 &lt;/li&gt;
@@ -15,7 +15,7 @@
 &lt;ul&gt;
 &lt;li&gt;学生の研究室への登校は任意(要事前申請)&lt;/li&gt;
 &lt;li&gt;連絡はコロナ禍の前からSlack …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
-&lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので、この分野を覗いてみたい人は是非参加してみてください。)
+&lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;12/4(土) 11:00-12:00 &lt;/li&gt;
@@ -35,9 +35,9 @@
 &lt;/ul&gt;
 &lt;h2&gt;研究室Webサーバー(Wordpress)の移設&lt;/h2&gt;
 &lt;p&gt;先日サーバーPCの置いてあった建屋で停電が起き，再起動出来たり出来なかったりと不安定な状況になりました。
-厄介なことに研究室や自宅にサーバPCを持って帰って検証しようとすると起動して，建屋で再開させようとすると起動しない。
-Wordpressで運用してるのですが，過去のサーバー移設の際もかなり面倒だったのと，放置してたgithubioのブログでの&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican&lt;/a&gt;がmarkdown記述でかなり楽なのもあってこれを機会にWordpressを辞めてPelican運用に変更しました。(移設については別記事で)&lt;/p&gt;
-&lt;p&gt;という訳で技術メモも含めた研究室のWebページという扱いで運用して行きます。&lt;/p&gt;</content><category term="News"></category></entry><entry><title>前期が終わりました</title><link href="https://eiichiromomma.github.io/2020/07/31/%E5%89%8D%E6%9C%9F%E3%81%8C%E7%B5%82%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2020-07-31T08:48:00+09:00</published><updated>2020-07-31T08:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2020-07-31:/2020/07/31/前期が終わりました/</id><content type="html">&lt;!-- wp:paragraph --&gt;
+厄介なことに，研究室や自宅にサーバPCを持って帰って検証しようとすると起動して，建屋で再開させようとすると起動しない。
+Wordpressで運用してるのですが，過去のサーバー移設の際もかなり面倒だったのと，放置してたgithubioのブログでの&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican&lt;/a&gt;がmarkdown記述でかなり楽なのもあって，これを機会にWordpressを辞めてPelican運用に変更しました。(移設については別記事で)&lt;/p&gt;
+&lt;p&gt;という訳で，技術メモも含めた研究室のWebページという扱いで運用して行きます。&lt;/p&gt;</content><category term="News"></category></entry><entry><title>前期が終わりました</title><link href="https://eiichiromomma.github.io/2020/07/31/%E5%89%8D%E6%9C%9F%E3%81%8C%E7%B5%82%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2020-07-31T08:48:00+09:00</published><updated>2020-07-31T08:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2020-07-31:/2020/07/31/前期が終わりました/</id><content type="html">&lt;!-- wp:paragraph --&gt;
 
 &lt;p&gt;コロナ禍で久々の更新です。卒業式もなく学位記伝達のみだったり，学部生は4正式に配属されてから一度も研究室に来てなかったりと特殊な状況ですが，M1, M2は入構可となってから1ヶ月くらいでリカバリーしてもらうところです。&lt;/p&gt;
 &lt;!-- /wp:paragraph --&gt;
