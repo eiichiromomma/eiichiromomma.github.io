@@ -1,63 +1,204 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title>CVMLAB Blog</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/cid.css">
-        <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-            <div class="container">
+    <title>CVMLAB Blog - Kivy</title>
 
-<header class="blog-header">
-    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
-    <p></p>
-    <nav>
-        <a href="https://eiichiromomma.github.io/">INDEX</a>
-        <a href="https://eiichiromomma.github.io/archives">ARCHIVES</a>
-        <a href="https://eiichiromomma.github.io/categories">CATEGORIES</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
 
-        <h1>Tag: . <small class="header-link"><a href="https://eiichiromomma.github.io/tags">All Tags</a></small></h1>
+<body>
 
-        <div class="post-list">
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
 
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">KivyでOpenCV</a></h2>
-                <time datetime="2017-12-05T08:00:00+09:00">12 05, 2017</time>
-                <div class="excerpt"><p>OpenCV with Kivy</p></div>
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/"><h3 class="article-title">KivyでOpenCV</h3></a>
+<h6 class="subheader" title="2017-12-05T08:00:00+09:00">2017-12-05(火)
+</h6>
+
+
+<h1>他のGUIで表示してみる</h1>
+<p>OpenCVのPythonモジュールではQtが絡むと色々と厄介になる。
+ビルド時のライブラリの依存の問題でシステムに入ってるQtやAnacondaに入ってるQtやその他諸々のQtをCMakeが拾ってきて，何も考えずにビルドするとビルドは問題なく終わるのに参照次第ではimportすら出来ない。(当たり前)
+という訳でQt抜きのパッケージになるケースが非常に多い。</p>
+<p><a href="https://riverbankcomputing.com/software/pyqt/intro">PyQt</a>か<a href="https://wiki.qt.io/PySide/ja">PySide</a>かという選択肢もあるが，試しにKivyを使ってみたら結構簡単だった。
+頑張ればOpenCVでのQt-highguiみたいにSaveボタンを付けたり(これは簡単)，拡大して画素値を出したりも出来そうだ。</p>
+<h1>サンプル</h1>
+<p><img alt="こんな感じ" src="https://eiichiromomma.github.io/images/20171205-1.png"></p>
+<p>こんな感じでWebCAM-スライダ-ボタンという並び。KivyのSliderは何故かラベルが無いのでちょっと工夫して付け足してる。</p>
+<p>構造としてはAppを継承したメインのクラスがあり，buildでUIの構築(と初期設定)，SliderとButtonにbindしたコールバック，Clock.schedule_intervalで指定してるupdateで更新。
+update内でOpenCV周りの処理を行なってImageのtextureを書き換えて表示といった流れになる。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.slider</span> <span class="kn">import</span> <span class="n">Slider</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics.texture</span> <span class="kn">import</span> <span class="n">Texture</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="k">class</span> <span class="nc">CvCamera</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#UIの構築等</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># ButtonやSlider等は基本size_hintでサイズ比率を指定(絶対値の時はNoneでsize=)</span>
+        <span class="c1"># Verticalの中に置くhorizontalなBoxLayout (ここだけ2column)</span>
+        <span class="n">layout2</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">halign</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+        <span class="n">slider1</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+        <span class="n">slider1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">slideCallback</span><span class="p">)</span>
+        <span class="c1"># 日本語フォントを使いたいときはfont_nameでフォントへのパス</span>
+        <span class="n">button1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;ボタン&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">font_name</span><span class="o">=</span><span class="s1">&#39;/usr/local/texlive/texmf-local/fonts/truetype/cjk-gs-integrate/ipag.ttf&#39;</span><span class="p">)</span>
+        <span class="n">button1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttonCallback</span><span class="p">)</span> <span class="c1">#bindでイベントごとにコールバック指定</span>
+        <span class="c1"># Imageに後で画像を描く</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">))</span>
+        <span class="c1"># Layoutを作ってadd_widgetで順次モノを置いていく(並びは置いた順)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="p">)</span>
+        <span class="c1"># ここだけ2columnでLabelとSliderを並べる</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">slider1</span><span class="p">)</span>
+        <span class="c1"># 1columnに戻る</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">button1</span><span class="p">)</span>
+        <span class="c1">#カメラ待ち</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span> 
+            <span class="k">pass</span>
+        <span class="c1"># 更新スケジュールとコールバックの指定</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+    <span class="k">def</span> <span class="nf">slideCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># Slider横のLabelをSliderの値に</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s1Label</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Slider </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">buttonCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="c1"># 何かのフラグに使える</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Buttn &lt;</span><span class="si">%s</span><span class="s1">&gt; is pressed.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="c1"># 基本的にここでOpenCV周りの処理を行なってtextureを更新する</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">texture1</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">)</span>
+        <span class="n">texture1</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">tostring</span><span class="p">(),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;bgr&#39;</span><span class="p">,</span> <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">&#39;ubyte&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img1</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture1</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">CvCamera</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/kivy.html">Kivy </a>
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
             </article>
 
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
 
-        </div>
+<p>
 
-        <div class="paginator">
-            Page 1 / 1
-        </div>
-
+</p>
+</div>
 
 
-<footer class="blog-footer">
 
-    <ul class="nav">
-    </ul>
+            <!-- /#posts-list -->
 
-    <p class="disclaimer">
-    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
-    </p>
-</footer>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by eiichiromomma</p> -->
             </div>
-    </body>
+            </div>
+    </div>
+</footer>
+</body>
 </html>

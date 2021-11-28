@@ -1,63 +1,170 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title>CVMLAB Blog</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/cid.css">
-        <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-            <div class="container">
+    <title>CVMLAB Blog - GoogleDrive</title>
 
-<header class="blog-header">
-    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
-    <p></p>
-    <nav>
-        <a href="https://eiichiromomma.github.io/">INDEX</a>
-        <a href="https://eiichiromomma.github.io/archives">ARCHIVES</a>
-        <a href="https://eiichiromomma.github.io/categories">CATEGORIES</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
 
-        <h1>Tag: . <small class="header-link"><a href="https://eiichiromomma.github.io/tags">All Tags</a></small></h1>
+<body>
 
-        <div class="post-list">
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
 
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Google Drive File Stream</a></h2>
-                <time datetime="2017-10-17T22:00:00+09:00">10 17, 2017</time>
-                <div class="excerpt"><p>Google Drive File Stream</p></div>
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/"><h3 class="article-title">Google Drive File Stream</h3></a>
+<h6 class="subheader" title="2017-10-17T22:00:00+09:00">2017-10-17(火)
+</h6>
+
+
+<h1>Google Driveからの乗り換え</h1>
+<p>Google Driveのデスクトップアプリ(PCに同期させるアプリ)は2018年3月に廃止が決定。
+置き換えソフトであるGoogle Drive File Streamアプリは，これまで大学との契約形態については未対応だったが配布開始された模様。
+Google Driveアプリを使われていた方は乗り換えが必要で，かなり挙動が違った。
+特にCドライブの容量が厳しく他のドライブに退避させていた方は注意が必要。</p>
+<ul>
+<li>「マイドライブ」と「チームドライブ」は外付けドライブのフォルダとしてマウントされる</li>
+<li>データは基本的にクラウドに保持(ネットに繋っていないと見えない)</li>
+<li>オフラインでも使えるようにするにはフォルダやファイルを選択して右クリックメニューで「オフラインで使用可能にする」</li>
+<li>オフライン用のキャッシュはc:\Users\username\AppData\Local\Google\DriveFSに保存される</li>
+<li>Google DriveをCドライブ以外で運用していた場合には，Cドライブの容量を食い潰されるうえに設定で変更できない</li>
+<li>既存のGoogleドライブからの引き継ぎは無い(インストーラorアプリがGoogleドライブの停止を推奨してくる)</li>
+<li>旧GoogleドライブのフォルダはGoogle Drive File Streamに以降した後は手動で削除する必要がある(消さなくても良いが同期しないうえに容量を食う)</li>
+<li>同期中はマウント状態が不安定になる(恐らく改善される)</li>
+<li>特に大量のファイルを同期させようとするとエクスプローラーが応答しなくなるが，暫く放置すると同期が終わって正常な状態になる</li>
+</ul>
+<h1>別ドライブにキャッシュを置く方法(無保証)</h1>
+<p>Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)</p>
+<h2>Windows</h2>
+<p>大容量HDDがHドライブのとき，コマンドプロンプトで</p>
+<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span>
+<span class="n">cd</span> <span class="o">\</span>
+<span class="n">mkdir</span> <span class="n">DFSCache</span>
+</code></pre></div>
+
+<p>でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)</p>
+<div class="highlight"><pre><span></span><code><span class="err">mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache</span>
+</code></pre></div>
+
+<p>としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。</p>
+<h2>Mac</h2>
+<p>/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir /Volumes/extdrive/DriveFS
+sudo chown username:staff DriveFS
+<span class="nb">cd</span> /Users/username/Library/Application<span class="se">\ </span>Support/Google
+ln -s /Volumes/extdrive/DriveFS DriveFS
+</code></pre></div>
+
+<p>でextdrive上に逃がせる。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/googledrive.html">GoogleDrive </a>
+</p>
+
+
+
             </article>
 
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
 
-        </div>
+<p>
 
-        <div class="paginator">
-            Page 1 / 1
-        </div>
-
+</p>
+</div>
 
 
-<footer class="blog-footer">
 
-    <ul class="nav">
-    </ul>
+            <!-- /#posts-list -->
 
-    <p class="disclaimer">
-    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
-    </p>
-</footer>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by eiichiromomma</p> -->
             </div>
-    </body>
+            </div>
+    </div>
+</footer>
+</body>
 </html>

@@ -1,43 +1,57 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title>CVMLAB Blog</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/cid.css">
-        <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-            <div class="container">
+    <title>CVMLAB Blog - Memo</title>
 
-<header class="blog-header">
-    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
-    <p></p>
-    <nav>
-        <a href="https://eiichiromomma.github.io/">INDEX</a>
-        <a href="https://eiichiromomma.github.io/archives">ARCHIVES</a>
-        <a href="https://eiichiromomma.github.io/categories">CATEGORIES</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
 
-        <h1>Category: Memo. <small class="header-link"><a href="https://eiichiromomma.github.io/categories">All Categories</a></small></h1>
+<body>
 
-        <div class="post-list">
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
 
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Wordpress to Pelican</a></h2>
-                <time datetime="2021-11-27T19:20:00+09:00">11 27, 2021</time>
-                <div class="excerpt"><p>WordpressからPelicanへの移行メモ</p>
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
+<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
+</h6>
+
+
+<p>WordpressからPelicanへの移行メモ</p>
 <h2>前置き</h2>
 <ul>
 <li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
@@ -57,93 +71,338 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 <p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
 <h3>xmlをエクスポート</h3>
 <p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …</p></div>
+あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)</p>
+<h3>pelican-import</h3>
+<p>python環境でpelicanが使える前提。importツールも勝手に入る。</p>
+<div class="highlight"><pre><span></span><code><span class="n">pelican</span><span class="o">-</span><span class="kn">import</span> <span class="o">--</span><span class="nb">dir</span><span class="o">-</span><span class="n">cat</span> <span class="o">--</span><span class="n">wpfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">wpoutput</span> <span class="o">-</span><span class="n">m</span> <span class="n">markdown</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">slugs</span> <span class="o">../</span><span class="n">cvmlab</span><span class="o">.</span><span class="n">WordPress</span><span class="o">.</span><span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mf">27.</span><span class="n">xml</span>
+</code></pre></div>
+
+<ul>
+<li>--dir-cat: Wordpressでのカテゴリごとにフォルダを掘って出力</li>
+<li>--wpfile: Wordpressからのコンバート</li>
+<li>-o wpoutput: wpoutputフォルダに出力</li>
+<li>-m markdown: Markdown形式で出力</li>
+<li>--disable-slugs: Pelicanはslugをファイル名やフォルダ名に使うのでWordpressのは使わないよう指定しないと後でカオスになる</li>
+</ul>
+<p>という感じでカテゴリごとにフォルダが掘られ，mdファイルが配置される。
+エラーが出たらipythonを起動し，</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">run</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">pelican</span><span class="o">-</span><span class="kn">import</span> <span class="o">--</span><span class="n">wpfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span> <span class="o">-</span><span class="n">m</span> <span class="n">markdown</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">slugs</span> <span class="o">../</span><span class="n">cvmlab</span><span class="o">.</span><span class="n">WordPress</span><span class="o">.</span><span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mf">27.</span><span class="n">xml</span>
+</code></pre></div>
+
+<p>という感じで実行し，その後で</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">debug</span>
+</code></pre></div>
+
+<p>とするとデバッガに入れる。大抵itemsに詰まったデータのitemを処理してる最中に起きるので，</p>
+<div class="highlight"><pre><span></span><code><span class="n">item</span>
+</code></pre></div>
+
+<p>でエラーが発生したitemの中身を表示して，Visual Studio Code等のエディタでxmlを開き該当箇所を探すと変な文字が紛れてたりするので消す。また実行してエラーが出なくなるまで繰り返し。</p>
+<h3>整形諸々</h3>
+<p>一応出力できたが問題は山積み</p>
+<ul>
+<li>-e0----.mdみたいなファイル名になりコマンド実行時にオプション扱いされる<ul>
+<li>multi-byteな文字の問題だろうが以後コマンドでファイル名を指定する作業の際に--(ハイフン二つ)を前に置くとファイル名として扱ってくれる</li>
+<li>pelicanで変換する際は問題にならないので放置</li>
+</ul>
+</li>
+<li>Pelicanはカテゴリは1つだけという制限<ul>
+<li>色々手はあるが組合せが面倒なので全部開いて手作業で一つにした</li>
+<li>Tagsは複数指定できるらしいが今後1つだけにすれば良いやということでそのまま</li>
+</ul>
+</li>
+<li>画像のリンクはwordpress内へのリンクのまま(当たり前)<ul>
+<li>gsedで一気に置換する</li>
+<li>sedでは"/"の代わりに別のセパレータ("|"とか)を指定すればURLをそのまま置換できる<ul>
+<li>Pelicanで使うcotnents/imagesの中にuploadsフォルダをまんまコピーしておく</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>find . -type f <span class="p">|</span> xargs gsed -i.bak -e <span class="s2">&quot;s|https://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/|{static}/images/|g&quot;</span>
+</code></pre></div>
+
+<p>で後は全ページチェックしておかしなところを直していくしか無いのだが，過去記事なので致命的な問題の指摘が来たら直すってことで。</p>
+<h3>あとはPelicanの通常作業</h3>
+<div class="highlight"><pre><span></span><code>make html
+make serve
+</code></pre></div>
+
+<p>でlocalhost:8000を開いて確認。</p>
+<p>問題無ければリリースする。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+</p>
+
+
+
             </article>
 
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/12/28/librealsense/">macOSでRealsense</a></h2>
-                <time datetime="2017-12-28T19:00:00+09:00">12 28, 2017</time>
-                <div class="excerpt"><p>Realsense on macOS</p></div>
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/12/28/librealsense/"><h3 class="article-title">macOSでRealsense</h3></a>
+<h6 class="subheader" title="2017-12-28T19:00:00+09:00">2017-12-28(木)
+</h6>
+
+
+<p>Realsense on macOS</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/realsense.html">Realsense </a>
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/pcl.html">PCL </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/librealsense/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">KivyでOpenCV</a></h2>
-                <time datetime="2017-12-05T08:00:00+09:00">12 05, 2017</time>
-                <div class="excerpt"><p>OpenCV with Kivy</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/"><h3 class="article-title">KivyでOpenCV</h3></a>
+<h6 class="subheader" title="2017-12-05T08:00:00+09:00">2017-12-05(火)
+</h6>
+
+
+<p>OpenCV with Kivy</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/kivy.html">Kivy </a>
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Google Drive File Stream</a></h2>
-                <time datetime="2017-10-17T22:00:00+09:00">10 17, 2017</time>
-                <div class="excerpt"><p>Google Drive File Stream</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/"><h3 class="article-title">Google Drive File Stream</h3></a>
+<h6 class="subheader" title="2017-10-17T22:00:00+09:00">2017-10-17(火)
+</h6>
+
+
+<p>Google Drive File Stream</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/googledrive.html">GoogleDrive </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/10/15/vcpkg/">ひき続きvcpkg</a></h2>
-                <time datetime="2017-10-15T23:00:00+09:00">10 15, 2017</time>
-                <div class="excerpt"><p>vcpkg</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/10/15/vcpkg/"><h3 class="article-title">ひき続きvcpkg</h3></a>
+<h6 class="subheader" title="2017-10-15T23:00:00+09:00">2017-10-15(日)
+</h6>
+
+
+<p>vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/15/vcpkg/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/">vcpkgのninja</a></h2>
-                <time datetime="2017-10-13T23:00:00+09:00">10 13, 2017</time>
-                <div class="excerpt"><p>ninja in vcpkg</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/"><h3 class="article-title">vcpkgのninja</h3></a>
+<h6 class="subheader" title="2017-10-13T23:00:00+09:00">2017-10-13(金)
+</h6>
+
+
+<p>ninja in vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/09/23/GAS/">Google Apps ScriptでDriveとGMail連携</a></h2>
-                <time datetime="2017-09-23T21:00:00+09:00"> 9 23, 2017</time>
-                <div class="excerpt"><p>GoogleDrive and GMail</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/09/23/GAS/"><h3 class="article-title">Google Apps ScriptでDriveとGMail連携</h3></a>
+<h6 class="subheader" title="2017-09-23T21:00:00+09:00">2017-09-23(土)
+</h6>
+
+
+<p>GoogleDrive and GMail</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/javascript.html">Javascript </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/09/23/GAS/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/">macOSでOpenCL</a></h2>
-                <time datetime="2017-07-03T22:00:00+09:00"> 7 03, 2017</time>
-                <div class="excerpt"><p>macOSでOpenCL</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/"><h3 class="article-title">macOSでOpenCL</h3></a>
+<h6 class="subheader" title="2017-07-03T22:00:00+09:00">2017-07-03(月)
+</h6>
+
+
+<p>macOSでOpenCL</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
+    <a href="https://eiichiromomma.github.io/tag/opencl.html">OpenCL </a>
+    <a href="https://eiichiromomma.github.io/tag/torch.html">Torch </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/">macOSでTensorflow</a></h2>
-                <time datetime="2017-05-18T08:00:00+09:00"> 5 18, 2017</time>
-                <div class="excerpt"><p>macOSでTensorflow</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/"><h3 class="article-title">macOSでTensorflow</h3></a>
+<h6 class="subheader" title="2017-05-18T08:00:00+09:00">2017-05-18(木)
+</h6>
+
+
+<p>macOSでTensorflow</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
+    <a href="https://eiichiromomma.github.io/tag/tensorflow.html">Tensorflow </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+        
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/04/01/nano/">GNU nano</a></h2>
-                <time datetime="2017-04-01T09:00:00+09:00"> 4 01, 2017</time>
-                <div class="excerpt"><p>GNU nano</p></div>
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/04/01/nano/"><h3 class="article-title">GNU nano</h3></a>
+<h6 class="subheader" title="2017-04-01T09:00:00+09:00">2017-04-01(土)
+</h6>
+
+
+<p>GNU nano</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/nano.html">nano </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/04/01/nano/">Read More</a>
+                <hr  class="gradient"/>
             </article>
 
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 2</h6>
 
-        </div>
+<p>
 
-        <div class="paginator">
-            Page 1 / 2
-                <a href="https://eiichiromomma.github.io/category/memo2.html">
-                    &gt;&gt;&gt;
-                </a>
-        </div>
+        <a href="https://eiichiromomma.github.io/category/memo2.html">Next &raquo;</a>
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
 
 
-
-<footer class="blog-footer">
-
-    <ul class="nav">
-    </ul>
-
-    <p class="disclaimer">
-    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
-    </p>
-</footer>
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by eiichiromomma</p> -->
             </div>
-    </body>
+            </div>
+    </div>
+</footer>
+</body>
 </html>

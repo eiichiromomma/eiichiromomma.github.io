@@ -1,63 +1,180 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title>CVMLAB Blog</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/cid.css">
-        <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-            <div class="container">
+    <title>CVMLAB Blog - Javascript</title>
 
-<header class="blog-header">
-    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
-    <p></p>
-    <nav>
-        <a href="https://eiichiromomma.github.io/">INDEX</a>
-        <a href="https://eiichiromomma.github.io/archives">ARCHIVES</a>
-        <a href="https://eiichiromomma.github.io/categories">CATEGORIES</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
 
-        <h1>Tag: . <small class="header-link"><a href="https://eiichiromomma.github.io/tags">All Tags</a></small></h1>
+<body>
 
-        <div class="post-list">
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
 
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/09/23/GAS/">Google Apps ScriptでDriveとGMail連携</a></h2>
-                <time datetime="2017-09-23T21:00:00+09:00"> 9 23, 2017</time>
-                <div class="excerpt"><p>GoogleDrive and GMail</p></div>
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/09/23/GAS/"><h3 class="article-title">Google Apps ScriptでDriveとGMail連携</h3></a>
+<h6 class="subheader" title="2017-09-23T21:00:00+09:00">2017-09-23(土)
+</h6>
+
+
+<h1>参加者が撮った写真を自動でWebアルバムみたいに表示したい</h1>
+<p>という要望があったので，この手の連携となれば<a href="https://ifttt.com">IFTTT</a>だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。</p>
+<p>GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
+取り敢えずGoogle Driveなら直ぐ出来そうなので</p>
+<div class="highlight"><pre><span></span><code><span class="err">特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)</span>
+</code></pre></div>
+
+<p>という処理に。</p>
+<ul>
+<li>e-mail: username+tag@gmail.com</li>
+<li>Google Driveのフォルダ: Test</li>
+</ul>
+<p>で，ググって出てきたスクリプトだと</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">subject</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">subject</span><span class="o">==</span><span class="s2">&quot;Target&quot;</span><span class="p">){</span>
+</code></pre></div>
+
+<p>みたいな処理だったので，ならToでもできるだろって事で</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="o">==</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">){</span>
+</code></pre></div>
+
+<p>としたら，Outlookが</p>
+<div class="highlight"><pre><span></span><code><span class="c">to:&lt;username+tag@gmail.com&gt;</span>
+</code></pre></div>
+
+<p>で送ってくるのでFalseになる。調べたら部分一致はindexOfでイケるらしいので下記で成功。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">gmailFileUploader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">Threads</span> <span class="o">=</span> <span class="nx">GmailApp</span><span class="p">.</span><span class="nx">getInboxThreads</span><span class="p">();</span>　
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">50</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>　
+    <span class="kd">var</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isUnread</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">status</span><span class="o">==</span><span class="kc">true</span><span class="p">){</span>　
+      <span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getTo</span><span class="p">();</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">attachments</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttachments</span><span class="p">();</span>　
+        <span class="kd">var</span> <span class="nx">folders</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">getFoldersByName</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">);</span>
+        <span class="k">while</span><span class="p">(</span><span class="nx">folders</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span>
+          <span class="kd">var</span> <span class="nx">folder</span> <span class="o">=</span> <span class="nx">folders</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+          <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">attachments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">createFile</span><span class="p">(</span><span class="nx">attachments</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
+            <span class="nx">folder</span><span class="p">.</span><span class="nx">addFile</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+          <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">moveToTrash</span><span class="p">();</span> <span class="c1">//保存終了したらゴミ箱に移動</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>    
+<span class="p">}</span>
+</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/javascript.html">Javascript </a>
+</p>
+
+
+
             </article>
 
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
 
-        </div>
+<p>
 
-        <div class="paginator">
-            Page 1 / 1
-        </div>
-
+</p>
+</div>
 
 
-<footer class="blog-footer">
 
-    <ul class="nav">
-    </ul>
+            <!-- /#posts-list -->
 
-    <p class="disclaimer">
-    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
-    </p>
-</footer>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by eiichiromomma</p> -->
             </div>
-    </body>
+            </div>
+    </div>
+</footer>
+</body>
 </html>

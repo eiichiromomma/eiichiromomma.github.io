@@ -1,70 +1,167 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title>CVMLAB Blog</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/cid.css">
-        <link href="https://eiichiromomma.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CVMLAB Blog Atom Feed" />
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-            <div class="container">
+    <title>CVMLAB Blog - C++</title>
 
-<header class="blog-header">
-    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
-    <p></p>
-    <nav>
-        <a href="https://eiichiromomma.github.io/">INDEX</a>
-        <a href="https://eiichiromomma.github.io/archives">ARCHIVES</a>
-        <a href="https://eiichiromomma.github.io/categories">CATEGORIES</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/modernizr.js"></script>
+</head>
 
-        <h1>Tag: . <small class="header-link"><a href="https://eiichiromomma.github.io/tags">All Tags</a></small></h1>
+<body>
 
-        <div class="post-list">
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
 
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/">VSCodeとClang</a></h2>
-                <time datetime="2017-03-05T11:00:00+09:00"> 3 05, 2017</time>
-                <div class="excerpt"><p>setup VSCode and clang</p></div>
-            </article>
-
-
-            <article class="post-overview">
-                <h2><a href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/">YouCompleteMe</a></h2>
-                <time datetime="2017-03-05T10:00:00+09:00"> 3 05, 2017</time>
-                <div class="excerpt"><p>setup YouCompleteMe</p></div>
-            </article>
-
-
-        </div>
-
-        <div class="paginator">
-            Page 1 / 1
-        </div>
-
-
-
-<footer class="blog-footer">
-
-    <ul class="nav">
     </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
 
-    <p class="disclaimer">
-    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
-    </p>
-</footer>
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/"><h3 class="article-title">VSCodeとClang</h3></a>
+<h6 class="subheader" title="2017-03-05T11:00:00+09:00">2017-03-05(日)
+</h6>
+
+
+<h1>VSCodeの補完</h1>
+<p>代表的な補完拡張の中にclangを使ったものがあるが、CMakeが</p>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span> <span class="p">(</span><span class="s">CMAKE_EXPORT_COMPILE_COMMANDS</span> <span class="s">ON</span><span class="p">)</span>
+</code></pre></div>
+
+<p>で吐いてくれるcompile_commands.jsonに対応していない。
+<a href="https://marketplace.visualstudio.com/items?itemName=mitaki28.vscode-clang">C/C++ Clang Command Adapter</a>ではsettings.jsonの"clang.cxxflags"にコンパイラへのオプションを一つずつ並べないと有効にならない。</p>
+<p>CMakeの出力はアホみたいにオプションが多くて流石に手入力はやりたくないので</p>
+<div class="highlight"><pre><span></span><code>cat compile_commands.json <span class="p">|</span> gsed -e <span class="s1">&#39;s/ -/&quot;,\n&quot;-/g&#39;</span>
+</code></pre></div>
+
+<p>とすると良い感じに変換できる。-oから先は不要なのでそれまでをsetting.jsonに貼り付ければ良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/vscode.html">VSCode </a>
+    <a href="https://eiichiromomma.github.io/tag/c.html">C++ </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/"><h3 class="article-title">YouCompleteMe</h3></a>
+<h6 class="subheader" title="2017-03-05T10:00:00+09:00">2017-03-05(日)
+</h6>
+
+
+<p>setup YouCompleteMe</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/vim.html">Vim </a>
+    <a href="https://eiichiromomma.github.io/tag/c.html">C++ </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
+
+<p>
+
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>CVMLAB Blog by eiichiromomma</p> -->
             </div>
-    </body>
+            </div>
+    </div>
+</footer>
+</body>
 </html>
