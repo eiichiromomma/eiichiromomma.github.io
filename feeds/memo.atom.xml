@@ -111,11 +111,11 @@ make serve
 &lt;p&gt;のような感じで書いて&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make html
 make serve
-&lt;span class="sb"&gt;```&lt;/span&gt;でlocalhost:8000を開いて確認する。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-このままでも良いのだが
-&lt;span class="sb"&gt;```&lt;/span&gt;bash
-pelican-themes -i /path/to/theme
+&lt;p&gt;でlocalhost:8000を開いて確認する。&lt;/p&gt;
+&lt;p&gt;このままでも良いのだが&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pelican-themes -i /path/to/theme
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としてインストールすると，THEMEの記述をパス不要で名前だけにもできる。&lt;/p&gt;
