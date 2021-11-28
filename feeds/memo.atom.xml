@@ -10,7 +10,7 @@
 &lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
 &lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
 ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
-&lt;h3&gt;嘘吐きサーバと嘘付きクライアント&lt;/h3&gt;
+&lt;h3&gt;嘘吐きサーバと嘘吐きクライアント&lt;/h3&gt;
 &lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
@@ -30,7 +30,7 @@ ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
 &lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
 &lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
 ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
-&lt;h3&gt;嘘吐きサーバと嘘付きクライアント&lt;/h3&gt;
+&lt;h3&gt;嘘吐きサーバと嘘吐きクライアント&lt;/h3&gt;
 &lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
