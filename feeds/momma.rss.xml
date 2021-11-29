@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description></description><lastBuildDate>Sun, 28 Nov 2021 10:59:00 +0900</lastBuildDate><item><title>研究室への問い合わせと2020-2021の状況について</title><link>https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Sun, 28 Nov 2021 10:59:00 +0900</lastBuildDate><item><title>研究室への問い合わせと2020-2021の状況について</title><link>https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
 &lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;
@@ -63,7 +63,7 @@ ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
 
 &lt;!-- wp:video --&gt;
 
-&lt;iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="640" height="476" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
 &lt;!-- /wp:video --&gt;
 
 &lt;!-- wp:paragraph --&gt;

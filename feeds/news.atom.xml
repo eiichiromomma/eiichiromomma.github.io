@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - News</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/news.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2021-11-28T10:59:00+09:00</updated><entry><title>研究室への問い合わせと2020-2021の状況について</title><link href="https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" rel="alternate"></link><published>2021-11-28T10:59:00+09:00</published><updated>2021-11-28T10:59:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</id><summary type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - News</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/news.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2021-11-28T10:59:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>研究室への問い合わせと2020-2021の状況について</title><link href="https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" rel="alternate"></link><published>2021-11-28T10:59:00+09:00</published><updated>2021-11-28T10:59:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</id><summary type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
 &lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;
@@ -66,7 +66,7 @@ Wordpressで運用してるのですが，過去のサーバー移設の際も�
 
 &lt;!-- wp:video --&gt;
 
-&lt;iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="640" height="476" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
 &lt;!-- /wp:video --&gt;
 
 &lt;!-- wp:paragraph --&gt;
