@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Thu, 24 Mar 2022 20:00:00 +0900</lastBuildDate><item><title>CanvasのSandbox</title><link>https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/</link><description>&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Thu, 24 Mar 2022 21:00:00 +0900</lastBuildDate><item><title>GithubのToken</title><link>https://eiichiromomma.github.io/2022/03/24/GithubToken/</link><description>&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tokenの生成ページ &lt;a href="https://github.com/settings/tokens"&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基本的には &lt;code&gt;repo: Full control of private repositories&lt;/code&gt; にチェックを入れた状態で生成する。
+期間は30日くらいにしておく。&lt;/p&gt;
+&lt;p&gt;あとはgitでパスワードを聞かれたときにTokenをコピペすれば良い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 24 Mar 2022 21:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/GithubToken/</guid><category>Memo</category><category>Github</category><category>Pelican</category></item><item><title>CanvasのSandbox</title><link>https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/</link><description>&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
 gitとかの基本的なツールはあって当たり前なので省略するが&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;この手順はmacOS (Monterey)&lt;/li&gt;
@@ -25,7 +31,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 ./script/docker_dev_setup.sh --mutagen
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3&gt;Docker Desktopが無いと言われる …&lt;/h3&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 24 Mar 2022 20:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/Canvas-Sandbox/</guid><category>Canvas</category><category>Docker</category><category>Canvas</category><category>Ubuntu</category></item><item><title>研究室への問い合わせと2020-2021の状況について</title><link>https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
+&lt;h3&gt;Docker Desktopが無いと言われる …&lt;/h3&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 24 Mar 2022 20:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/Canvas-Sandbox/</guid><category>Memo</category><category>Docker</category><category>Canvas</category><category>Ubuntu</category></item><item><title>研究室への問い合わせと2020-2021の状況について</title><link>https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link><description>&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
 &lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;

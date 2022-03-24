@@ -50,6 +50,36 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/03/24/GithubToken/"><h3 class="article-title">GithubのToken</h3></a>
+<h6 class="subheader" title="2022-03-24T21:00:00+09:00">2022-03-24(木)
+</h6>
+
+
+<p>Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。</p>
+<ul>
+<li>Tokenの生成ページ <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
+</ul>
+<p>基本的には <code>repo: Full control of private repositories</code> にチェックを入れた状態で生成する。
+期間は30日くらいにしておく。</p>
+<p>あとはgitでパスワードを聞かれたときにTokenをコピペすれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
+    <a href="https://eiichiromomma.github.io/tag/pelican.html">Pelican </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
 <h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
 </h6>
@@ -81,93 +111,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 ./script/docker_dev_setup.sh --mutagen
 </code></pre></div>
 
-<h3>Docker Desktopが無いと言われる</h3>
-<p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので <code>script/common/utils/docker_desktop_setup.sh</code> の最後の</p>
-<div class="highlight"><pre><span></span><code><span class="k">function</span> check_for_docker_desktop <span class="o">{</span>
-  <span class="k">if</span> ! mdfind <span class="s2">&quot;kMDItemKind == &#39;Application&#39;&quot;</span> <span class="p">|</span>grep -qE <span class="s1">&#39;Docker.app|Docker\ Desktop.app&#39;</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Docker Desktop is not installed!&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Refer to https://docs.docker.com/docker-for-mac/install/ for help installing.&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Once Docker Desktop is installed rerun this script.&quot;</span>
-    <span class="nb">exit</span> <span class="m">1</span>
-  <span class="k">fi</span>
-<span class="o">}</span>
-</code></pre></div>
-
-<p>のexit 1を消す泥縄で対応。(エラーになっても終了させない)</p>
-<h3>またコケるが再度実行すると通る</h3>
-<p>その後コケるが，docker_dev_setup.logを見ても↓のような感じで原因不明だが，もう一度実行すると何故かエラーなく通る</p>
-<div class="highlight"><pre><span></span><code>Gem files will remain installed in /home/docker/.gem/gems/ruby-debug-ide-0.7.2
-<span class="k">for</span> inspection.
-Results logged to
-/home/docker/.gem/extensions/x86_64-linux/2.7.0/ruby-debug-ide-0.7.2/gem_make.out
-
-An error occurred <span class="k">while</span> installing ruby-debug-ide <span class="o">(</span><span class="m">0</span>.7.2<span class="o">)</span>, and Bundler cannot
-<span class="k">continue</span>.
-Make sure that <span class="sb">`</span>gem install ruby-debug-ide -v <span class="s1">&#39;0.7.2&#39;</span> --source
-<span class="s1">&#39;https://rubygems.org/&#39;</span><span class="sb">`</span> succeeds before bundling.
-
-In Gemfile:
-  ruby-debug-ide
-  /o<span class="se">\ </span>Something went wrong. Check /xxxxxxxxx/sandbox/canvas-lms/log/docker_dev_setup.log <span class="k">for</span> details.
-</code></pre></div>
-
-<p>ということでもう一度実行</p>
-<div class="highlight"><pre><span></span><code>./script/docker_dev_setup.sh --mutagen
-</code></pre></div>
-
-<p>今度はセットアップが完了する。</p>
-<h3>docker-compose up</h3>
-<p>docker-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消えるので注意)。</p>
-<div class="highlight"><pre><span></span><code>docker-compose up
-</code></pre></div>
-
-<p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://canvas.docker/">http://canvas.docker</a>を開くとCanvasのログイン画面になれば順調。</p>
-<h3>Canvasのアカウント作成</h3>
-<p>この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。</p>
-<div class="highlight"><pre><span></span><code>docker ps
-</code></pre></div>
-
-<p>で確認してIMAGEが<code>canvas-lms_web</code>のNAMESを見る(たぶんcanvas-lms_web_1)。</p>
-<div class="highlight"><pre><span></span><code>docker <span class="nb">exec</span> -u <span class="m">0</span> -it canvas-lms_web_1 /bin/bash
-</code></pre></div>
-
-<p>でコンテナに入ると</p>
-<div class="highlight"><pre><span></span><code>root@xxxxxxxxxxx:/usr/src/app#
-</code></pre></div>
-
-<p>のようなプロンプトになるので</p>
-<div class="highlight"><pre><span></span><code>rails db:initial_setup
-</code></pre></div>
-
-<p>を実行すると色々聞かれる。</p>
-<p>※アカウント名(the account name)なのだが，特殊な用語で大学-学部-学科のようなツリーを考えたときの大学に相当する</p>
-<div class="highlight"><pre><span></span><code><span class="m">1</span>: development:public
-What email address will the site administrator account use? &gt; <span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-Please confirm &gt; <span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-What password will the site administrator use? &gt; <span class="o">[</span>パスワードを入力<span class="o">]</span>
-Please confirm &gt; <span class="o">[</span>パスワードを入力<span class="o">]</span>
-What <span class="k">do</span> you want users to see as the account name? This should probably be the name of your organization. &gt; <span class="o">[</span>他のユーザーから見たアカウント名<span class="o">]</span>
-To <span class="nb">help</span> our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
-<span class="m">1</span>. Opt in
-<span class="m">2</span>. Only send anonymized data
-<span class="m">3</span>. Opt out completely
-&gt; <span class="o">[</span>開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難<span class="o">]</span>
-Thank you <span class="k">for</span> participating in anonymous usage collection.
-You can change this feature at any <span class="nb">time</span> by running the rake task <span class="s1">&#39;rake db:configure_statistics_collection&#39;</span>
-........................................................................................
-Notifications Loaded
-No notification files found <span class="k">for</span> Assignment Publishing Reminder
-No notification files found <span class="k">for</span> Assignment Grading Reminder
-No notification files found <span class="k">for</span> Assignment Due Date Reminder
-No notification files found <span class="k">for</span> Rubric Assessment Invitation
-No notification files found <span class="k">for</span> Migration Export Ready
-No notification files found <span class="k">for</span> Migration Import Finished
-No notification files found <span class="k">for</span> Migration Import Failed
-
-Initial data loaded
-</code></pre></div>
-
-<p>で完了。doryのおかげで<a href="http://canvas.docker/">http://canvas.docker</a>でログインできるようになってる。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/canvas.html">Canvas</a>
+<h3>Docker Desktopが無いと言われる …</h3><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
@@ -177,11 +121,9 @@ Initial data loaded
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -495,46 +437,6 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/09/20/研究室見学について/"><h3 class="article-title">研究室見学について</h3></a>
-<h6 class="subheader" title="2019-09-20T18:42:00+09:00">2019-09-20(金)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>仮着手の季節が来ました。見学は以下の時間に受付けています。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
-<ul>
-<li>9/21(土) -16:00</li>
-<li>9/25(水) 11:30-13:00</li>
-<li>9/27(金) 11:30-13:00</li>
-<li>9/28(土) 11:00-12:30</li>
-<li>10/6(土) 電気工学科オープンラボ 9:30-17:00</li>
-<li>10/9(水) 11:30-13:00</li>
-<li>10/11(金) 11:30-13:00</li>
-</ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
-<p>これら以外の場合は事前にアポイントを取ってくれると助かります</p>
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/09/20/研究室見学について/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
 <h6 class="subheader">Page 1 of 17</h6>
@@ -562,7 +464,6 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="https://eiichiromomma.github.io/category/canvas.html">Canvas</a></li>
             <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
             <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
             <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>

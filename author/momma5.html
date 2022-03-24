@@ -51,6 +51,43 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2017/12/28/micro-capの意外な使い方/"><h3 class="article-title">Micro-CAPの意外(?)な使い方</h3></a>
+<h6 class="subheader" title="2017-12-28T19:29:00+09:00">2017-12-28(木)
+</h6>
+
+
+<p>4年次設置の電子回路CADで使っているMicro-CAPですが，他のSPICE系回路シミュレータには(たぶん)無いDynamic AC解析機能があります。
+<img alt="None" class="alignnone size-full wp-image-604" height="641" src="https://eiichiromomma.github.io/images/uploads/2017/12/78a2175f380937da70f79e81cf54fca5.png" width="661"></p>
+<p>こんな感じです。簡単に言うと電気回路理論の問題が解けます。</p>
+<p>青い四角形が複素電流で最初の数字が大きさ，カンマの後の数字が偏角です。これは相互インダクタンスの回路で下がT型等価回路へ変換した回路で，同じ枝電流になっています。で，ピンクの楕円の方が複素電圧です。グランドの位置を変えているのは節点電圧法で解いた場合の電位を出すためです。電圧と電流は直角座標系での表示も出来ます。</p>
+<ul>
+<li>電源はVoltage SourceのSineを使いAC解析の方に実効値を入れて初期位相はdegree</li>
+<li>計算が楽なのでω=1000として扱う<ul>
+<li>Lの値はインピーダンス表記から1/1000</li>
+<li>Cの値はインピーダンス表記の逆数の1/1000</li>
+<li>Analysis-Dynamic ACで出てくるダイヤログで周波数を1000/6.28</li>
+</ul>
+</li>
+<li>相互インダクタンスはAnalog Primitives-Passive ComponentsのKを使う(磁気結合)<ul>
+<li>k=M/√(L1・L2)でkを決める</li>
+</ul>
+</li>
+</ul>
+<p>という感じで演習の解答の確認にも使ってます。</p>
+<p>ちなみにMicro-CAP 11は<a href="http://www.spectrum-soft.com/demoform.shtm">評価版</a>を制限付きですが使えます。日本語のマニュアルとUIが欲しい人はCQ出版のMicro-CAP 9を買いましょう。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/講義.html">講義</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/micro-capの意外な使い方/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2017/12/15/oculus/"><h3 class="article-title">Oculus</h3></a>
 <h6 class="subheader" title="2017-12-15T13:00:00+09:00">2017-12-15(金)
 </h6>
@@ -243,28 +280,6 @@
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/06/16/輪講その2/"><h3 class="article-title">輪講その2</h3></a>
-<h6 class="subheader" title="2017-06-16T17:51:00+09:00">2017-06-16(金)
-</h6>
-
-
-<p>今回の輪講は「やってみた」系です。決められた時間内にデモをやるのは結構難しいので良い経験かと思います。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/image-1.jpeg" width="600">
-<img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/Image-uploaded-from-iOS.jpg" width="600">
-<img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/07/image.jpeg" width="600"></p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/06/16/輪講その2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
 <h6 class="subheader">Page 5 of 17</h6>
@@ -293,7 +308,6 @@
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="https://eiichiromomma.github.io/category/canvas.html">Canvas</a></li>
             <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
             <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
             <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
