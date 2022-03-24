@@ -1,5 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2021-11-28T10:59:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>研究室への問い合わせと2020-2021の状況について</title><link href="https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" rel="alternate"></link><published>2021-11-28T10:59:00+09:00</published><updated>2021-11-28T10:59:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</id><summary type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-03-24T20:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>CanvasのSandbox</title><link href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/" rel="alternate"></link><published>2022-03-24T20:00:00+09:00</published><updated>2022-03-24T20:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/Canvas-Sandbox/</id><summary type="html">&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+gitとかの基本的なツールはあって当たり前なので省略するが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;この手順はmacOS (Monterey)&lt;/li&gt;
+&lt;li&gt;doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)&lt;/li&gt;
+&lt;li&gt;docker諸々必要&lt;/li&gt;
+&lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;あたりが条件&lt;/p&gt;
+&lt;h3&gt;doryを入れる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install dory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
+&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start"&gt;ここ&lt;/a&gt;の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install docker-machine
+brew install mutagen-io/mutagen/mutagen
+brew install mutagen-io/mutagen/mutagen-compose
+./script/docker_dev_setup.sh --mutagen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Docker Desktopが無いと言われる …&lt;/h3&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+gitとかの基本的なツールはあって当たり前なので省略するが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;この手順はmacOS (Monterey)&lt;/li&gt;
+&lt;li&gt;doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)&lt;/li&gt;
+&lt;li&gt;docker諸々必要&lt;/li&gt;
+&lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;あたりが条件&lt;/p&gt;
+&lt;h3&gt;doryを入れる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install dory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
+&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start"&gt;ここ&lt;/a&gt;の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install docker-machine
+brew install mutagen-io/mutagen/mutagen
+brew install mutagen-io/mutagen/mutagen-compose
+./script/docker_dev_setup.sh --mutagen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Docker Desktopが無いと言われる&lt;/h3&gt;
+&lt;p&gt;で，Docker Desktopをインストールしてあるのに無いと言われてコケるので &lt;code&gt;script/common/utils/docker_desktop_setup.sh&lt;/code&gt; の最後の&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;function&lt;/span&gt; check_for_docker_desktop &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; ! mdfind &lt;span class="s2"&gt;&amp;quot;kMDItemKind == &amp;#39;Application&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;grep -qE &lt;span class="s1"&gt;&amp;#39;Docker.app|Docker\ Desktop.app&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;  Docker Desktop is not installed!&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;  Refer to https://docs.docker.com/docker-for-mac/install/ for help installing.&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;  Once Docker Desktop is installed rerun this script.&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のexit 1を消す泥縄で対応。(エラーになっても終了させない)&lt;/p&gt;
+&lt;h3&gt;またコケるが再度実行すると通る&lt;/h3&gt;
+&lt;p&gt;その後コケるが，docker_dev_setup.logを見ても↓のような感じで原因不明だが，もう一度実行すると何故かエラーなく通る&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Gem files will remain installed in /home/docker/.gem/gems/ruby-debug-ide-0.7.2
+&lt;span class="k"&gt;for&lt;/span&gt; inspection.
+Results logged to
+/home/docker/.gem/extensions/x86_64-linux/2.7.0/ruby-debug-ide-0.7.2/gem_make.out
+
+An error occurred &lt;span class="k"&gt;while&lt;/span&gt; installing ruby-debug-ide &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.7.2&lt;span class="o"&gt;)&lt;/span&gt;, and Bundler cannot
+&lt;span class="k"&gt;continue&lt;/span&gt;.
+Make sure that &lt;span class="sb"&gt;`&lt;/span&gt;gem install ruby-debug-ide -v &lt;span class="s1"&gt;&amp;#39;0.7.2&amp;#39;&lt;/span&gt; --source
+&lt;span class="s1"&gt;&amp;#39;https://rubygems.org/&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; succeeds before bundling.
+
+In Gemfile:
+  ruby-debug-ide
+  /o&lt;span class="se"&gt;\ &lt;/span&gt;Something went wrong. Check /xxxxxxxxx/sandbox/canvas-lms/log/docker_dev_setup.log &lt;span class="k"&gt;for&lt;/span&gt; details.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ということでもう一度実行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./script/docker_dev_setup.sh --mutagen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;今度はセットアップが完了する。&lt;/p&gt;
+&lt;h3&gt;docker-compose up&lt;/h3&gt;
+&lt;p&gt;docker-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消えるので注意)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker-compose up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で，暫く待ってると&lt;code&gt;webpack_1&lt;/code&gt;からのログが終わって&lt;code&gt;jobs_1&lt;/code&gt;からのログが流れるので，ブラウザで &lt;a href="http://canvas.docker/"&gt;http://canvas.docker&lt;/a&gt;を開くとCanvasのログイン画面になれば順調。&lt;/p&gt;
+&lt;h3&gt;Canvasのアカウント作成&lt;/h3&gt;
+&lt;p&gt;この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker ps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で確認してIMAGEが&lt;code&gt;canvas-lms_web&lt;/code&gt;のNAMESを見る(たぶんcanvas-lms_web_1)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker &lt;span class="nb"&gt;exec&lt;/span&gt; -u &lt;span class="m"&gt;0&lt;/span&gt; -it canvas-lms_web_1 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でコンテナに入ると&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;root@xxxxxxxxxxx:/usr/src/app#
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようなプロンプトになるので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rails db:initial_setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行すると色々聞かれる。&lt;/p&gt;
+&lt;p&gt;※アカウント名(the account name)なのだが，特殊な用語で大学-学部-学科のようなツリーを考えたときの大学に相当する&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="m"&gt;1&lt;/span&gt;: development:public
+What email address will the site administrator account use? &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;ログインIDになるメールアドレスを入力&lt;span class="o"&gt;]&lt;/span&gt;
+Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;ログインIDになるメールアドレスを入力&lt;span class="o"&gt;]&lt;/span&gt;
+What password will the site administrator use? &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
+Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
+What &lt;span class="k"&gt;do&lt;/span&gt; you want users to see as the account name? This should probably be the name of your organization. &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;他のユーザーから見たアカウント名&lt;span class="o"&gt;]&lt;/span&gt;
+To &lt;span class="nb"&gt;help&lt;/span&gt; our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
+&lt;span class="m"&gt;1&lt;/span&gt;. Opt in
+&lt;span class="m"&gt;2&lt;/span&gt;. Only send anonymized data
+&lt;span class="m"&gt;3&lt;/span&gt;. Opt out completely
+&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難&lt;span class="o"&gt;]&lt;/span&gt;
+Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating in anonymous usage collection.
+You can change this feature at any &lt;span class="nb"&gt;time&lt;/span&gt; by running the rake task &lt;span class="s1"&gt;&amp;#39;rake db:configure_statistics_collection&amp;#39;&lt;/span&gt;
+........................................................................................
+Notifications Loaded
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Publishing Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Grading Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Due Date Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Rubric Assessment Invitation
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Export Ready
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Import Finished
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Import Failed
+
+Initial data loaded
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で完了。doryのおかげで&lt;a href="http://canvas.docker/"&gt;http://canvas.docker&lt;/a&gt;でログインできるようになってる。&lt;/p&gt;</content><category term="Canvas"></category><category term="Docker"></category><category term="Canvas"></category><category term="Ubuntu"></category></entry><entry><title>研究室への問い合わせと2020-2021の状況について</title><link href="https://eiichiromomma.github.io/2021/11/28/%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%B8%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%A82020-2021%E3%81%AE%E7%8A%B6%E6%B3%81%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" rel="alternate"></link><published>2021-11-28T10:59:00+09:00</published><updated>2021-11-28T10:59:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2021-11-28:/2021/11/28/研究室への問い合わせと2020-2021の状況について/</id><summary type="html">&lt;h2&gt;研究室への問い合わせ&lt;/h2&gt;
 &lt;p&gt;12/2,3は&lt;a href="http://view.tc-iaip.org/view/2021/"&gt;ViEW2021 ビジョン技術の実利用ワークショップ&lt;/a&gt;の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
 質問受け付けは&lt;strong&gt;全てZoomで実施します&lt;/strong&gt;。(Zoom URLはドライブの方に掲示)&lt;/p&gt;
 &lt;ul&gt;
