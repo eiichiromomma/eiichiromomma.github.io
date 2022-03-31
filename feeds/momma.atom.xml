@@ -1,5 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-03-24T21:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>GithubのToken</title><link href="https://eiichiromomma.github.io/2022/03/24/GithubToken/" rel="alternate"></link><published>2022-03-24T21:00:00+09:00</published><updated>2022-03-24T21:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/GithubToken/</id><content type="html">&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-04-01T06:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>CanvasのSandbox WSL2編</title><link href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/" rel="alternate"></link><published>2022-04-01T06:00:00+09:00</published><updated>2022-04-01T06:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-01:/2022/04/01/Canvas-Sandbox-WSL2/</id><summary type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL2 + Ubuntu 18.04 は自力で入れましょう&lt;/li&gt;
+&lt;li&gt;18.04必須です(20.04は×)&lt;/li&gt;
+&lt;li&gt;doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)&lt;/li&gt;
+&lt;li&gt;WSL2上でのdocker諸々必要&lt;/li&gt;
+&lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;doryを入れる&lt;/h3&gt;
+&lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
+&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
+&lt;p&gt;要mutagenなのだが&lt;a href="https://mutagen.io/documentation/introduction/installation"&gt;homebrewしか楽に入れる方法がない&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://brew.sh/"&gt;Homebrew&lt;/a&gt;のコマンド&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/bin/bash -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL2 + Ubuntu 18.04 は自力で入れましょう&lt;/li&gt;
+&lt;li&gt;18.04必須です(20.04は×)&lt;/li&gt;
+&lt;li&gt;doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)&lt;/li&gt;
+&lt;li&gt;WSL2上でのdocker諸々必要&lt;/li&gt;
+&lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;doryを入れる&lt;/h3&gt;
+&lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
+&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
+&lt;p&gt;要mutagenなのだが&lt;a href="https://mutagen.io/documentation/introduction/installation"&gt;homebrewしか楽に入れる方法がない&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://brew.sh/"&gt;Homebrew&lt;/a&gt;のコマンド&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/bin/bash -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行するのだが，その後に設定が必要。admin不要としたいがために&lt;a href="https://docs.brew.sh/Homebrew-on-Linux"&gt;/home/linuxbrewへインストールされる&lt;/a&gt;らしい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;test&lt;/span&gt; -d ~/.linuxbrew &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;~/.linuxbrew/bin/brew shellenv&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt; -d /home/linuxbrew/.linuxbrew &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;/home/linuxbrew/.linuxbrew/bin/brew shellenv&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt; -r ~/.bash_profile &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;eval \&amp;quot;\$(&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;brew --prefix&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;/bin/brew shellenv)\&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bash_profile
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;eval \&amp;quot;\$(&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;brew --prefix&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;/bin/brew shellenv)\&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とかやって&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;の後に&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install hello
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で確認できる。&lt;/p&gt;
+&lt;p&gt;で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install mutagen-io/mutagen/mutagen
+brew install mutagen-io/mutagen/mutagen-compose
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でmutagenとmutagen-composeを入れる。&lt;/p&gt;
+&lt;h3&gt;WSL2固有の作業&lt;/h3&gt;
+&lt;p&gt;ここからはWSL2固有の問題で，IPv6優先の設定が災いしてgemsとyarnの導入で必ずコケる。後に載せたdiff通りDockerfileに記載するだけでは解決しない。( /etc/gai.confに &lt;code&gt;echo precedence ::ffff:0:0/96  100&lt;/code&gt;とか書いてるのがそれ)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./script/docker_dev_setup.sh --mutagen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行するとまず&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt; Bundle install...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のところで&lt;code&gt;Gem::RemoteFetcher::UnknownHostError timed out&lt;/code&gt;でコケる。これはhostsに rubygems.org に対応するIPを書いて解決する。また，その後で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt; Yarn install....
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のところで必ず &lt;code&gt;getaddrinfo EAI_AGAIN registry.yarnpkg.com&lt;/code&gt;でコケるので 8.8.8.8 を /etc/resolv.conf に書き込んだりする。&lt;/p&gt;
+&lt;p&gt;実際の対処方法は，この時点でコンテナは出来上がっているので，canvas-lms-web-1 に入り込んで上記を書き込む。&lt;/p&gt;
+&lt;p&gt;まず，hostコマンドでrubygems.orgのIPを確認する&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;host rubygems.org
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;rubygems.org has address 151.101.65.227&lt;/span&gt;
+&lt;span class="err"&gt;rubygems.org has address 151.101.193.227&lt;/span&gt;
+&lt;span class="err"&gt;rubygems.org has address 151.101.129.227&lt;/span&gt;
+&lt;span class="err"&gt;rubygems.org has address 151.101.1.227&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と出た例を以下に示す。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker &lt;span class="nb"&gt;exec&lt;/span&gt; -it --user&lt;span class="o"&gt;=&lt;/span&gt;root canvas-lms-web-1 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で canvas-lms-web-1 のコンテナにrootで入り&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;151.101.65.227    rubygems.org&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/hosts
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;151.101.193.227    rubygems.org&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/hosts
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;151.101.129.227    rubygems.org&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/hosts
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;151.101.1.227    rubygems.org&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/hosts
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;nameserver 8.8.8.8&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/resolv.conf
+&lt;span class="nb"&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で書き換え完了。このままscript/docker_dev_setup.shを再度実行するとまたbuildされてしまうので，同ファイルをコピーして&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cp script/docker_dev_setup.sh script/docker_dev_build_assets.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;としたうえで，その中を&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;create_log_file
+init_log_file &lt;span class="s2"&gt;&amp;quot;Docker Dev Setup&amp;quot;&lt;/span&gt;
+os_setup
+message &lt;span class="s1"&gt;&amp;#39;Now we can set up Canvas!&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;# copy_docker_config&lt;/span&gt;
+&lt;span class="c1"&gt;# setup_docker_compose_override&lt;/span&gt;
+&lt;span class="c1"&gt;# build_images&lt;/span&gt;
+&lt;span class="c1"&gt;# docker_compose_up&lt;/span&gt;
+&lt;span class="c1"&gt;# check_gemfile&lt;/span&gt;
+build_assets
+create_db
+display_next_steps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のように コケたところから再開するようにコメントアウトして，そのスクリプトを実行する&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./script/docker_dev_build_assets.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で Success !と出たら成功。&lt;/p&gt;
+&lt;h3&gt;docker-compose up&lt;/h3&gt;
+&lt;p&gt;docker-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消えるので注意)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker-compose up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で，暫く待ってると&lt;code&gt;webpack_1&lt;/code&gt;からのログが終わって&lt;code&gt;jobs_1&lt;/code&gt;からのログが流れるので，ブラウザで &lt;a href="http://canvas.docker/"&gt;http://canvas.docker&lt;/a&gt;を開くとCanvasのログイン画面になれば順調。&lt;/p&gt;
+&lt;h3&gt;Canvasのアカウント作成&lt;/h3&gt;
+&lt;p&gt;この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker ps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で確認してIMAGEが&lt;code&gt;canvas-lms_web&lt;/code&gt;のNAMESを見る(たぶんcanvas-lms_web_1)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker &lt;span class="nb"&gt;exec&lt;/span&gt; -u &lt;span class="m"&gt;0&lt;/span&gt; -it canvas-lms_web_1 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でコンテナに入ると&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;root@xxxxxxxxxxx:/usr/src/app#
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようなプロンプトになるので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rails db:initial_setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行すると色々聞かれる。&lt;/p&gt;
+&lt;p&gt;※アカウント名(the account name)なのだが，特殊な用語で大学-学部-学科のようなツリーを考えたときの大学に相当する&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="m"&gt;1&lt;/span&gt;: development:public
+What email address will the site administrator account use? &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;ログインIDになるメールアドレスを入力&lt;span class="o"&gt;]&lt;/span&gt;
+Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;ログインIDになるメールアドレスを入力&lt;span class="o"&gt;]&lt;/span&gt;
+What password will the site administrator use? &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
+Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
+What &lt;span class="k"&gt;do&lt;/span&gt; you want users to see as the account name? This should probably be the name of your organization. &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;他のユーザーから見たアカウント名&lt;span class="o"&gt;]&lt;/span&gt;
+To &lt;span class="nb"&gt;help&lt;/span&gt; our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
+&lt;span class="m"&gt;1&lt;/span&gt;. Opt in
+&lt;span class="m"&gt;2&lt;/span&gt;. Only send anonymized data
+&lt;span class="m"&gt;3&lt;/span&gt;. Opt out completely
+&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難&lt;span class="o"&gt;]&lt;/span&gt;
+Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating in anonymous usage collection.
+You can change this feature at any &lt;span class="nb"&gt;time&lt;/span&gt; by running the rake task &lt;span class="s1"&gt;&amp;#39;rake db:configure_statistics_collection&amp;#39;&lt;/span&gt;
+........................................................................................
+Notifications Loaded
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Publishing Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Grading Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Assignment Due Date Reminder
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Rubric Assessment Invitation
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Export Ready
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Import Finished
+No notification files found &lt;span class="k"&gt;for&lt;/span&gt; Migration Import Failed
+
+Initial data loaded
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので &lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt; を開くとCanvasのログイン画面が出てくる。&lt;/p&gt;
+&lt;h3&gt;git diff&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/Dockerfile b/Dockerfile&lt;/span&gt;
+&lt;span class="gh"&gt;index f973e5f232..f4c0d79620 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/Dockerfile&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/Dockerfile&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -33,9 +33,11 @@ ARG USER_ID&lt;/span&gt;
+ # Without it, some linux distributions are unable to write at all to the host mounted volume.
+ RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \
+         &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
+&lt;span class="gd"&gt;-&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;precedence ::ffff:0:0/96  100&amp;quot; &amp;gt;&amp;gt; /etc/gai.conf&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
+ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
+   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
+   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
+&lt;span class="gu"&gt;@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&amp;quot;&lt;/span&gt;
+   &amp;amp;&amp;amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \
+   &amp;amp;&amp;amp; gem install bundler --no-document -v $BUNDLER_VERSION \
+   &amp;amp;&amp;amp; find $GEM_HOME ! -user docker | xargs chown docker:docker
+&lt;span class="gi"&gt;+# RUN gem update --system&lt;/span&gt;
+ RUN npm install -g npm@latest &amp;amp;&amp;amp; npm cache clean --force
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.193.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.1.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.129.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.65.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
+
+ USER docker
+
+&lt;span class="gh"&gt;diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins&lt;/span&gt;
+&lt;span class="gh"&gt;index 9f5a765399..a4f2ca3520 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/Dockerfile.jenkins&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/Dockerfile.jenkins&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle&lt;/span&gt;
+ WORKDIR $APP_HOME
+
+ USER root
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
+ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
+   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
+   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
+&lt;span class="gh"&gt;diff --git a/build/Dockerfile.template b/build/Dockerfile.template&lt;/span&gt;
+&lt;span class="gh"&gt;index 61e680d71b..ec0cde9222 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/build/Dockerfile.template&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/build/Dockerfile.template&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -42,8 +42,10 @@ RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \&lt;/span&gt;
+         &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
+
+ &amp;lt;% end -%&amp;gt;
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
+ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
+   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
+   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
+   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
+&lt;span class="gh"&gt;diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh&lt;/span&gt;
+&lt;span class="gh"&gt;index e04d4165cf..10a6d1b3d9 100755&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/script/common/utils/dory_setup.sh&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/script/common/utils/dory_setup.sh&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -16,9 +16,9 @@ function check_for_dory {&lt;/span&gt;
+
+ function start_dory {
+   message &amp;#39;Starting dory...&amp;#39;
+&lt;span class="gd"&gt;-  if dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;
+&lt;span class="gd"&gt;-    confirm_command &amp;#39;dory up&amp;#39;&lt;/span&gt;
+&lt;span class="gd"&gt;-  elif ! dory status; then&lt;/span&gt;
+&lt;span class="gi"&gt;+  if sudo dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;
+&lt;span class="gi"&gt;+    confirm_command &amp;#39;sudo dory up&amp;#39;&lt;/span&gt;
+&lt;span class="gi"&gt;+  elif ! sudo dory status; then&lt;/span&gt;
+     message &amp;quot;Something went wrong with dory! Exiting script.&amp;quot;
+     exit 1
+   else
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Docker"></category><category term="Canvas"></category><category term="Ubuntu"></category><category term="WSL2"></category></entry><entry><title>GithubのToken</title><link href="https://eiichiromomma.github.io/2022/03/24/GithubToken/" rel="alternate"></link><published>2022-03-24T21:00:00+09:00</published><updated>2022-03-24T21:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/GithubToken/</id><content type="html">&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Tokenの生成ページ &lt;a href="https://github.com/settings/tokens"&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;

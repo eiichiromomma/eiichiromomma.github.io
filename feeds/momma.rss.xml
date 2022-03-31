@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Thu, 24 Mar 2022 21:00:00 +0900</lastBuildDate><item><title>GithubのToken</title><link>https://eiichiromomma.github.io/2022/03/24/GithubToken/</link><description>&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Fri, 01 Apr 2022 06:00:00 +0900</lastBuildDate><item><title>CanvasのSandbox WSL2編</title><link>https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/</link><description>&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL2 + Ubuntu 18.04 は自力で入れましょう&lt;/li&gt;
+&lt;li&gt;18.04必須です(20.04は×)&lt;/li&gt;
+&lt;li&gt;doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)&lt;/li&gt;
+&lt;li&gt;WSL2上でのdocker諸々必要&lt;/li&gt;
+&lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;doryを入れる&lt;/h3&gt;
+&lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
+&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
+&lt;p&gt;要mutagenなのだが&lt;a href="https://mutagen.io/documentation/introduction/installation"&gt;homebrewしか楽に入れる方法がない&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://brew.sh/"&gt;Homebrew&lt;/a&gt;のコマンド&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/bin/bash -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Fri, 01 Apr 2022 06:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-04-01:/2022/04/01/Canvas-Sandbox-WSL2/</guid><category>Memo</category><category>Docker</category><category>Canvas</category><category>Ubuntu</category><category>WSL2</category></item><item><title>GithubのToken</title><link>https://eiichiromomma.github.io/2022/03/24/GithubToken/</link><description>&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Tokenの生成ページ &lt;a href="https://github.com/settings/tokens"&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
