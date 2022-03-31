@@ -187,6 +187,7 @@ Initial data loaded
 
 &lt;p&gt;で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので &lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt; を開くとCanvasのログイン画面が出てくる。&lt;/p&gt;
 &lt;h3&gt;git diff&lt;/h3&gt;
+&lt;p&gt;たぶん不要な情報もあるが動いてるからそのまま&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/Dockerfile b/Dockerfile&lt;/span&gt;
 &lt;span class="gh"&gt;index f973e5f232..f4c0d79620 100644&lt;/span&gt;
 &lt;span class="gd"&gt;--- a/Dockerfile&lt;/span&gt;
