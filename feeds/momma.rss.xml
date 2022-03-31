@@ -8,9 +8,9 @@
 &lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;まず時間を合わせとツール入れ&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sudo ntpdate time.google.com&lt;/span&gt;
-&lt;span class="err"&gt;sudo apt update; sudo apt upgrade -y&lt;/span&gt;
-&lt;span class="err"&gt;sudo apt install ruby build-essential git &lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo ntpdate time.google.com
+sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo apt upgrade -y
+sudo apt install ruby build-essential git 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;doryを入れる&lt;/h3&gt;
