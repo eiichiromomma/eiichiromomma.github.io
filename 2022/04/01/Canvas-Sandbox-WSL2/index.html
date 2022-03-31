@@ -64,6 +64,12 @@
 <li>WSL2上でのdocker諸々必要</li>
 <li>mutagenが必要(dockerのバインドマウントを高速化)</li>
 </ul>
+<h3>まず時間を合わせとツール入れ</h3>
+<div class="highlight"><pre><span></span><code><span class="err">sudo ntpdate time.google.com</span>
+<span class="err">sudo apt update; sudo apt upgrade -y</span>
+<span class="err">sudo apt install ruby build-essential git </span>
+</code></pre></div>
+
 <h3>doryを入れる</h3>
 <p>doryは普通にgemで入る</p>
 <div class="highlight"><pre><span></span><code>sudo gem install dory

@@ -7,20 +7,19 @@
 &lt;li&gt;WSL2上でのdocker諸々必要&lt;/li&gt;
 &lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3&gt;まず時間を合わせとツール入れ&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sudo ntpdate time.google.com&lt;/span&gt;
+&lt;span class="err"&gt;sudo apt update; sudo apt upgrade -y&lt;/span&gt;
+&lt;span class="err"&gt;sudo apt install ruby build-essential git &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;h3&gt;doryを入れる&lt;/h3&gt;
 &lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
-&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
-&lt;p&gt;要mutagenなのだが&lt;a href="https://mutagen.io/documentation/introduction/installation"&gt;homebrewしか楽に入れる方法がない&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://brew.sh/"&gt;Homebrew&lt;/a&gt;のコマンド&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/bin/bash -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;WSL2 + Ubuntu 18.04 は自力で入れましょう&lt;/li&gt;
 &lt;li&gt;18.04必須です(20.04は×)&lt;/li&gt;
@@ -28,6 +27,12 @@
 &lt;li&gt;WSL2上でのdocker諸々必要&lt;/li&gt;
 &lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3&gt;まず時間を合わせとツール入れ&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sudo ntpdate time.google.com&lt;/span&gt;
+&lt;span class="err"&gt;sudo apt update; sudo apt upgrade -y&lt;/span&gt;
+&lt;span class="err"&gt;sudo apt install ruby build-essential git &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;h3&gt;doryを入れる&lt;/h3&gt;
 &lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
