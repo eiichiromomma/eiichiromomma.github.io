@@ -175,7 +175,7 @@ display_next_steps
 <div class="highlight"><pre><span></span><code>docker-compose up
 </code></pre></div>
 
-<p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://canvas.docker/">http://canvas.docker</a>を開くとCanvasのログイン画面になれば順調。</p>
+<p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://localhost/">http://localhost</a>を開くとCanvasのログイン画面になれば順調。</p>
 <h3>Canvasのアカウント作成</h3>
 <p>この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。</p>
 <div class="highlight"><pre><span></span><code>docker ps
@@ -222,7 +222,7 @@ Initial data loaded
 </code></pre></div>
 
 <p>で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので <a href="http://localhost/">http://localhost/</a> を開くとCanvasのログイン画面が出てくる。</p>
-<h3>git diff</h3>
+<h3>git  diff</h3>
 <p>たぶん不要な情報もあるが動いてるからそのまま</p>
 <div class="highlight"><pre><span></span><code><span class="gh">diff --git a/Dockerfile b/Dockerfile</span>
 <span class="gh">index f973e5f232..f4c0d79620 100644</span>

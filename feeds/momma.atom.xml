@@ -139,7 +139,7 @@ display_next_steps
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker-compose up
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;で，暫く待ってると&lt;code&gt;webpack_1&lt;/code&gt;からのログが終わって&lt;code&gt;jobs_1&lt;/code&gt;からのログが流れるので，ブラウザで &lt;a href="http://canvas.docker/"&gt;http://canvas.docker&lt;/a&gt;を開くとCanvasのログイン画面になれば順調。&lt;/p&gt;
+&lt;p&gt;で，暫く待ってると&lt;code&gt;webpack_1&lt;/code&gt;からのログが終わって&lt;code&gt;jobs_1&lt;/code&gt;からのログが流れるので，ブラウザで &lt;a href="http://localhost/"&gt;http://localhost&lt;/a&gt;を開くとCanvasのログイン画面になれば順調。&lt;/p&gt;
 &lt;h3&gt;Canvasのアカウント作成&lt;/h3&gt;
 &lt;p&gt;この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker ps
@@ -186,7 +186,7 @@ Initial data loaded
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので &lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt; を開くとCanvasのログイン画面が出てくる。&lt;/p&gt;
-&lt;h3&gt;git diff&lt;/h3&gt;
+&lt;h3&gt;git  diff&lt;/h3&gt;
 &lt;p&gt;たぶん不要な情報もあるが動いてるからそのまま&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/Dockerfile b/Dockerfile&lt;/span&gt;
 &lt;span class="gh"&gt;index f973e5f232..f4c0d79620 100644&lt;/span&gt;
