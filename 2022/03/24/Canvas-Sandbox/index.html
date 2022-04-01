@@ -76,8 +76,7 @@ gitとかの基本的なツールはあって当たり前なので省略する�
 
 <h3>依存アプリを入れて環境構築</h3>
 <p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
-<div class="highlight"><pre><span></span><code>brew install docker-machine
-brew install mutagen-io/mutagen/mutagen
+<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
 brew install mutagen-io/mutagen/mutagen-compose
 ./script/docker_dev_setup.sh --mutagen
 </code></pre></div>
@@ -117,9 +116,9 @@ In Gemfile:
 </code></pre></div>
 
 <p>今度はセットアップが完了する。</p>
-<h3>docker-compose up</h3>
-<p>docker-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消えるので注意)。</p>
-<div class="highlight"><pre><span></span><code>docker-compose up
+<h3>mutagen-compose up</h3>
+<p>mutagen-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消える)。</p>
+<div class="highlight"><pre><span></span><code>mutagen-compose up
 </code></pre></div>
 
 <p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://canvas.docker/">http://canvas.docker</a>を開くとCanvasのログイン画面になれば順調。</p>
