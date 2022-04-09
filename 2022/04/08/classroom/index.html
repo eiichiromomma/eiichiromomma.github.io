@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>CVMLAB Blog - Memo</title>
+    <title>Classroomから受講者名簿の生成</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2022/04/08/classroom/" rel="bookmark"
+        title="Permalink to Classroomから受講者名簿の生成">Classroomから受講者名簿の生成</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/08/classroom/"><h3 class="article-title">Classroomから受講者名簿の生成</h3></a>
 <h6 class="subheader" title="2022-04-08T20:20:00+09:00">2022-04-08(金)
 </h6>
 
 
-<p>長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。</p>
+    <p>長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。</p>
 <p>Classroom APIで情報取得する際はページ単位(30個/ページ がデフォルト)で持って来ようとするので，ページあたりのデータ数を増やしてもっと寄越せと指定しても仕様で「いっぱいくれと言われてもあげないよ」と書かれており，</p>
 <ol>
 <li>取得(pageToken(今どこまで読んだか)も返される)</li>
@@ -104,7 +105,8 @@
 </code></pre></div>
 
 <p>※挙動が不明だったので冗長に書いてます</p>
-<p>実際にはGoogle Driveで新規作成からGoogle Apps Scriptを選んで(なければ追加)，サービスからClassroom APIを追加し，ソースをコピペして実行すれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>実際にはGoogle Driveで新規作成からGoogle Apps Scriptを選んで(なければ追加)，サービスからClassroom APIを追加し，ソースをコピペして実行すれば良い。</p>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/classroom.html">Classroom </a>
@@ -113,292 +115,8 @@
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/"><h3 class="article-title">CanvasのSandbox WSL2編</h3></a>
-<h6 class="subheader" title="2022-04-01T06:00:00+09:00">2022-04-01(金)
-</h6>
-
-
-<p>LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。</p>
-<ul>
-<li>WSL2 + Ubuntu 18.04 は自力で入れましょう</li>
-<li>18.04必須です(20.04は×)</li>
-<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
-<li>WSL2上でのdocker諸々必要</li>
-<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
-</ul>
-<h3>まず時間を合わせとツール入れ</h3>
-<div class="highlight"><pre><span></span><code>sudo ntpdate time.google.com
-sudo apt update<span class="p">;</span> sudo apt upgrade -y
-sudo apt install ruby build-essential git 
-</code></pre></div>
-
-<h3>doryを入れる</h3>
-<p>doryは普通にgemで入る</p>
-<div class="highlight"><pre><span></span><code>sudo gem install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/03/24/GithubToken/"><h3 class="article-title">GithubのToken</h3></a>
-<h6 class="subheader" title="2022-03-24T21:00:00+09:00">2022-03-24(木)
-</h6>
-
-
-<p>Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。</p>
-<ul>
-<li>Tokenの生成ページ <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
-</ul>
-<p>基本的には <code>repo: Full control of private repositories</code> にチェックを入れた状態で生成する。
-期間は30日くらいにしておく。</p>
-<p>あとはgitでパスワードを聞かれたときにTokenをコピペすれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
-    <a href="https://eiichiromomma.github.io/tag/pelican.html">Pelican </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/GithubToken/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
-<h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
-</h6>
-
-
-<p>LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
-gitとかの基本的なツールはあって当たり前なので省略するが</p>
-<ul>
-<li>この手順はmacOS (Monterey)</li>
-<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
-<li>docker諸々必要</li>
-<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
-</ul>
-<p>あたりが条件</p>
-<h3>doryを入れる</h3>
-<div class="highlight"><pre><span></span><code>brew install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms.git
-<span class="nb">cd</span> canvas-lms
-</code></pre></div>
-
-<h3>依存アプリを入れて環境構築</h3>
-<p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
-<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
-brew install mutagen-io/mutagen/mutagen-compose
-./script/docker_dev_setup.sh --mutagen
-</code></pre></div>
-
-<h3>Docker Desktopが無いと言われる</h3>
-<p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
-<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
-</h6>
-
-
-<p>WordpressからPelicanへの移行メモ</p>
-<h2>前置き</h2>
-<ul>
-<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
-<li>本体は持ち運び可能なNUC</li>
-<li>IPは固定のグローバル</li>
-</ul>
-<h2>サーバが起動してるうちにバックアップ</h2>
-<h3>IPの取得をDHCPに</h3>
-<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
-ifconfigなりip addressでIPアドレスを調べておく。</p>
-<h3>嘘吐きサーバと嘘吐きクライアント</h3>
-<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
-<ol>
-<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
-<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
-</ol>
-<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
-<h3>xmlをエクスポート</h3>
-<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/12/28/librealsense/"><h3 class="article-title">macOSでRealsense</h3></a>
-<h6 class="subheader" title="2017-12-28T19:00:00+09:00">2017-12-28(木)
-</h6>
-
-
-<p>Realsense on macOS</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/realsense.html">Realsense </a>
-    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/pcl.html">PCL </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/librealsense/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/"><h3 class="article-title">KivyでOpenCV</h3></a>
-<h6 class="subheader" title="2017-12-05T08:00:00+09:00">2017-12-05(火)
-</h6>
-
-
-<p>OpenCV with Kivy</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/kivy.html">Kivy </a>
-    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/"><h3 class="article-title">Google Drive File Stream</h3></a>
-<h6 class="subheader" title="2017-10-17T22:00:00+09:00">2017-10-17(火)
-</h6>
-
-
-<p>Google Drive File Stream</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/googledrive.html">GoogleDrive </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/15/vcpkg/"><h3 class="article-title">ひき続きvcpkg</h3></a>
-<h6 class="subheader" title="2017-10-15T23:00:00+09:00">2017-10-15(日)
-</h6>
-
-
-<p>vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/15/vcpkg/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/"><h3 class="article-title">vcpkgのninja</h3></a>
-<h6 class="subheader" title="2017-10-13T23:00:00+09:00">2017-10-13(金)
-</h6>
-
-
-<p>ninja in vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 2</h6>
-
-<p>
-
-        <a href="https://eiichiromomma.github.io/category/memo2.html">Next &raquo;</a>
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 
