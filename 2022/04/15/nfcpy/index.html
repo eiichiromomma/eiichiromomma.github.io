@@ -68,7 +68,7 @@
 <li>Slackにメッセージを投げる</li>
 <li>3に戻る</li>
 </ol>
-<p>と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にするのが最もシンプルな方法に決定。</p>
+<p>と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。</p>
 <p>一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">usb</span>
 <span class="n">devs</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_all</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">idVendor</span><span class="o">=</span><span class="mh">0x054c</span><span class="p">)</span>

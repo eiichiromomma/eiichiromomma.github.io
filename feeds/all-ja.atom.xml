@@ -11,7 +11,7 @@
 &lt;li&gt;Slackにメッセージを投げる&lt;/li&gt;
 &lt;li&gt;3に戻る&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にするのが最もシンプルな方法に決定。&lt;/p&gt;
+&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。&lt;/p&gt;
 &lt;p&gt;一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;usb&lt;/span&gt;
 &lt;span class="n"&gt;devs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;find_all&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idVendor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;0x054c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -31,7 +31,7 @@
 &lt;li&gt;Slackにメッセージを投げる&lt;/li&gt;
 &lt;li&gt;3に戻る&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にするのが最もシンプルな方法に決定。&lt;/p&gt;
+&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。&lt;/p&gt;
 &lt;p&gt;一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;usb&lt;/span&gt;
 &lt;span class="n"&gt;devs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;find_all&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idVendor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;0x054c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
