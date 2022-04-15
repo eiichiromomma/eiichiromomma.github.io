@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Sat, 09 Apr 2022 09:20:00 +0900</lastBuildDate><item><title>Moorebot Scout</title><link>https://eiichiromomma.github.io/2022/04/09/moorebot-scout/</link><description>&lt;p&gt;KickstarterでROSも使える面白そうな&lt;a href="https://www.moorebot.com/pages/moorebot-scout"&gt;自律走行ロボット Moorebot Scout&lt;/a&gt;が出ていたのでバッカーになってました。
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Wed, 20 Apr 2022 19:20:00 +0900</lastBuildDate><item><title>Raspberry-pi+Slackで入退室管理</title><link>https://eiichiromomma.github.io/2022/04/20/nfcpy/</link><description>&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
+使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;特定のiSerialNumberのUSB機器を探す&lt;/li&gt;
+&lt;li&gt;機器のUSB busとaddressを取得して接続&lt;/li&gt;
+&lt;li&gt;数秒おきにNFCリーダーの入力待機&lt;/li&gt;
+&lt;li&gt;NFCリーダーで学生証のIDを読む&lt;/li&gt;
+&lt;li&gt;音を鳴らす&lt;/li&gt;
+&lt;li&gt;予め用意したdictに従ってID-&amp;gt;人名変換をする&lt;/li&gt;
+&lt;li&gt;Slackにメッセージを投げる&lt;/li&gt;
+&lt;li&gt;3に戻る&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にするのが最もシンプルな方法に決定。&lt;/p&gt;
+&lt;p&gt;一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;usb&lt;/span&gt;
+&lt;span class="n"&gt;devs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;find_all&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idVendor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;0x054c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;devs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 20 Apr 2022 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-04-20:/2022/04/20/nfcpy/</guid><category>Memo</category><category>Python</category><category>Slack</category><category>Raspberry-pi</category></item><item><title>Moorebot Scout</title><link>https://eiichiromomma.github.io/2022/04/09/moorebot-scout/</link><description>&lt;p&gt;KickstarterでROSも使える面白そうな&lt;a href="https://www.moorebot.com/pages/moorebot-scout"&gt;自律走行ロボット Moorebot Scout&lt;/a&gt;が出ていたのでバッカーになってました。
 去年6月に発送予定ということで去年の卒研にも使おうと思っていたところで半導体・部材の世界的不足に巻き込まれ，半年くらい遅れて届いた3体。まともに触るタイミングがまるで無かったのですが新年度ということでファームウェアアップデート。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220409-MoorebotScout.jpg" width="600"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sat, 09 Apr 2022 09:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-04-09:/2022/04/09/moorebot-scout/</guid><category>ゼミ</category><category>ROS</category></item><item><title>Classroomから受講者名簿の生成</title><link>https://eiichiromomma.github.io/2022/04/08/classroom/</link><description>&lt;p&gt;長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。&lt;/p&gt;
 &lt;p&gt;Classroom APIで情報取得する際はページ単位(30個/ページ がデフォルト)で持って来ようとするので，ページあたりのデータ数を増やしてもっと寄越せと指定しても仕様で「いっぱいくれと言われてもあげないよ」と書かれており，&lt;/p&gt;

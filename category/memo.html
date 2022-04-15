@@ -50,6 +50,136 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/04/20/nfcpy/"><h3 class="article-title">Raspberry-pi+Slackで入退室管理</h3></a>
+<h6 class="subheader" title="2022-04-20T19:20:00+09:00">2022-04-20(水)
+</h6>
+
+
+<p>コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
+使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。</p>
+<ol>
+<li>特定のiSerialNumberのUSB機器を探す</li>
+<li>機器のUSB busとaddressを取得して接続</li>
+<li>数秒おきにNFCリーダーの入力待機</li>
+<li>NFCリーダーで学生証のIDを読む</li>
+<li>音を鳴らす</li>
+<li>予め用意したdictに従ってID-&gt;人名変換をする</li>
+<li>Slackにメッセージを投げる</li>
+<li>3に戻る</li>
+</ol>
+<p>と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にするのが最もシンプルな方法に決定。</p>
+<p>一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">usb</span>
+<span class="n">devs</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_all</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">idVendor</span><span class="o">=</span><span class="mh">0x054c</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+</code></pre></div>
+
+<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる。</p>
+<p>もう一つの課題としては，どう自動実行するかで，Raspberry piの起動時にサービスとして走らせる方法がよく紹介されているものの，それも面倒なので</p>
+<div class="highlight"><pre><span></span><code>crontab -e
+</code></pre></div>
+
+<p>で @rebootを指定して入室待機と退室待機の2つのスクリプトを走らせる手抜きで対応。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">nfc</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">usb</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">https://api.slack.com/</span>
+<span class="sd">からCreate an appでbotを作る</span>
+<span class="sd">https://note.com/npaka/n/n4bcb38a1ea74</span>
+<span class="sd">らへん参照。多少UIは変わってるが問題ない。</span>
+<span class="sd">そっちのテストは</span>
+<span class="sd">https://api.slack.com/methods/chat.postMessage/test</span>
+<span class="sd">からやる</span>
+<span class="sd">CHANNELで指定するチャンネルは予め作るBotを指定してインストールしておく必要あり(チャンネルの設定→インテグレーション)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">TOKEN</span> <span class="o">=</span> <span class="s1">&#39;ここに取得したtokenが入る&#39;</span>
+<span class="n">CHANNEL</span> <span class="o">=</span> <span class="s1">&#39;入退室記録&#39;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://slack.com/api/chat.postMessage&quot;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer &quot;</span><span class="o">+</span><span class="n">TOKEN</span><span class="p">}</span>
+
+<span class="c1"># 入室USB ID &#39;1412926&#39; #うちのはこれだったが当然個体で変わる</span>
+<span class="c1"># 退室USB ID &#39;1413147&#39;</span>
+<span class="n">usbid</span> <span class="o">=</span> <span class="s1">&#39;1412926&#39;</span> <span class="c1">#これで入室用か退室用かを決める(もうちょいエレガントな方法もあるが手抜き)</span>
+<span class="k">if</span> <span class="n">usbid</span> <span class="o">==</span> <span class="s1">&#39;1412926&#39;</span><span class="p">:</span>
+    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が入室しました :tada: &#39;</span>
+    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が入室しました。 :warning: &#39;</span>
+    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Enter.mp3&#39;</span>
+<span class="k">else</span><span class="p">:</span> 
+    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が退室しました :wave:&#39;</span>
+    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が退室しました。 :warning: &#39;</span>
+    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Leave.mp3&#39;</span>
+<span class="n">members</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">#IDと名前の対応テーブル</span>
+    <span class="s1">&#39;0000000000000000&#39;</span><span class="p">:</span> <span class="s1">&#39;aaaaa&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;1111111111111111&#39;</span><span class="p">:</span> <span class="s1">&#39;Momma&#39;</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="n">idm</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">idm</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">-%H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">who</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">idm</span><span class="p">]</span>
+        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
+           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
+           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">who</span> <span class="o">+</span> <span class="n">msg_valid</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
+           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
+           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39; 不明ID </span><span class="si">{idm}</span><span class="s1"> &#39;</span><span class="o">+</span> <span class="n">msg_warn</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown ID </span><span class="si">{idm}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># pythonからスマートに音が出ないのでsubprocessに逃げた</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;mpg123&#39;</span><span class="p">,</span> <span class="n">mp3file</span><span class="p">])</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">シリアルナンバー決め打ちでUSB デバイスを探す</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">find_reader</span><span class="p">(</span><span class="n">serial_str</span><span class="p">):</span>
+    <span class="n">dev</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">serial_number</span> <span class="o">=</span> <span class="n">serial_str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dev</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">dev</span> <span class="o">=</span> <span class="n">find_reader</span><span class="p">(</span><span class="n">usbid</span><span class="p">)</span>
+    <span class="n">usb_address</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;usb:</span><span class="si">{dev.bus:#03}</span><span class="s1">:</span><span class="si">{dev.address:#03}</span><span class="s1">&#39;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">nfc</span><span class="o">.</span><span class="n">ContactlessFrontend</span><span class="p">(</span><span class="n">usb_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">rdwr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;on-connect&#39;</span><span class="p">:</span> <span class="n">process</span><span class="p">})</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>で，完成。↓のような感じで運用(スピーカーの裏にRaspberry piがある)</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy.jpg" width="600"></p>
+<p>Slackにはこんな感じで送られてくる。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy-slack.png" width="600"></p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/slack.html">Slack </a>
+    <a href="https://eiichiromomma.github.io/tag/raspberry-pi.html">Raspberry-pi </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/08/classroom/"><h3 class="article-title">Classroomから受講者名簿の生成</h3></a>
 <h6 class="subheader" title="2022-04-08T20:20:00+09:00">2022-04-08(金)
 </h6>
@@ -72,39 +202,7 @@
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// 一覧を抽出するコース名 (Classroom)上の名前</span>
   <span class="kd">var</span> <span class="nx">courseName</span> <span class="o">=</span> <span class="s1">&#39;画像処理&#39;</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">cList</span> <span class="o">=</span> <span class="nx">Classroom</span><span class="p">.</span><span class="nx">Courses</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">myCourses</span> <span class="o">=</span> <span class="nx">cList</span><span class="p">.</span><span class="nx">courses</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">myCourses</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">Logger</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myCourses</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="c1">//デバッグ用に表示</span>
-    <span class="c1">//コース名はアーカイブされているものは重複しても許されるので courseStateの確認が必要</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">myCourses</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nx">courseName</span> <span class="o">&amp;&amp;</span> <span class="nx">myCourses</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;courseState&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;ARCHIVED&#39;</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">inviteClassId</span> <span class="o">=</span> <span class="nx">myCourses</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">];</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="kd">var</span> <span class="nx">pageToken</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">studentsString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-  <span class="c1">//どう頑張っても小塊でしか拾ってくれない(デフォ30)ので，Students.list での取得時にトークンを渡す</span>
-  <span class="c1">//トークンは取得ごとに更新されるので do - whileの最後に nextPageTokenに置換えると次のページを取得できる</span>
-  <span class="k">do</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">search</span> <span class="o">=</span> <span class="nx">Classroom</span><span class="p">.</span><span class="nx">Courses</span><span class="p">.</span><span class="nx">Students</span><span class="p">.</span><span class="nx">list</span><span class="p">(</span><span class="nx">inviteClassId</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;pageToken&quot;</span><span class="o">:</span> <span class="nx">pageToken</span><span class="p">});</span>
-    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">search</span><span class="p">[</span><span class="s1">&#39;students&#39;</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">//ここは雑にカンマ区切りのstringを作ってしまう。データごとに改行を入れる</span>
-      <span class="nx">studentsString</span> <span class="o">=</span> <span class="nx">studentsString</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span> <span class="o">+</span>  
-      <span class="nx">search</span><span class="p">[</span><span class="s1">&#39;students&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;profile&#39;</span><span class="p">][</span><span class="s1">&#39;emailAddress&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">search</span><span class="p">[</span><span class="s1">&#39;students&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;profile&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;fullName&#39;</span><span class="p">]</span>
-      <span class="o">+</span><span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">search</span><span class="p">[</span><span class="s1">&#39;students&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;profile&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;familyName&#39;</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">search</span><span class="p">[</span><span class="s1">&#39;students&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">][</span><span class="s1">&#39;profile&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span>
-    <span class="p">}</span>
-    <span class="nx">pageToken</span> <span class="o">=</span> <span class="nx">search</span><span class="p">.</span><span class="nx">nextPageToken</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="nx">pageToken</span><span class="p">)</span>
-  <span class="kd">var</span> <span class="nx">contentType</span> <span class="o">=</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">charset</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">;</span>
-  <span class="c1">// スクリプトの場所を取得する術がなさそうなのでまんま実行。MyDriveのルートにファイルが作られる</span>
-  <span class="kd">var</span> <span class="nx">blob</span> <span class="o">=</span> <span class="nx">Utilities</span><span class="p">.</span><span class="nx">newBlob</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nx">contentType</span><span class="p">,</span><span class="nx">courseName</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">).</span><span class="nx">setDataFromString</span><span class="p">(</span><span class="nx">studentsString</span><span class="p">,</span> <span class="nx">charset</span><span class="p">)</span>
-  <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">createFile</span><span class="p">(</span><span class="nx">blob</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>※挙動が不明だったので冗長に書いてます</p>
-<p>実際にはGoogle Driveで新規作成からGoogle Apps Scriptを選んで(なければ追加)，サービスからClassroom APIを追加し，ソースをコピペして実行すれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+  <span class="kd">var</span> <span class="nx">cList</span> <span class="o">=</span> <span class="nx">Classroom</span><span class="p">.</span><span class="nx">Courses …</span></code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/classroom.html">Classroom </a>
@@ -113,11 +211,9 @@
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/08/classroom/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -368,30 +464,9 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/"><h3 class="article-title">vcpkgのninja</h3></a>
-<h6 class="subheader" title="2017-10-13T23:00:00+09:00">2017-10-13(金)
-</h6>
-
-
-<p>ninja in vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 1 of 2</h6>
+<h6 class="subheader">Page 1 of 3</h6>
 
 <p>
 
