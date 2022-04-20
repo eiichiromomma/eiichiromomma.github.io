@@ -50,6 +50,80 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
+<h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
+</h6>
+
+
+<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
+<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。</p>
+<div class="highlight"><pre><span></span><code>$ cat /etc/issue
+Debian GNU/Linux <span class="m">11</span> <span class="se">\n</span> <span class="se">\l</span>
+</code></pre></div>
+
+<p>ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。</p>
+<h3>確認作業</h3>
+<p>ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。</p>
+<div class="highlight"><pre><span></span><code>locale -a
+</code></pre></div>
+
+<p>とやって<code>ja_JP.utf-8</code>が存在していれば作業不要。</p>
+<h3>日本語化</h3>
+<p>以下をコピペする</p>
+<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
+sudo locale-gen
+sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
+wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+msgfmt -o gcc.mo ja.po
+sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+<span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
+<span class="nb">source</span> ~/.profile
+</code></pre></div>
+
+<p>わかりやすいかは疑問だが英語で思考停止する人には良い。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220420-cse.png" width="600"></p>
+<h4>分けて説明</h4>
+<p>localeとしてja_JP.utf-8が有効になっていないので<code>/etc/locale.gen</code>ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。</p>
+<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
+sudo locale-gen
+sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
+</code></pre></div>
+
+<p>gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので</p>
+<div class="highlight"><pre><span></span><code>$ file /usr/bin/gcc
+/usr/bin/gcc: symbolic link to gcc-10
+</code></pre></div>
+
+<p>で出てきたgcc-10に合わせている。</p>
+<div class="highlight"><pre><span></span><code>wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+msgfmt -o gcc.mo ja.po
+sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+</code></pre></div>
+
+<p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
+<span class="nb">source</span> ~/.profile
+</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
+    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
+    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
+    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/15/nfcpy/"><h3 class="article-title">Raspberry-pi+Slackで入退室管理</h3></a>
 <h6 class="subheader" title="2022-04-15T19:20:00+09:00">2022-04-15(金)
 </h6>
@@ -75,92 +149,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
 </code></pre></div>
 
-<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる。</p>
-<p>もう一つの課題としては，どう自動実行するかで，Raspberry piの起動時にサービスとして走らせる方法がよく紹介されているものの，それも面倒なので</p>
-<div class="highlight"><pre><span></span><code>crontab -e
-</code></pre></div>
-
-<p>で @rebootを指定して入室待機と退室待機の2つのスクリプトを走らせる手抜きで対応。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">nfc</span>
-<span class="kn">import</span> <span class="nn">binascii</span>
-<span class="kn">import</span> <span class="nn">usb</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">https://api.slack.com/</span>
-<span class="sd">からCreate an appでbotを作る</span>
-<span class="sd">https://note.com/npaka/n/n4bcb38a1ea74</span>
-<span class="sd">らへん参照。多少UIは変わってるが問題ない。</span>
-<span class="sd">そっちのテストは</span>
-<span class="sd">https://api.slack.com/methods/chat.postMessage/test</span>
-<span class="sd">からやる</span>
-<span class="sd">CHANNELで指定するチャンネルは予め作るBotを指定してインストールしておく必要あり(チャンネルの設定→インテグレーション)</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="n">TOKEN</span> <span class="o">=</span> <span class="s1">&#39;ここに取得したtokenが入る&#39;</span>
-<span class="n">CHANNEL</span> <span class="o">=</span> <span class="s1">&#39;入退室記録&#39;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://slack.com/api/chat.postMessage&quot;</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer &quot;</span><span class="o">+</span><span class="n">TOKEN</span><span class="p">}</span>
-
-<span class="c1"># 入室USB ID &#39;1412926&#39; #うちのはこれだったが当然個体で変わる</span>
-<span class="c1"># 退室USB ID &#39;1413147&#39;</span>
-<span class="n">usbid</span> <span class="o">=</span> <span class="s1">&#39;1412926&#39;</span> <span class="c1">#これで入室用か退室用かを決める(もうちょいエレガントな方法もあるが手抜き)</span>
-<span class="k">if</span> <span class="n">usbid</span> <span class="o">==</span> <span class="s1">&#39;1412926&#39;</span><span class="p">:</span>
-    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が入室しました :tada: &#39;</span>
-    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が入室しました。 :warning: &#39;</span>
-    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Enter.mp3&#39;</span>
-<span class="k">else</span><span class="p">:</span> 
-    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が退室しました :wave:&#39;</span>
-    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が退室しました。 :warning: &#39;</span>
-    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Leave.mp3&#39;</span>
-<span class="n">members</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">#IDと名前の対応テーブル</span>
-    <span class="s1">&#39;0000000000000000&#39;</span><span class="p">:</span> <span class="s1">&#39;aaaaa&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;1111111111111111&#39;</span><span class="p">:</span> <span class="s1">&#39;Momma&#39;</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
-    <span class="n">idm</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">idm</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-    <span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">-%H:%M:%S&#39;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">who</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">idm</span><span class="p">]</span>
-        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
-           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
-           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">who</span> <span class="o">+</span> <span class="n">msg_valid</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
-           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
-           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39; 不明ID </span><span class="si">{idm}</span><span class="s1"> &#39;</span><span class="o">+</span> <span class="n">msg_warn</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown ID </span><span class="si">{idm}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="c1"># pythonからスマートに音が出ないのでsubprocessに逃げた</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;mpg123&#39;</span><span class="p">,</span> <span class="n">mp3file</span><span class="p">])</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">シリアルナンバー決め打ちでUSB デバイスを探す</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="k">def</span> <span class="nf">find_reader</span><span class="p">(</span><span class="n">serial_str</span><span class="p">):</span>
-    <span class="n">dev</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">serial_number</span> <span class="o">=</span> <span class="n">serial_str</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dev</span>
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">dev</span> <span class="o">=</span> <span class="n">find_reader</span><span class="p">(</span><span class="n">usbid</span><span class="p">)</span>
-    <span class="n">usb_address</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;usb:</span><span class="si">{dev.bus:#03}</span><span class="s1">:</span><span class="si">{dev.address:#03}</span><span class="s1">&#39;</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">nfc</span><span class="o">.</span><span class="n">ContactlessFrontend</span><span class="p">(</span><span class="n">usb_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">rdwr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;on-connect&#39;</span><span class="p">:</span> <span class="n">process</span><span class="p">})</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
-<p>で，完成。↓のような感じで運用(スピーカーの裏にRaspberry piがある)</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy.jpg" width="600"></p>
-<p>Slackにはこんな感じで送られてくる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy-slack.png" width="600"></p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -170,11 +159,9 @@
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/15/nfcpy/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -440,27 +427,6 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/15/vcpkg/"><h3 class="article-title">ひき続きvcpkg</h3></a>
-<h6 class="subheader" title="2017-10-15T23:00:00+09:00">2017-10-15(日)
-</h6>
-
-
-<p>vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/15/vcpkg/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

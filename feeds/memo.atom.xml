@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-04-15T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Raspberry-pi+Slackで入退室管理</title><link href="https://eiichiromomma.github.io/2022/04/15/nfcpy/" rel="alternate"></link><published>2022-04-15T19:20:00+09:00</published><updated>2022-04-15T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-15:/2022/04/15/nfcpy/</id><summary type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-04-20T21:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Google Cloud Shellの日本語化(gcc込み)</title><link href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/" rel="alternate"></link><published>2022-04-20T21:20:00+09:00</published><updated>2022-04-20T21:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-20:/2022/04/20/CloudShellEditor/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
+&lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
+Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。&lt;/p&gt;
+&lt;h3&gt;確認作業&lt;/h3&gt;
+&lt;p&gt;ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;locale -a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とやって&lt;code&gt;ja_JP.utf-8&lt;/code&gt;が存在していれば作業不要。&lt;/p&gt;
+&lt;h3&gt;日本語化&lt;/h3&gt;
+&lt;p&gt;以下をコピペする&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
+sudo locale-gen
+sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
+&lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
+Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。&lt;/p&gt;
+&lt;h3&gt;確認作業&lt;/h3&gt;
+&lt;p&gt;ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;locale -a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とやって&lt;code&gt;ja_JP.utf-8&lt;/code&gt;が存在していれば作業不要。&lt;/p&gt;
+&lt;h3&gt;日本語化&lt;/h3&gt;
+&lt;p&gt;以下をコピペする&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
+sudo locale-gen
+sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo apt install task-japanese -y
+wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+msgfmt -o gcc.mo ja.po
+sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;export LANG=ja_JP.utf-8&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;わかりやすいかは疑問だが英語で思考停止する人には良い。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220420-cse.png" width="600"&gt;&lt;/p&gt;
+&lt;h4&gt;分けて説明&lt;/h4&gt;
+&lt;p&gt;localeとしてja_JP.utf-8が有効になっていないので&lt;code&gt;/etc/locale.gen&lt;/code&gt;ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
+sudo locale-gen
+sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo apt install task-japanese -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ file /usr/bin/gcc
+/usr/bin/gcc: symbolic link to gcc-10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で出てきたgcc-10に合わせている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+msgfmt -o gcc.mo ja.po
+sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;export LANG=ja_JP.utf-8&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Raspberry-pi+Slackで入退室管理</title><link href="https://eiichiromomma.github.io/2022/04/15/nfcpy/" rel="alternate"></link><published>2022-04-15T19:20:00+09:00</published><updated>2022-04-15T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-15:/2022/04/15/nfcpy/</id><summary type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
 使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;特定のiSerialNumberのUSB機器を探す&lt;/li&gt;

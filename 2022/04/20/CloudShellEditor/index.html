@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
-    <title>CVMLAB Blog - C</title>
+    <title>Google Cloud Shellの日本語化(gcc込み)</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/" rel="bookmark"
+        title="Permalink to Google Cloud Shellの日本語化(gcc込み)">Google Cloud Shellの日本語化(gcc込み)</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
 <h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
 </h6>
 
 
-<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
+    <p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
 <p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。</p>
 <div class="highlight"><pre><span></span><code>$ cat /etc/issue
 Debian GNU/Linux <span class="m">11</span> <span class="se">\n</span> <span class="se">\l</span>
@@ -103,7 +104,8 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 <p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
 <span class="nb">source</span> ~/.profile
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+</code></pre></div>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -114,65 +116,8 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/"><h3 class="article-title">VSCodeとClang</h3></a>
-<h6 class="subheader" title="2017-03-05T11:00:00+09:00">2017-03-05(日)
-</h6>
-
-
-<p>setup VSCode and clang</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vscode.html">VSCode </a>
-    <a href="https://eiichiromomma.github.io/tag/c.html">C++ </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/"><h3 class="article-title">YouCompleteMe</h3></a>
-<h6 class="subheader" title="2017-03-05T10:00:00+09:00">2017-03-05(日)
-</h6>
-
-
-<p>setup YouCompleteMe</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vim.html">Vim </a>
-    <a href="https://eiichiromomma.github.io/tag/c.html">C++ </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/03/05/youcompleteme/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
-
-<p>
-
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 
