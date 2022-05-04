@@ -50,6 +50,82 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
+<h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
+</h6>
+
+
+<p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
+<p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
+<p>結論としてはざっくり2択</p>
+<ul>
+<li>Pythonが使えてMarkdownが好きなら<a href="https://github.com/gpoore/text2qti">text2qti</a>でMarkdownからQTIに変換</li>
+<li>php7が使える環境なら<a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a>と<a href="https://github.com/csev/gift2qti">gift2qti</a>でGIFTからQTIに変換</li>
+</ul>
+<hr>
+<h3>Markdown から QTI</h3>
+<h4><a href="https://github.com/gpoore/text2qti">text2qti</a> (要Python, 動作確認済み)</h4>
+<p>配布元のページのサンプルを見れば書き方は直ぐに分かる。</p>
+<p>上記のより<a href="https://github.com/molpopgen/md2Canvas">発展的な使い方</a>(Github, bitbucket連携)</p>
+<hr>
+<h3>GIFT FormatからQTI</h3>
+<p>MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには</p>
+<ul>
+<li>gift2qtiで変換してインポート</li>
+<li>GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート</li>
+</ul>
+<p>の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。</p>
+<h4><a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a> (要VS Code, 動作確認済み)</h4>
+<p>VS Codeでガシガシ補間してくれながらプレビュー付きで使える。</p>
+<h4><a href="https://www.microsoft.com/ja-jp/p/moodle-test-creator/9nx4z4k7xn8x">Moodle Test Creatorアプリ</a>(Windows, 動作未確認)</h4>
+<p>起動までは確認したが面倒そうなので放置。</p>
+<h4><a href="https://github.com/csev/gift2qti">gift2qti</a> (要PHP7, 動作確認済み)</h4>
+<p>ローカルのWebサイトとして動作する。PHP 7.x まで利用可能(現行のPHP8だと動かない)。PHP7が動く環境があるならCanvasへプラグインのような形で取り込みも可能。</p>
+<p><a href="https://www.tsugi.org/gift2qti/">デモサイト</a>もあるが常用はお勧めしない。</p>
+<h5>macOSでhomebrewのphp7を使った例</h5>
+<h6>php 7.xのインストールとソースの入手</h6>
+<div class="highlight"><pre><span></span><code>brew install php@7.4
+git clone https://github.com/csev/gift2qti.git
+</code></pre></div>
+
+<p>でgift2qtiフォルダに移動してからサーバーとして起動すれば良い。強引だがrcファイルを書き換えなくとも下記でいける。</p>
+<h6>起動方法</h6>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> gift2qti
+<span class="nv">PATH</span><span class="o">=</span>/usr/local/opt/php@7.4/bin:<span class="nv">$PATH</span> php -S localhost:8000
+</code></pre></div>
+
+<p>あとは<a href="http://localhost:8000/">ローカルのサーバ(コマンドで指定したport 8000)</a>を開けば良い。</p>
+<hr>
+<h3>(動作確認できず) <a href="https://github.com/OklahomaChristian/BlackboardQuizGenerator">BlackBoard形式からQTI</a></h3>
+<p>ASP.NETで動くらしい。IISをローカルで起動すれば動くと思われるが，<a href="https://ed.oc.edu/blackboardquizgenerator/">デモサイト</a>で生成したデータのインポートは失敗</p>
+<hr>
+<h3>以下未確認いろいろ</h3>
+<ul>
+<li><a href="https://github.com/backyardbiomech/qtiConverter">qtiConverter App</a> テキストから変換(Macのみ)</li>
+<li><a href="https://github.com/nenad/CSV2QTI">CSV2QTI</a> CSVから変換(Python)</li>
+<li><a href="https://canconvert.k-state.edu/qti/">Kansas State Universityのcsv2qti</a> CSVから変換 </li>
+</ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/markdown.html">Markdown </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
 <h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
 </h6>
@@ -72,38 +148,7 @@ Debian GNU/Linux <span class="m">11</span> <span class="se">\n</span> <span clas
 <p>以下をコピペする</p>
 <div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
 sudo locale-gen
-sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
-wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
-msgfmt -o gcc.mo ja.po
-sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
-<span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
-<span class="nb">source</span> ~/.profile
-</code></pre></div>
-
-<p>わかりやすいかは疑問だが英語で思考停止する人には良い。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220420-cse.png" width="600"></p>
-<h4>分けて説明</h4>
-<p>localeとしてja_JP.utf-8が有効になっていないので<code>/etc/locale.gen</code>ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。</p>
-<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
-sudo locale-gen
-sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
-</code></pre></div>
-
-<p>gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので</p>
-<div class="highlight"><pre><span></span><code>$ file /usr/bin/gcc
-/usr/bin/gcc: symbolic link to gcc-10
-</code></pre></div>
-
-<p>で出てきたgcc-10に合わせている。</p>
-<div class="highlight"><pre><span></span><code>wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
-msgfmt -o gcc.mo ja.po
-sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
-</code></pre></div>
-
-<p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
-<span class="nb">source</span> ~/.profile
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+sudo apt update<span class="p">;</span> sudo …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -114,11 +159,9 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -406,27 +449,6 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/"><h3 class="article-title">Google Drive File Stream</h3></a>
-<h6 class="subheader" title="2017-10-17T22:00:00+09:00">2017-10-17(火)
-</h6>
-
-
-<p>Google Drive File Stream</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/googledrive.html">GoogleDrive </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

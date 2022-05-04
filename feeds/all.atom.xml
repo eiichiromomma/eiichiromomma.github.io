@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-04-20T21:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Google Cloud Shellの日本語化(gcc込み)</title><link href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/" rel="alternate"></link><published>2022-04-20T21:20:00+09:00</published><updated>2022-04-20T21:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-20:/2022/04/20/CloudShellEditor/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-04T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</title><link href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/" rel="alternate"></link><published>2022-05-04T19:20:00+09:00</published><updated>2022-05-04T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-04:/2022/05/04/OpenCV-Book/</id><content type="html">&lt;p&gt;著者の方からご献本頂いたので早速読みました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;技術評論社 &lt;a href="https://gihyo.jp/book/2022/978-4-297-12775-6"&gt;OpenCVではじめよう ディープラーニングによる画像認識&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"&gt;&lt;/p&gt;
+&lt;p&gt;情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
+案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。&lt;/p&gt;
+&lt;p&gt;サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。&lt;/p&gt;</content><category term="ゼミ"></category><category term="OpenCV"></category><category term="Python"></category><category term="Book"></category></entry><entry><title>Canvas用のQuiz作成ツール</title><link href="https://eiichiromomma.github.io/2022/05/03/text2qti/" rel="alternate"></link><published>2022-05-03T19:20:00+09:00</published><updated>2022-05-03T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-03:/2022/05/03/text2qti/</id><summary type="html">&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
+&lt;p&gt;Quizの簡単な記述法としてはMoodleでのテキスト記述の&lt;a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88"&gt;GIFT Format&lt;/a&gt;があるが，Canvasでは工夫しないと使えない。&lt;/p&gt;
+&lt;p&gt;結論としてはざっくり2択&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pythonが使えてMarkdownが好きなら&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt;でMarkdownからQTIに変換&lt;/li&gt;
+&lt;li&gt;php7が使える環境なら&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt;と&lt;a href="https://github.com/csev/gift2qti"&gt;gift2qti&lt;/a&gt;でGIFTからQTIに変換&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Markdown から QTI&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt; (要Python, 動作確認済み)&lt;/h4&gt;
+&lt;p&gt;配布元のページのサンプルを見れば書き方は直ぐに分かる。&lt;/p&gt;
+&lt;p&gt;上記のより&lt;a href="https://github.com/molpopgen/md2Canvas"&gt;発展的な使い方&lt;/a&gt;(Github, bitbucket連携)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;GIFT FormatからQTI&lt;/h3&gt;
+&lt;p&gt;MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gift2qtiで変換してインポート&lt;/li&gt;
+&lt;li&gt;GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt; (要VS Code …&lt;/h4&gt;</summary><content type="html">&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
+&lt;p&gt;Quizの簡単な記述法としてはMoodleでのテキスト記述の&lt;a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88"&gt;GIFT Format&lt;/a&gt;があるが，Canvasでは工夫しないと使えない。&lt;/p&gt;
+&lt;p&gt;結論としてはざっくり2択&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pythonが使えてMarkdownが好きなら&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt;でMarkdownからQTIに変換&lt;/li&gt;
+&lt;li&gt;php7が使える環境なら&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt;と&lt;a href="https://github.com/csev/gift2qti"&gt;gift2qti&lt;/a&gt;でGIFTからQTIに変換&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Markdown から QTI&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt; (要Python, 動作確認済み)&lt;/h4&gt;
+&lt;p&gt;配布元のページのサンプルを見れば書き方は直ぐに分かる。&lt;/p&gt;
+&lt;p&gt;上記のより&lt;a href="https://github.com/molpopgen/md2Canvas"&gt;発展的な使い方&lt;/a&gt;(Github, bitbucket連携)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;GIFT FormatからQTI&lt;/h3&gt;
+&lt;p&gt;MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gift2qtiで変換してインポート&lt;/li&gt;
+&lt;li&gt;GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt; (要VS Code, 動作確認済み)&lt;/h4&gt;
+&lt;p&gt;VS Codeでガシガシ補間してくれながらプレビュー付きで使える。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://www.microsoft.com/ja-jp/p/moodle-test-creator/9nx4z4k7xn8x"&gt;Moodle Test Creatorアプリ&lt;/a&gt;(Windows, 動作未確認)&lt;/h4&gt;
+&lt;p&gt;起動までは確認したが面倒そうなので放置。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://github.com/csev/gift2qti"&gt;gift2qti&lt;/a&gt; (要PHP7, 動作確認済み)&lt;/h4&gt;
+&lt;p&gt;ローカルのWebサイトとして動作する。PHP 7.x まで利用可能(現行のPHP8だと動かない)。PHP7が動く環境があるならCanvasへプラグインのような形で取り込みも可能。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.tsugi.org/gift2qti/"&gt;デモサイト&lt;/a&gt;もあるが常用はお勧めしない。&lt;/p&gt;
+&lt;h5&gt;macOSでhomebrewのphp7を使った例&lt;/h5&gt;
+&lt;h6&gt;php 7.xのインストールとソースの入手&lt;/h6&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install php@7.4
+git clone https://github.com/csev/gift2qti.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でgift2qtiフォルダに移動してからサーバーとして起動すれば良い。強引だがrcファイルを書き換えなくとも下記でいける。&lt;/p&gt;
+&lt;h6&gt;起動方法&lt;/h6&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; gift2qti
+&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/opt/php@7.4/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt; php -S localhost:8000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;あとは&lt;a href="http://localhost:8000/"&gt;ローカルのサーバ(コマンドで指定したport 8000)&lt;/a&gt;を開けば良い。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;(動作確認できず) &lt;a href="https://github.com/OklahomaChristian/BlackboardQuizGenerator"&gt;BlackBoard形式からQTI&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;ASP.NETで動くらしい。IISをローカルで起動すれば動くと思われるが，&lt;a href="https://ed.oc.edu/blackboardquizgenerator/"&gt;デモサイト&lt;/a&gt;で生成したデータのインポートは失敗&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;以下未確認いろいろ&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/backyardbiomech/qtiConverter"&gt;qtiConverter App&lt;/a&gt; テキストから変換(Macのみ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/nenad/CSV2QTI"&gt;CSV2QTI&lt;/a&gt; CSVから変換(Python)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://canconvert.k-state.edu/qti/"&gt;Kansas State Universityのcsv2qti&lt;/a&gt; CSVから変換 &lt;/li&gt;
+&lt;/ul&gt;</content><category term="Memo"></category><category term="Canvas"></category><category term="Python"></category><category term="Markdown"></category></entry><entry><title>Google Cloud Shellの日本語化(gcc込み)</title><link href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/" rel="alternate"></link><published>2022-04-20T21:20:00+09:00</published><updated>2022-04-20T21:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-20:/2022/04/20/CloudShellEditor/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
 &lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
 Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;

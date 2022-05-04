@@ -51,6 +51,79 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/"><h3 class="article-title">研究室への問い合わせと2020-2021の状況について</h3></a>
+<h6 class="subheader" title="2021-11-28T10:59:00+09:00">2021-11-28(日)
+</h6>
+
+
+<h2>研究室への問い合わせ</h2>
+<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
+質問受け付けは<strong>全てZoomで実施します</strong>。(Zoom URLはドライブの方に掲示)</p>
+<ul>
+<li>12/4(土) 11:00-12:00 </li>
+<li>12/6(月) 17:00-18:00 </li>
+<li>12/7(火) 12:00-13:00 </li>
+<li>時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡</li>
+</ul>
+<h2>近況</h2>
+<p>コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
+写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。</p>
+<p>緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。</p>
+<ul>
+<li>学生の研究室への登校は任意(要事前申請)</li>
+<li>連絡はコロナ禍の前からSlack …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
+<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
+</h6>
+
+
+<p>WordpressからPelicanへの移行メモ</p>
+<h2>前置き</h2>
+<ul>
+<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
+<li>本体は持ち運び可能なNUC</li>
+<li>IPは固定のグローバル</li>
+</ul>
+<h2>サーバが起動してるうちにバックアップ</h2>
+<h3>IPの取得をDHCPに</h3>
+<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。</p>
+<h3>嘘吐きサーバと嘘吐きクライアント</h3>
+<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
+<ol>
+<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
+<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
+</ol>
+<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
+<h3>xmlをエクスポート</h3>
+<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2020/07/31/前期が終わりました/"><h3 class="article-title">前期が終わりました</h3></a>
 <h6 class="subheader" title="2020-07-31T08:48:00+09:00">2020-07-31(金)
 </h6>
@@ -354,92 +427,6 @@
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/09/10/研修旅行2019/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/08/28/研究会部門優秀論文発表賞-表彰/"><h3 class="article-title">研究会+部門優秀論文発表賞 表彰</h3></a>
-<h6 class="subheader" title="2019-08-28T18:23:00+09:00">2019-08-28(水)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>徳島大学で開催の知覚情報/次世代産業システム合同研究会に参加してきました。研究発表に加えて昨年度 現M2の木鉛君が受賞した部門優秀論文発表賞の表彰も実施され，「非整備環境におけるセンシングとAI技術調査専門委員会」 委員長の谷口先生から表彰状を授与されました。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:gallery {"ids":[751,752]} -->
-
-<ul>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1208-1024x768.jpg" width="600"></p>
-</li>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1209-1024x768.jpg" width="600"></p>
-</li>
-</ul>
-<!-- /wp:gallery -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/08/28/研究会部門優秀論文発表賞-表彰/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/06/20/デモ大会その2自己紹介lt飲み会/"><h3 class="article-title">デモ大会その2+自己紹介LT飲み会</h3></a>
-<h6 class="subheader" title="2019-06-20T18:17:00+09:00">2019-06-20(木)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>前回に引続きデモ大会です。UE4+ViveProでちゃんと作り込んできてました。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":746} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00436-1024x768.jpg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
-<p>その後打上げを兼ねた自己紹介LT飲み会(全員揃うまで続きます)です。写真は誕生日で浮かれる田久保君。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:gallery {"ids":[747,748]} -->
-
-<ul>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00454-1024x768.jpg" width="600"></p>
-</li>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/DSC00464-1024x768.jpg" width="600"></p>
-</li>
-</ul>
-<!-- /wp:gallery -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/06/20/デモ大会その2自己紹介lt飲み会/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

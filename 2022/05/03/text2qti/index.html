@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
-    <title>CVMLAB Blog - Canvas</title>
+    <title>Canvas用のQuiz作成ツール</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2022/05/03/text2qti/" rel="bookmark"
+        title="Permalink to Canvas用のQuiz作成ツール">Canvas用のQuiz作成ツール</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
 <h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
 </h6>
 
 
-<p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
+    <p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
 <p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
 <p>結論としてはざっくり2択</p>
 <ul>
@@ -106,7 +107,8 @@ git clone https://github.com/csev/gift2qti.git
 <li><a href="https://github.com/backyardbiomech/qtiConverter">qtiConverter App</a> テキストから変換(Macのみ)</li>
 <li><a href="https://github.com/nenad/CSV2QTI">CSV2QTI</a> CSVから変換(Python)</li>
 <li><a href="https://canconvert.k-state.edu/qti/">Kansas State Universityのcsv2qti</a> CSVから変換 </li>
-</ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+</ul>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
@@ -116,114 +118,8 @@ git clone https://github.com/csev/gift2qti.git
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/"><h3 class="article-title">CanvasのSandbox WSL2編</h3></a>
-<h6 class="subheader" title="2022-04-01T06:00:00+09:00">2022-04-01(金)
-</h6>
-
-
-<p>LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。</p>
-<ul>
-<li>WSL2 + Ubuntu 18.04 は自力で入れましょう</li>
-<li>18.04必須です(20.04は×)</li>
-<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
-<li>WSL2上でのdocker諸々必要</li>
-<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
-</ul>
-<h3>まず時間を合わせとツール入れ</h3>
-<div class="highlight"><pre><span></span><code>sudo ntpdate time.google.com
-sudo apt update<span class="p">;</span> sudo apt upgrade -y
-sudo apt install ruby build-essential git 
-</code></pre></div>
-
-<h3>doryを入れる</h3>
-<p>doryは普通にgemで入る</p>
-<div class="highlight"><pre><span></span><code>sudo gem install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
-<h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
-</h6>
-
-
-<p>LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
-gitとかの基本的なツールはあって当たり前なので省略するが</p>
-<ul>
-<li>この手順はmacOS (Monterey)</li>
-<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
-<li>docker諸々必要</li>
-<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
-</ul>
-<p>あたりが条件</p>
-<h3>doryを入れる</h3>
-<div class="highlight"><pre><span></span><code>brew install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms.git
-<span class="nb">cd</span> canvas-lms
-</code></pre></div>
-
-<h3>依存アプリを入れて環境構築</h3>
-<p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
-<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
-brew install mutagen-io/mutagen/mutagen-compose
-./script/docker_dev_setup.sh --mutagen
-</code></pre></div>
-
-<h3>Docker Desktopが無いと言われる</h3>
-<p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
-
-<p>
-
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 

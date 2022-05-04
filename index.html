@@ -50,6 +50,83 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/"><h3 class="article-title">書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</h3></a>
+<h6 class="subheader" title="2022-05-04T19:20:00+09:00">2022-05-04(水)
+</h6>
+
+
+<p>著者の方からご献本頂いたので早速読みました。</p>
+<ul>
+<li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
+</ul>
+<p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
+<p>情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
+案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。</p>
+<p>サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/book.html">Book </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
+<h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
+</h6>
+
+
+<p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
+<p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
+<p>結論としてはざっくり2択</p>
+<ul>
+<li>Pythonが使えてMarkdownが好きなら<a href="https://github.com/gpoore/text2qti">text2qti</a>でMarkdownからQTIに変換</li>
+<li>php7が使える環境なら<a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a>と<a href="https://github.com/csev/gift2qti">gift2qti</a>でGIFTからQTIに変換</li>
+</ul>
+<hr>
+<h3>Markdown から QTI</h3>
+<h4><a href="https://github.com/gpoore/text2qti">text2qti</a> (要Python, 動作確認済み)</h4>
+<p>配布元のページのサンプルを見れば書き方は直ぐに分かる。</p>
+<p>上記のより<a href="https://github.com/molpopgen/md2Canvas">発展的な使い方</a>(Github, bitbucket連携)</p>
+<hr>
+<h3>GIFT FormatからQTI</h3>
+<p>MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには</p>
+<ul>
+<li>gift2qtiで変換してインポート</li>
+<li>GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート</li>
+</ul>
+<p>の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。</p>
+<h4><a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a> (要VS Code …</h4><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/markdown.html">Markdown </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/03/text2qti/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
 <h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
 </h6>
@@ -72,38 +149,7 @@ Debian GNU/Linux <span class="m">11</span> <span class="se">\n</span> <span clas
 <p>以下をコピペする</p>
 <div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
 sudo locale-gen
-sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
-wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
-msgfmt -o gcc.mo ja.po
-sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
-<span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
-<span class="nb">source</span> ~/.profile
-</code></pre></div>
-
-<p>わかりやすいかは疑問だが英語で思考停止する人には良い。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220420-cse.png" width="600"></p>
-<h4>分けて説明</h4>
-<p>localeとしてja_JP.utf-8が有効になっていないので<code>/etc/locale.gen</code>ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。</p>
-<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
-sudo locale-gen
-sudo apt update<span class="p">;</span> sudo apt install task-japanese -y
-</code></pre></div>
-
-<p>gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので</p>
-<div class="highlight"><pre><span></span><code>$ file /usr/bin/gcc
-/usr/bin/gcc: symbolic link to gcc-10
-</code></pre></div>
-
-<p>で出てきたgcc-10に合わせている。</p>
-<div class="highlight"><pre><span></span><code>wget -c https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
-msgfmt -o gcc.mo ja.po
-sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
-</code></pre></div>
-
-<p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span> &gt;&gt; ~/.profile
-<span class="nb">source</span> ~/.profile
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+sudo apt update<span class="p">;</span> sudo …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -114,11 +160,9 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -371,79 +415,6 @@ brew install mutagen-io/mutagen/mutagen-compose
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/12/04/github-wiki-see/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/"><h3 class="article-title">研究室への問い合わせと2020-2021の状況について</h3></a>
-<h6 class="subheader" title="2021-11-28T10:59:00+09:00">2021-11-28(日)
-</h6>
-
-
-<h2>研究室への問い合わせ</h2>
-<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
-質問受け付けは<strong>全てZoomで実施します</strong>。(Zoom URLはドライブの方に掲示)</p>
-<ul>
-<li>12/4(土) 11:00-12:00 </li>
-<li>12/6(月) 17:00-18:00 </li>
-<li>12/7(火) 12:00-13:00 </li>
-<li>時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡</li>
-</ul>
-<h2>近況</h2>
-<p>コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
-写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。</p>
-<p>緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。</p>
-<ul>
-<li>学生の研究室への登校は任意(要事前申請)</li>
-<li>連絡はコロナ禍の前からSlack …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
-<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
-</h6>
-
-
-<p>WordpressからPelicanへの移行メモ</p>
-<h2>前置き</h2>
-<ul>
-<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
-<li>本体は持ち運び可能なNUC</li>
-<li>IPは固定のグローバル</li>
-</ul>
-<h2>サーバが起動してるうちにバックアップ</h2>
-<h3>IPの取得をDHCPに</h3>
-<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
-ifconfigなりip addressでIPアドレスを調べておく。</p>
-<h3>嘘吐きサーバと嘘吐きクライアント</h3>
-<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
-<ol>
-<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
-<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
-</ol>
-<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
-<h3>xmlをエクスポート</h3>
-<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

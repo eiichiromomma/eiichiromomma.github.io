@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Wed, 20 Apr 2022 21:20:00 +0900</lastBuildDate><item><title>Google Cloud Shellの日本語化(gcc込み)</title><link>https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/</link><description>&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Wed, 04 May 2022 19:20:00 +0900</lastBuildDate><item><title>書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</title><link>https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/</link><description>&lt;p&gt;著者の方からご献本頂いたので早速読みました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;技術評論社 &lt;a href="https://gihyo.jp/book/2022/978-4-297-12775-6"&gt;OpenCVではじめよう ディープラーニングによる画像認識&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"&gt;&lt;/p&gt;
+&lt;p&gt;情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
+案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。&lt;/p&gt;
+&lt;p&gt;サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 04 May 2022 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-05-04:/2022/05/04/OpenCV-Book/</guid><category>ゼミ</category><category>OpenCV</category><category>Python</category><category>Book</category></item><item><title>Canvas用のQuiz作成ツール</title><link>https://eiichiromomma.github.io/2022/05/03/text2qti/</link><description>&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
+&lt;p&gt;Quizの簡単な記述法としてはMoodleでのテキスト記述の&lt;a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88"&gt;GIFT Format&lt;/a&gt;があるが，Canvasでは工夫しないと使えない。&lt;/p&gt;
+&lt;p&gt;結論としてはざっくり2択&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pythonが使えてMarkdownが好きなら&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt;でMarkdownからQTIに変換&lt;/li&gt;
+&lt;li&gt;php7が使える環境なら&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt;と&lt;a href="https://github.com/csev/gift2qti"&gt;gift2qti&lt;/a&gt;でGIFTからQTIに変換&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Markdown から QTI&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt; (要Python, 動作確認済み)&lt;/h4&gt;
+&lt;p&gt;配布元のページのサンプルを見れば書き方は直ぐに分かる。&lt;/p&gt;
+&lt;p&gt;上記のより&lt;a href="https://github.com/molpopgen/md2Canvas"&gt;発展的な使い方&lt;/a&gt;(Github, bitbucket連携)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;GIFT FormatからQTI&lt;/h3&gt;
+&lt;p&gt;MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gift2qtiで変換してインポート&lt;/li&gt;
+&lt;li&gt;GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt; (要VS Code …&lt;/h4&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Tue, 03 May 2022 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-05-03:/2022/05/03/text2qti/</guid><category>Memo</category><category>Canvas</category><category>Python</category><category>Markdown</category></item><item><title>Google Cloud Shellの日本語化(gcc込み)</title><link>https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/</link><description>&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
 &lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
 Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;

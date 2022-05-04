@@ -50,6 +50,83 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/"><h3 class="article-title">書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</h3></a>
+<h6 class="subheader" title="2022-05-04T19:20:00+09:00">2022-05-04(水)
+</h6>
+
+
+<p>著者の方からご献本頂いたので早速読みました。</p>
+<ul>
+<li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
+</ul>
+<p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
+<p>情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
+案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。</p>
+<p>サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/book.html">Book </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
+<h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
+</h6>
+
+
+<p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
+<p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
+<p>結論としてはざっくり2択</p>
+<ul>
+<li>Pythonが使えてMarkdownが好きなら<a href="https://github.com/gpoore/text2qti">text2qti</a>でMarkdownからQTIに変換</li>
+<li>php7が使える環境なら<a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a>と<a href="https://github.com/csev/gift2qti">gift2qti</a>でGIFTからQTIに変換</li>
+</ul>
+<hr>
+<h3>Markdown から QTI</h3>
+<h4><a href="https://github.com/gpoore/text2qti">text2qti</a> (要Python, 動作確認済み)</h4>
+<p>配布元のページのサンプルを見れば書き方は直ぐに分かる。</p>
+<p>上記のより<a href="https://github.com/molpopgen/md2Canvas">発展的な使い方</a>(Github, bitbucket連携)</p>
+<hr>
+<h3>GIFT FormatからQTI</h3>
+<p>MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
+GIFT FormatをCanvasで利用するには</p>
+<ul>
+<li>gift2qtiで変換してインポート</li>
+<li>GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート</li>
+</ul>
+<p>の手段しかない。
+既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。</p>
+<h4><a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a> (要VS Code …</h4><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/markdown.html">Markdown </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/03/text2qti/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/15/nfcpy/"><h3 class="article-title">Raspberry-pi+Slackで入退室管理</h3></a>
 <h6 class="subheader" title="2022-04-15T19:20:00+09:00">2022-04-15(金)
 </h6>
@@ -75,92 +152,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
 </code></pre></div>
 
-<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる。</p>
-<p>もう一つの課題としては，どう自動実行するかで，Raspberry piの起動時にサービスとして走らせる方法がよく紹介されているものの，それも面倒なので</p>
-<div class="highlight"><pre><span></span><code>crontab -e
-</code></pre></div>
-
-<p>で @rebootを指定して入室待機と退室待機の2つのスクリプトを走らせる手抜きで対応。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">nfc</span>
-<span class="kn">import</span> <span class="nn">binascii</span>
-<span class="kn">import</span> <span class="nn">usb</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">https://api.slack.com/</span>
-<span class="sd">からCreate an appでbotを作る</span>
-<span class="sd">https://note.com/npaka/n/n4bcb38a1ea74</span>
-<span class="sd">らへん参照。多少UIは変わってるが問題ない。</span>
-<span class="sd">そっちのテストは</span>
-<span class="sd">https://api.slack.com/methods/chat.postMessage/test</span>
-<span class="sd">からやる</span>
-<span class="sd">CHANNELで指定するチャンネルは予め作るBotを指定してインストールしておく必要あり(チャンネルの設定→インテグレーション)</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="n">TOKEN</span> <span class="o">=</span> <span class="s1">&#39;ここに取得したtokenが入る&#39;</span>
-<span class="n">CHANNEL</span> <span class="o">=</span> <span class="s1">&#39;入退室記録&#39;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://slack.com/api/chat.postMessage&quot;</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer &quot;</span><span class="o">+</span><span class="n">TOKEN</span><span class="p">}</span>
-
-<span class="c1"># 入室USB ID &#39;1412926&#39; #うちのはこれだったが当然個体で変わる</span>
-<span class="c1"># 退室USB ID &#39;1413147&#39;</span>
-<span class="n">usbid</span> <span class="o">=</span> <span class="s1">&#39;1412926&#39;</span> <span class="c1">#これで入室用か退室用かを決める(もうちょいエレガントな方法もあるが手抜き)</span>
-<span class="k">if</span> <span class="n">usbid</span> <span class="o">==</span> <span class="s1">&#39;1412926&#39;</span><span class="p">:</span>
-    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が入室しました :tada: &#39;</span>
-    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が入室しました。 :warning: &#39;</span>
-    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Enter.mp3&#39;</span>
-<span class="k">else</span><span class="p">:</span> 
-    <span class="n">msg_valid</span> <span class="o">=</span> <span class="s1">&#39; が退室しました :wave:&#39;</span>
-    <span class="n">msg_warn</span> <span class="o">=</span> <span class="s1">&#39; が退室しました。 :warning: &#39;</span>
-    <span class="n">mp3file</span> <span class="o">=</span> <span class="s1">&#39;Leave.mp3&#39;</span>
-<span class="n">members</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">#IDと名前の対応テーブル</span>
-    <span class="s1">&#39;0000000000000000&#39;</span><span class="p">:</span> <span class="s1">&#39;aaaaa&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;1111111111111111&#39;</span><span class="p">:</span> <span class="s1">&#39;Momma&#39;</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
-    <span class="n">idm</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">idm</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-    <span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">-%H:%M:%S&#39;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">who</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">idm</span><span class="p">]</span>
-        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
-           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
-           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">who</span> <span class="o">+</span> <span class="n">msg_valid</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
-           <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
-           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39; 不明ID </span><span class="si">{idm}</span><span class="s1"> &#39;</span><span class="o">+</span> <span class="n">msg_warn</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown ID </span><span class="si">{idm}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="c1"># pythonからスマートに音が出ないのでsubprocessに逃げた</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;mpg123&#39;</span><span class="p">,</span> <span class="n">mp3file</span><span class="p">])</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">シリアルナンバー決め打ちでUSB デバイスを探す</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="k">def</span> <span class="nf">find_reader</span><span class="p">(</span><span class="n">serial_str</span><span class="p">):</span>
-    <span class="n">dev</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">serial_number</span> <span class="o">=</span> <span class="n">serial_str</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dev</span>
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">dev</span> <span class="o">=</span> <span class="n">find_reader</span><span class="p">(</span><span class="n">usbid</span><span class="p">)</span>
-    <span class="n">usb_address</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;usb:</span><span class="si">{dev.bus:#03}</span><span class="s1">:</span><span class="si">{dev.address:#03}</span><span class="s1">&#39;</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">nfc</span><span class="o">.</span><span class="n">ContactlessFrontend</span><span class="p">(</span><span class="n">usb_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">rdwr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;on-connect&#39;</span><span class="p">:</span> <span class="n">process</span><span class="p">})</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
-<p>で，完成。↓のような感じで運用(スピーカーの裏にRaspberry piがある)</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy.jpg" width="600"></p>
-<p>Slackにはこんな感じで送られてくる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy-slack.png" width="600"></p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -170,11 +162,9 @@
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/15/nfcpy/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
