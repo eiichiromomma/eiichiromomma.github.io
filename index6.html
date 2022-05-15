@@ -51,6 +51,67 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2017/12/28/micro-capの意外な使い方/"><h3 class="article-title">Micro-CAPの意外(?)な使い方</h3></a>
+<h6 class="subheader" title="2017-12-28T19:29:00+09:00">2017-12-28(木)
+</h6>
+
+
+<p>4年次設置の電子回路CADで使っているMicro-CAPですが，他のSPICE系回路シミュレータには(たぶん)無いDynamic AC解析機能があります。
+<img alt="None" class="alignnone size-full wp-image-604" height="641" src="https://eiichiromomma.github.io/images/uploads/2017/12/78a2175f380937da70f79e81cf54fca5.png" width="661"></p>
+<p>こんな感じです。簡単に言うと電気回路理論の問題が解けます。</p>
+<p>青い四角形が複素電流で最初の数字が大きさ，カンマの後の数字が偏角です。これは相互インダクタンスの回路で下がT型等価回路へ変換した回路で，同じ枝電流になっています。で，ピンクの楕円の方が複素電圧です。グランドの位置を変えているのは節点電圧法で解いた場合の電位を出すためです。電圧と電流は直角座標系での表示も出来ます。</p>
+<ul>
+<li>電源はVoltage SourceのSineを使いAC解析の方に実効値を入れて初期位相はdegree</li>
+<li>計算が楽なのでω=1000として扱う<ul>
+<li>Lの値はインピーダンス表記から1/1000</li>
+<li>Cの値はインピーダンス表記の逆数の1/1000</li>
+<li>Analysis-Dynamic ACで出てくるダイヤログで周波数を1000/6.28</li>
+</ul>
+</li>
+<li>相互インダクタンスはAnalog Primitives-Passive ComponentsのKを使う(磁気結合)<ul>
+<li>k=M/√(L1・L2)でkを決める</li>
+</ul>
+</li>
+</ul>
+<p>という感じで演習の解答の確認にも使ってます。</p>
+<p>ちなみにMicro-CAP 11は<a href="http://www.spectrum-soft.com/demoform.shtm">評価版</a>を制限付きですが使えます。日本語のマニュアルとUIが欲しい人はCQ出版のMicro-CAP 9を買いましょう。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/講義.html">講義</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/micro-capの意外な使い方/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/12/28/librealsense/"><h3 class="article-title">macOSでRealsense</h3></a>
+<h6 class="subheader" title="2017-12-28T19:00:00+09:00">2017-12-28(木)
+</h6>
+
+
+<p>Realsense on macOS</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/realsense.html">Realsense </a>
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/pcl.html">PCL </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/librealsense/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2017/12/15/oculus/"><h3 class="article-title">Oculus</h3></a>
 <h6 class="subheader" title="2017-12-15T13:00:00+09:00">2017-12-15(金)
 </h6>
@@ -210,53 +271,6 @@
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/13/vcpkg-ninja/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/09/23/GAS/"><h3 class="article-title">Google Apps ScriptでDriveとGMail連携</h3></a>
-<h6 class="subheader" title="2017-09-23T21:00:00+09:00">2017-09-23(土)
-</h6>
-
-
-<p>GoogleDrive and GMail</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/javascript.html">Javascript </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/09/23/GAS/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/09/21/研究室見学の受付時間について2017/"><h3 class="article-title">研究室見学の受付時間について2017</h3></a>
-<h6 class="subheader" title="2017-09-21T09:07:00+09:00">2017-09-21(木)
-</h6>
-
-
-<p>仮配属の季節になりました。下記が研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。</p>
-<ul>
-<li>9/23(土) 15:30-17:00</li>
-<li>9/25(月) 15:30-17:00</li>
-<li>9/27(水) 16:00-17:30</li>
-<li>9/30(土) [16:15]{style="color: #ff0000;"}-17:00</li>
-<li>10/5(木) 15:30-17:00</li>
-<li>10/6(金) 16:30-18 …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/09/21/研究室見学の受付時間について2017/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -51,6 +51,89 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
+<h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
+</h6>
+
+
+<p>LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+gitとかの基本的なツールはあって当たり前なので省略するが</p>
+<ul>
+<li>この手順はmacOS (Monterey)</li>
+<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
+<li>docker諸々必要</li>
+<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
+</ul>
+<p>あたりが条件</p>
+<h3>doryを入れる</h3>
+<div class="highlight"><pre><span></span><code>brew install dory
+</code></pre></div>
+
+<h3>Canvasのソースを拾ってくる</h3>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms.git
+<span class="nb">cd</span> canvas-lms
+</code></pre></div>
+
+<h3>依存アプリを入れて環境構築</h3>
+<p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
+<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
+brew install mutagen-io/mutagen/mutagen-compose
+./script/docker_dev_setup.sh --mutagen
+</code></pre></div>
+
+<h3>Docker Desktopが無いと言われる</h3>
+<p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/"><h3 class="article-title">研究室への問い合わせと2020-2021の状況について</h3></a>
+<h6 class="subheader" title="2021-11-28T10:59:00+09:00">2021-11-28(日)
+</h6>
+
+
+<h2>研究室への問い合わせ</h2>
+<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
+質問受け付けは<strong>全てZoomで実施します</strong>。(Zoom URLはドライブの方に掲示)</p>
+<ul>
+<li>12/4(土) 11:00-12:00 </li>
+<li>12/6(月) 17:00-18:00 </li>
+<li>12/7(火) 12:00-13:00 </li>
+<li>時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡</li>
+</ul>
+<h2>近況</h2>
+<p>コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
+写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。</p>
+<p>緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。</p>
+<ul>
+<li>学生の研究室への登校は任意(要事前申請)</li>
+<li>連絡はコロナ禍の前からSlack …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
 <h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
 </h6>
@@ -365,78 +448,9 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/09/10/研修旅行2019/"><h3 class="article-title">研修旅行2019</h3></a>
-<h6 class="subheader" title="2019-09-10T19:56:00+09:00">2019-09-10(火)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>今年の研修旅行は日帰りで恵比須の東京都写真美術館を見た後にヱビスビール記念館に行って，夜はバーベキューでした。外で飲み食いするのもたまには良いもんです。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":760,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00473.jpg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/09/10/研修旅行2019/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/08/28/研究会部門優秀論文発表賞-表彰/"><h3 class="article-title">研究会+部門優秀論文発表賞 表彰</h3></a>
-<h6 class="subheader" title="2019-08-28T18:23:00+09:00">2019-08-28(水)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>徳島大学で開催の知覚情報/次世代産業システム合同研究会に参加してきました。研究発表に加えて昨年度 現M2の木鉛君が受賞した部門優秀論文発表賞の表彰も実施され，「非整備環境におけるセンシングとAI技術調査専門委員会」 委員長の谷口先生から表彰状を授与されました。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:gallery {"ids":[751,752]} -->
-
-<ul>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1208-1024x768.jpg" width="600"></p>
-</li>
-<li>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2019/09/IMG_1209-1024x768.jpg" width="600"></p>
-</li>
-</ul>
-<!-- /wp:gallery -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/08/28/研究会部門優秀論文発表賞-表彰/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 17</h6>
+<h6 class="subheader">Page 2 of 18</h6>
 
 <p>
             <a href="https://eiichiromomma.github.io/author/momma.html">&laquo; Prev</a>

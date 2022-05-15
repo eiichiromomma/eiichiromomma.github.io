@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Wed, 04 May 2022 19:20:00 +0900</lastBuildDate><item><title>書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</title><link>https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/</link><description>&lt;p&gt;著者の方からご献本頂いたので早速読みました。&lt;/p&gt;
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Sun, 15 May 2022 09:30:00 +0900</lastBuildDate><item><title>colour-scienceで三刺激値のプロットとか</title><link>https://eiichiromomma.github.io/2022/05/15/colour-science/</link><description>&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
+&lt;h3&gt;等色関数のプロット&lt;/h3&gt;
+&lt;h4&gt;一つだけプロットする場合&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html"&gt;colour.MSDS_CMFS&lt;/a&gt;で定義されているdictもどきの&lt;code&gt;LazyCaseInsensitiveMapping&lt;/code&gt;(後で説明)。
+ここの&lt;code&gt;Stiles &amp;amp; Burch 1955 2 Degree RGB CMFs&lt;/code&gt;とかがkeyという鬼畜で，&lt;code&gt;plot_single_cmfs&lt;/code&gt;で単にプロットしたい場合のkeyでもある。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;colour.plotting&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;cplt&lt;/span&gt;
+&lt;span class="n"&gt;cplt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot_single_cmfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Stiles &amp;amp; Burch 1955 2 Degree RGB CMFs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science.png" width="600"&gt;&lt;/p&gt;
+&lt;h4&gt;複数プロットする場合&lt;/h4&gt;
+&lt;p&gt;等色関数の名前をリストにして&lt;code&gt;plot_multi_cmfs&lt;/code&gt;に渡すだけでよい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;cmfs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Stiles &amp;amp; Burch 1959 10 Degree RGB CMFs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;CIE …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 15 May 2022 09:30:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/colour-science/</guid><category>Memo</category><category>Python</category></item><item><title>TeXでPDFに埋め込んだ数式情報の救出</title><link>https://eiichiromomma.github.io/2022/05/15/PyPDF2/</link><description>&lt;p&gt;LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。&lt;/p&gt;
+&lt;p&gt;結論から言うと TeX2imgは&lt;a href="https://github.com/py-pdf/PyPDF2"&gt;PyPDF2&lt;/a&gt;で読める。LaTeXiTは面倒過ぎて放棄。&lt;/p&gt;
+&lt;h3&gt;tex2imgの場合&lt;/h3&gt;
+&lt;p&gt;PyPDF2でPDFファイルを開いてページを取得する。
+前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;PyPDF2&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;equation.pdf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;reader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PyPDF2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PdfFileReader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getPage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;pageは&lt;code&gt;PyPDF2._page.PageObject&lt;/code&gt;だがdictと考えて良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dict_keys&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/Type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Parent&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Resources&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Contents&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/MediaBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Rotate&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Annots&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/ArtBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/BleedBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/CropBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/TrimBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;みたいな感じで，注釈として …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 15 May 2022 09:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/PyPDF2/</guid><category>Memo</category><category>TeX</category><category>Python</category></item><item><title>書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</title><link>https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/</link><description>&lt;p&gt;著者の方からご献本頂いたので早速読みました。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;技術評論社 &lt;a href="https://gihyo.jp/book/2022/978-4-297-12775-6"&gt;OpenCVではじめよう ディープラーニングによる画像認識&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;

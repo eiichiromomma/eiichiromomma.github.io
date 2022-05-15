@@ -5,36 +5,50 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/</loc>
-<lastmod>2022-05-04T22:46:27-00:00</lastmod>
+<lastmod>2022-05-15T10:59:44-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tags.html</loc>
-<lastmod>2022-05-04T22:46:27-00:00</lastmod>
+<lastmod>2022-05-15T10:59:44-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/categories.html</loc>
-<lastmod>2022-05-04T22:46:27-00:00</lastmod>
+<lastmod>2022-05-15T10:59:44-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/authors.html</loc>
-<lastmod>2022-05-04T22:46:27-00:00</lastmod>
+<lastmod>2022-05-15T10:59:44-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/archives.html</loc>
-<lastmod>2022-05-04T22:46:27-00:00</lastmod>
+<lastmod>2022-05-15T10:59:44-00:00</lastmod>
 <changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2022/05/15/colour-science/</loc>
+<lastmod>2022-05-15T09:30:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2022/05/15/PyPDF2/</loc>
+<lastmod>2022-05-15T09:20:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -1342,7 +1356,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/category/memo.html</loc>
-<lastmod>2022-05-03T19:20:00+09:19</lastmod>
+<lastmod>2022-05-15T09:30:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1383,14 +1397,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://eiichiromomma.github.io/tag/opencv.html</loc>
-<lastmod>2022-05-04T19:20:00+09:19</lastmod>
+<loc>https://eiichiromomma.github.io/tag/python.html</loc>
+<lastmod>2022-05-15T09:30:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://eiichiromomma.github.io/tag/python.html</loc>
+<loc>https://eiichiromomma.github.io/tag/tex.html</loc>
+<lastmod>2022-05-15T09:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/opencv.html</loc>
 <lastmod>2022-05-04T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -1629,7 +1650,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/author/momma.html</loc>
-<lastmod>2022-05-04T19:20:00+09:19</lastmod>
+<lastmod>2022-05-15T09:30:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+    <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
+    <title>CVMLAB Blog - TeX</title>
+
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/custom.modernizr.js"></script>
+
+    <!-- So Firefox can bookmark->"abo this site" -->
+        <link href="feeds/all.atom.xml" rel="alternate" title="CVMLAB Blog" type="application/atom+xml">
+
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
+<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
+<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
+<h3>tex2imgの場合</h3>
+<p>PyPDF2でPDFファイルを開いてページを取得する。
+前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い。</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">:</span> <span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;/Type&#39;</span><span class="p">,</span> <span class="s1">&#39;/Parent&#39;</span><span class="p">,</span> <span class="s1">&#39;/Resources&#39;</span><span class="p">,</span> <span class="s1">&#39;/Contents&#39;</span><span class="p">,</span> <span class="s1">&#39;/MediaBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/Rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;/Annots&#39;</span><span class="p">,</span> <span class="s1">&#39;/ArtBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/BleedBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/CropBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/TrimBox&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>みたいな感じで，注釈として<code>'/Annots'</code>に入ってるので，ここを掘る。</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;/Annots&#39;</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">:</span> <span class="p">[</span><span class="n">IndirectObject</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">IndirectObject</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+</code></pre></div>
+
+<p>のような感じで<code>IndirectObject</code>のリストになっているので、とりあえず先頭の要素を指定して<code>getObject</code>で取得する。</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;/Annots&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;/Popup&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;/Parent&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+  <span class="s1">&#39;/Type&#39;</span><span class="p">:</span> <span class="s1">&#39;/Annot&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;/Subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;/Popup&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;/Rect&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">64</span><span class="p">]},</span>
+ <span class="s1">&#39;/Type&#39;</span><span class="p">:</span> <span class="s1">&#39;/Annot&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/AP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;/N&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;/Filter&#39;</span><span class="p">:</span> <span class="s1">&#39;/FlateDecode&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;/Type&#39;</span><span class="p">:</span> <span class="s1">&#39;/XObject&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;/Subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;/Form&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;/FormType&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="s1">&#39;/BBox&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+   <span class="s1">&#39;/Resources&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;/ProcSet&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;/PDF&#39;</span><span class="p">]}}},</span>
+ <span class="s1">&#39;/Rect&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+ <span class="s1">&#39;/Contents&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%%</span><span class="s1">TeX2img Document</span><span class="se">\n</span><span class="si">% La</span><span class="s1">TeX compiler: platex</span><span class="se">\n</span><span class="s1">% DVI driver: dvipdfmx</span><span class="se">\n\\</span><span class="s1">documentclass[fleqn,papersize]</span><span class="si">{jsarticle}</span><span class="se">\n\\</span><span class="s1">usepackage{amsmath,amssymb}</span><span class="se">\n\\</span><span class="s1">usepackage[dvipdfmx]{graphicx,color}</span><span class="se">\n\\</span><span class="s1">pagestyle</span><span class="si">{empty}</span><span class="se">\n\\</span><span class="s1">parindent = 0pt</span><span class="se">\n\n\\</span><span class="s1">renewcommand{</span><span class="se">\\</span><span class="s1">kanjifamilydefault}{</span><span class="se">\\</span><span class="s1">gtdefault} </span><span class="se">\n</span><span class="s1">% 日本語書体をゴシック体に</span><span class="se">\n\\</span><span class="s1">renewcommand{</span><span class="se">\\</span><span class="s1">familydefault}{</span><span class="se">\\</span><span class="s1">sfdefault} </span><span class="se">\n</span><span class="s1">% 欧文書体をHelveticaに</span><span class="se">\n\\</span><span class="s1">setlength{</span><span class="se">\\</span><span class="s1">textwidth}</span><span class="si">{100mm}</span><span class="se">\n\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">複素電圧$ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1">$や複素電流$ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1">$から瞬時電圧$v$や瞬時電流$i$を求めるには$</span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} $を乗じた虚部を求めれば良い。</span><span class="se">\n\n\\</span><span class="s1">begin{eqnarray*}</span><span class="se">\n\\</span><span class="s1">mbox</span><span class="si">{複素電圧:}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1"> &amp;=&amp; V e^{j0^</span><span class="se">\\</span><span class="s1">circ} = V</span><span class="se">\\</span><span class="s1">angle 0^</span><span class="se">\\</span><span class="s1">circ = V </span><span class="se">\\</span><span class="s1">dots (4.35) </span><span class="se">\\\\\n\\</span><span class="s1">mbox</span><span class="si">{複素電流:}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1"> &amp;=&amp; I e^{j</span><span class="se">\\</span><span class="s1">theta } = I</span><span class="se">\\</span><span class="s1">angle </span><span class="se">\\</span><span class="s1">theta = I (</span><span class="se">\\</span><span class="s1">cos </span><span class="se">\\</span><span class="s1">theta + j</span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">theta) </span><span class="se">\\</span><span class="s1">dots (4.36) </span><span class="se">\n\\</span><span class="s1">end{eqnarray*}</span><span class="se">\n</span><span class="s1">とすると</span><span class="se">\n\\</span><span class="s1">begin{eqnarray*}</span><span class="se">\n</span><span class="s1">v(t) &amp;=&amp; </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">times </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} ] =  </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> V e^{j </span><span class="se">\\</span><span class="s1">omega t}] </span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">Im[ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">V (</span><span class="se">\\</span><span class="s1">cos </span><span class="se">\\</span><span class="s1">omega t + j </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t ) ]</span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">V </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t = V_m </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t</span><span class="se">\\\\\n</span><span class="s1">i(t) &amp;=&amp; </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">times </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} ] =  </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> I e^{j </span><span class="se">\\</span><span class="s1">theta}  e^{j </span><span class="se">\\</span><span class="s1">omega t}]  = </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> I e^{j ( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta)}] </span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">Im[ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">I </span><span class="se">\\</span><span class="s1">{ (</span><span class="se">\\</span><span class="s1">cos ( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) + j </span><span class="se">\\</span><span class="s1">sin( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) </span><span class="se">\\</span><span class="s1">} ] </span><span class="se">\\\\\n</span><span class="s1"> &amp; =&amp;  </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">I </span><span class="se">\\</span><span class="s1">sin (</span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) = I_m </span><span class="se">\\</span><span class="s1">sin ( </span><span class="se">\\</span><span class="s1">omega t+ </span><span class="se">\\</span><span class="s1">theta)</span><span class="se">\n\\</span><span class="s1">end{eqnarray*}</span><span class="se">\n\\</span><span class="s1">end</span><span class="si">{document}</span><span class="s1">&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/F&#39;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+ <span class="s1">&#39;/Subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;/Text&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+<p>と、これもdictで<code>'/Contents'</code>に対象がある。</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;/Annots&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">()[</span><span class="s1">&#39;/Contents&#39;</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%%</span><span class="s1">TeX2img Document</span><span class="se">\n</span><span class="si">% La</span><span class="s1">TeX compiler: platex</span><span class="se">\n</span><span class="s1">% DVI driver: dvipdfmx</span><span class="se">\n\\</span><span class="s1">documentclass[fleqn,papersize]</span><span class="si">{jsarticle}</span><span class="se">\n\\</span><span class="s1">usepackage{amsmath,amssymb}</span><span class="se">\n\\</span><span class="s1">usepackage[dvipdfmx]{graphicx,color}</span><span class="se">\n\\</span><span class="s1">pagestyle</span><span class="si">{empty}</span><span class="se">\n\\</span><span class="s1">parindent = 0pt</span><span class="se">\n\n\\</span><span class="s1">renewcommand{</span><span class="se">\\</span><span class="s1">kanjifamilydefault}{</span><span class="se">\\</span><span class="s1">gtdefault} </span><span class="se">\n</span><span class="s1">% 日本語書体をゴシック体に</span><span class="se">\n\\</span><span class="s1">renewcommand{</span><span class="se">\\</span><span class="s1">familydefault}{</span><span class="se">\\</span><span class="s1">sfdefault} </span><span class="se">\n</span><span class="s1">% 欧文書体をHelveticaに</span><span class="se">\n\\</span><span class="s1">setlength{</span><span class="se">\\</span><span class="s1">textwidth}</span><span class="si">{100mm}</span><span class="se">\n\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">複素電圧$ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1">$や複素電流$ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1">$から瞬時電圧$v$や瞬時電流$i$を求めるには$</span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} $を乗じた虚部を求めれば良い。</span><span class="se">\n\n\\</span><span class="s1">begin{eqnarray*}</span><span class="se">\n\\</span><span class="s1">mbox</span><span class="si">{複素電圧:}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1"> &amp;=&amp; V e^{j0^</span><span class="se">\\</span><span class="s1">circ} = V</span><span class="se">\\</span><span class="s1">angle 0^</span><span class="se">\\</span><span class="s1">circ = V </span><span class="se">\\</span><span class="s1">dots (4.35) </span><span class="se">\\\\\n\\</span><span class="s1">mbox</span><span class="si">{複素電流:}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1"> &amp;=&amp; I e^{j</span><span class="se">\\</span><span class="s1">theta } = I</span><span class="se">\\</span><span class="s1">angle </span><span class="se">\\</span><span class="s1">theta = I (</span><span class="se">\\</span><span class="s1">cos </span><span class="se">\\</span><span class="s1">theta + j</span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">theta) </span><span class="se">\\</span><span class="s1">dots (4.36) </span><span class="se">\n\\</span><span class="s1">end{eqnarray*}</span><span class="se">\n</span><span class="s1">とすると</span><span class="se">\n\\</span><span class="s1">begin{eqnarray*}</span><span class="se">\n</span><span class="s1">v(t) &amp;=&amp; </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{V}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">times </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} ] =  </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> V e^{j </span><span class="se">\\</span><span class="s1">omega t}] </span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">Im[ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">V (</span><span class="se">\\</span><span class="s1">cos </span><span class="se">\\</span><span class="s1">omega t + j </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t ) ]</span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">V </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t = V_m </span><span class="se">\\</span><span class="s1">sin </span><span class="se">\\</span><span class="s1">omega t</span><span class="se">\\\\\n</span><span class="s1">i(t) &amp;=&amp; </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">dot</span><span class="si">{I}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">times </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> e^{j</span><span class="se">\\</span><span class="s1">omega t} ] =  </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> I e^{j </span><span class="se">\\</span><span class="s1">theta}  e^{j </span><span class="se">\\</span><span class="s1">omega t}]  = </span><span class="se">\\</span><span class="s1">Im [ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1"> I e^{j ( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta)}] </span><span class="se">\\\\\n</span><span class="s1">&amp; = &amp; </span><span class="se">\\</span><span class="s1">Im[ </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">I </span><span class="se">\\</span><span class="s1">{ (</span><span class="se">\\</span><span class="s1">cos ( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) + j </span><span class="se">\\</span><span class="s1">sin( </span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) </span><span class="se">\\</span><span class="s1">} ] </span><span class="se">\\\\\n</span><span class="s1"> &amp; =&amp;  </span><span class="se">\\</span><span class="s1">sqrt</span><span class="si">{2}</span><span class="s1">I </span><span class="se">\\</span><span class="s1">sin (</span><span class="se">\\</span><span class="s1">omega t + </span><span class="se">\\</span><span class="s1">theta) = I_m </span><span class="se">\\</span><span class="s1">sin ( </span><span class="se">\\</span><span class="s1">omega t+ </span><span class="se">\\</span><span class="s1">theta)</span><span class="se">\n\\</span><span class="s1">end{eqnarray*}</span><span class="se">\n\\</span><span class="s1">end</span><span class="si">{document}</span><span class="s1">&#39;</span>
+</code></pre></div>
+
+<p>で拾えた。</p>
+<div class="highlight"><pre><span></span><code>In : print(page[&#39;/Annots&#39;][0].getObject()[&#39;/Contents&#39;])
+<span class="c">%%TeX2img Document</span>
+<span class="c">% LaTeX compiler: platex</span>
+<span class="c">% DVI driver: dvipdfmx</span>
+<span class="k">\documentclass</span><span class="na">[fleqn,papersize]</span><span class="nb">{</span>jsarticle<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>amsmath,amssymb<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[dvipdfmx]</span><span class="nb">{</span>graphicx,color<span class="nb">}</span>
+<span class="k">\pagestyle</span><span class="nb">{</span>empty<span class="nb">}</span>
+<span class="k">\parindent</span> = 0pt
+
+<span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\kanjifamilydefault</span><span class="nb">}{</span><span class="k">\gtdefault</span><span class="nb">}</span>
+<span class="c">% 日本語書体をゴシック体に</span>
+<span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\familydefault</span><span class="nb">}{</span><span class="k">\sfdefault</span><span class="nb">}</span>
+<span class="c">% 欧文書体をHelveticaに</span>
+<span class="k">\setlength</span><span class="nb">{</span><span class="k">\textwidth</span><span class="nb">}{</span>100mm<span class="nb">}</span>
+
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+複素電圧<span class="s">$</span><span class="nb"> </span><span class="nv">\dot</span><span class="nb">{V}</span><span class="s">$</span>や複素電流<span class="s">$</span><span class="nb"> </span><span class="nv">\dot</span><span class="nb">{I}</span><span class="s">$</span>から瞬時電圧<span class="s">$</span><span class="nb">v</span><span class="s">$</span>や瞬時電流<span class="s">$</span><span class="nb">i</span><span class="s">$</span>を求めるには<span class="s">$</span><span class="nv">\sqrt</span><span class="nb">{</span><span class="m">2</span><span class="nb">} e^{j</span><span class="nv">\omega</span><span class="nb"> t} </span><span class="s">$</span>を乗じた虚部を求めれば良い。
+
+<span class="k">\begin</span><span class="nb">{</span>eqnarray*<span class="nb">}</span>
+<span class="k">\mbox</span><span class="nb">{</span>複素電圧:<span class="nb">}</span> <span class="k">\dot</span><span class="nb">{</span>V<span class="nb">}</span> <span class="nb">&amp;</span>=<span class="nb">&amp;</span> V e<span class="nb">^{</span>j0<span class="nb">^</span><span class="k">\circ</span><span class="nb">}</span> = V<span class="k">\angle</span> 0<span class="nb">^</span><span class="k">\circ</span> = V <span class="k">\dots</span> (4.35) <span class="k">\\</span>
+<span class="k">\mbox</span><span class="nb">{</span>複素電流:<span class="nb">}</span> <span class="k">\dot</span><span class="nb">{</span>I<span class="nb">}</span> <span class="nb">&amp;</span>=<span class="nb">&amp;</span> I e<span class="nb">^{</span>j<span class="k">\theta</span> <span class="nb">}</span> = I<span class="k">\angle</span> <span class="k">\theta</span> = I (<span class="k">\cos</span> <span class="k">\theta</span> + j<span class="k">\sin</span> <span class="k">\theta</span>) <span class="k">\dots</span> (4.36)
+<span class="k">\end</span><span class="nb">{</span>eqnarray*<span class="nb">}</span>
+とすると
+<span class="k">\begin</span><span class="nb">{</span>eqnarray*<span class="nb">}</span>
+v(t) <span class="nb">&amp;</span>=<span class="nb">&amp;</span> <span class="k">\Im</span> [ <span class="k">\dot</span><span class="nb">{</span>V<span class="nb">}</span> <span class="k">\times</span> <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span> e<span class="nb">^{</span>j<span class="k">\omega</span> t<span class="nb">}</span> ] =  <span class="k">\Im</span> [ <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span> V e<span class="nb">^{</span>j <span class="k">\omega</span> t<span class="nb">}</span>] <span class="k">\\</span>
+<span class="nb">&amp;</span> = <span class="nb">&amp;</span> <span class="k">\Im</span><span class="na">[ \sqrt{2}V (\cos \omega t + j \sin \omega t ) ]</span><span class="k">\\</span>
+<span class="nb">&amp;</span> = <span class="nb">&amp;</span> <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span>V <span class="k">\sin</span> <span class="k">\omega</span> t = V<span class="nb">_</span>m <span class="k">\sin</span> <span class="k">\omega</span> t<span class="k">\\</span>
+i(t) <span class="nb">&amp;</span>=<span class="nb">&amp;</span> <span class="k">\Im</span> [ <span class="k">\dot</span><span class="nb">{</span>I<span class="nb">}</span> <span class="k">\times</span> <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span> e<span class="nb">^{</span>j<span class="k">\omega</span> t<span class="nb">}</span> ] =  <span class="k">\Im</span> [ <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span> I e<span class="nb">^{</span>j <span class="k">\theta</span><span class="nb">}</span>  e<span class="nb">^{</span>j <span class="k">\omega</span> t<span class="nb">}</span>]  = <span class="k">\Im</span> [ <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span> I e<span class="nb">^{</span>j ( <span class="k">\omega</span> t + <span class="k">\theta</span>)<span class="nb">}</span>] <span class="k">\\</span>
+<span class="nb">&amp;</span> = <span class="nb">&amp;</span> <span class="k">\Im</span><span class="na">[ \sqrt{2}I \{ (\cos ( \omega t + \theta) + j \sin( \omega t + \theta) \} ]</span> <span class="k">\\</span>
+ <span class="nb">&amp;</span> =<span class="nb">&amp;</span>  <span class="k">\sqrt</span><span class="nb">{</span>2<span class="nb">}</span>I <span class="k">\sin</span> (<span class="k">\omega</span> t + <span class="k">\theta</span>) = I<span class="nb">_</span>m <span class="k">\sin</span> ( <span class="k">\omega</span> t+ <span class="k">\theta</span>)
+<span class="k">\end</span><span class="nb">{</span>eqnarray*<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</code></pre></div>
+
+<h3>LaTeXiTの場合</h3>
+<p>pdfminerみたいなパッケージでTextだけ拾うなら簡単。埋め込んだTeXソースについては，エンコード済み埋め込みデータとして存在しているので，データを拾ってエンコードして，という感じになりそうだが面倒過ぎて放棄。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+            </article>
+
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
+
+<p>
+
+</p>
+</div>
+
+
+
+            <!-- /#posts-list -->
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+
+
+                <li><a href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+                <p>CVMLAB Blog by eiichiromomma</p>
+            </div>
+            </div>
+    </div>
+</footer>
