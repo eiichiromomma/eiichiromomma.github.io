@@ -143,7 +143,15 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science3.png" width="600"&gt;&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category></entry><entry><title>TeXでPDFに埋め込んだ数式情報の救出</title><link href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/" rel="alternate"></link><published>2022-05-15T09:20:00+09:00</published><updated>2022-05-15T09:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/PyPDF2/</id><summary type="html">&lt;p&gt;LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science3.png" width="600"&gt;&lt;/p&gt;
+&lt;h4&gt;&lt;code&gt;numpy_print_options&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;試行錯誤してたら&lt;code&gt;numpy_print_options&lt;/code&gt;というものがあるらしく&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;colour.utilities&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;numpy_print_options&lt;/span&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;numpy_print_options&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cmf&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で，表示だけできるのは分かったが特に便利な何かという訳ではない。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category></entry><entry><title>TeXでPDFに埋め込んだ数式情報の救出</title><link href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/" rel="alternate"></link><published>2022-05-15T09:20:00+09:00</published><updated>2022-05-15T09:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/PyPDF2/</id><summary type="html">&lt;p&gt;LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。&lt;/p&gt;
 &lt;p&gt;結論から言うと TeX2imgは&lt;a href="https://github.com/py-pdf/PyPDF2"&gt;PyPDF2&lt;/a&gt;で読める。LaTeXiTは面倒過ぎて放棄。&lt;/p&gt;
 &lt;h3&gt;tex2imgの場合&lt;/h3&gt;
 &lt;p&gt;PyPDF2でPDFファイルを開いてページを取得する。
