@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all-ja.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-15T09:30:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>colour-scienceで三刺激値のプロットとか</title><link href="https://eiichiromomma.github.io/2022/05/15/colour-science/" rel="alternate"></link><published>2022-05-15T09:30:00+09:00</published><updated>2022-05-15T09:30:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/colour-science/</id><summary type="html">&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all-ja.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-21T08:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
+&lt;h3&gt;Android&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオの関数電卓。作りようが無いといえばそうなのだが，下のとほぼ同じ感じもする。Androidのアプリはよくわからない。&lt;/p&gt;
+&lt;p&gt;ENG表示の設定が可能で，SI接頭辞表示モードがあるのは便利。(3000→3kみたいな感じ)&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=scientific.calculator.es991.es115.es300&amp;amp;hl=ja&amp;amp;gl=US"&gt;数学計算機991、300プラス&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。メニューのアイコンとか設定のレイアウトも上のアプリとほぼ同じでどういう関係かはよく分からない。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=com.hiedu.calculator580pro"&gt;HiEdu Calculator He-580 Pro&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。Proじゃない版もあるのだが，こちらの環境だと表示が崩れる。190円なので常用するなら買っても良い。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;iOS&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://apps.apple.com/au/app/ncalc-scientific-calculator/id1449106995?l=ja&amp;amp;platform=iphone"&gt;NCalc Scientific Calculator+&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;キーボードデザインについてはfx-991esとかCASIOを名指しで指定しているだけあってよく似ている。
+ENG表示とSI接頭辞表示モードがあり便利。
+370円払わないとゾーニング無しの何でもありな動く広告が出る。macOS版もある。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;探すポイント&lt;/h3&gt;
+&lt;p&gt;現在市場にある関数電卓としてはCASIO, TI, HP(RPN), SHARPあたり。以下がそれらのポイント。&lt;/p&gt;
+&lt;h4&gt;CASIOっぽさ&lt;/h4&gt;
+&lt;p&gt;最近のHPの廉価版，CANONの関数電卓はCASIOと同じファームウェアを使っているように思える&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S←→Dキー …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
+&lt;h3&gt;Android&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオの関数電卓。作りようが無いといえばそうなのだが，下のとほぼ同じ感じもする。Androidのアプリはよくわからない。&lt;/p&gt;
+&lt;p&gt;ENG表示の設定が可能で，SI接頭辞表示モードがあるのは便利。(3000→3kみたいな感じ)&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=scientific.calculator.es991.es115.es300&amp;amp;hl=ja&amp;amp;gl=US"&gt;数学計算機991、300プラス&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。メニューのアイコンとか設定のレイアウトも上のアプリとほぼ同じでどういう関係かはよく分からない。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=com.hiedu.calculator580pro"&gt;HiEdu Calculator He-580 Pro&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。Proじゃない版もあるのだが，こちらの環境だと表示が崩れる。190円なので常用するなら買っても良い。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;iOS&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://apps.apple.com/au/app/ncalc-scientific-calculator/id1449106995?l=ja&amp;amp;platform=iphone"&gt;NCalc Scientific Calculator+&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;キーボードデザインについてはfx-991esとかCASIOを名指しで指定しているだけあってよく似ている。
+ENG表示とSI接頭辞表示モードがあり便利。
+370円払わないとゾーニング無しの何でもありな動く広告が出る。macOS版もある。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;探すポイント&lt;/h3&gt;
+&lt;p&gt;現在市場にある関数電卓としてはCASIO, TI, HP(RPN), SHARPあたり。以下がそれらのポイント。&lt;/p&gt;
+&lt;h4&gt;CASIOっぽさ&lt;/h4&gt;
+&lt;p&gt;最近のHPの廉価版，CANONの関数電卓はCASIOと同じファームウェアを使っているように思える&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S←→Dキー(CANONはF←→Dキー)がある&lt;/li&gt;
+&lt;li&gt;SHIFT, ALPHAキーがある&lt;/li&gt;
+&lt;li&gt;991, 115, 300なんとかという名前&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;TIっぽさ&lt;/h4&gt;
+&lt;p&gt;ガワの下が丸みを帯びているのも特徴。
+だいたいTI-84かTI-89Tiを意識したデザイン。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「何とか84」「何とか89」という名称&lt;/li&gt;
+&lt;li&gt;2nd, ALPHAキー(SHARPも)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;HP(RPN)っぽさ&lt;/h4&gt;
+&lt;p&gt;HP Prime以外はあまり売る気が無さそう(HP300+はマニュアルのリンクすら間違えてる)。個人的にはHP-35sとかHP-48gといったRPN電卓の方が複素数の演算も使い易いがまたそれは別の機会に。何もわからず使おうとすると本当に何もできないので調べてから使いましょう。あとRPNでも複素数を楽に使える機種は少ない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enterというデカいキーがある&lt;/li&gt;
+&lt;li&gt;f, gキーまたはオレンジ，水色キー&lt;/li&gt;
+&lt;li&gt;11, 12, 15, 16, 42, 48あたりが名前に入る&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;SHARPっぽさ&lt;/h4&gt;
+&lt;p&gt;一時期SHARP製も配られたことがあった。カーソルがデカいのも特徴。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;D1, D2みたいなカスタムキー&lt;/li&gt;
+&lt;li&gt;3の下に(-)キー&lt;/li&gt;
+&lt;li&gt;▶DRG(角度単位の変更)&lt;/li&gt;
+&lt;li&gt;2nd, ALPHAキー(TIも)&lt;/li&gt;
+&lt;/ul&gt;</content><category term="講義"></category><category term="iOS"></category><category term="Android"></category></entry><entry><title>colour-scienceで三刺激値のプロットとか</title><link href="https://eiichiromomma.github.io/2022/05/15/colour-science/" rel="alternate"></link><published>2022-05-15T09:30:00+09:00</published><updated>2022-05-15T09:30:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/colour-science/</id><summary type="html">&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
 &lt;h3&gt;等色関数のプロット&lt;/h3&gt;
 &lt;h4&gt;一つだけプロットする場合&lt;/h4&gt;
 &lt;p&gt;&lt;a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html"&gt;colour.MSDS_CMFS&lt;/a&gt;で定義されているdictもどきの&lt;code&gt;LazyCaseInsensitiveMapping&lt;/code&gt;(後で説明)。

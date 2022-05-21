@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - 講義</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/%E8%AC%9B%E7%BE%A9.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2019-02-12T17:45:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>授業アンケート結果(電気回路I及び演習)</title><link href="https://eiichiromomma.github.io/2019/02/12/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E7%B5%90%E6%9E%9C%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92/" rel="alternate"></link><published>2019-02-12T17:45:00+09:00</published><updated>2019-02-12T17:45:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2019-02-12:/2019/02/12/授業アンケート結果電気回路i及び演習/</id><content type="html">&lt;!-- wp:paragraph --&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - 講義</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/%E8%AC%9B%E7%BE%A9.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-21T08:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
+&lt;h3&gt;Android&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオの関数電卓。作りようが無いといえばそうなのだが，下のとほぼ同じ感じもする。Androidのアプリはよくわからない。&lt;/p&gt;
+&lt;p&gt;ENG表示の設定が可能で，SI接頭辞表示モードがあるのは便利。(3000→3kみたいな感じ)&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=scientific.calculator.es991.es115.es300&amp;amp;hl=ja&amp;amp;gl=US"&gt;数学計算機991、300プラス&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。メニューのアイコンとか設定のレイアウトも上のアプリとほぼ同じでどういう関係かはよく分からない。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=com.hiedu.calculator580pro"&gt;HiEdu Calculator He-580 Pro&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。Proじゃない版もあるのだが，こちらの環境だと表示が崩れる。190円なので常用するなら買っても良い。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;iOS&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://apps.apple.com/au/app/ncalc-scientific-calculator/id1449106995?l=ja&amp;amp;platform=iphone"&gt;NCalc Scientific Calculator+&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;キーボードデザインについてはfx-991esとかCASIOを名指しで指定しているだけあってよく似ている。
+ENG表示とSI接頭辞表示モードがあり便利。
+370円払わないとゾーニング無しの何でもありな動く広告が出る。macOS版もある。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;探すポイント&lt;/h3&gt;
+&lt;p&gt;現在市場にある関数電卓としてはCASIO, TI, HP(RPN), SHARPあたり。以下がそれらのポイント。&lt;/p&gt;
+&lt;h4&gt;CASIOっぽさ&lt;/h4&gt;
+&lt;p&gt;最近のHPの廉価版，CANONの関数電卓はCASIOと同じファームウェアを使っているように思える&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S←→Dキー …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
+&lt;h3&gt;Android&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオの関数電卓。作りようが無いといえばそうなのだが，下のとほぼ同じ感じもする。Androidのアプリはよくわからない。&lt;/p&gt;
+&lt;p&gt;ENG表示の設定が可能で，SI接頭辞表示モードがあるのは便利。(3000→3kみたいな感じ)&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=scientific.calculator.es991.es115.es300&amp;amp;hl=ja&amp;amp;gl=US"&gt;数学計算機991、300プラス&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。メニューのアイコンとか設定のレイアウトも上のアプリとほぼ同じでどういう関係かはよく分からない。&lt;/p&gt;
+&lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=com.hiedu.calculator580pro"&gt;HiEdu Calculator He-580 Pro&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;ほぼカシオ。Proじゃない版もあるのだが，こちらの環境だと表示が崩れる。190円なので常用するなら買っても良い。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;iOS&lt;/h3&gt;
+&lt;h4&gt;&lt;a href="https://apps.apple.com/au/app/ncalc-scientific-calculator/id1449106995?l=ja&amp;amp;platform=iphone"&gt;NCalc Scientific Calculator+&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;キーボードデザインについてはfx-991esとかCASIOを名指しで指定しているだけあってよく似ている。
+ENG表示とSI接頭辞表示モードがあり便利。
+370円払わないとゾーニング無しの何でもありな動く広告が出る。macOS版もある。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;探すポイント&lt;/h3&gt;
+&lt;p&gt;現在市場にある関数電卓としてはCASIO, TI, HP(RPN), SHARPあたり。以下がそれらのポイント。&lt;/p&gt;
+&lt;h4&gt;CASIOっぽさ&lt;/h4&gt;
+&lt;p&gt;最近のHPの廉価版，CANONの関数電卓はCASIOと同じファームウェアを使っているように思える&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S←→Dキー(CANONはF←→Dキー)がある&lt;/li&gt;
+&lt;li&gt;SHIFT, ALPHAキーがある&lt;/li&gt;
+&lt;li&gt;991, 115, 300なんとかという名前&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;TIっぽさ&lt;/h4&gt;
+&lt;p&gt;ガワの下が丸みを帯びているのも特徴。
+だいたいTI-84かTI-89Tiを意識したデザイン。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「何とか84」「何とか89」という名称&lt;/li&gt;
+&lt;li&gt;2nd, ALPHAキー(SHARPも)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;HP(RPN)っぽさ&lt;/h4&gt;
+&lt;p&gt;HP Prime以外はあまり売る気が無さそう(HP300+はマニュアルのリンクすら間違えてる)。個人的にはHP-35sとかHP-48gといったRPN電卓の方が複素数の演算も使い易いがまたそれは別の機会に。何もわからず使おうとすると本当に何もできないので調べてから使いましょう。あとRPNでも複素数を楽に使える機種は少ない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enterというデカいキーがある&lt;/li&gt;
+&lt;li&gt;f, gキーまたはオレンジ，水色キー&lt;/li&gt;
+&lt;li&gt;11, 12, 15, 16, 42, 48あたりが名前に入る&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;SHARPっぽさ&lt;/h4&gt;
+&lt;p&gt;一時期SHARP製も配られたことがあった。カーソルがデカいのも特徴。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;D1, D2みたいなカスタムキー&lt;/li&gt;
+&lt;li&gt;3の下に(-)キー&lt;/li&gt;
+&lt;li&gt;▶DRG(角度単位の変更)&lt;/li&gt;
+&lt;li&gt;2nd, ALPHAキー(TIも)&lt;/li&gt;
+&lt;/ul&gt;</content><category term="講義"></category><category term="iOS"></category><category term="Android"></category></entry><entry><title>授業アンケート結果(電気回路I及び演習)</title><link href="https://eiichiromomma.github.io/2019/02/12/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E7%B5%90%E6%9E%9C%E9%9B%BB%E6%B0%97%E5%9B%9E%E8%B7%AFi%E5%8F%8A%E3%81%B3%E6%BC%94%E7%BF%92/" rel="alternate"></link><published>2019-02-12T17:45:00+09:00</published><updated>2019-02-12T17:45:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2019-02-12:/2019/02/12/授業アンケート結果電気回路i及び演習/</id><content type="html">&lt;!-- wp:paragraph --&gt;
 
 &lt;p&gt;データの加工が割と面倒なのでここ数年サボっていましたが，下図のような集計となりました．今年は諸事情によりABクラス1部屋で160名でしたのでうるさくならないか心配でしたが大丈夫でした．&lt;/p&gt;
 &lt;!-- /wp:paragraph --&gt;
