@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Sat, 21 May 2022 08:20:00 +0900</lastBuildDate><item><title>CASIOっぽい関数電卓アプリ</title><link>https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/</link><description>&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Wed, 25 May 2022 22:00:00 +0900</lastBuildDate><item><title>M1 MacでWindowsアプリを使う</title><link>https://eiichiromomma.github.io/2022/05/25/WineskinServer/</link><description>&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
+&lt;p&gt;WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;WineskinServerで動作確認したソフト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;WineskinServerの導入&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Homebrewでインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install --no-quarantine gcenx/wine/unofficial-wineskin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Wineskin Wineryがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 25 May 2022 22:00:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2022-05-25:/2022/05/25/WineskinServer/</guid><category>Memo</category><category>Windows</category><category>M1 mac</category><category>Micro-CAP</category><category>LTspice</category><category>Wine</category><category>WineskinServer</category></item><item><title>CASIOっぽい関数電卓アプリ</title><link>https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/</link><description>&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
 カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
 &lt;h3&gt;Android&lt;/h3&gt;
 &lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+    <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
+    <title>CVMLAB Blog - Windows</title>
+
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/custom.modernizr.js"></script>
+
+    <!-- So Firefox can bookmark->"abo this site" -->
+        <link href="feeds/all.atom.xml" rel="alternate" title="CVMLAB Blog" type="application/atom+xml">
+
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
+<h6 class="subheader" title="2022-05-25T22:00:00+09:00">2022-05-25(水)
+</h6>
+
+
+<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Gcenx/WineskinServer">WineskinServer</a>が使いやすかった。
+講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。</p>
+<p>WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
+<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
+<h3>WineskinServerで動作確認したソフト</h3>
+<ul>
+<li><a href="http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10</a></li>
+<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい)</li>
+<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
+</ul>
+<h3>WineskinServerの導入</h3>
+<ol>
+<li>Homebrewでインストール</li>
+</ol>
+<div class="highlight"><pre><span></span><code>brew install --no-quarantine gcenx/wine/unofficial-wineskin
+</code></pre></div>
+
+<ol>
+<li>Wineskin Wineryがアプリケーションにあるので起動</li>
+<li>"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
+<li>Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする</li>
+</ol>
+<p>これで本体の導入は終わり。</p>
+<h3>Wrapperの作成</h3>
+<p>WineskinServerはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。</p>
+<ol>
+<li>Wineskin Wineryを起動</li>
+<li>"Create New Blank Wrapper"を選ぶ</li>
+<li>Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
+<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Wineskin"フォルダがあるのでそれを開く</li>
+<li>3で指定した名前のアプリを開く(アイコンはWineskinという茶色いもの)</li>
+<li>"Advanced"を選ぶ</li>
+<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
+<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
+<li>" Winetricks Commands Finished!!"と出たらClose</li>
+<li>左下の"Install Software"を選ぶ</li>
+<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)</li>
+<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
+</ol>
+<p>6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリがあるのでそれを実行する。</p>
+<h3>字が小さい</h3>
+<p>WineskinのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。</p>
+<h3>アプリ(Wineskin Wrapper)を消したい</h3>
+<p>システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
+<h3>アイコンを変えたい場合</h3>
+<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
+    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
+    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
+    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
+    <a href="https://eiichiromomma.github.io/tag/wineskinserver.html">WineskinServer </a>
+</p>
+
+
+
+            </article>
+
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
+
+<p>
+
+</p>
+</div>
+
+
+
+            <!-- /#posts-list -->
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+
+
+                <li><a href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+                <p>CVMLAB Blog by eiichiromomma</p>
+            </div>
+            </div>
+    </div>
+</footer>

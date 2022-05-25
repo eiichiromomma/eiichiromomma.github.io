@@ -51,6 +51,45 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
+<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
+</h6>
+
+
+<p>WordpressからPelicanへの移行メモ</p>
+<h2>前置き</h2>
+<ul>
+<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
+<li>本体は持ち運び可能なNUC</li>
+<li>IPは固定のグローバル</li>
+</ul>
+<h2>サーバが起動してるうちにバックアップ</h2>
+<h3>IPの取得をDHCPに</h3>
+<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
+ifconfigなりip addressでIPアドレスを調べておく。</p>
+<h3>嘘吐きサーバと嘘吐きクライアント</h3>
+<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
+<ol>
+<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
+<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
+</ol>
+<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
+<h3>xmlをエクスポート</h3>
+<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
+あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2017/12/28/librealsense/"><h3 class="article-title">macOSでRealsense</h3></a>
 <h6 class="subheader" title="2017-12-28T19:00:00+09:00">2017-12-28(木)
 </h6>
@@ -241,27 +280,6 @@
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/04/01/nano/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/03/31/excelna/"><h3 class="article-title">NA (Excel)</h3></a>
-<h6 class="subheader" title="2017-03-31T23:00:00+09:00">2017-03-31(金)
-</h6>
-
-
-<p>Excel NA()</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/excel.html">Excel </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/03/31/excelna/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

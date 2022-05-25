@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-21T08:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-25T22:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>M1 MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/" rel="alternate"></link><published>2022-05-25T22:00:00+09:00</published><updated>2022-05-25T22:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-25:/2022/05/25/WineskinServer/</id><summary type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
+&lt;p&gt;WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;WineskinServerで動作確認したソフト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;WineskinServerの導入&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Homebrewでインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install --no-quarantine gcenx/wine/unofficial-wineskin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Wineskin Wineryがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
+&lt;p&gt;WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;WineskinServerで動作確認したソフト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;WineskinServerの導入&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Homebrewでインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install --no-quarantine gcenx/wine/unofficial-wineskin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Wineskin Wineryがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;これで本体の導入は終わり。&lt;/p&gt;
+&lt;h3&gt;Wrapperの作成&lt;/h3&gt;
+&lt;p&gt;WineskinServerはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Wineskin Wineryを起動&lt;/li&gt;
+&lt;li&gt;"Create New Blank Wrapper"を選ぶ&lt;/li&gt;
+&lt;li&gt;Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)&lt;/li&gt;
+&lt;li&gt;暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Wineskin"フォルダがあるのでそれを開く&lt;/li&gt;
+&lt;li&gt;3で指定した名前のアプリを開く(アイコンはWineskinという茶色いもの)&lt;/li&gt;
+&lt;li&gt;"Advanced"を選ぶ&lt;/li&gt;
+&lt;li&gt;"Tools"タブを選び"Winetricks"ボタンを押す&lt;/li&gt;
+&lt;li&gt;Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ&lt;/li&gt;
+&lt;li&gt;" Winetricks Commands Finished!!"と出たらClose&lt;/li&gt;
+&lt;li&gt;左下の"Install Software"を選ぶ&lt;/li&gt;
+&lt;li&gt;インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)&lt;/li&gt;
+&lt;li&gt;最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリがあるのでそれを実行する。&lt;/p&gt;
+&lt;h3&gt;字が小さい&lt;/h3&gt;
+&lt;p&gt;WineskinのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。&lt;/p&gt;
+&lt;h3&gt;アプリ(Wineskin Wrapper)を消したい&lt;/h3&gt;
+&lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
+&lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="WineskinServer"></category></entry><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
 カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
 &lt;h3&gt;Android&lt;/h3&gt;
 &lt;h4&gt;&lt;a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;amp;hl=ja&amp;amp;gl=US"&gt;Scientific calculator plus advanced 991 calc&lt;/a&gt;&lt;/h4&gt;
