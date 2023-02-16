@@ -50,67 +50,74 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
-<h6 class="subheader" title="2022-05-25T22:00:00+09:00">2022-05-25(水)
+                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
+<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
 </h6>
 
 
-<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Gcenx/WineskinServer">WineskinServer</a>が使いやすかった。
-講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。</p>
-<p>WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
-デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
-容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
-<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
-<h3>WineskinServerで動作確認したソフト</h3>
-<ul>
-<li><a href="http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10</a></li>
-<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい)</li>
-<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
-</ul>
-<h3>WineskinServerの導入</h3>
-<ol>
-<li>Homebrewでインストール</li>
-</ol>
-<div class="highlight"><pre><span></span><code>brew install --no-quarantine gcenx/wine/unofficial-wineskin
+<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
+<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプラットフォームでの実行ファイル生成はできない。(開発は可能)</p>
+<p>GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に<code>cv2.imshow</code>が使えたりする。</p>
+<p>(余談だが<a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo">Python.Netのデモ</a>がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)</p>
+<p>手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで</p>
+<div class="highlight"><pre><span></span><code>python setup.py build
 </code></pre></div>
 
-<ol>
-<li>Wineskin Wineryがアプリケーションにあるので起動</li>
-<li>"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
-<li>Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする</li>
-</ol>
-<p>これで本体の導入は終わり。</p>
-<h3>Wrapperの作成</h3>
-<p>WineskinServerはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。</p>
-<ol>
-<li>Wineskin Wineryを起動</li>
-<li>"Create New Blank Wrapper"を選ぶ</li>
-<li>Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
-<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Wineskin"フォルダがあるのでそれを開く</li>
-<li>3で指定した名前のアプリを開く(アイコンはWineskinという茶色いもの)</li>
-<li>"Advanced"を選ぶ</li>
-<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
-<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
-<li>" Winetricks Commands Finished!!"と出たらClose</li>
-<li>左下の"Install Software"を選ぶ</li>
-<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)</li>
-<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
-</ol>
-<p>6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリがあるのでそれを実行する。</p>
-<h3>字が小さい</h3>
-<p>WineskinのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。</p>
-<h3>アプリ(Wineskin Wrapper)を消したい</h3>
-<p>システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
-<h3>アイコンを変えたい場合</h3>
-<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>または</p>
+<div class="highlight"><pre><span></span><code>python setup.py bdist_mac
+</code></pre></div>
+
+<p>とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。</p>
+<p>必要なファイルについては結構優秀で自動的に依存関係からコピーしてくれるのだが，逆に言えば依存関係の解析に失敗すれば全コケする。.pydのようなバイナリ化してるパッケージについては対応できてないようなので，pythonでスクリプトを走らせたときは動くのに，exe化したときには動かない，という現象が発生するうえに，printでデバッグできないので検証が面倒。
+(importでSystemErrorを起こしてexeでだけ動かないプログラムも↓の方法で確認したらnumpyが無いと言われてたので，<code>import numpy</code>をそのパッケージの前にimportしたら動いた)</p>
+<h3>エラーの収集</h3>
+<p>.exeにするとprintデバッグができないがstdoutとstderrをファイルに振ってしまえば行けるだろうと思ったら<a href="https://pc.atsuhiro-me.net/entry/2014/07/27/211623">既に先人が居た</a>ので有り難く使わせて貰う。</p>
+<p>具体的には</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">LogFrozen</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">initstdout</span><span class="p">():</span>
+    <span class="n">localdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">localdir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">localdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;frozen&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="c1"># frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">LogFrozen</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># not frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+<span class="n">initstdout</span><span class="p">()</span>
+<span class="c1"># この後に怪しいimportを書く</span>
+</code></pre></div>
+
+<p>をスクリプトに入れておけばホームフォルダ(Windowsならc:\Users\username，macOSなら/Users/username)にlog.txtファイルで出力される。場所を変えたかったら<code>localdir = os.path.expanduser("~/")</code>のところの"~/"を適当に変える(チルダはホームフォルダの意味)</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
-    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
-    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
-    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
-    <a href="https://eiichiromomma.github.io/tag/wineskinserver.html">WineskinServer </a>
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
 </p>
 
 
@@ -125,34 +132,62 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/"><h3 class="article-title">Windows11 Edu.でのローカルID</h3></a>
+<h6 class="subheader" title="2023-02-15T19:20:00+09:00">2023-02-15(水)
+</h6>
+
+
+<h3>初見殺しのWindows11</h3>
+<p>Windows11は初期セットアップではMicrosoft Accountがないと無理矢理作らされるが，その後はネット切断してから「設定」でアカウント追加を実行すればローカルアカウントが作れる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
+<h6 class="subheader" title="2022-05-25T22:00:00+09:00">2022-05-25(水)
+</h6>
+
+
+<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Gcenx/WineskinServer">WineskinServer</a>が使いやすかった。
+講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
+    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
+    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
+    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
+    <a href="https://eiichiromomma.github.io/tag/wineskinserver.html">WineskinServer </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/"><h3 class="article-title">CASIOっぽい関数電卓アプリ</h3></a>
 <h6 class="subheader" title="2022-05-21T08:20:00+09:00">2022-05-21(土)
 </h6>
 
 
 <p>大学配布のCASIOの関数電卓を模擬したものを探してみた。
-カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。</p>
-<h3>Android</h3>
-<h4><a href="https://play.google.com/store/apps/details?id=advanced.scientific.calculator.calc991.plus&amp;hl=ja&amp;gl=US">Scientific calculator plus advanced 991 calc</a></h4>
-<p>ほぼカシオの関数電卓。作りようが無いといえばそうなのだが，下のとほぼ同じ感じもする。Androidのアプリはよくわからない。</p>
-<p>ENG表示の設定が可能で，SI接頭辞表示モードがあるのは便利。(3000→3kみたいな感じ)</p>
-<h4><a href="https://play.google.com/store/apps/details?id=scientific.calculator.es991.es115.es300&amp;hl=ja&amp;gl=US">数学計算機991、300プラス</a></h4>
-<p>ほぼカシオ。メニューのアイコンとか設定のレイアウトも上のアプリとほぼ同じでどういう関係かはよく分からない。</p>
-<h4><a href="https://play.google.com/store/apps/details?id=com.hiedu.calculator580pro">HiEdu Calculator He-580 Pro</a></h4>
-<p>ほぼカシオ。Proじゃない版もあるのだが，こちらの環境だと表示が崩れる。190円なので常用するなら買っても良い。</p>
-<hr>
-<h3>iOS</h3>
-<h4><a href="https://apps.apple.com/au/app/ncalc-scientific-calculator/id1449106995?l=ja&amp;platform=iphone">NCalc Scientific Calculator+</a></h4>
-<p>キーボードデザインについてはfx-991esとかCASIOを名指しで指定しているだけあってよく似ている。
-ENG表示とSI接頭辞表示モードがあり便利。
-370円払わないとゾーニング無しの何でもありな動く広告が出る。macOS版もある。</p>
-<hr>
-<h3>探すポイント</h3>
-<p>現在市場にある関数電卓としてはCASIO, TI, HP(RPN), SHARPあたり。以下がそれらのポイント。</p>
-<h4>CASIOっぽさ</h4>
-<p>最近のHPの廉価版，CANONの関数電卓はCASIOと同じファームウェアを使っているように思える</p>
-<ul>
-<li>S←→Dキー …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/講義.html">講義</a>
+カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備してお …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/講義.html">講義</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/ios.html">iOS </a>
@@ -177,16 +212,7 @@ ENG表示とSI接頭辞表示モードがあり便利。
 <p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
 <h3>等色関数のプロット</h3>
 <h4>一つだけプロットする場合</h4>
-<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されているdictもどきの<code>LazyCaseInsensitiveMapping</code>(後で説明)。
-ここの<code>Stiles &amp; Burch 1955 2 Degree RGB CMFs</code>とかがkeyという鬼畜で，<code>plot_single_cmfs</code>で単にプロットしたい場合のkeyでもある。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">colour.plotting</span> <span class="k">as</span> <span class="nn">cplt</span>
-<span class="n">cplt</span><span class="o">.</span><span class="n">plot_single_cmfs</span><span class="p">(</span><span class="s1">&#39;Stiles &amp; Burch 1955 2 Degree RGB CMFs&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science.png" width="600"></p>
-<h4>複数プロットする場合</h4>
-<p>等色関数の名前をリストにして<code>plot_multi_cmfs</code>に渡すだけでよい。</p>
-<div class="highlight"><pre><span></span><code><span class="n">cmfs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Stiles &amp; Burch 1959 10 Degree RGB CMFs&#39;</span><span class="p">,</span> <span class="s1">&#39;CIE …</span></code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されて …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -218,12 +244,7 @@ ENG表示とSI接頭辞表示モードがあり便利。
 <span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 
-<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い。</p>
-<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">Out</span><span class="p">:</span> <span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;/Type&#39;</span><span class="p">,</span> <span class="s1">&#39;/Parent&#39;</span><span class="p">,</span> <span class="s1">&#39;/Resources&#39;</span><span class="p">,</span> <span class="s1">&#39;/Contents&#39;</span><span class="p">,</span> <span class="s1">&#39;/MediaBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/Rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;/Annots&#39;</span><span class="p">,</span> <span class="s1">&#39;/ArtBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/BleedBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/CropBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/TrimBox&#39;</span><span class="p">])</span>
-</code></pre></div>
-
-<p>みたいな感じで，注釈として …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
@@ -250,9 +271,7 @@ ENG表示とSI接頭辞表示モードがあり便利。
 <li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
 </ul>
 <p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
-<p>情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
-案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。</p>
-<p>サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+<p>情報の取捨選択 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
@@ -277,27 +296,7 @@ ENG表示とSI接頭辞表示モードがあり便利。
 
 <p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
 <p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
-<p>結論としてはざっくり2択</p>
-<ul>
-<li>Pythonが使えてMarkdownが好きなら<a href="https://github.com/gpoore/text2qti">text2qti</a>でMarkdownからQTIに変換</li>
-<li>php7が使える環境なら<a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a>と<a href="https://github.com/csev/gift2qti">gift2qti</a>でGIFTからQTIに変換</li>
-</ul>
-<hr>
-<h3>Markdown から QTI</h3>
-<h4><a href="https://github.com/gpoore/text2qti">text2qti</a> (要Python, 動作確認済み)</h4>
-<p>配布元のページのサンプルを見れば書き方は直ぐに分かる。</p>
-<p>上記のより<a href="https://github.com/molpopgen/md2Canvas">発展的な使い方</a>(Github, bitbucket連携)</p>
-<hr>
-<h3>GIFT FormatからQTI</h3>
-<p>MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
-GIFT FormatをCanvasで利用するには</p>
-<ul>
-<li>gift2qtiで変換してインポート</li>
-<li>GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート</li>
-</ul>
-<p>の手段しかない。
-既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。</p>
-<h4><a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a> (要VS Code …</h4><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>結論とし …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
@@ -321,23 +320,7 @@ GIFT FormatをCanvasで利用するには</p>
 
 
 <p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
-<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。</p>
-<div class="highlight"><pre><span></span><code>$ cat /etc/issue
-Debian GNU/Linux <span class="m">11</span> <span class="se">\n</span> <span class="se">\l</span>
-</code></pre></div>
-
-<p>ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。</p>
-<h3>確認作業</h3>
-<p>ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。</p>
-<div class="highlight"><pre><span></span><code>locale -a
-</code></pre></div>
-
-<p>とやって<code>ja_JP.utf-8</code>が存在していれば作業不要。</p>
-<h3>日本語化</h3>
-<p>以下をコピペする</p>
-<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
-sudo locale-gen
-sudo apt update<span class="p">;</span> sudo …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>機能的にはエデ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -361,27 +344,7 @@ sudo apt update<span class="p">;</span> sudo …</code></pre></div><p class="sub
 </h6>
 
 
-<p>コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
-使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。</p>
-<ol>
-<li>特定のiSerialNumberのUSB機器を探す</li>
-<li>機器のUSB busとaddressを取得して接続</li>
-<li>数秒おきにNFCリーダーの入力待機</li>
-<li>NFCリーダーで学生証のIDを読む</li>
-<li>音を鳴らす</li>
-<li>予め用意したdictに従ってID-&gt;人名変換をする</li>
-<li>Slackにメッセージを投げる</li>
-<li>3に戻る</li>
-</ol>
-<p>と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。</p>
-<p>一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">usb</span>
-<span class="n">devs</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_all</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">idVendor</span><span class="o">=</span><span class="mh">0x054c</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-</code></pre></div>
-
-<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録の …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -392,68 +355,6 @@ sudo apt update<span class="p">;</span> sudo …</code></pre></div><p class="sub
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/15/nfcpy/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/09/moorebot-scout/"><h3 class="article-title">Moorebot Scout</h3></a>
-<h6 class="subheader" title="2022-04-09T09:20:00+09:00">2022-04-09(土)
-</h6>
-
-
-<p>KickstarterでROSも使える面白そうな<a href="https://www.moorebot.com/pages/moorebot-scout">自律走行ロボット Moorebot Scout</a>が出ていたのでバッカーになってました。
-去年6月に発送予定ということで去年の卒研にも使おうと思っていたところで半導体・部材の世界的不足に巻き込まれ，半年くらい遅れて届いた3体。まともに触るタイミングがまるで無かったのですが新年度ということでファームウェアアップデート。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220409-MoorebotScout.jpg" width="600"></p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/ros.html">ROS </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/09/moorebot-scout/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/08/classroom/"><h3 class="article-title">Classroomから受講者名簿の生成</h3></a>
-<h6 class="subheader" title="2022-04-08T20:20:00+09:00">2022-04-08(金)
-</h6>
-
-
-<p>長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。</p>
-<p>Classroom APIで情報取得する際はページ単位(30個/ページ がデフォルト)で持って来ようとするので，ページあたりのデータ数を増やしてもっと寄越せと指定しても仕様で「いっぱいくれと言われてもあげないよ」と書かれており，</p>
-<ol>
-<li>取得(pageToken(今どこまで読んだか)も返される)</li>
-<li>読んだデータを別バッファにpush</li>
-<li>貰ったpageTokenを示しつつ取得</li>
-<li>pageTokenがnullになるまで繰り返し</li>
-</ol>
-<p>という処理になる。
-↓は手を抜いていて実際には</p>
-<div class="highlight"><pre><span></span><code>  <span class="kd">var</span> <span class="nx">cList</span> <span class="o">=</span> <span class="nx">Classroom</span><span class="p">.</span><span class="nx">Courses</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
-</code></pre></div>
-
-<p>だと30個までしかコースは取得できないのだが30個以上コース持つことは無いだろうということでそのまま。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// 一覧を抽出するコース名 (Classroom)上の名前</span>
-  <span class="kd">var</span> <span class="nx">courseName</span> <span class="o">=</span> <span class="s1">&#39;画像処理&#39;</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">cList</span> <span class="o">=</span> <span class="nx">Classroom</span><span class="p">.</span><span class="nx">Courses …</span></code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/classroom.html">Classroom </a>
-    <a href="https://eiichiromomma.github.io/tag/gas.html">GAS </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/08/classroom/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

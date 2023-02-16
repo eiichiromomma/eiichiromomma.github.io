@@ -50,20 +50,74 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/"><h3 class="article-title">macOSでOpenCL</h3></a>
-<h6 class="subheader" title="2017-07-03T22:00:00+09:00">2017-07-03(月)
+                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
+<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
 </h6>
 
 
-<h1>macOSでOpenCLを頑張ってみた</h1>
-<p>折角Radeonを搭載しているiMacもあるのでOpenCLでDeep Learningのframeworkが動かないかと弄ってみた。</p>
-<p><a href="https://github.com/arrayfire/arrayfire">Arrayfire</a>とか<a href="https://github.com/BVLC/caffe/tree/opencl">CaffeのOpenCLブランチ</a>とか<a href="https://github.com/hughperkins/cltorch">cltorch</a>とか<a href="https://github.com/pyopencl/pyopencl">PyOpenCL</a>とか色々と試してみて、ArrayfireやPyOpenCLは一応GPU使って動いてる感までは得られた。</p>
-<p>が、OpenCL自体が遅くCPUより処理が遅い。おまけにArrayfireは何かやらかすとmacOSごと調子悪くなる(要再起動)。つらい</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
+<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプラットフォームでの実行ファイル生成はできない。(開発は可能)</p>
+<p>GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に<code>cv2.imshow</code>が使えたりする。</p>
+<p>(余談だが<a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo">Python.Netのデモ</a>がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)</p>
+<p>手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで</p>
+<div class="highlight"><pre><span></span><code>python setup.py build
+</code></pre></div>
+
+<p>または</p>
+<div class="highlight"><pre><span></span><code>python setup.py bdist_mac
+</code></pre></div>
+
+<p>とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。</p>
+<p>必要なファイルについては結構優秀で自動的に依存関係からコピーしてくれるのだが，逆に言えば依存関係の解析に失敗すれば全コケする。.pydのようなバイナリ化してるパッケージについては対応できてないようなので，pythonでスクリプトを走らせたときは動くのに，exe化したときには動かない，という現象が発生するうえに，printでデバッグできないので検証が面倒。
+(importでSystemErrorを起こしてexeでだけ動かないプログラムも↓の方法で確認したらnumpyが無いと言われてたので，<code>import numpy</code>をそのパッケージの前にimportしたら動いた)</p>
+<h3>エラーの収集</h3>
+<p>.exeにするとprintデバッグができないがstdoutとstderrをファイルに振ってしまえば行けるだろうと思ったら<a href="https://pc.atsuhiro-me.net/entry/2014/07/27/211623">既に先人が居た</a>ので有り難く使わせて貰う。</p>
+<p>具体的には</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">LogFrozen</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">initstdout</span><span class="p">():</span>
+    <span class="n">localdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">localdir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">localdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;frozen&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="c1"># frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">LogFrozen</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># not frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+<span class="n">initstdout</span><span class="p">()</span>
+<span class="c1"># この後に怪しいimportを書く</span>
+</code></pre></div>
+
+<p>をスクリプトに入れておけばホームフォルダ(Windowsならc:\Users\username，macOSなら/Users/username)にlog.txtファイルで出力される。場所を変えたかったら<code>localdir = os.path.expanduser("~/")</code>のところの"~/"を適当に変える(チルダはホームフォルダの意味)</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
     <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
-    <a href="https://eiichiromomma.github.io/tag/opencl.html">OpenCL </a>
-    <a href="https://eiichiromomma.github.io/tag/torch.html">Torch </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
 </p>
 
 
@@ -73,6 +127,29 @@
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/"><h3 class="article-title">macOSでOpenCL</h3></a>
+<h6 class="subheader" title="2017-07-03T22:00:00+09:00">2017-07-03(月)
+</h6>
+
+
+<p>macOSでOpenCL</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
+    <a href="https://eiichiromomma.github.io/tag/opencl.html">OpenCL </a>
+    <a href="https://eiichiromomma.github.io/tag/torch.html">Torch </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 

@@ -132,9 +132,9 @@
     <span class="k">except</span><span class="p">:</span>
         <span class="n">data</span>  <span class="o">=</span> <span class="p">{</span>
            <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">CHANNEL</span><span class="p">,</span>
-           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39; 不明ID </span><span class="si">{idm}</span><span class="s1"> &#39;</span><span class="o">+</span> <span class="n">msg_warn</span><span class="p">,</span>
+           <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">dt_now</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39; 不明ID </span><span class="si">{</span><span class="n">idm</span><span class="si">}</span><span class="s1"> &#39;</span><span class="o">+</span> <span class="n">msg_warn</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown ID </span><span class="si">{idm}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown ID </span><span class="si">{</span><span class="n">idm</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
     <span class="c1"># pythonからスマートに音が出ないのでsubprocessに逃げた</span>
     <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;mpg123&#39;</span><span class="p">,</span> <span class="n">mp3file</span><span class="p">])</span>
@@ -148,7 +148,7 @@
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">dev</span> <span class="o">=</span> <span class="n">find_reader</span><span class="p">(</span><span class="n">usbid</span><span class="p">)</span>
-    <span class="n">usb_address</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;usb:</span><span class="si">{dev.bus:#03}</span><span class="s1">:</span><span class="si">{dev.address:#03}</span><span class="s1">&#39;</span>
+    <span class="n">usb_address</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;usb:</span><span class="si">{</span><span class="n">dev</span><span class="o">.</span><span class="n">bus</span><span class="si">:</span><span class="s1">#03</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">dev</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s1">#03</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">nfc</span><span class="o">.</span><span class="n">ContactlessFrontend</span><span class="p">(</span><span class="n">usb_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>

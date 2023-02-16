@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2022-05-25T22:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>M1 MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/" rel="alternate"></link><published>2022-05-25T22:00:00+09:00</published><updated>2022-05-25T22:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-25:/2022/05/25/WineskinServer/</id><summary type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
-講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
-&lt;p&gt;WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
-デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
-容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
-&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
-&lt;h3&gt;WineskinServerで動作確認したソフト&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;WineskinServerの導入&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;Homebrewでインストール&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install --no-quarantine gcenx/wine/unofficial-wineskin
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - Memo</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/memo.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-02-16T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>cx_FreezeでPythonからexeファイル生成</title><link href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/" rel="alternate"></link><published>2023-02-16T19:20:00+09:00</published><updated>2023-02-16T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-02-16:/2023/02/16/cx_Freeze/</id><summary type="html">&lt;p&gt;Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，&lt;a href="https://github.com/marcelotduarte/cx_Freeze"&gt;cx_Freeze&lt;/a&gt;はその一つ。&lt;/p&gt;
+&lt;p&gt;Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，&lt;a href="https://github.com/marcelotduarte/cx_Freeze"&gt;cx_Freeze&lt;/a&gt;はその一つ。&lt;/p&gt;
+&lt;p&gt;Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプラットフォームでの実行ファイル生成はできない。(開発は可能)&lt;/p&gt;
+&lt;p&gt;GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に&lt;code&gt;cv2.imshow&lt;/code&gt;が使えたりする。&lt;/p&gt;
+&lt;p&gt;(余談だが&lt;a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo"&gt;Python.Netのデモ&lt;/a&gt;がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)&lt;/p&gt;
+&lt;p&gt;手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python setup.py build
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Wineskin Wineryがアプリケーションにあるので起動&lt;/li&gt;
-&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
-&lt;li&gt;Wrapper Versionのところで …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
+&lt;p&gt;または&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python setup.py bdist_mac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。&lt;/p&gt;
+&lt;p&gt;必要なファイルについては結構優秀で自動的に依存関係からコピーしてくれるのだが，逆に言えば依存関係の解析に失敗すれば全コケする。.pydのようなバイナリ化してるパッケージについては対応できてないようなので，pythonでスクリプトを走らせたときは動くのに，exe化したときには動かない，という現象が発生するうえに，printでデバッグできないので検証が面倒。
+(importでSystemErrorを起こしてexeでだけ動かないプログラムも↓の方法で確認したらnumpyが無いと言われてたので，&lt;code&gt;import numpy&lt;/code&gt;をそのパッケージの前にimportしたら動いた)&lt;/p&gt;
+&lt;h3&gt;エラーの収集&lt;/h3&gt;
+&lt;p&gt;.exeにするとprintデバッグができないがstdoutとstderrをファイルに振ってしまえば行けるだろうと思ったら&lt;a href="https://pc.atsuhiro-me.net/entry/2014/07/27/211623"&gt;既に先人が居た&lt;/a&gt;ので有り難く使わせて貰う。&lt;/p&gt;
+&lt;p&gt;具体的には&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;log.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mm&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mm&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mm&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;LogFrozen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;log.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mm&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mm&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initstdout&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;localdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expanduser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localdir&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localdir&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;frozen&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="c1"&gt;# frozen&lt;/span&gt;
+        &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LogFrozen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localdir&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;log.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="c1"&gt;# not frozen&lt;/span&gt;
+        &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localdir&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;log.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt;
+&lt;span class="n"&gt;initstdout&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c1"&gt;# この後に怪しいimportを書く&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;をスクリプトに入れておけばホームフォルダ(Windowsならc:\Users\username，macOSなら/Users/username)にlog.txtファイルで出力される。場所を変えたかったら&lt;code&gt;localdir = os.path.expanduser("~/")&lt;/code&gt;のところの"~/"を適当に変える(チルダはホームフォルダの意味)&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="macOS"></category><category term="Python"></category><category term="cx_Freeze"></category></entry><entry><title>Windows11 Edu.でのローカルID</title><link href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/" rel="alternate"></link><published>2023-02-15T19:20:00+09:00</published><updated>2023-02-15T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-02-15:/2023/02/15/Windows11LocalAccount/</id><summary type="html">&lt;h3&gt;初見殺しのWindows11&lt;/h3&gt;
+&lt;p&gt;Windows11は初期セットアップではMicrosoft Accountがないと無理矢理作らされるが，その後はネット切断してから「設定」でアカウント追加を実行すればローカルアカウントが作れる …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;初見殺しのWindows11&lt;/h3&gt;
+&lt;p&gt;Windows11は初期セットアップではMicrosoft Accountがないと無理矢理作らされるが，その後はネット切断してから「設定」でアカウント追加を実行すればローカルアカウントが作れる。&lt;/p&gt;
+&lt;p&gt;が、Education含めたエンタープライズ系の場合ログイン画面で一旦AD認証(職場・大学)になってしまうと，起動したときにE-Mailアドレスとパスワードの入力しか受け付けない状態でローカルアカウントでログインできなくなるように振る舞う。&lt;/p&gt;
+&lt;p&gt;解決方法はE-Mailアドレスを入れろと書かれているところに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;.\
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のあとに続けてローカルアカウントIDを入れる。この".\"(ピリオド+リバーススラッシュまたはピリオド+円マーク(半角))はローカル領域という意味になるらしい。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category></entry><entry><title>M1 MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/" rel="alternate"></link><published>2022-05-25T22:00:00+09:00</published><updated>2022-05-25T22:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-25:/2022/05/25/WineskinServer/</id><summary type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Gcenx/WineskinServer"&gt;WineskinServer&lt;/a&gt;が使いやすかった。
 講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
 &lt;p&gt;WineskinServerは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
 デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
@@ -71,16 +117,7 @@
 &lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="WineskinServer"></category></entry><entry><title>colour-scienceで三刺激値のプロットとか</title><link href="https://eiichiromomma.github.io/2022/05/15/colour-science/" rel="alternate"></link><published>2022-05-15T09:30:00+09:00</published><updated>2022-05-15T09:30:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-15:/2022/05/15/colour-science/</id><summary type="html">&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
 &lt;h3&gt;等色関数のプロット&lt;/h3&gt;
 &lt;h4&gt;一つだけプロットする場合&lt;/h4&gt;
-&lt;p&gt;&lt;a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html"&gt;colour.MSDS_CMFS&lt;/a&gt;で定義されているdictもどきの&lt;code&gt;LazyCaseInsensitiveMapping&lt;/code&gt;(後で説明)。
-ここの&lt;code&gt;Stiles &amp;amp; Burch 1955 2 Degree RGB CMFs&lt;/code&gt;とかがkeyという鬼畜で，&lt;code&gt;plot_single_cmfs&lt;/code&gt;で単にプロットしたい場合のkeyでもある。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;colour.plotting&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;cplt&lt;/span&gt;
-&lt;span class="n"&gt;cplt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot_single_cmfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Stiles &amp;amp; Burch 1955 2 Degree RGB CMFs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science.png" width="600"&gt;&lt;/p&gt;
-&lt;h4&gt;複数プロットする場合&lt;/h4&gt;
-&lt;p&gt;等色関数の名前をリストにして&lt;code&gt;plot_multi_cmfs&lt;/code&gt;に渡すだけでよい。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;cmfs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Stiles &amp;amp; Burch 1959 10 Degree RGB CMFs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;CIE …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html"&gt;colour.MSDS_CMFS&lt;/a&gt;で定義されて …&lt;/p&gt;</summary><content type="html">&lt;p&gt;色彩工学・光学関係で便利そうな&lt;a href="https://www.colour-science.org/"&gt;colour-science&lt;/a&gt;なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。&lt;/p&gt;
 &lt;h3&gt;等色関数のプロット&lt;/h3&gt;
 &lt;h4&gt;一つだけプロットする場合&lt;/h4&gt;
 &lt;p&gt;&lt;a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html"&gt;colour.MSDS_CMFS&lt;/a&gt;で定義されているdictもどきの&lt;code&gt;LazyCaseInsensitiveMapping&lt;/code&gt;(後で説明)。
@@ -121,7 +158,7 @@
 &lt;p&gt;なので，&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;cfms&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;colour&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MSDS_CMFS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Stiles &amp;amp; Burch 1955 2 Degree RGB CMFs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;wl&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cfms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="si"&gt;{wl}&lt;/span&gt;&lt;span class="s1"&gt;: &lt;/span&gt;&lt;span class="si"&gt;{cfms[wl]}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;wl&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;cfms&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;wl&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で&lt;/p&gt;
@@ -231,12 +268,7 @@
 &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getPage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;pageは&lt;code&gt;PyPDF2._page.PageObject&lt;/code&gt;だがdictと考えて良い。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dict_keys&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/Type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Parent&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Resources&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Contents&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/MediaBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Rotate&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/Annots&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/ArtBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/BleedBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/CropBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/TrimBox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;みたいな感じで，注釈として …&lt;/p&gt;</summary><content type="html">&lt;p&gt;LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。&lt;/p&gt;
+&lt;p&gt;pageは&lt;code&gt;PyPDF2._page.PageObject&lt;/code&gt;だがdictと考えて良い …&lt;/p&gt;</summary><content type="html">&lt;p&gt;LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。&lt;/p&gt;
 &lt;p&gt;結論から言うと TeX2imgは&lt;a href="https://github.com/py-pdf/PyPDF2"&gt;PyPDF2&lt;/a&gt;で読める。LaTeXiTは面倒過ぎて放棄。&lt;/p&gt;
 &lt;h3&gt;tex2imgの場合&lt;/h3&gt;
 &lt;p&gt;PyPDF2でPDFファイルを開いてページを取得する。
@@ -321,27 +353,7 @@ i(t) &lt;span class="nb"&gt;&amp;amp;&lt;/span&gt;=&lt;span class="nb"&gt;&amp;a
 &lt;h3&gt;LaTeXiTの場合&lt;/h3&gt;
 &lt;p&gt;pdfminerみたいなパッケージでTextだけ拾うなら簡単。埋め込んだTeXソースについては，エンコード済み埋め込みデータとして存在しているので，データを拾ってエンコードして，という感じになりそうだが面倒過ぎて放棄。&lt;/p&gt;</content><category term="Memo"></category><category term="TeX"></category><category term="Python"></category></entry><entry><title>Canvas用のQuiz作成ツール</title><link href="https://eiichiromomma.github.io/2022/05/03/text2qti/" rel="alternate"></link><published>2022-05-03T19:20:00+09:00</published><updated>2022-05-03T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-03:/2022/05/03/text2qti/</id><summary type="html">&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
 &lt;p&gt;Quizの簡単な記述法としてはMoodleでのテキスト記述の&lt;a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88"&gt;GIFT Format&lt;/a&gt;があるが，Canvasでは工夫しないと使えない。&lt;/p&gt;
-&lt;p&gt;結論としてはざっくり2択&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pythonが使えてMarkdownが好きなら&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt;でMarkdownからQTIに変換&lt;/li&gt;
-&lt;li&gt;php7が使える環境なら&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt;と&lt;a href="https://github.com/csev/gift2qti"&gt;gift2qti&lt;/a&gt;でGIFTからQTIに変換&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3&gt;Markdown から QTI&lt;/h3&gt;
-&lt;h4&gt;&lt;a href="https://github.com/gpoore/text2qti"&gt;text2qti&lt;/a&gt; (要Python, 動作確認済み)&lt;/h4&gt;
-&lt;p&gt;配布元のページのサンプルを見れば書き方は直ぐに分かる。&lt;/p&gt;
-&lt;p&gt;上記のより&lt;a href="https://github.com/molpopgen/md2Canvas"&gt;発展的な使い方&lt;/a&gt;(Github, bitbucket連携)&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3&gt;GIFT FormatからQTI&lt;/h3&gt;
-&lt;p&gt;MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
-GIFT FormatをCanvasで利用するには&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;gift2qtiで変換してインポート&lt;/li&gt;
-&lt;li&gt;GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;の手段しかない。
-既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。&lt;/p&gt;
-&lt;h4&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;amp;ssr=false#overview"&gt;GIFT Format拡張機能&lt;/a&gt; (要VS Code …&lt;/h4&gt;</summary><content type="html">&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
+&lt;p&gt;結論とし …&lt;/p&gt;</summary><content type="html">&lt;p&gt;色々試した結果&lt;a href="https://en.wikipedia.org/wiki/QTI"&gt;QTI形式&lt;/a&gt;だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。&lt;/p&gt;
 &lt;p&gt;Quizの簡単な記述法としてはMoodleでのテキスト記述の&lt;a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88"&gt;GIFT Format&lt;/a&gt;があるが，Canvasでは工夫しないと使えない。&lt;/p&gt;
 &lt;p&gt;結論としてはざっくり2択&lt;/p&gt;
 &lt;ul&gt;
@@ -393,23 +405,7 @@ git clone https://github.com/csev/gift2qti.git
 &lt;li&gt;&lt;a href="https://github.com/nenad/CSV2QTI"&gt;CSV2QTI&lt;/a&gt; CSVから変換(Python)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://canconvert.k-state.edu/qti/"&gt;Kansas State Universityのcsv2qti&lt;/a&gt; CSVから変換 &lt;/li&gt;
 &lt;/ul&gt;</content><category term="Memo"></category><category term="Canvas"></category><category term="Python"></category><category term="Markdown"></category></entry><entry><title>Google Cloud Shellの日本語化(gcc込み)</title><link href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/" rel="alternate"></link><published>2022-04-20T21:20:00+09:00</published><updated>2022-04-20T21:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-20:/2022/04/20/CloudShellEditor/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
-&lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
-Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。&lt;/p&gt;
-&lt;h3&gt;確認作業&lt;/h3&gt;
-&lt;p&gt;ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;locale -a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;とやって&lt;code&gt;ja_JP.utf-8&lt;/code&gt;が存在していれば作業不要。&lt;/p&gt;
-&lt;h3&gt;日本語化&lt;/h3&gt;
-&lt;p&gt;以下をコピペする&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
-sudo locale-gen
-sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
+&lt;p&gt;機能的にはエデ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。&lt;/p&gt;
 &lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat /etc/issue
 Debian GNU/Linux &lt;span class="m"&gt;11&lt;/span&gt; &lt;span class="se"&gt;\n&lt;/span&gt; &lt;span class="se"&gt;\l&lt;/span&gt;
@@ -457,27 +453,7 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 &lt;p&gt;シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;export LANG=ja_JP.utf-8&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
 &lt;span class="nb"&gt;source&lt;/span&gt; ~/.profile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Raspberry-pi+Slackで入退室管理</title><link href="https://eiichiromomma.github.io/2022/04/15/nfcpy/" rel="alternate"></link><published>2022-04-15T19:20:00+09:00</published><updated>2022-04-15T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-15:/2022/04/15/nfcpy/</id><summary type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
-使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;特定のiSerialNumberのUSB機器を探す&lt;/li&gt;
-&lt;li&gt;機器のUSB busとaddressを取得して接続&lt;/li&gt;
-&lt;li&gt;数秒おきにNFCリーダーの入力待機&lt;/li&gt;
-&lt;li&gt;NFCリーダーで学生証のIDを読む&lt;/li&gt;
-&lt;li&gt;音を鳴らす&lt;/li&gt;
-&lt;li&gt;予め用意したdictに従ってID-&amp;gt;人名変換をする&lt;/li&gt;
-&lt;li&gt;Slackにメッセージを投げる&lt;/li&gt;
-&lt;li&gt;3に戻る&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。&lt;/p&gt;
-&lt;p&gt;一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;usb&lt;/span&gt;
-&lt;span class="n"&gt;devs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;find_all&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idVendor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;0x054c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;devs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …&lt;/p&gt;</summary><content type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Raspberry-pi+Slackで入退室管理</title><link href="https://eiichiromomma.github.io/2022/04/15/nfcpy/" rel="alternate"></link><published>2022-04-15T19:20:00+09:00</published><updated>2022-04-15T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-15:/2022/04/15/nfcpy/</id><summary type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録の …&lt;/p&gt;</summary><content type="html">&lt;p&gt;コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
 使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;特定のiSerialNumberのUSB機器を探す&lt;/li&gt;
@@ -553,9 +529,9 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
     &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="n"&gt;data&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
            &lt;span class="s1"&gt;&amp;#39;channel&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;CHANNEL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-           &lt;span class="s1"&gt;&amp;#39;text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dt_now&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; 不明ID &lt;/span&gt;&lt;span class="si"&gt;{idm}&lt;/span&gt;&lt;span class="s1"&gt; &amp;#39;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;msg_warn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+           &lt;span class="s1"&gt;&amp;#39;text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dt_now&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; 不明ID &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;idm&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt; &amp;#39;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;msg_warn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Unknown ID &lt;/span&gt;&lt;span class="si"&gt;{idm}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Unknown ID &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;idm&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="c1"&gt;# pythonからスマートに音が出ないのでsubprocessに逃げた&lt;/span&gt;
     &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mpg123&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mp3file&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
@@ -569,7 +545,7 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;find_reader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;usbid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;usb_address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;usb:&lt;/span&gt;&lt;span class="si"&gt;{dev.bus:#03}&lt;/span&gt;&lt;span class="s1"&gt;:&lt;/span&gt;&lt;span class="si"&gt;{dev.address:#03}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;usb_address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;usb:&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bus&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;#03&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;:&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;#03&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
     &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;nfc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ContactlessFrontend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;usb_address&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;cf&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -582,7 +558,7 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 &lt;p&gt;で，完成。↓のような感じで運用(スピーカーの裏にRaspberry piがある)&lt;/p&gt;
 &lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy.jpg" width="600"&gt;&lt;/p&gt;
 &lt;p&gt;Slackにはこんな感じで送られてくる。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy-slack.png" width="600"&gt;&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Slack"></category><category term="Raspberry-pi"></category></entry><entry><title>Classroomから受講者名簿の生成</title><link href="https://eiichiromomma.github.io/2022/04/08/classroom/" rel="alternate"></link><published>2022-04-08T20:20:00+09:00</published><updated>2022-04-08T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-08:/2022/04/08/classroom/</id><summary type="html">&lt;p&gt;長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220415-nfcpy-slack.png" width="600"&gt;&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Slack"></category><category term="Raspberry-pi"></category></entry><entry><title>Classroomから受講者名簿の生成</title><link href="https://eiichiromomma.github.io/2022/04/08/classroom/" rel="alternate"></link><published>2022-04-08T20:20:00+09:00</published><updated>2022-04-08T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-04-08:/2022/04/08/classroom/</id><summary type="html">&lt;p&gt;長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。&lt;/p&gt;
 &lt;p&gt;Classroom APIで情報取得する際はページ単位(30個/ページ がデフォルト)で持って来ようとするので，ページあたりのデータ数を増やしてもっと寄越せと指定しても仕様で「いっぱいくれと言われてもあげないよ」と書かれており，&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;取得(pageToken(今どこまで読んだか)も返される)&lt;/li&gt;
@@ -592,59 +568,42 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 &lt;/ol&gt;
 &lt;p&gt;という処理になる。
 ↓は手を抜いていて実際には&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;cList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cList&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;だと30個までしかコースは取得できないのだが30個以上コース持つことは無いだろうということでそのまま。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;myFunction&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// 一覧を抽出するコース名 (Classroom)上の名前&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;courseName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;画像処理&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;cList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽出してみました。&lt;/p&gt;
-&lt;p&gt;Classroom APIで情報取得する際はページ単位(30個/ページ がデフォルト)で持って来ようとするので，ページあたりのデータ数を増やしてもっと寄越せと指定しても仕様で「いっぱいくれと言われてもあげないよ」と書かれており，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;取得(pageToken(今どこまで読んだか)も返される)&lt;/li&gt;
-&lt;li&gt;読んだデータを別バッファにpush&lt;/li&gt;
-&lt;li&gt;貰ったpageTokenを示しつつ取得&lt;/li&gt;
-&lt;li&gt;pageTokenがnullになるまで繰り返し&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;という処理になる。
-↓は手を抜いていて実際には&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;cList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;だと30個までしかコースは取得できないのだが30個以上コース持つことは無いだろうということでそのまま。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;myFunction&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// 一覧を抽出するコース名 (Classroom)上の名前&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;courseName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;画像処理&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;cList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myCourses&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;cList&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;courses&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;Logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="c1"&gt;//デバッグ用に表示&lt;/span&gt;
-    &lt;span class="c1"&gt;//コース名はアーカイブされているものは重複しても許されるので courseStateの確認が必要&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nx"&gt;courseName&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;courseState&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ARCHIVED&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;inviteClassId&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;pageToken&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;studentsString&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="c1"&gt;//どう頑張っても小塊でしか拾ってくれない(デフォ30)ので，Students.list での取得時にトークンを渡す&lt;/span&gt;
-  &lt;span class="c1"&gt;//トークンは取得ごとに更新されるので do - whileの最後に nextPageTokenに置換えると次のページを取得できる&lt;/span&gt;
-  &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Students&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;inviteClassId&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pageToken&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="c1"&gt;//ここは雑にカンマ区切りのstringを作ってしまう。データごとに改行を入れる&lt;/span&gt;
-      &lt;span class="nx"&gt;studentsString&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;studentsString&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;  
-      &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;emailAddress&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;fullName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-      &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;familyName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;givenName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="nx"&gt;pageToken&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nextPageToken&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;contentType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;text/plain&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;charset&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="c1"&gt;// スクリプトの場所を取得する術がなさそうなのでまんま実行。MyDriveのルートにファイルが作られる&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;blob&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Utilities&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;newBlob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;contentType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;courseName&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;setDataFromString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;studentsString&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;charset&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;blob&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;myFunction&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;// 一覧を抽出するコース名 (Classroom)上の名前&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;courseName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;画像処理&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cList&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cList&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;courses&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nx"&gt;Logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;//デバッグ用に表示&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;//コース名はアーカイブされているものは重複しても許されるので courseStateの確認が必要&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;courseName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;courseState&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ARCHIVED&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;inviteClassId&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;myCourses&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;studentsString&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;//どう頑張っても小塊でしか拾ってくれない(デフォ30)ので，Students.list での取得時にトークンを渡す&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;//トークンは取得ごとに更新されるので do - whileの最後に nextPageTokenに置換えると次のページを取得できる&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Classroom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Courses&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Students&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;inviteClassId&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pageToken&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;//ここは雑にカンマ区切りのstringを作ってしまう。データごとに改行を入れる&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nx"&gt;studentsString&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;studentsString&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;emailAddress&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;fullName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;familyName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;students&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;givenName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nextPageToken&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pageToken&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;contentType&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;text/plain&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;charset&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;// スクリプトの場所を取得する術がなさそうなのでまんま実行。MyDriveのルートにファイルが作られる&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;blob&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Utilities&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;newBlob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;contentType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;courseName&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;setDataFromString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;studentsString&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;charset&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;blob&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;※挙動が不明だったので冗長に書いてます&lt;/p&gt;
@@ -658,17 +617,7 @@ sudo cp gcc.mo /usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
 &lt;/ul&gt;
 &lt;h3&gt;まず時間を合わせとツール入れ&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo ntpdate time.google.com
-sudo apt update&lt;span class="p"&gt;;&lt;/span&gt; sudo apt upgrade -y
-sudo apt install ruby build-essential git 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;doryを入れる&lt;/h3&gt;
-&lt;p&gt;doryは普通にgemで入る&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo gem install dory
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
+sudo apt update …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成のWSL2編。WSL2ならではの問題でハマった。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;WSL2 + Ubuntu 18.04 は自力で入れましょう&lt;/li&gt;
 &lt;li&gt;18.04必須です(20.04は×)&lt;/li&gt;
@@ -740,10 +689,10 @@ brew install mutagen-io/mutagen/mutagen-compose
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;rubygems.org has address 151.101.65.227&lt;/span&gt;
-&lt;span class="err"&gt;rubygems.org has address 151.101.193.227&lt;/span&gt;
-&lt;span class="err"&gt;rubygems.org has address 151.101.129.227&lt;/span&gt;
-&lt;span class="err"&gt;rubygems.org has address 151.101.1.227&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rubygems.org has address 151.101.65.227
+rubygems.org has address 151.101.193.227
+rubygems.org has address 151.101.129.227
+rubygems.org has address 151.101.1.227
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;と出た例を以下に示す。&lt;/p&gt;
@@ -815,11 +764,11 @@ What password will the site administrator use? &amp;gt; &lt;span class="o"&gt;[&
 Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
 What &lt;span class="k"&gt;do&lt;/span&gt; you want users to see as the account name? This should probably be the name of your organization. &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;他のユーザーから見たアカウント名&lt;span class="o"&gt;]&lt;/span&gt;
 To &lt;span class="nb"&gt;help&lt;/span&gt; our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
-&lt;span class="m"&gt;1&lt;/span&gt;. Opt in
+&lt;span class="m"&gt;1&lt;/span&gt;. Opt &lt;span class="k"&gt;in&lt;/span&gt;
 &lt;span class="m"&gt;2&lt;/span&gt;. Only send anonymized data
 &lt;span class="m"&gt;3&lt;/span&gt;. Opt out completely
 &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難&lt;span class="o"&gt;]&lt;/span&gt;
-Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating in anonymous usage collection.
+Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating &lt;span class="k"&gt;in&lt;/span&gt; anonymous usage collection.
 You can change this feature at any &lt;span class="nb"&gt;time&lt;/span&gt; by running the rake task &lt;span class="s1"&gt;&amp;#39;rake db:configure_statistics_collection&amp;#39;&lt;/span&gt;
 ........................................................................................
 Notifications Loaded
@@ -837,86 +786,86 @@ Initial data loaded
 &lt;p&gt;で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので &lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt; を開くとCanvasのログイン画面が出てくる。&lt;/p&gt;
 &lt;h3&gt;git  diff&lt;/h3&gt;
 &lt;p&gt;たぶん不要な情報もあるが動いてるからそのまま&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/Dockerfile b/Dockerfile&lt;/span&gt;
-&lt;span class="gh"&gt;index f973e5f232..f4c0d79620 100644&lt;/span&gt;
-&lt;span class="gd"&gt;--- a/Dockerfile&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/Dockerfile&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -33,9 +33,11 @@ ARG USER_ID&lt;/span&gt;
- # Without it, some linux distributions are unable to write at all to the host mounted volume.
- RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \
-         &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
-&lt;span class="gd"&gt;-&lt;/span&gt;
-&lt;span class="gi"&gt;+RUN echo &amp;quot;precedence ::ffff:0:0/96  100&amp;quot; &amp;gt;&amp;gt; /etc/gai.conf&lt;/span&gt;
-&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
-&lt;span class="gu"&gt;@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&amp;quot;&lt;/span&gt;
-   &amp;amp;&amp;amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \
-   &amp;amp;&amp;amp; gem install bundler --no-document -v $BUNDLER_VERSION \
-   &amp;amp;&amp;amp; find $GEM_HOME ! -user docker | xargs chown docker:docker
-&lt;span class="gi"&gt;+# RUN gem update --system&lt;/span&gt;
- RUN npm install -g npm@latest &amp;amp;&amp;amp; npm cache clean --force
-&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.193.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
-&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.1.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
-&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.129.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
-&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.65.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/Dockerfile b/Dockerfile&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;index f973e5f232..f4c0d79620 100644&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/Dockerfile&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/Dockerfile&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -33,9 +33,11 @@ ARG USER_ID&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;# Without it, some linux distributions are unable to write at all to the host mounted volume.&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;        &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;precedence ::ffff:0:0/96  100&amp;quot; &amp;gt;&amp;gt; /etc/gai.conf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; gem install bundler --no-document -v $BUNDLER_VERSION \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; find $GEM_HOME ! -user docker | xargs chown docker:docker&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+# RUN gem update --system&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;RUN npm install -g npm@latest &amp;amp;&amp;amp; npm cache clean --force&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.193.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.1.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.129.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN echo &amp;quot;151.101.65.227 rubygems.org&amp;quot; &amp;gt;&amp;gt; /etc/hosts&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
- USER docker
+&lt;span class="w"&gt; &lt;/span&gt;USER docker&lt;span class="w"&gt;&lt;/span&gt;
 
-&lt;span class="gh"&gt;diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins&lt;/span&gt;
-&lt;span class="gh"&gt;index 9f5a765399..a4f2ca3520 100644&lt;/span&gt;
-&lt;span class="gd"&gt;--- a/Dockerfile.jenkins&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/Dockerfile.jenkins&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle&lt;/span&gt;
- WORKDIR $APP_HOME
+&lt;span class="gh"&gt;diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;index 9f5a765399..a4f2ca3520 100644&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/Dockerfile.jenkins&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/Dockerfile.jenkins&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;WORKDIR $APP_HOME&lt;span class="w"&gt;&lt;/span&gt;
 
- USER root
-&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
-&lt;span class="gh"&gt;diff --git a/build/Dockerfile.template b/build/Dockerfile.template&lt;/span&gt;
-&lt;span class="gh"&gt;index 61e680d71b..ec0cde9222 100644&lt;/span&gt;
-&lt;span class="gd"&gt;--- a/build/Dockerfile.template&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/build/Dockerfile.template&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -42,8 +42,10 @@ RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \&lt;/span&gt;
-         &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
+&lt;span class="w"&gt; &lt;/span&gt;USER root&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;diff --git a/build/Dockerfile.template b/build/Dockerfile.template&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;index 61e680d71b..ec0cde9222 100644&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/build/Dockerfile.template&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/build/Dockerfile.template&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -42,8 +42,10 @@ RUN if [ -n &amp;quot;$USER_ID&amp;quot; ]; then usermod -u &amp;quot;${USER_ID}&amp;quot; docker \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;        &amp;amp;&amp;amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi&lt;span class="w"&gt;&lt;/span&gt;
 
- &amp;lt;% end -%&amp;gt;
-&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;
-   &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \
-&lt;span class="gh"&gt;diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh&lt;/span&gt;
-&lt;span class="gh"&gt;index e04d4165cf..10a6d1b3d9 100755&lt;/span&gt;
-&lt;span class="gd"&gt;--- a/script/common/utils/dory_setup.sh&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/script/common/utils/dory_setup.sh&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -16,9 +16,9 @@ function check_for_dory {&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;% end -%&amp;gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+RUN apt-get update; apt-get install wget -y&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  &amp;amp;&amp;amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  # &amp;amp;&amp;amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb https://dl.yarnpkg.com/debian/ stable main&amp;quot; &amp;gt; /etc/apt/sources.list.d/yarn.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; printf &amp;#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&amp;#39; &amp;gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  &amp;amp;&amp;amp; echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list \&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gh"&gt;index e04d4165cf..10a6d1b3d9 100755&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/script/common/utils/dory_setup.sh&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/script/common/utils/dory_setup.sh&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -16,9 +16,9 @@ function check_for_dory {&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
- function start_dory {
-   message &amp;#39;Starting dory...&amp;#39;
-&lt;span class="gd"&gt;-  if dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;
-&lt;span class="gd"&gt;-    confirm_command &amp;#39;dory up&amp;#39;&lt;/span&gt;
-&lt;span class="gd"&gt;-  elif ! dory status; then&lt;/span&gt;
-&lt;span class="gi"&gt;+  if sudo dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;
-&lt;span class="gi"&gt;+    confirm_command &amp;#39;sudo dory up&amp;#39;&lt;/span&gt;
-&lt;span class="gi"&gt;+  elif ! sudo dory status; then&lt;/span&gt;
-     message &amp;quot;Something went wrong with dory! Exiting script.&amp;quot;
-     exit 1
-   else
+&lt;span class="w"&gt; &lt;/span&gt;function start_dory {&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  message &amp;#39;Starting dory...&amp;#39;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  if dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-    confirm_command &amp;#39;dory up&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  elif ! dory status; then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  if sudo dory status | grep -q &amp;#39;not running&amp;#39;; then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+    confirm_command &amp;#39;sudo dory up&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  elif ! sudo dory status; then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;    message &amp;quot;Something went wrong with dory! Exiting script.&amp;quot;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;    exit 1&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;  else&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Docker"></category><category term="Canvas"></category><category term="Ubuntu"></category><category term="WSL2"></category></entry><entry><title>GithubのToken</title><link href="https://eiichiromomma.github.io/2022/03/24/GithubToken/" rel="alternate"></link><published>2022-03-24T21:00:00+09:00</published><updated>2022-03-24T21:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-03-24:/2022/03/24/GithubToken/</id><content type="html">&lt;p&gt;Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Tokenの生成ページ &lt;a href="https://github.com/settings/tokens"&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/li&gt;
@@ -931,25 +880,7 @@ gitとかの基本的なツールはあって当たり前なので省略する�
 &lt;li&gt;docker諸々必要&lt;/li&gt;
 &lt;li&gt;mutagenが必要(dockerのバインドマウントを高速化)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;あたりが条件&lt;/p&gt;
-&lt;h3&gt;doryを入れる&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install dory
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;Canvasのソースを拾ってくる&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/instructure/canvas-lms.git
-&lt;span class="nb"&gt;cd&lt;/span&gt; canvas-lms
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;依存アプリを入れて環境構築&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start"&gt;ここ&lt;/a&gt;の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install mutagen-io/mutagen/mutagen
-brew install mutagen-io/mutagen/mutagen-compose
-./script/docker_dev_setup.sh --mutagen
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3&gt;Docker Desktopが無いと言われる&lt;/h3&gt;
-&lt;p&gt;で，Docker Desktopをインストールしてあるのに無いと言われてコケるので …&lt;/p&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+&lt;p&gt;あたり …&lt;/p&gt;</summary><content type="html">&lt;p&gt;LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
 gitとかの基本的なツールはあって当たり前なので省略するが&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;この手順はmacOS (Monterey)&lt;/li&gt;
@@ -989,7 +920,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 &lt;p&gt;のexit 1を消す泥縄で対応。(エラーになっても終了させない)&lt;/p&gt;
 &lt;h3&gt;またコケるが再度実行すると通る&lt;/h3&gt;
 &lt;p&gt;その後コケるが，docker_dev_setup.logを見ても↓のような感じで原因不明だが，もう一度実行すると何故かエラーなく通る&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Gem files will remain installed in /home/docker/.gem/gems/ruby-debug-ide-0.7.2
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Gem files will remain installed &lt;span class="k"&gt;in&lt;/span&gt; /home/docker/.gem/gems/ruby-debug-ide-0.7.2
 &lt;span class="k"&gt;for&lt;/span&gt; inspection.
 Results logged to
 /home/docker/.gem/extensions/x86_64-linux/2.7.0/ruby-debug-ide-0.7.2/gem_make.out
@@ -1041,11 +972,11 @@ What password will the site administrator use? &amp;gt; &lt;span class="o"&gt;[&
 Please confirm &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;パスワードを入力&lt;span class="o"&gt;]&lt;/span&gt;
 What &lt;span class="k"&gt;do&lt;/span&gt; you want users to see as the account name? This should probably be the name of your organization. &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;他のユーザーから見たアカウント名&lt;span class="o"&gt;]&lt;/span&gt;
 To &lt;span class="nb"&gt;help&lt;/span&gt; our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
-&lt;span class="m"&gt;1&lt;/span&gt;. Opt in
+&lt;span class="m"&gt;1&lt;/span&gt;. Opt &lt;span class="k"&gt;in&lt;/span&gt;
 &lt;span class="m"&gt;2&lt;/span&gt;. Only send anonymized data
 &lt;span class="m"&gt;3&lt;/span&gt;. Opt out completely
 &amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難&lt;span class="o"&gt;]&lt;/span&gt;
-Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating in anonymous usage collection.
+Thank you &lt;span class="k"&gt;for&lt;/span&gt; participating &lt;span class="k"&gt;in&lt;/span&gt; anonymous usage collection.
 You can change this feature at any &lt;span class="nb"&gt;time&lt;/span&gt; by running the rake task &lt;span class="s1"&gt;&amp;#39;rake db:configure_statistics_collection&amp;#39;&lt;/span&gt;
 ........................................................................................
 Notifications Loaded
@@ -1067,20 +998,7 @@ Initial data loaded
 &lt;li&gt;本体は持ち運び可能なNUC&lt;/li&gt;
 &lt;li&gt;IPは固定のグローバル&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;サーバが起動してるうちにバックアップ&lt;/h2&gt;
-&lt;h3&gt;IPの取得をDHCPに&lt;/h3&gt;
-&lt;p&gt;/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
-ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
-&lt;h3&gt;嘘吐きサーバと嘘吐きクライアント&lt;/h3&gt;
-&lt;p&gt;本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。&lt;/li&gt;
-&lt;li&gt;クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。&lt;/p&gt;
-&lt;h3&gt;xmlをエクスポート&lt;/h3&gt;
-&lt;p&gt;Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …&lt;/p&gt;</summary><content type="html">&lt;p&gt;WordpressからPelicanへの移行メモ&lt;/p&gt;
+&lt;h2&gt;サーバが起動してるうちに …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;WordpressからPelicanへの移行メモ&lt;/p&gt;
 &lt;h2&gt;前置き&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。&lt;/li&gt;
@@ -1115,7 +1033,7 @@ ifconfigなりip addressでIPアドレスを調べておく。&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;という感じでカテゴリごとにフォルダが掘られ，mdファイルが配置される。
 エラーが出たらipythonを起動し，&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;wpfile&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;slugs&lt;/span&gt; &lt;span class="o"&gt;../&lt;/span&gt;&lt;span class="n"&gt;cvmlab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WordPress&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2021&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;27.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;wpfile&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;slugs&lt;/span&gt; &lt;span class="o"&gt;../&lt;/span&gt;&lt;span class="n"&gt;cvmlab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WordPress&lt;/span&gt;&lt;span class="mf"&gt;.2021&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;27.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;という感じで実行し，その後で&lt;/p&gt;
@@ -1211,33 +1129,33 @@ ccmake ..
 &lt;li&gt;BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-- Installing: /usr/local/lib/librealsense-file.a&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-capture&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-save-to-disk&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-multicam&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-pointcloud&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-align&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-sensor-control&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-depth&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-color&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-distance&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-terminal&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-enumerate-devices&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/realsense-viewer&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-data-collect&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-depth-quality&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/live-test&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.2.8.3.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.2.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pyrealsense2.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.2.8.3.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.2.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/lib/pybackend2.cpython-36m-darwin.so&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-imshow&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-grabcuts&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-latency-tool&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-dnn&lt;/span&gt;
-&lt;span class="err"&gt;-- Installing: /usr/local/bin/rs-pcl&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;librealsense&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;capture&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;disk&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multicam&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pointcloud&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;align&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sensor&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;depth&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;distance&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;enumerate&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devices&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;realsense&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;viewer&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;collect&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;depth&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;quality&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;live&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyrealsense2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;2.8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;3.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyrealsense2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;2.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyrealsense2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pybackend2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;2.8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;3.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pybackend2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;2.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pybackend2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;darwin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;grabcuts&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;latency&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;tool&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dnn&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Installing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pcl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;という感じに面白いサンプルも入る。&lt;/p&gt;
@@ -1819,13 +1737,13 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 &lt;p&gt;Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)&lt;/p&gt;
 &lt;h2&gt;Windows&lt;/h2&gt;
 &lt;p&gt;大容量HDDがHドライブのとき，コマンドプロンプトで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;\&lt;/span&gt;
-&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;DFSCache&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;DFSCache&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。&lt;/p&gt;
@@ -1860,39 +1778,39 @@ ln -s /Volumes/extdrive/DriveFS DriveFS
 諦めてVisual Studioの&lt;a href="https://www.microsoft.com/en-US/download/details.aspx?id=48157"&gt;英語言語パック&lt;/a&gt;をインストールしたら解決した。&lt;/p&gt;
 &lt;h2&gt;旧記事&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/Microsoft/vcpkg"&gt;vcpkg&lt;/a&gt;を試してみようと，とりあえずPower Shellで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;git clone https://github.com/Microsoft/vcpkg.git&lt;/span&gt;
-&lt;span class="err"&gt;cd vcpkg&lt;/span&gt;
-&lt;span class="err"&gt;.\vcpkg install opencv:x64-windows&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\vcpkg install opencv:x64-windows
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とやったらzlibのビルドで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Building&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;BUILD_FAILED&lt;/span&gt;
-&lt;span class="n"&gt;Please&lt;/span&gt; &lt;span class="n"&gt;ensure&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;latest&lt;/span&gt; &lt;span class="n"&gt;portfiles&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;.\&lt;/span&gt;&lt;span class="n"&gt;vcpkg&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
-&lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;issue&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/Microsoft/vcpkg/iss&lt;/span&gt;&lt;span class="n"&gt;ues&lt;/span&gt; &lt;span class="n"&gt;including&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-  &lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;
-  &lt;span class="n"&gt;Vcpkg&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;91&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;e19c24d2911ff1ef648aeed0c596e3987eafebf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Building&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;package&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;failed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BUILD_FAILED&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Please&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ensure&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;portfiles&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;.\&lt;/span&gt;&lt;span class="n"&gt;vcpkg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;submit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;an&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;issue&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;at&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/Microsoft/vcpkg/iss&lt;/span&gt;&lt;span class="n"&gt;ues&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;including&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Vcpkg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;91&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;e19c24d2911ff1ef648aeed0c596e3987eafebf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
-&lt;span class="n"&gt;Additionally&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attach&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;relevant&lt;/span&gt; &lt;span class="n"&gt;sections&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Additionally&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;attach&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;any&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;relevant&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sections&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;みたいなエラーでコケる。エラーログを見てみると&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot; RC C:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11\win3&lt;/span&gt;
-&lt;span class="err"&gt;2\zlib1.rc &amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot; CMakeFiles\zlib.dir\win32\zlib1.res &amp;quot;: CN[h t@C:  &amp;quot; &amp;quot;C:/Program Files&lt;/span&gt;
-&lt;span class="err"&gt; (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64_x86/cl.exe&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1\bin\x64\rc.exe -DNO_FSEEKO -DZLIB_&lt;/span&gt;
-&lt;span class="err"&gt;DLL -D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE -IC:\local\vcpkg\buildtrees\zlib\src\zlib-1.2.11 -IC:\local\v&lt;/span&gt;
-&lt;span class="err"&gt;cpkg\buildtrees\zlib\x86-windows-rel /DWIN32 /foCMakeFiles\zlib.dir\win32\zlib1.res C:\local\vcpkg\buildtrees\zlib\src\z&lt;/span&gt;
-&lt;span class="err"&gt;lib-1.2.11\win32\zlib1.rc&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="s2"&gt;&amp;quot;C:/local/vcpkg/downloads/cmake-3.9.3-win32-x86/bin/cmcldeps.exe&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;\&lt;span class="n"&gt;local&lt;/span&gt;\&lt;span class="n"&gt;vcpkg&lt;/span&gt;\&lt;span class="n"&gt;buildtrees&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;\&lt;span class="n"&gt;src&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;\&lt;span class="n"&gt;win3&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;\&lt;span class="n"&gt;zlib1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;CMakeFiles\zlib.dir\win32\zlib1.res.d&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;CMakeFiles&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dir&lt;/span&gt;\&lt;span class="n"&gt;win32&lt;/span&gt;\&lt;span class="n"&gt;zlib1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;: CN[h t@C:  &amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C:/Program Files&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Visual&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Studio&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;14.0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;VC&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;amd64_x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; C:\PROGRA~2\WI3CF2~1\8.1&lt;/span&gt;&lt;span class="se"&gt;\b&lt;/span&gt;&lt;span class="s2"&gt;in&lt;/span&gt;&lt;span class="se"&gt;\x64\r&lt;/span&gt;&lt;span class="s2"&gt;c.exe -DNO_FSEEKO -DZLIB_&lt;/span&gt;
+&lt;span class="n"&gt;DLL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;D_CRT_NONSTDC_NO_DEPRECATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;D_CRT_SECURE_NO_DEPRECATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IC&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;\&lt;span class="n"&gt;local&lt;/span&gt;\&lt;span class="n"&gt;vcpkg&lt;/span&gt;\&lt;span class="n"&gt;buildtrees&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;\&lt;span class="n"&gt;src&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IC&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;\&lt;span class="n"&gt;local&lt;/span&gt;\&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;cpkg&lt;/span&gt;\&lt;span class="n"&gt;buildtrees&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;\&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;windows&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rel&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DWIN32&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;foCMakeFiles&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dir&lt;/span&gt;\&lt;span class="n"&gt;win32&lt;/span&gt;\&lt;span class="n"&gt;zlib1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;\&lt;span class="n"&gt;local&lt;/span&gt;\&lt;span class="n"&gt;vcpkg&lt;/span&gt;\&lt;span class="n"&gt;buildtrees&lt;/span&gt;\&lt;span class="n"&gt;zlib&lt;/span&gt;\&lt;span class="n"&gt;src&lt;/span&gt;\&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;\&lt;span class="n"&gt;win32&lt;/span&gt;\&lt;span class="n"&gt;zlib1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;途中変な文字化けをしているのでchcpでutf-8にしていないせいかと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;chcp 65001&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;chcp 65001
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とやってから実行してみたが何の変化も無し。
 zlibのportsを見てみると，どうもninjaを使っているらしい。
 そして&lt;a href="https://github.com/Microsoft/vcpkg/commit/67e876c76555c466e4faf49d6cd80a88b835f972#diff-1478a69d316b5c33129cf0ec2c174b7d"&gt;これ&lt;/a&gt;。
 という訳でvcpkg/ports/zlib/portfile.cmakeの&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="err"&gt;PREFER&lt;/span&gt; &lt;span class="err"&gt;NINJA&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;PREFER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;NINJA&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;をコメントアウト。
@@ -1900,7 +1818,7 @@ zlibのportsを見てみると，どうもninjaを使っているらしい。
 &lt;p&gt;という要望があったので，この手の連携となれば&lt;a href="https://ifttt.com"&gt;IFTTT&lt;/a&gt;だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。&lt;/p&gt;
 &lt;p&gt;GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
 取り敢えずGoogle Driveなら直ぐ出来そうなので&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;という処理に。&lt;/p&gt;
@@ -1909,48 +1827,48 @@ zlibのportsを見てみると，どうもninjaを使っているらしい。
 &lt;li&gt;Google Driveのフォルダ: Test&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;で，ググって出てきたスクリプトだと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;subject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;subject&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Target&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;subject&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;subject&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Target&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;みたいな処理だったので，ならToでもできるだろって事で&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username+tag@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getSubject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username+tag@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としたら，Outlookが&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c"&gt;to:&amp;lt;username+tag@gmail.com&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="nv"&gt;@gmail&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で送ってくるのでFalseになる。調べたら部分一致はindexOfでイケるらしいので下記で成功。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;gmailFileUploader&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;GmailApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getInboxThreads&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;　
-  &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;　
-    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;isUnread&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;status&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;　
-      &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getTo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;indexOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username+tag@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;attachments&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getAttachments&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;　
-        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;folders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getFoldersByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;folders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;hasNext&lt;/span&gt;&lt;span class="p"&gt;()){&lt;/span&gt;
-          &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;folder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;folders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;next&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-          &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;attachments&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;attachments&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
-            &lt;span class="nx"&gt;folder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; 
-          &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;moveToTrash&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//保存終了したらゴミ箱に移動&lt;/span&gt;
-      &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;    
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;gmailFileUploader&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;GmailApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getInboxThreads&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;　&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mf"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;　&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;status&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;isUnread&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;status&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;　&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getTo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;to&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;indexOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username+tag@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;-&lt;/span&gt;&lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;attachments&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getMessages&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getAttachments&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;　&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;folders&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getFoldersByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;folders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;hasNext&lt;/span&gt;&lt;span class="p"&gt;()){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;folder&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;folders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;next&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;attachments&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;DriveApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;attachments&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nx"&gt;folder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nx"&gt;Threads&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;moveToTrash&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;//保存終了したらゴミ箱に移動&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="Javascript"></category></entry><entry><title>macOSでOpenCL</title><link href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/" rel="alternate"></link><published>2017-07-03T22:00:00+09:00</published><updated>2017-07-03T22:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-07-03:/2017/07/03/macOSOpenCL/</id><summary type="html">&lt;p&gt;macOSでOpenCL&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでOpenCLを頑張ってみた&lt;/h1&gt;
 &lt;p&gt;折角Radeonを搭載しているiMacもあるのでOpenCLでDeep Learningのframeworkが動かないかと弄ってみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/arrayfire/arrayfire"&gt;Arrayfire&lt;/a&gt;とか&lt;a href="https://github.com/BVLC/caffe/tree/opencl"&gt;CaffeのOpenCLブランチ&lt;/a&gt;とか&lt;a href="https://github.com/hughperkins/cltorch"&gt;cltorch&lt;/a&gt;とか&lt;a href="https://github.com/pyopencl/pyopencl"&gt;PyOpenCL&lt;/a&gt;とか色々と試してみて、ArrayfireやPyOpenCLは一応GPU使って動いてる感までは得られた。&lt;/p&gt;
 &lt;p&gt;が、OpenCL自体が遅くCPUより処理が遅い。おまけにArrayfireは何かやらかすとmacOSごと調子悪くなる(要再起動)。つらい&lt;/p&gt;</content><category term="Memo"></category><category term="macOS"></category><category term="OpenCL"></category><category term="Torch"></category></entry><entry><title>macOSでTensorflow</title><link href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/" rel="alternate"></link><published>2017-05-18T08:00:00+09:00</published><updated>2017-05-18T08:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-05-18:/2017/05/18/macOSTensorflow/</id><summary type="html">&lt;p&gt;macOSでTensorflow&lt;/p&gt;</summary><content type="html">&lt;h1&gt;macOSでTensorflowを頑張ってみた&lt;/h1&gt;
 &lt;p&gt;&lt;a href="http://blog.amedama.jp/entry/2017/03/08/223308"&gt;ここ&lt;/a&gt;の通りやってもCPUによってはまだ改善点があるようで&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.&lt;/span&gt;
-&lt;span class="err"&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use FMA instructions, but these are availab&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&amp;#39;t compiled to use FMA instructions, but these are availab
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とでる。bazelでビルドする時にAVX2とFMAも加えてみる。&lt;/p&gt;
@@ -1969,35 +1887,35 @@ $ pip install keras
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py&lt;/span&gt;
-&lt;span class="err"&gt;echo &amp;#39;K.clear_session()&amp;#39; &amp;gt;&amp;gt; mnist_cnn.py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py
+echo &amp;#39;K.clear_session()&amp;#39; &amp;gt;&amp;gt; mnist_cnn.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;とした後に&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;python mnist_cnn.py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python mnist_cnn.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でmnistが動く。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;Using TensorFlow backend.&lt;/span&gt;
-&lt;span class="err"&gt;x_train shape: (60000, 28, 28, 1)&lt;/span&gt;
-&lt;span class="err"&gt;60000 train samples&lt;/span&gt;
-&lt;span class="err"&gt;10000 test samples&lt;/span&gt;
-&lt;span class="err"&gt;Train on 60000 samples, validate on 10000 samples&lt;/span&gt;
-&lt;span class="err"&gt;Epoch 1/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734&lt;/span&gt;
-&lt;span class="err"&gt;Epoch 2/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822&lt;/span&gt;
-&lt;span class="err"&gt;Epoch 3/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Using TensorFlow backend.
+x_train shape: (60000, 28, 28, 1)
+60000 train samples
+10000 test samples
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/12
+60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734
+Epoch 2/12
+60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822
+Epoch 3/12
+60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;1epochあたり100s(Core i7のiMac)。Core i5のmac miniだと&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;Epoch 10/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905&lt;/span&gt;
-&lt;span class="err"&gt;Epoch 11/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899&lt;/span&gt;
-&lt;span class="err"&gt;Epoch 12/12&lt;/span&gt;
-&lt;span class="err"&gt;60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Epoch 10/12
+60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905
+Epoch 11/12
+60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899
+Epoch 12/12
+60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;ちなみにGeForce 970だと1 epochあたり9s。これだけ頑張っても10倍遅い。GeForce 1080だと1 epochあたり4s。つらい&lt;/p&gt;</content><category term="Memo"></category><category term="macOS"></category><category term="Tensorflow"></category></entry><entry><title>GNU nano</title><link href="https://eiichiromomma.github.io/2017/04/01/nano/" rel="alternate"></link><published>2017-04-01T09:00:00+09:00</published><updated>2017-04-01T09:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-04-01:/2017/04/01/nano/</id><summary type="html">&lt;p&gt;GNU nano&lt;/p&gt;</summary><content type="html">&lt;h1&gt;GNU nano&lt;/h1&gt;
@@ -2008,7 +1926,7 @@ $ pip install keras
 &lt;p&gt;欠損値のところに=NA()を入れておくと補完してくれるらしい。
 &lt;img alt="こんな感じ" src="https://eiichiromomma.github.io/images/20170331-2.png"&gt;&lt;/p&gt;</content><category term="Memo"></category><category term="Excel"></category></entry><entry><title>VSCodeとClang</title><link href="https://eiichiromomma.github.io/2017/03/05/vscode_clang/" rel="alternate"></link><published>2017-03-05T11:00:00+09:00</published><updated>2017-03-05T11:00:00+09:00</updated><author><name>eiichiromomma</name></author><id>tag:eiichiromomma.github.io,2017-03-05:/2017/03/05/vscode_clang/</id><summary type="html">&lt;p&gt;setup VSCode and clang&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VSCodeの補完&lt;/h1&gt;
 &lt;p&gt;代表的な補完拡張の中にclangを使ったものがあるが、CMakeが&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;CMAKE_EXPORT_COMPILE_COMMANDS&lt;/span&gt; &lt;span class="s"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;CMAKE_EXPORT_COMPILE_COMMANDS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で吐いてくれるcompile_commands.jsonに対応していない。
@@ -2041,20 +1959,20 @@ make serve
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で http://localhost:8000 から作業内容を確認できる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
-&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;02&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt; &lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt;
-&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Memo&lt;/span&gt;
-&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
-&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20170212&lt;/span&gt;&lt;span class="n"&gt;_post&lt;/span&gt;
-&lt;span class="n"&gt;Author&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;eiichiromomma&lt;/span&gt;
-&lt;span class="n"&gt;Summary&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Hello&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;02&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Memo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;20170212&lt;/span&gt;&lt;span class="n"&gt;_post&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Author&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;eiichiromomma&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Summary&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
 
-&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;お試し&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;お試し&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;確認したら&lt;/p&gt;

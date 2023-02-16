@@ -57,8 +57,8 @@
 
 <h1>macOSでTensorflowを頑張ってみた</h1>
 <p><a href="http://blog.amedama.jp/entry/2017/03/08/223308">ここ</a>の通りやってもCPUによってはまだ改善点があるようで</p>
-<div class="highlight"><pre><span></span><code><span class="err">W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.</span>
-<span class="err">W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are availab</span>
+<div class="highlight"><pre><span></span><code>W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are availab
 </code></pre></div>
 
 <p>とでる。bazelでビルドする時にAVX2とFMAも加えてみる。</p>
@@ -77,35 +77,35 @@ $ pip install keras
 </code></pre></div>
 
 <p>で</p>
-<div class="highlight"><pre><span></span><code><span class="err">curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py</span>
-<span class="err">echo &#39;K.clear_session()&#39; &gt;&gt; mnist_cnn.py</span>
+<div class="highlight"><pre><span></span><code>curl -O https://raw.githubusercontent.com/fchollet/keras/master/examples/mnist_cnn.py
+echo &#39;K.clear_session()&#39; &gt;&gt; mnist_cnn.py
 </code></pre></div>
 
 <p>とした後に</p>
-<div class="highlight"><pre><span></span><code><span class="err">python mnist_cnn.py</span>
+<div class="highlight"><pre><span></span><code>python mnist_cnn.py
 </code></pre></div>
 
 <p>でmnistが動く。</p>
-<div class="highlight"><pre><span></span><code><span class="err">Using TensorFlow backend.</span>
-<span class="err">x_train shape: (60000, 28, 28, 1)</span>
-<span class="err">60000 train samples</span>
-<span class="err">10000 test samples</span>
-<span class="err">Train on 60000 samples, validate on 10000 samples</span>
-<span class="err">Epoch 1/12</span>
-<span class="err">60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734</span>
-<span class="err">Epoch 2/12</span>
-<span class="err">60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822</span>
-<span class="err">Epoch 3/12</span>
-<span class="err">60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852</span>
+<div class="highlight"><pre><span></span><code>Using TensorFlow backend.
+x_train shape: (60000, 28, 28, 1)
+60000 train samples
+10000 test samples
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/12
+60000/60000 [==============================] - 100s - loss: 0.3406 - acc: 0.8961 - val_loss: 0.0818 - val_acc: 0.9734
+Epoch 2/12
+60000/60000 [==============================] - 96s - loss: 0.1207 - acc: 0.9643 - val_loss: 0.0533 - val_acc: 0.9822
+Epoch 3/12
+60000/60000 [==============================] - 95s - loss: 0.0891 - acc: 0.9743 - val_loss: 0.0461 - val_acc: 0.9852
 </code></pre></div>
 
 <p>1epochあたり100s(Core i7のiMac)。Core i5のmac miniだと</p>
-<div class="highlight"><pre><span></span><code><span class="err">Epoch 10/12</span>
-<span class="err">60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905</span>
-<span class="err">Epoch 11/12</span>
-<span class="err">60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899</span>
-<span class="err">Epoch 12/12</span>
-<span class="err">60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909</span>
+<div class="highlight"><pre><span></span><code>Epoch 10/12
+60000/60000 [==============================] - 195s - loss: 0.0391 - acc: 0.9883 - val_loss: 0.0277 - val_acc: 0.9905
+Epoch 11/12
+60000/60000 [==============================] - 219s - loss: 0.0379 - acc: 0.9893 - val_loss: 0.0306 - val_acc: 0.9899
+Epoch 12/12
+60000/60000 [==============================] - 247s - loss: 0.0359 - acc: 0.9887 - val_loss: 0.0266 - val_acc: 0.9909
 </code></pre></div>
 
 <p>ちなみにGeForce 970だと1 epochあたり9s。これだけ頑張っても10倍遅い。GeForce 1080だと1 epochあたり4s。つらい</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>

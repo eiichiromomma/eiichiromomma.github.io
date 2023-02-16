@@ -51,6 +51,65 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/03/24/GithubToken/"><h3 class="article-title">GithubのToken</h3></a>
+<h6 class="subheader" title="2022-03-24T21:00:00+09:00">2022-03-24(木)
+</h6>
+
+
+<p>Githubの自分のリポジトリにgitコマンドから何かするときにパスワードではなくTokenが必要になる。普段はGUIなツールなので意識しないがPelicanでこのサイトを更新するときには必要。</p>
+<ul>
+<li>Tokenの生成ページ <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
+</ul>
+<p>基本的には <code>repo: Full control of private repositories</code> にチェックを入れた状態で生成する。
+期間は30日くらいにしておく。</p>
+<p>あとはgitでパスワードを聞かれたときにTokenをコピペすれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
+    <a href="https://eiichiromomma.github.io/tag/pelican.html">Pelican </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/GithubToken/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
+<h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
+</h6>
+
+
+<p>LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
+gitとかの基本的なツールはあって当たり前なので省略するが</p>
+<ul>
+<li>この手順はmacOS (Monterey)</li>
+<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
+<li>docker諸々必要</li>
+<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
+</ul>
+<p>あたり …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
 <h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
 </h6>
@@ -63,20 +122,7 @@
 <li>本体は持ち運び可能なNUC</li>
 <li>IPは固定のグローバル</li>
 </ul>
-<h2>サーバが起動してるうちにバックアップ</h2>
-<h3>IPの取得をDHCPに</h3>
-<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
-ifconfigなりip addressでIPアドレスを調べておく。</p>
-<h3>嘘吐きサーバと嘘吐きクライアント</h3>
-<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
-<ol>
-<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
-<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
-</ol>
-<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
-<h3>xmlをエクスポート</h3>
-<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<h2>サーバが起動してるうちに …</h2><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
 </p>
 
@@ -237,49 +283,6 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/07/03/macOSOpenCL/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/"><h3 class="article-title">macOSでTensorflow</h3></a>
-<h6 class="subheader" title="2017-05-18T08:00:00+09:00">2017-05-18(木)
-</h6>
-
-
-<p>macOSでTensorflow</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
-    <a href="https://eiichiromomma.github.io/tag/tensorflow.html">Tensorflow </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/05/18/macOSTensorflow/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/04/01/nano/"><h3 class="article-title">GNU nano</h3></a>
-<h6 class="subheader" title="2017-04-01T09:00:00+09:00">2017-04-01(土)
-</h6>
-
-
-<p>GNU nano</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/nano.html">nano </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/04/01/nano/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

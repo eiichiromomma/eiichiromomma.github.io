@@ -75,13 +75,13 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 <p>Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)</p>
 <h2>Windows</h2>
 <p>大容量HDDがHドライブのとき，コマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span>
-<span class="n">cd</span> <span class="o">\</span>
-<span class="n">mkdir</span> <span class="n">DFSCache</span>
+<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span><span class="w"></span>
+<span class="n">cd</span><span class="w"> </span><span class="o">\</span><span class="w"></span>
+<span class="n">mkdir</span><span class="w"> </span><span class="n">DFSCache</span><span class="w"></span>
 </code></pre></div>
 
 <p>でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)</p>
-<div class="highlight"><pre><span></span><code><span class="err">mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache</span>
+<div class="highlight"><pre><span></span><code>mklink /d c:\Users\username\AppData\Local\Google\DriveFS h:\DFSCache
 </code></pre></div>
 
 <p>としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。</p>

@@ -50,155 +50,74 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/colour-science/"><h3 class="article-title">colour-scienceで三刺激値のプロットとか</h3></a>
-<h6 class="subheader" title="2022-05-15T09:30:00+09:00">2022-05-15(日)
+                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
+<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
 </h6>
 
 
-<p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
-<h3>等色関数のプロット</h3>
-<h4>一つだけプロットする場合</h4>
-<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されているdictもどきの<code>LazyCaseInsensitiveMapping</code>(後で説明)。
-ここの<code>Stiles &amp; Burch 1955 2 Degree RGB CMFs</code>とかがkeyという鬼畜で，<code>plot_single_cmfs</code>で単にプロットしたい場合のkeyでもある。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">colour.plotting</span> <span class="k">as</span> <span class="nn">cplt</span>
-<span class="n">cplt</span><span class="o">.</span><span class="n">plot_single_cmfs</span><span class="p">(</span><span class="s1">&#39;Stiles &amp; Burch 1955 2 Degree RGB CMFs&#39;</span><span class="p">)</span>
+<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
+<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプラットフォームでの実行ファイル生成はできない。(開発は可能)</p>
+<p>GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に<code>cv2.imshow</code>が使えたりする。</p>
+<p>(余談だが<a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo">Python.Netのデモ</a>がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)</p>
+<p>手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで</p>
+<div class="highlight"><pre><span></span><code>python setup.py build
 </code></pre></div>
 
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science.png" width="600"></p>
-<h4>複数プロットする場合</h4>
-<p>等色関数の名前をリストにして<code>plot_multi_cmfs</code>に渡すだけでよい。</p>
-<div class="highlight"><pre><span></span><code><span class="n">cmfs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Stiles &amp; Burch 1959 10 Degree RGB CMFs&#39;</span><span class="p">,</span> <span class="s1">&#39;CIE 1964 10 Degree Standard Observer&#39;</span><span class="p">]</span>
-<span class="n">cplt</span><span class="o">.</span><span class="n">plot_multi_cmfs</span><span class="p">(</span><span class="n">cmfs</span><span class="p">)</span>
+<p>または</p>
+<div class="highlight"><pre><span></span><code>python setup.py bdist_mac
 </code></pre></div>
 
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science2.png" width="600"></p>
-<h3><a href="https://colour.readthedocs.io/en/develop/generated/colour.utilities.LazyCaseInsensitiveMapping.html">LazyCaseInsensitiveMapping</a></h3>
-<p>dictもどきのclassでdomain(波長)をkeyとしたdataと，labelsとかの情報で構成されている。</p>
-<div class="highlight"><pre><span></span><code><span class="n">cmf</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">MSDS_CMFS</span><span class="p">[</span><span class="s1">&#39;Stiles &amp; Burch 1955 2 Degree RGB CMFs&#39;</span><span class="p">]</span>
-<span class="n">cmf</span>
+<p>とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。</p>
+<p>必要なファイルについては結構優秀で自動的に依存関係からコピーしてくれるのだが，逆に言えば依存関係の解析に失敗すれば全コケする。.pydのようなバイナリ化してるパッケージについては対応できてないようなので，pythonでスクリプトを走らせたときは動くのに，exe化したときには動かない，という現象が発生するうえに，printでデバッグできないので検証が面倒。
+(importでSystemErrorを起こしてexeでだけ動かないプログラムも↓の方法で確認したらnumpyが無いと言われてたので，<code>import numpy</code>をそのパッケージの前にimportしたら動いた)</p>
+<h3>エラーの収集</h3>
+<p>.exeにするとprintデバッグができないがstdoutとstderrをファイルに振ってしまえば行けるだろうと思ったら<a href="https://pc.atsuhiro-me.net/entry/2014/07/27/211623">既に先人が居た</a>ので有り難く使わせて貰う。</p>
+<p>具体的には</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">LogFrozen</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">initstdout</span><span class="p">():</span>
+    <span class="n">localdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">localdir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">localdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;frozen&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="c1"># frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">LogFrozen</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># not frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+<span class="n">initstdout</span><span class="p">()</span>
+<span class="c1"># この後に怪しいimportを書く</span>
 </code></pre></div>
 
-<p>でドバーっと中身が出てくるが容易に拾えない。</p>
-<h4>domain</h4>
-<p>これが中身を拾うためのkeysになる。(内部で処理してるにせよ一致が保証されないfloat型をkeyにして大丈夫なのかと思うが)</p>
-<div class="highlight"><pre><span></span><code><span class="n">cmf</span><span class="o">.</span><span class="n">domain</span>
-<span class="n">Out</span><span class="p">:</span>
-<span class="n">array</span><span class="p">([</span> <span class="mf">390.</span><span class="p">,</span>  <span class="mf">395.</span><span class="p">,</span>  <span class="mf">400.</span><span class="p">,</span>  <span class="mf">405.</span><span class="p">,</span>  <span class="mf">410.</span><span class="p">,</span>  <span class="mf">415.</span><span class="p">,</span>  <span class="mf">420.</span><span class="p">,</span>  <span class="mf">425.</span><span class="p">,</span>  <span class="mf">430.</span><span class="p">,</span>
-        <span class="mf">435.</span><span class="p">,</span>  <span class="mf">440.</span><span class="p">,</span>  <span class="mf">445.</span><span class="p">,</span>  <span class="mf">450.</span><span class="p">,</span>  <span class="mf">455.</span><span class="p">,</span>  <span class="mf">460.</span><span class="p">,</span>  <span class="mf">465.</span><span class="p">,</span>  <span class="mf">470.</span><span class="p">,</span>  <span class="mf">475.</span><span class="p">,</span>
-        <span class="mf">480.</span><span class="p">,</span>  <span class="mf">485.</span><span class="p">,</span>  <span class="mf">490.</span><span class="p">,</span>  <span class="mf">495.</span><span class="p">,</span>  <span class="mf">500.</span><span class="p">,</span>  <span class="mf">505.</span><span class="p">,</span>  <span class="mf">510.</span><span class="p">,</span>  <span class="mf">515.</span><span class="p">,</span>  <span class="mf">520.</span><span class="p">,</span>
-        <span class="mf">525.</span><span class="p">,</span>  <span class="mf">530.</span><span class="p">,</span>  <span class="mf">535.</span><span class="p">,</span>  <span class="mf">540.</span><span class="p">,</span>  <span class="mf">545.</span><span class="p">,</span>  <span class="mf">550.</span><span class="p">,</span>  <span class="mf">555.</span><span class="p">,</span>  <span class="mf">560.</span><span class="p">,</span>  <span class="mf">565.</span><span class="p">,</span>
-        <span class="mf">570.</span><span class="p">,</span>  <span class="mf">575.</span><span class="p">,</span>  <span class="mf">580.</span><span class="p">,</span>  <span class="mf">585.</span><span class="p">,</span>  <span class="mf">590.</span><span class="p">,</span>  <span class="mf">595.</span><span class="p">,</span>  <span class="mf">600.</span><span class="p">,</span>  <span class="mf">605.</span><span class="p">,</span>  <span class="mf">610.</span><span class="p">,</span>
-        <span class="mf">615.</span><span class="p">,</span>  <span class="mf">620.</span><span class="p">,</span>  <span class="mf">625.</span><span class="p">,</span>  <span class="mf">630.</span><span class="p">,</span>  <span class="mf">635.</span><span class="p">,</span>  <span class="mf">640.</span><span class="p">,</span>  <span class="mf">645.</span><span class="p">,</span>  <span class="mf">650.</span><span class="p">,</span>  <span class="mf">655.</span><span class="p">,</span>
-        <span class="mf">660.</span><span class="p">,</span>  <span class="mf">665.</span><span class="p">,</span>  <span class="mf">670.</span><span class="p">,</span>  <span class="mf">675.</span><span class="p">,</span>  <span class="mf">680.</span><span class="p">,</span>  <span class="mf">685.</span><span class="p">,</span>  <span class="mf">690.</span><span class="p">,</span>  <span class="mf">695.</span><span class="p">,</span>  <span class="mf">700.</span><span class="p">,</span>
-        <span class="mf">705.</span><span class="p">,</span>  <span class="mf">710.</span><span class="p">,</span>  <span class="mf">715.</span><span class="p">,</span>  <span class="mf">720.</span><span class="p">,</span>  <span class="mf">725.</span><span class="p">,</span>  <span class="mf">730.</span><span class="p">])</span>
-</code></pre></div>
-
-<p>なので，</p>
-<div class="highlight"><pre><span></span><code><span class="n">cfms</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">MSDS_CMFS</span><span class="p">[</span><span class="s1">&#39;Stiles &amp; Burch 1955 2 Degree RGB CMFs&#39;</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">cfms</span><span class="o">.</span><span class="n">domain</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{wl}</span><span class="s1">: </span><span class="si">{cfms[wl]}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>で</p>
-<div class="highlight"><pre><span></span><code><span class="mf">390.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.0018397</span>  <span class="o">-</span><span class="mf">0.00045393</span>  <span class="mf">0.012152</span>  <span class="p">]</span>
-<span class="mf">395.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.0046153</span> <span class="o">-</span><span class="mf">0.0010464</span>  <span class="mf">0.03111</span>  <span class="p">]</span>
-<span class="mf">400.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.0096264</span> <span class="o">-</span><span class="mf">0.0021689</span>  <span class="mf">0.062371</span> <span class="p">]</span>
-<span class="mf">405.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.018979</span>  <span class="o">-</span><span class="mf">0.0044304</span>  <span class="mf">0.13161</span>  <span class="p">]</span>
-<span class="mf">410.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.030803</span>  <span class="o">-</span><span class="mf">0.0072048</span>  <span class="mf">0.2275</span>   <span class="p">]</span>
-<span class="mf">415.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.042459</span> <span class="o">-</span><span class="mf">0.012579</span>  <span class="mf">0.35897</span> <span class="p">]</span>
-<span class="mf">420.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.051662</span> <span class="o">-</span><span class="mf">0.016651</span>  <span class="mf">0.52396</span> <span class="p">]</span>
-<span class="mf">425.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.052837</span> <span class="o">-</span><span class="mf">0.02124</span>   <span class="mf">0.68586</span> <span class="p">]</span>
-<span class="mf">430.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.044287</span> <span class="o">-</span><span class="mf">0.019936</span>  <span class="mf">0.79604</span> <span class="p">]</span>
-<span class="mf">435.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.03222</span>  <span class="o">-</span><span class="mf">0.016097</span>  <span class="mf">0.89459</span> <span class="p">]</span>
-<span class="mf">440.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.014763</span>  <span class="o">-</span><span class="mf">0.0073457</span>  <span class="mf">0.96395</span>  <span class="p">]</span>
-<span class="mf">445.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0023392</span>  <span class="mf">0.001369</span>   <span class="mf">0.99814</span>  <span class="p">]</span>
-<span class="mf">450.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.02913</span>  <span class="mf">0.01961</span>  <span class="mf">0.91875</span><span class="p">]</span>
-<span class="mf">455.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.060677</span>  <span class="mf">0.043464</span>  <span class="mf">0.82487</span> <span class="p">]</span>
-<span class="mf">460.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.096224</span>  <span class="mf">0.070954</span>  <span class="mf">0.78554</span> <span class="p">]</span>
-<span class="mf">465.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.13759</span>  <span class="mf">0.11022</span>  <span class="mf">0.66723</span><span class="p">]</span>
-<span class="mf">470.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.17486</span>  <span class="mf">0.15088</span>  <span class="mf">0.61098</span><span class="p">]</span>
-<span class="mf">475.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2126</span>   <span class="mf">0.19794</span>  <span class="mf">0.48829</span><span class="p">]</span>
-<span class="mf">480.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2378</span>   <span class="mf">0.24042</span>  <span class="mf">0.36195</span><span class="p">]</span>
-<span class="mf">485.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.25674</span>  <span class="mf">0.27993</span>  <span class="mf">0.26634</span><span class="p">]</span>
-<span class="mf">490.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.27727</span>  <span class="mf">0.33353</span>  <span class="mf">0.19593</span><span class="p">]</span>
-<span class="mf">495.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.29125</span>  <span class="mf">0.40521</span>  <span class="mf">0.1473</span> <span class="p">]</span>
-<span class="mf">500.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.295</span>    <span class="mf">0.4906</span>   <span class="mf">0.10749</span><span class="p">]</span>
-<span class="mf">505.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.29706</span>   <span class="mf">0.59673</span>   <span class="mf">0.076714</span><span class="p">]</span>
-<span class="mf">510.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.26759</span>   <span class="mf">0.70184</span>   <span class="mf">0.050248</span><span class="p">]</span>
-<span class="mf">515.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.21725</span>   <span class="mf">0.80852</span>   <span class="mf">0.028781</span><span class="p">]</span>
-<span class="mf">520.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.14768</span>   <span class="mf">0.91076</span>   <span class="mf">0.013309</span><span class="p">]</span>
-<span class="mf">525.0</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.035184</span>  <span class="mf">0.98482</span>   <span class="mf">0.002117</span><span class="p">]</span>
-<span class="mf">530.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.10614</span>    <span class="mf">1.0339</span>    <span class="o">-</span><span class="mf">0.0041574</span><span class="p">]</span>
-<span class="mf">535.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.25981</span>    <span class="mf">1.0538</span>    <span class="o">-</span><span class="mf">0.0083032</span><span class="p">]</span>
-<span class="mf">540.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.41976</span>   <span class="mf">1.0512</span>   <span class="o">-</span><span class="mf">0.012191</span><span class="p">]</span>
-<span class="mf">545.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.59259</span>   <span class="mf">1.0498</span>   <span class="o">-</span><span class="mf">0.014039</span><span class="p">]</span>
-<span class="mf">550.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.79004</span>   <span class="mf">1.0368</span>   <span class="o">-</span><span class="mf">0.014681</span><span class="p">]</span>
-<span class="mf">555.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.0078</span>    <span class="mf">0.99826</span>  <span class="o">-</span><span class="mf">0.014947</span><span class="p">]</span>
-<span class="mf">560.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.2283</span>    <span class="mf">0.93783</span>  <span class="o">-</span><span class="mf">0.014613</span><span class="p">]</span>
-<span class="mf">565.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.4727</span>    <span class="mf">0.88039</span>  <span class="o">-</span><span class="mf">0.013782</span><span class="p">]</span>
-<span class="mf">570.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.7476</span>   <span class="mf">0.82835</span> <span class="o">-</span><span class="mf">0.01265</span><span class="p">]</span>
-<span class="mf">575.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.0214</span>    <span class="mf">0.74686</span>  <span class="o">-</span><span class="mf">0.011356</span><span class="p">]</span>
-<span class="mf">580.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.2724</span>     <span class="mf">0.6493</span>    <span class="o">-</span><span class="mf">0.0099317</span><span class="p">]</span>
-<span class="mf">585.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.4896</span>     <span class="mf">0.56317</span>   <span class="o">-</span><span class="mf">0.0084148</span><span class="p">]</span>
-<span class="mf">590.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.6725</span>    <span class="mf">0.47675</span>  <span class="o">-</span><span class="mf">0.007021</span><span class="p">]</span>
-<span class="mf">595.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.8093</span>     <span class="mf">0.38484</span>   <span class="o">-</span><span class="mf">0.0057437</span><span class="p">]</span>
-<span class="mf">600.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.8717</span>     <span class="mf">0.30069</span>   <span class="o">-</span><span class="mf">0.0042743</span><span class="p">]</span>
-<span class="mf">605.0</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.8525</span>     <span class="mf">0.22853</span>   <span class="o">-</span><span class="mf">0.0029132</span><span class="p">]</span>
-<span class="mf">610.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.76010000e+00</span>   <span class="mf">1.65750000e-01</span>  <span class="o">-</span><span class="mf">2.26930000e-03</span><span class="p">]</span>
-<span class="mf">615.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.59890000e+00</span>   <span class="mf">1.13730000e-01</span>  <span class="o">-</span><span class="mf">1.99660000e-03</span><span class="p">]</span>
-<span class="mf">620.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.37430000e+00</span>   <span class="mf">7.46820000e-02</span>  <span class="o">-</span><span class="mf">1.50690000e-03</span><span class="p">]</span>
-<span class="mf">625.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.10540000e+00</span>   <span class="mf">4.65040000e-02</span>  <span class="o">-</span><span class="mf">9.38220000e-04</span><span class="p">]</span>
-<span class="mf">630.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.81450000e+00</span>   <span class="mf">2.63330000e-02</span>  <span class="o">-</span><span class="mf">5.53160000e-04</span><span class="p">]</span>
-<span class="mf">635.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.52470000e+00</span>   <span class="mf">1.27240000e-02</span>  <span class="o">-</span><span class="mf">3.16680000e-04</span><span class="p">]</span>
-<span class="mf">640.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.25430000e+00</span>   <span class="mf">4.50330000e-03</span>  <span class="o">-</span><span class="mf">1.43190000e-04</span><span class="p">]</span>
-<span class="mf">645.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.00760000e+00</span>   <span class="mf">9.66110000e-05</span>  <span class="o">-</span><span class="mf">4.08310000e-06</span><span class="p">]</span>
-<span class="mf">650.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">7.86420000e-01</span>  <span class="o">-</span><span class="mf">1.96450000e-03</span>   <span class="mf">1.10810000e-04</span><span class="p">]</span>
-<span class="mf">655.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">5.96590000e-01</span>  <span class="o">-</span><span class="mf">2.63270000e-03</span>   <span class="mf">1.91750000e-04</span><span class="p">]</span>
-<span class="mf">660.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">4.43200000e-01</span>  <span class="o">-</span><span class="mf">2.62620000e-03</span>   <span class="mf">2.26560000e-04</span><span class="p">]</span>
-<span class="mf">665.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">3.24100000e-01</span>  <span class="o">-</span><span class="mf">2.30270000e-03</span>   <span class="mf">2.15200000e-04</span><span class="p">]</span>
-<span class="mf">670.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.34550000e-01</span>  <span class="o">-</span><span class="mf">1.87000000e-03</span>   <span class="mf">1.63610000e-04</span><span class="p">]</span>
-<span class="mf">675.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.68840000e-01</span>  <span class="o">-</span><span class="mf">1.44240000e-03</span>   <span class="mf">9.71640000e-05</span><span class="p">]</span>
-<span class="mf">680.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.20860000e-01</span>  <span class="o">-</span><span class="mf">1.07550000e-03</span>   <span class="mf">5.10330000e-05</span><span class="p">]</span>
-<span class="mf">685.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">8.58110000e-02</span>  <span class="o">-</span><span class="mf">7.90040000e-04</span>   <span class="mf">3.52710000e-05</span><span class="p">]</span>
-<span class="mf">690.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">6.02600000e-02</span>  <span class="o">-</span><span class="mf">5.67650000e-04</span>   <span class="mf">3.12110000e-05</span><span class="p">]</span>
-<span class="mf">695.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">4.14800000e-02</span>  <span class="o">-</span><span class="mf">3.92740000e-04</span>   <span class="mf">2.45080000e-05</span><span class="p">]</span>
-<span class="mf">700.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">2.81140000e-02</span>  <span class="o">-</span><span class="mf">2.62310000e-04</span>   <span class="mf">1.65210000e-05</span><span class="p">]</span>
-<span class="mf">705.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.91170000e-02</span>  <span class="o">-</span><span class="mf">1.75120000e-04</span>   <span class="mf">1.11240000e-05</span><span class="p">]</span>
-<span class="mf">710.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">1.33050000e-02</span>  <span class="o">-</span><span class="mf">1.21400000e-04</span>   <span class="mf">8.69650000e-06</span><span class="p">]</span>
-<span class="mf">715.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">9.40920000e-03</span>  <span class="o">-</span><span class="mf">8.57600000e-05</span>   <span class="mf">7.43510000e-06</span><span class="p">]</span>
-<span class="mf">720.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">6.51770000e-03</span>  <span class="o">-</span><span class="mf">5.76770000e-05</span>   <span class="mf">6.10570000e-06</span><span class="p">]</span>
-<span class="mf">725.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">4.53770000e-03</span>  <span class="o">-</span><span class="mf">3.90030000e-05</span>   <span class="mf">5.02770000e-06</span><span class="p">]</span>
-<span class="mf">730.0</span><span class="p">:</span> <span class="p">[</span>  <span class="mf">3.17420000e-03</span>  <span class="o">-</span><span class="mf">2.65110000e-05</span>   <span class="mf">4.12510000e-06</span><span class="p">]</span>
-</code></pre></div>
-
-<p>みたいな出力が得られる。(dataはndarray)</p>
-<h4>自力でプロット</h4>
-<p>綺麗ではないが力技で拾ってプロット</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">colour</span>
-
-<span class="n">cmf</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">MSDS_CMFS</span><span class="p">[</span><span class="s1">&#39;Stiles &amp; Burch 1955 2 Degree RGB CMFs&#39;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">cmf</span><span class="o">.</span><span class="n">domain</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">cmf</span><span class="o">.</span><span class="n">labels</span><span class="p">)))</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">wl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cmf</span><span class="o">.</span><span class="n">domain</span><span class="p">):</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,]</span> <span class="o">=</span> <span class="n">cmf</span><span class="p">[</span><span class="n">wl</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmf</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">cmf</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2022-05-15-colour-science3.png" width="600"></p>
-<h4><code>numpy_print_options</code></h4>
-<p>試行錯誤してたら<code>numpy_print_options</code>というものがあるらしく</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">colour.utilities</span> <span class="kn">import</span> <span class="n">numpy_print_options</span>
-<span class="k">with</span> <span class="n">numpy_print_options</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">cmf</span><span class="p">)</span>
-</code></pre></div>
-
-<p>で，表示だけできるのは分かったが特に便利な何かという訳ではない。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>をスクリプトに入れておけばホームフォルダ(Windowsならc:\Users\username，macOSなら/Users/username)にlog.txtファイルで出力される。場所を変えたかったら<code>localdir = os.path.expanduser("~/")</code>のところの"~/"を適当に変える(チルダはホームフォルダの意味)</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
 </p>
 
 
@@ -208,6 +127,30 @@
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/colour-science/"><h3 class="article-title">colour-scienceで三刺激値のプロットとか</h3></a>
+<h6 class="subheader" title="2022-05-15T09:30:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
+<h3>等色関数のプロット</h3>
+<h4>一つだけプロットする場合</h4>
+<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されて …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/colour-science/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
@@ -229,12 +172,7 @@
 <span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 
-<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い。</p>
-<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">Out</span><span class="p">:</span> <span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;/Type&#39;</span><span class="p">,</span> <span class="s1">&#39;/Parent&#39;</span><span class="p">,</span> <span class="s1">&#39;/Resources&#39;</span><span class="p">,</span> <span class="s1">&#39;/Contents&#39;</span><span class="p">,</span> <span class="s1">&#39;/MediaBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/Rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;/Annots&#39;</span><span class="p">,</span> <span class="s1">&#39;/ArtBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/BleedBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/CropBox&#39;</span><span class="p">,</span> <span class="s1">&#39;/TrimBox&#39;</span><span class="p">])</span>
-</code></pre></div>
-
-<p>みたいな感じで，注釈として …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
@@ -261,9 +199,7 @@
 <li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
 </ul>
 <p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
-<p>情報の取捨選択が良いとこ突いててPythonのcv2モジュールに絞ったうえで，リファレンスとまでは行かないにせよOpenCVの関数を良い感じで網羅しています。
-案外知られていない?OpenCVのdnnモジュールを使った推論のやり方についても説明があり，タイトルの通り画像認識までの最短経路の構成です。</p>
-<p>サンプルは動かしたことがあるくらいの人が次のステップに進むのにも良い感じで，ひとまずPythonのソースは読めるけど。。。という企業の方にもお勧めしやすい内容です。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+<p>情報の取捨選択 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
@@ -288,27 +224,7 @@
 
 <p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
 <p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
-<p>結論としてはざっくり2択</p>
-<ul>
-<li>Pythonが使えてMarkdownが好きなら<a href="https://github.com/gpoore/text2qti">text2qti</a>でMarkdownからQTIに変換</li>
-<li>php7が使える環境なら<a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a>と<a href="https://github.com/csev/gift2qti">gift2qti</a>でGIFTからQTIに変換</li>
-</ul>
-<hr>
-<h3>Markdown から QTI</h3>
-<h4><a href="https://github.com/gpoore/text2qti">text2qti</a> (要Python, 動作確認済み)</h4>
-<p>配布元のページのサンプルを見れば書き方は直ぐに分かる。</p>
-<p>上記のより<a href="https://github.com/molpopgen/md2Canvas">発展的な使い方</a>(Github, bitbucket連携)</p>
-<hr>
-<h3>GIFT FormatからQTI</h3>
-<p>MoodleでのGIFT Format利用を想定したツールが殆どで，QTIへの変換についてはgift2qti一択な状況。
-GIFT FormatをCanvasで利用するには</p>
-<ul>
-<li>gift2qtiで変換してインポート</li>
-<li>GIFT Formatで書いた問題をMoodleのコースに入れて，エクスポートしたデータをCanvasにインポート</li>
-</ul>
-<p>の手段しかない。
-既にパーサーはあるのでCanvas側が本気になればXMLへのコンバートなので楽にインポートできる筈なのだが。</p>
-<h4><a href="https://marketplace.visualstudio.com/items?itemName=ethan-ou.vscode-gift-pack&amp;ssr=false#overview">GIFT Format拡張機能</a> (要VS Code …</h4><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>結論とし …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
@@ -331,27 +247,7 @@ GIFT FormatをCanvasで利用するには</p>
 </h6>
 
 
-<p>コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録のシステムを作りました。
-使ったのはSonyのICカードリーダー RC-S380。Windows, macOS以外だと選択肢がこれ以外ほぼ無い状態のようです。</p>
-<ol>
-<li>特定のiSerialNumberのUSB機器を探す</li>
-<li>機器のUSB busとaddressを取得して接続</li>
-<li>数秒おきにNFCリーダーの入力待機</li>
-<li>NFCリーダーで学生証のIDを読む</li>
-<li>音を鳴らす</li>
-<li>予め用意したdictに従ってID-&gt;人名変換をする</li>
-<li>Slackにメッセージを投げる</li>
-<li>3に戻る</li>
-</ol>
-<p>と，やってることは至ってシンプル。メッセージについては各自について入室状況を保持してトグル処理を考えたものの，大抵タッチし忘れたときに破綻するので毎日リセットとか色々面倒なので，入室用と退室用でICカードリーダーを別にする最もシンプルな方法に決定。</p>
-<p>一番面倒だったのはpynfcとRC-S380の接続で，USBのバス番号は接続状況で変わる可能性があるのと，入室用と退室用を確実に決め打ちできるシリアルナンバー(iSerialNumber)をpyUsbでスキャン。ちなみにidVendor 0x054cはSony。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">usb</span>
-<span class="n">devs</span> <span class="o">=</span> <span class="n">usb</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_all</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">idVendor</span><span class="o">=</span><span class="mh">0x054c</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-</code></pre></div>
-
-<p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>コロナ禍で研究室がスッカラカンな状態でしたが，今年度からはかなり人の出入りも増えてきたので入退室記録の …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>

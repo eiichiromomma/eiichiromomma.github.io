@@ -128,10 +128,10 @@ brew install mutagen-io/mutagen/mutagen-compose
 </code></pre></div>
 
 <p>で</p>
-<div class="highlight"><pre><span></span><code><span class="err">rubygems.org has address 151.101.65.227</span>
-<span class="err">rubygems.org has address 151.101.193.227</span>
-<span class="err">rubygems.org has address 151.101.129.227</span>
-<span class="err">rubygems.org has address 151.101.1.227</span>
+<div class="highlight"><pre><span></span><code>rubygems.org has address 151.101.65.227
+rubygems.org has address 151.101.193.227
+rubygems.org has address 151.101.129.227
+rubygems.org has address 151.101.1.227
 </code></pre></div>
 
 <p>と出た例を以下に示す。</p>
@@ -203,11 +203,11 @@ What password will the site administrator use? &gt; <span class="o">[</span>パ�
 Please confirm &gt; <span class="o">[</span>パスワードを入力<span class="o">]</span>
 What <span class="k">do</span> you want users to see as the account name? This should probably be the name of your organization. &gt; <span class="o">[</span>他のユーザーから見たアカウント名<span class="o">]</span>
 To <span class="nb">help</span> our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
-<span class="m">1</span>. Opt in
+<span class="m">1</span>. Opt <span class="k">in</span>
 <span class="m">2</span>. Only send anonymized data
 <span class="m">3</span>. Opt out completely
 &gt; <span class="o">[</span>開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難<span class="o">]</span>
-Thank you <span class="k">for</span> participating in anonymous usage collection.
+Thank you <span class="k">for</span> participating <span class="k">in</span> anonymous usage collection.
 You can change this feature at any <span class="nb">time</span> by running the rake task <span class="s1">&#39;rake db:configure_statistics_collection&#39;</span>
 ........................................................................................
 Notifications Loaded
@@ -225,86 +225,86 @@ Initial data loaded
 <p>で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので <a href="http://localhost/">http://localhost/</a> を開くとCanvasのログイン画面が出てくる。</p>
 <h3>git  diff</h3>
 <p>たぶん不要な情報もあるが動いてるからそのまま</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/Dockerfile b/Dockerfile</span>
-<span class="gh">index f973e5f232..f4c0d79620 100644</span>
-<span class="gd">--- a/Dockerfile</span>
-<span class="gi">+++ b/Dockerfile</span>
-<span class="gu">@@ -33,9 +33,11 @@ ARG USER_ID</span>
- # Without it, some linux distributions are unable to write at all to the host mounted volume.
- RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \
-         &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
-<span class="gd">-</span>
-<span class="gi">+RUN echo &quot;precedence ::ffff:0:0/96  100&quot; &gt;&gt; /etc/gai.conf</span>
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-   &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gu">@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&quot;</span>
-   &amp;&amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \
-   &amp;&amp; gem install bundler --no-document -v $BUNDLER_VERSION \
-   &amp;&amp; find $GEM_HOME ! -user docker | xargs chown docker:docker
-<span class="gi">+# RUN gem update --system</span>
- RUN npm install -g npm@latest &amp;&amp; npm cache clean --force
-<span class="gi">+RUN echo &quot;151.101.193.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.1.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.129.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.65.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
+<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/Dockerfile b/Dockerfile</span><span class="w"></span>
+<span class="gh">index f973e5f232..f4c0d79620 100644</span><span class="w"></span>
+<span class="gd">--- a/Dockerfile</span><span class="w"></span>
+<span class="gi">+++ b/Dockerfile</span><span class="w"></span>
+<span class="gu">@@ -33,9 +33,11 @@ ARG USER_ID</span><span class="w"></span>
+<span class="w"> </span># Without it, some linux distributions are unable to write at all to the host mounted volume.<span class="w"></span>
+<span class="w"> </span>RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \<span class="w"></span>
+<span class="w"> </span>        &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi<span class="w"></span>
+<span class="gd">-</span><span class="w"></span>
+<span class="gi">+RUN echo &quot;precedence ::ffff:0:0/96  100&quot; &gt;&gt; /etc/gai.conf</span><span class="w"></span>
+<span class="gi">+RUN apt-get update; apt-get install wget -y</span><span class="w"></span>
+<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \<span class="w"></span>
+<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \<span class="w"></span>
+<span class="gu">@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&quot;</span><span class="w"></span>
+<span class="w"> </span>  &amp;&amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; gem install bundler --no-document -v $BUNDLER_VERSION \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; find $GEM_HOME ! -user docker | xargs chown docker:docker<span class="w"></span>
+<span class="gi">+# RUN gem update --system</span><span class="w"></span>
+<span class="w"> </span>RUN npm install -g npm@latest &amp;&amp; npm cache clean --force<span class="w"></span>
+<span class="gi">+RUN echo &quot;151.101.193.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span><span class="w"></span>
+<span class="gi">+RUN echo &quot;151.101.1.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span><span class="w"></span>
+<span class="gi">+RUN echo &quot;151.101.129.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span><span class="w"></span>
+<span class="gi">+RUN echo &quot;151.101.65.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span><span class="w"></span>
 
- USER docker
+<span class="w"> </span>USER docker<span class="w"></span>
 
-<span class="gh">diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins</span>
-<span class="gh">index 9f5a765399..a4f2ca3520 100644</span>
-<span class="gd">--- a/Dockerfile.jenkins</span>
-<span class="gi">+++ b/Dockerfile.jenkins</span>
-<span class="gu">@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle</span>
- WORKDIR $APP_HOME
+<span class="gh">diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins</span><span class="w"></span>
+<span class="gh">index 9f5a765399..a4f2ca3520 100644</span><span class="w"></span>
+<span class="gd">--- a/Dockerfile.jenkins</span><span class="w"></span>
+<span class="gi">+++ b/Dockerfile.jenkins</span><span class="w"></span>
+<span class="gu">@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle</span><span class="w"></span>
+<span class="w"> </span>WORKDIR $APP_HOME<span class="w"></span>
 
- USER root
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-   &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gh">diff --git a/build/Dockerfile.template b/build/Dockerfile.template</span>
-<span class="gh">index 61e680d71b..ec0cde9222 100644</span>
-<span class="gd">--- a/build/Dockerfile.template</span>
-<span class="gi">+++ b/build/Dockerfile.template</span>
-<span class="gu">@@ -42,8 +42,10 @@ RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \</span>
-         &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
+<span class="w"> </span>USER root<span class="w"></span>
+<span class="gi">+RUN apt-get update; apt-get install wget -y</span><span class="w"></span>
+<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \<span class="w"></span>
+<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \<span class="w"></span>
+<span class="gh">diff --git a/build/Dockerfile.template b/build/Dockerfile.template</span><span class="w"></span>
+<span class="gh">index 61e680d71b..ec0cde9222 100644</span><span class="w"></span>
+<span class="gd">--- a/build/Dockerfile.template</span><span class="w"></span>
+<span class="gi">+++ b/build/Dockerfile.template</span><span class="w"></span>
+<span class="gu">@@ -42,8 +42,10 @@ RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \</span><span class="w"></span>
+<span class="w"> </span>        &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi<span class="w"></span>
 
- &lt;% end -%&gt;
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
- RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-   &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-   &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-   &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gh">diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh</span>
-<span class="gh">index e04d4165cf..10a6d1b3d9 100755</span>
-<span class="gd">--- a/script/common/utils/dory_setup.sh</span>
-<span class="gi">+++ b/script/common/utils/dory_setup.sh</span>
-<span class="gu">@@ -16,9 +16,9 @@ function check_for_dory {</span>
+<span class="w"> </span>&lt;% end -%&gt;<span class="w"></span>
+<span class="gi">+RUN apt-get update; apt-get install wget -y</span><span class="w"></span>
+<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \<span class="w"></span>
+<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span><span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \<span class="w"></span>
+<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \<span class="w"></span>
+<span class="gh">diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh</span><span class="w"></span>
+<span class="gh">index e04d4165cf..10a6d1b3d9 100755</span><span class="w"></span>
+<span class="gd">--- a/script/common/utils/dory_setup.sh</span><span class="w"></span>
+<span class="gi">+++ b/script/common/utils/dory_setup.sh</span><span class="w"></span>
+<span class="gu">@@ -16,9 +16,9 @@ function check_for_dory {</span><span class="w"></span>
 
- function start_dory {
-   message &#39;Starting dory...&#39;
-<span class="gd">-  if dory status | grep -q &#39;not running&#39;; then</span>
-<span class="gd">-    confirm_command &#39;dory up&#39;</span>
-<span class="gd">-  elif ! dory status; then</span>
-<span class="gi">+  if sudo dory status | grep -q &#39;not running&#39;; then</span>
-<span class="gi">+    confirm_command &#39;sudo dory up&#39;</span>
-<span class="gi">+  elif ! sudo dory status; then</span>
-     message &quot;Something went wrong with dory! Exiting script.&quot;
-     exit 1
-   else
+<span class="w"> </span>function start_dory {<span class="w"></span>
+<span class="w"> </span>  message &#39;Starting dory...&#39;<span class="w"></span>
+<span class="gd">-  if dory status | grep -q &#39;not running&#39;; then</span><span class="w"></span>
+<span class="gd">-    confirm_command &#39;dory up&#39;</span><span class="w"></span>
+<span class="gd">-  elif ! dory status; then</span><span class="w"></span>
+<span class="gi">+  if sudo dory status | grep -q &#39;not running&#39;; then</span><span class="w"></span>
+<span class="gi">+    confirm_command &#39;sudo dory up&#39;</span><span class="w"></span>
+<span class="gi">+  elif ! sudo dory status; then</span><span class="w"></span>
+<span class="w"> </span>    message &quot;Something went wrong with dory! Exiting script.&quot;<span class="w"></span>
+<span class="w"> </span>    exit 1<span class="w"></span>
+<span class="w"> </span>  else<span class="w"></span>
 </code></pre></div>
 <p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 

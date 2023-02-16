@@ -59,7 +59,7 @@
 <p>という要望があったので，この手の連携となれば<a href="https://ifttt.com">IFTTT</a>だろと調べてみたのだが，不特定多数からの受付が出来なさそうなので諦め。</p>
 <p>GMailだとusername@gmail.comなアドレスについて，username+tag@gmail.comでも受信できる技があるので，それをトリガにGoogle Photosに保存できるだろと少し調査。
 取り敢えずGoogle Driveなら直ぐ出来そうなので</p>
-<div class="highlight"><pre><span></span><code><span class="err">特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)</span>
+<div class="highlight"><pre><span></span><code>特定のアドレスに送られたメールの添付ファイルをGoogle Driveのフォルダに自動で保存する(メールはゴミ箱へ)
 </code></pre></div>
 
 <p>という処理に。</p>
@@ -68,41 +68,41 @@
 <li>Google Driveのフォルダ: Test</li>
 </ul>
 <p>で，ググって出てきたスクリプトだと</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">subject</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nx">subject</span><span class="o">==</span><span class="s2">&quot;Target&quot;</span><span class="p">){</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">subject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mf">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="nx">subject</span><span class="o">==</span><span class="s2">&quot;Target&quot;</span><span class="p">){</span><span class="w"></span>
 </code></pre></div>
 
 <p>みたいな処理だったので，ならToでもできるだろって事で</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="o">==</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">){</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mf">0</span><span class="p">].</span><span class="nx">getSubject</span><span class="p">();</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="o">==</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">){</span><span class="w"></span>
 </code></pre></div>
 
 <p>としたら，Outlookが</p>
-<div class="highlight"><pre><span></span><code><span class="c">to:&lt;username+tag@gmail.com&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="k">to</span><span class="err">:</span><span class="o">&lt;</span><span class="n">username</span><span class="o">+</span><span class="n">tag</span><span class="nv">@gmail</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span><span class="w"></span>
 </code></pre></div>
 
 <p>で送ってくるのでFalseになる。調べたら部分一致はindexOfでイケるらしいので下記で成功。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">gmailFileUploader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">Threads</span> <span class="o">=</span> <span class="nx">GmailApp</span><span class="p">.</span><span class="nx">getInboxThreads</span><span class="p">();</span>　
-  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">50</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>　
-    <span class="kd">var</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isUnread</span><span class="p">();</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">status</span><span class="o">==</span><span class="kc">true</span><span class="p">){</span>　
-      <span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getTo</span><span class="p">();</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">){</span>
-        <span class="kd">var</span> <span class="nx">attachments</span> <span class="o">=</span> <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttachments</span><span class="p">();</span>　
-        <span class="kd">var</span> <span class="nx">folders</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">getFoldersByName</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">);</span>
-        <span class="k">while</span><span class="p">(</span><span class="nx">folders</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span>
-          <span class="kd">var</span> <span class="nx">folder</span> <span class="o">=</span> <span class="nx">folders</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-          <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">attachments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">){</span>
-            <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">DriveApp</span><span class="p">.</span><span class="nx">createFile</span><span class="p">(</span><span class="nx">attachments</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
-            <span class="nx">folder</span><span class="p">.</span><span class="nx">addFile</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
-          <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">moveToTrash</span><span class="p">();</span> <span class="c1">//保存終了したらゴミ箱に移動</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>    
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">gmailFileUploader</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">Threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">GmailApp</span><span class="p">.</span><span class="nx">getInboxThreads</span><span class="p">();</span><span class="w">　</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mf">50</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="w">　</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isUnread</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">status</span><span class="o">==</span><span class="kc">true</span><span class="p">){</span><span class="w">　</span>
+<span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mf">0</span><span class="p">].</span><span class="nx">getTo</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;username+tag@gmail.com&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mf">1</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">attachments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getMessages</span><span class="p">()[</span><span class="mf">0</span><span class="p">].</span><span class="nx">getAttachments</span><span class="p">();</span><span class="w">　</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">folders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DriveApp</span><span class="p">.</span><span class="nx">getFoldersByName</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="nx">folders</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()){</span><span class="w"></span>
+<span class="w">          </span><span class="kd">var</span><span class="w"> </span><span class="nx">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">folders</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span><span class="w"></span>
+<span class="w">          </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">attachments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="kd">var</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DriveApp</span><span class="p">.</span><span class="nx">createFile</span><span class="p">(</span><span class="nx">attachments</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span><span class="w"></span>
+<span class="w">            </span><span class="nx">folder</span><span class="p">.</span><span class="nx">addFile</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span><span class="w"> </span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Threads</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">moveToTrash</span><span class="p">();</span><span class="w"> </span><span class="c1">//保存終了したらゴミ箱に移動</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w">    </span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 

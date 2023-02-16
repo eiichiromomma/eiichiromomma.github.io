@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+    <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
+    <title>cx_FreezeでPythonからexeファイル生成</title>
+
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/pygments.css" />	
+    <script src="https://eiichiromomma.github.io/theme/js/custom.modernizr.js"></script>
+
+    <!-- So Firefox can bookmark->"abo this site" -->
+        <link href="feeds/all.atom.xml" rel="alternate" title="CVMLAB Blog" type="application/atom+xml">
+
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://eiichiromomma.github.io">CVMLAB Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/" rel="bookmark"
+        title="Permalink to cx_FreezeでPythonからexeファイル生成">cx_FreezeでPythonからexeファイル生成</a></h3>
+    </header>
+
+<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
+</h6>
+
+
+    <p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
+Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
+<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
+ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプラットフォームでの実行ファイル生成はできない。(開発は可能)</p>
+<p>GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に<code>cv2.imshow</code>が使えたりする。</p>
+<p>(余談だが<a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo">Python.Netのデモ</a>がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)</p>
+<p>手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで</p>
+<div class="highlight"><pre><span></span><code>python setup.py build
+</code></pre></div>
+
+<p>または</p>
+<div class="highlight"><pre><span></span><code>python setup.py bdist_mac
+</code></pre></div>
+
+<p>とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。</p>
+<p>必要なファイルについては結構優秀で自動的に依存関係からコピーしてくれるのだが，逆に言えば依存関係の解析に失敗すれば全コケする。.pydのようなバイナリ化してるパッケージについては対応できてないようなので，pythonでスクリプトを走らせたときは動くのに，exe化したときには動かない，という現象が発生するうえに，printでデバッグできないので検証が面倒。
+(importでSystemErrorを起こしてexeでだけ動かないプログラムも↓の方法で確認したらnumpyが無いと言われてたので，<code>import numpy</code>をそのパッケージの前にimportしたら動いた)</p>
+<h3>エラーの収集</h3>
+<p>.exeにするとprintデバッグができないがstdoutとstderrをファイルに振ってしまえば行けるだろうと思ったら<a href="https://pc.atsuhiro-me.net/entry/2014/07/27/211623">既に先人が居た</a>ので有り難く使わせて貰う。</p>
+<p>具体的には</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">LogFrozen</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">initstdout</span><span class="p">():</span>
+    <span class="n">localdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">localdir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">localdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;frozen&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="c1"># frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">LogFrozen</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># not frozen</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localdir</span><span class="p">,</span><span class="s2">&quot;log.txt&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">log</span>
+<span class="n">initstdout</span><span class="p">()</span>
+<span class="c1"># この後に怪しいimportを書く</span>
+</code></pre></div>
+
+<p>をスクリプトに入れておけばホームフォルダ(Windowsならc:\Users\username，macOSなら/Users/username)にlog.txtファイルで出力される。場所を変えたかったら<code>localdir = os.path.expanduser("~/")</code>のところの"~/"を適当に変える(チルダはホームフォルダの意味)</p>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/archives.html">Archives</a>
+            <li><a href="https://eiichiromomma.github.io/tags.html">Tags</a>
+
+
+                <li><a href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://eiichiromomma.github.io/category/memo.html">Memo</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/news.html">News</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/このblog.html">このBlog</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a></li>
+            <li><a href="https://eiichiromomma.github.io/category/講義.html">講義</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="https://getpelican.com/">Pelican</a></li>
+            <li><a href="https://www.python.org/">Python.org</a></li>
+            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+            <li><a href="https://github.com/eiichiromomma/CVMLAB/wiki">ちゃんと纏めたWiki</a></li>
+            <li><a href="https://www.nihon-u.ac.jp/">日本大学</a></li>
+            <li><a href="https://www.cst.nihon-u.ac.jp/">日本大学理工学部</a></li>
+            <li><a href="https://www.ele.cst.nihon-u.ac.jp/">日本大学理工学部電気工学科</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://www.facebook.com/eiichiro.momma">Facebook</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+                <p>CVMLAB Blog by eiichiromomma</p>
+            </div>
+            </div>
+    </div>
+</footer>

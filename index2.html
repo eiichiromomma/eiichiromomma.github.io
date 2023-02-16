@@ -51,6 +51,50 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/04/09/moorebot-scout/"><h3 class="article-title">Moorebot Scout</h3></a>
+<h6 class="subheader" title="2022-04-09T09:20:00+09:00">2022-04-09(土)
+</h6>
+
+
+<p>KickstarterでROSも使える面白そうな<a href="https://www.moorebot.com/pages/moorebot-scout">自律走行ロボット Moorebot Scout</a>が出ていたのでバッカーになってました。
+去年6月に発送予定ということで去年の卒研にも使おうと思っていたところで半導体・部材の世界的不足に巻き込まれ，半年く …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/ros.html">ROS </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/09/moorebot-scout/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/04/08/classroom/"><h3 class="article-title">Classroomから受講者名簿の生成</h3></a>
+<h6 class="subheader" title="2022-04-08T20:20:00+09:00">2022-04-08(金)
+</h6>
+
+
+<p>長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/classroom.html">Classroom </a>
+    <a href="https://eiichiromomma.github.io/tag/gas.html">GAS </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/08/classroom/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/"><h3 class="article-title">CanvasのSandbox WSL2編</h3></a>
 <h6 class="subheader" title="2022-04-01T06:00:00+09:00">2022-04-01(金)
 </h6>
@@ -66,17 +110,7 @@
 </ul>
 <h3>まず時間を合わせとツール入れ</h3>
 <div class="highlight"><pre><span></span><code>sudo ntpdate time.google.com
-sudo apt update<span class="p">;</span> sudo apt upgrade -y
-sudo apt install ruby build-essential git 
-</code></pre></div>
-
-<h3>doryを入れる</h3>
-<p>doryは普通にgemで入る</p>
-<div class="highlight"><pre><span></span><code>sudo gem install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+sudo apt update …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
@@ -136,25 +170,7 @@ gitとかの基本的なツールはあって当たり前なので省略する�
 <li>docker諸々必要</li>
 <li>mutagenが必要(dockerのバインドマウントを高速化)</li>
 </ul>
-<p>あたりが条件</p>
-<h3>doryを入れる</h3>
-<div class="highlight"><pre><span></span><code>brew install dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms.git
-<span class="nb">cd</span> canvas-lms
-</code></pre></div>
-
-<h3>依存アプリを入れて環境構築</h3>
-<p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
-<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
-brew install mutagen-io/mutagen/mutagen-compose
-./script/docker_dev_setup.sh --mutagen
-</code></pre></div>
-
-<h3>Docker Desktopが無いと言われる</h3>
-<p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>あたり …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
@@ -178,12 +194,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 
 
 <p>昔は研究室Webサーバ内にwikiを設置していたものの，SPAM対策やら色々面倒になりGithubのリポジトリ内Wikiでいいかと<a href="https://github.com/eiichiromomma/CVMLAB/wiki">引っ越した</a>訳ですが，2019年からGoogle等の検索エンジンのクロールをGithubが拒否するようになってます。
-理由は色々あるらしいですが，<code>robots.txt</code>から <code>Disallow: /*/wiki*</code>を削除したものの<code>x-robots-tag: none</code>がヘッダに埋め込まれるせいでGithubの検索から以外は探せない状態が続いています。(<a href="https://github.com/github/feedback/discussions/4992">ここで議論されてました</a>)</p>
-<p>例えばffmpegを使おうとして<code>eiichiromomma ffmpeg</code>で<a href="https://www.google.com/search?q=eiichiromomma+ffmpeg">検索してもGithubのWikiが出てこない</a>。出てくるのはgithub-wiki-seeなる怪しいサイト。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20211204-ghws.png" width="600"></p>
-<p>見た目的に変なサイトと思えてしまいますが，<a href="https://github-wiki-see.page/">本来であれば検索エンジンに拾われたであろうGithub Wikiの内容をクロールして検索エンジンに渡して，オリジナルのWikiのURLを提示する</a>。というサイトのようです。
-私も最初訝しんでブロックしてましたが，問題無いようなので利用して下さい。</p>
-<p>改善しないなら，ここ(Github Pages)に今のWikiの内容をマージするのもアリかなと。ただフォルダ構造変えないとダメになるのでそれはそれで面倒。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+理由は色々あるらしいですが，<code>robots.txt</code>から <code>Disallow: /*/wiki*</code>を削除したものの<code>x-robots-tag: none</code>がヘッダに埋め込まれるせ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/github.html">github </a>
@@ -206,21 +217,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 
 
 <h2>研究室への問い合わせ</h2>
-<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマセン。(学生さんは聴講参加無料なので，この分野を覗いてみたい人は是非参加してみてください。)
-質問受け付けは<strong>全てZoomで実施します</strong>。(Zoom URLはドライブの方に掲示)</p>
-<ul>
-<li>12/4(土) 11:00-12:00 </li>
-<li>12/6(月) 17:00-18:00 </li>
-<li>12/7(火) 12:00-13:00 </li>
-<li>時間が合わない人は可能な範囲で個別に調整するので momma.eiichiro@nihon-u.ac.jp まで連絡</li>
-</ul>
-<h2>近況</h2>
-<p>コロナ禍なかなか収束しませんませんね。Blogに載せられる活動がほぼ無い状況なので1年以上更新も止まってました。
-写真はどうなんでしょうかね。マスクマンだらけなので社会情勢の記録にはなりますが。</p>
-<p>緊急事態宣言下ではもちろんリモートですが，卒研の活動については学部生は半数までという制限もあります(最近)。</p>
-<ul>
-<li>学生の研究室への登校は任意(要事前申請)</li>
-<li>連絡はコロナ禍の前からSlack …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
+<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
 
 </p>
 
@@ -246,20 +243,7 @@ brew install mutagen-io/mutagen/mutagen-compose
 <li>本体は持ち運び可能なNUC</li>
 <li>IPは固定のグローバル</li>
 </ul>
-<h2>サーバが起動してるうちにバックアップ</h2>
-<h3>IPの取得をDHCPに</h3>
-<p>/etc/network/interfaces をdhcp用に書き換える。ここらへんの作業は大した話ではない。再起動すればローカルのネットワーク内にアクセス可能なWebサーバが取り敢えず起動した状態になる。
-ifconfigなりip addressでIPアドレスを調べておく。</p>
-<h3>嘘吐きサーバと嘘吐きクライアント</h3>
-<p>本番物理環境以外で起動してもWebサーバはServerNameに基いて喋るのでDHCPで取得したIP直打ちでブラウザから開こうとしても蹴られる。ServerNameをIPにする手段もあるがSSLの扱いとか諸々上手く行かないうえに，サーバ内でlynxやw3mで開いて保存してもsshで同じ問題に当たるので，</p>
-<ol>
-<li>サーバの/etc/hosts でDHCPから割り当てられたIPと使っていたFQDN(www.cvm....)を紐付ける。</li>
-<li>クライアント(macOS)の/private/etc/hostsも同様にサーバのFQDNがDHCPでサーバが取得したIPに紐付ける。</li>
-</ol>
-<p>でローカル内で共謀させる。これでクライアントで今迄開いていたようにwww.cvm....を開くとローカルのサーバへアクセスできるし，sshやscpが機能する。</p>
-<h3>xmlをエクスポート</h3>
-<p>Wordpress to Wordpressならpluginで移行ツールも山程あるがPelicanはxmlが必要なので「ツール」-「エクスポート」で全データのXMLを吸い出す。
-あとは/var …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<h2>サーバが起動してるうちに …</h2><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
 </p>
 
@@ -297,22 +281,7 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 
 <!-- wp:paragraph -->
 
-<p>講義は全てオンデマンド式の講義で曜日無関係な収録の日々ではあるものの，そこは画像が専門なので，タダでは転ばず<a href="https://github.com/eiichiromomma/CVMLAB/wiki/%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%88%E8%AC%9B%E7%BE%A9">ノウハウを溜めました</a>ので，皆さんも参考にして下さい。お陰で自宅にクロマキー環境まで作ってYoutuber状態ですが。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-<p>まだタワー・スコラに来たことすら無い2年生もいるかも知れませんので(?)，3Dモデルを噂の3D Scanner Appで作ってみました。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:video -->
-
-<iframe src="https://player.vimeo.com/video/650708251?h=edbbc6d929" width="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-<!-- /wp:video -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
+<p>講義は全てオンデマンド式の講義で曜日無 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
 
 </p>
 
@@ -333,13 +302,7 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 
 <!-- wp:paragraph -->
 
-<p>例年だとB3と師匠の名誉教授にご参加頂き開催するところですが，例の肺炎対策ということで門馬とのポスターを使った試問ということにしました(距離は取ってます)。B3はネットでポスターを確認して Sli.do で質疑という試みもしました。今年度は上から水が降ったせいでリソースを大幅に取られたり色々ありましたが，どうにかM0の2名が研究会にも出せたし何とかなりました。皆様お疲れ様でした。Cavaで乾杯だけして解散。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":782,"sizeSlug":"large"} -->
-
-<p><img alt="None" src="https://eiichiromomma.github.io/images/uploads/2020/03/IMG_1545.jpeg" width="600"></p>
-<!-- /wp:image --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+<p>例年だとB3と師匠の名誉教授にご参加頂き開催するところですが，例の肺炎対策ということで門馬とのポスターを使った試問ということにしました(距離は取ってます)。B3はネットでポスターを確認して …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
 
 </p>
 
@@ -349,82 +312,9 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2020/01/30/卒論下見発表会/"><h3 class="article-title">卒論下見発表会</h3></a>
-<h6 class="subheader" title="2020-01-30T17:12:00+09:00">2020-01-30(木)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>卒論も大詰めということで下見発表会を開催しました。打ち上げも開催したいところですが，テストに追われていたり前日まで無理をしている人もいたりということで，昼にピザを差し入れするだけにしておきました。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":777,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00529.jpeg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:image {"id":778,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00531.jpg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:image {"id":779,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00534.jpg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
-<!-- /wp:paragraph --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2020/01/30/卒論下見発表会/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2019/12/19/忘年会/"><h3 class="article-title">忘年会</h3></a>
-<h6 class="subheader" title="2019-12-19T20:10:00+09:00">2019-12-19(木)
-</h6>
-
-
-<!-- wp:paragraph -->
-
-<p>数日前に飲み会をやったばかりですが，今度はB4+院生の忘年会。たまたまM1の誕生日ということでケーキでお祝い。</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":773,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00524.jpg" width="600"></p>
-<!-- /wp:image -->
-
-<!-- wp:image {"id":774,"sizeSlug":"large"} -->
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2020/03/DSC00528.jpg" width="600"></p>
-<!-- /wp:image --><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2019/12/19/忘年会/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 19</h6>
+<h6 class="subheader">Page 2 of 20</h6>
 
 <p>
             <a href="https://eiichiromomma.github.io/index.html">&laquo; Prev</a>
