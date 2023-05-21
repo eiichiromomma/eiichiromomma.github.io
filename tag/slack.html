@@ -77,7 +77,7 @@
 
 <p>でずらずらと表示される一覧のiSerialNumberがそれ。ただしstringなので注意。 find(serial_number='xxxxx')となる。</p>
 <p>もう一つの課題としては，どう自動実行するかで，Raspberry piの起動時にサービスとして走らせる方法がよく紹介されているものの，それも面倒なので</p>
-<div class="highlight"><pre><span></span><code>crontab -e
+<div class="highlight"><pre><span></span><code>crontab<span class="w"> </span>-e
 </code></pre></div>
 
 <p>で @rebootを指定して入室待機と退室待機の2つのスクリプトを走らせる手抜きで対応。</p>

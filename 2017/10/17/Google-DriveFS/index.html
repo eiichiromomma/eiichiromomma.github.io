@@ -76,9 +76,9 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 <p>Google Drive File Streamをインストールする前に以下の作業をする。(後でもDriveFSをコピーしてしまえば出来るが入れる前の方が安全)</p>
 <h2>Windows</h2>
 <p>大容量HDDがHドライブのとき，コマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span><span class="w"></span>
-<span class="n">cd</span><span class="w"> </span><span class="o">\</span><span class="w"></span>
-<span class="n">mkdir</span><span class="w"> </span><span class="n">DFSCache</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">h</span><span class="o">:</span>
+<span class="n">cd</span><span class="w"> </span><span class="o">\</span>
+<span class="n">mkdir</span><span class="w"> </span><span class="n">DFSCache</span>
 </code></pre></div>
 
 <p>でh:\DFSCacheを作成して，そこへのシンボリックリンクをGoogle Drive File Streamアプリが作成する筈フォルダ名で作成する。(usernameは自分のホームフォルダに置き換える)</p>
@@ -88,10 +88,10 @@ Google Driveアプリを使われていた方は乗り換えが必要で，か�
 <p>としてからGoogle Drive File Streamをインストールすると，h:\DFSCacheにもりもりファイルが溜まる。</p>
 <h2>Mac</h2>
 <p>/Users/username/Library/Application Support/Google/DriveFS にキャッシュが置かれるので，これを外付けドライブ等へのシンボリックリンクにする。</p>
-<div class="highlight"><pre><span></span><code>sudo mkdir /Volumes/extdrive/DriveFS
-sudo chown username:staff DriveFS
-<span class="nb">cd</span> /Users/username/Library/Application<span class="se">\ </span>Support/Google
-ln -s /Volumes/extdrive/DriveFS DriveFS
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>mkdir<span class="w"> </span>/Volumes/extdrive/DriveFS
+sudo<span class="w"> </span>chown<span class="w"> </span>username:staff<span class="w"> </span>DriveFS
+<span class="nb">cd</span><span class="w"> </span>/Users/username/Library/Application<span class="se">\ </span>Support/Google
+ln<span class="w"> </span>-s<span class="w"> </span>/Volumes/extdrive/DriveFS<span class="w"> </span>DriveFS
 </code></pre></div>
 
 <p>でextdrive上に逃がせる。</p>

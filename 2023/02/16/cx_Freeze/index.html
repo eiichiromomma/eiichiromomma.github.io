@@ -63,11 +63,11 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 <p>GUIアプリケーションのサンプルとしてはPyQt5, PyQt6, PySide2, PySide6, wxWidgets, tcltk, Python.Netあたり。OpenCVも普通に<code>cv2.imshow</code>が使えたりする。</p>
 <p>(余談だが<a href="https://github.com/marcelotduarte/cx_Freeze/tree/main/samples/pythonnet-demo">Python.Netのデモ</a>がIronPythonよりも遥かにC#のFormsアプリっぽく書けそうで驚いた。)</p>
 <p>手順としては普通にプログラムを作ったうえで，ルールに従ってsetup.pyを記述したうえで</p>
-<div class="highlight"><pre><span></span><code>python setup.py build
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>setup.py<span class="w"> </span>build
 </code></pre></div>
 
 <p>または</p>
-<div class="highlight"><pre><span></span><code>python setup.py bdist_mac
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>setup.py<span class="w"> </span>bdist_mac
 </code></pre></div>
 
 <p>とすれば.exeや.appを生成する。ただし実行に必要なdll等は内包せずに一緒にbuildフォルダにコピーされるので，フォルダごと持って行って実行。となる。OpenCLを使うパッケージでも普通に動いたのでかなり便利。</p>

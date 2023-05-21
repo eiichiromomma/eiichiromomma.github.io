@@ -66,69 +66,69 @@ gitとかの基本的なツールはあって当たり前なので省略する�
 </ul>
 <p>あたりが条件</p>
 <h3>doryを入れる</h3>
-<div class="highlight"><pre><span></span><code>brew install dory
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>dory
 </code></pre></div>
 
 <h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/instructure/canvas-lms.git
-<span class="nb">cd</span> canvas-lms
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/instructure/canvas-lms.git
+<span class="nb">cd</span><span class="w"> </span>canvas-lms
 </code></pre></div>
 
 <h3>依存アプリを入れて環境構築</h3>
 <p><a href="https://github.com/instructure/canvas-lms/wiki/Quick-Start">ここ</a>の通りにDocker環境のセットアップを実行すると足りないものを指摘してくれるのだが，先に依存するアプリも入れてしまう</p>
-<div class="highlight"><pre><span></span><code>brew install mutagen-io/mutagen/mutagen
-brew install mutagen-io/mutagen/mutagen-compose
-./script/docker_dev_setup.sh --mutagen
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>mutagen-io/mutagen/mutagen
+brew<span class="w"> </span>install<span class="w"> </span>mutagen-io/mutagen/mutagen-compose
+./script/docker_dev_setup.sh<span class="w"> </span>--mutagen
 </code></pre></div>
 
 <h3>Docker Desktopが無いと言われる</h3>
 <p>で，Docker Desktopをインストールしてあるのに無いと言われてコケるので <code>script/common/utils/docker_desktop_setup.sh</code> の最後の</p>
-<div class="highlight"><pre><span></span><code><span class="k">function</span> check_for_docker_desktop <span class="o">{</span>
-  <span class="k">if</span> ! mdfind <span class="s2">&quot;kMDItemKind == &#39;Application&#39;&quot;</span> <span class="p">|</span>grep -qE <span class="s1">&#39;Docker.app|Docker\ Desktop.app&#39;</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Docker Desktop is not installed!&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Refer to https://docs.docker.com/docker-for-mac/install/ for help installing.&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;  Once Docker Desktop is installed rerun this script.&quot;</span>
-    <span class="nb">exit</span> <span class="m">1</span>
-  <span class="k">fi</span>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>check_for_docker_desktop<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>mdfind<span class="w"> </span><span class="s2">&quot;kMDItemKind == &#39;Application&#39;&quot;</span><span class="w"> </span><span class="p">|</span>grep<span class="w"> </span>-qE<span class="w"> </span><span class="s1">&#39;Docker.app|Docker\ Desktop.app&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  Docker Desktop is not installed!&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  Refer to https://docs.docker.com/docker-for-mac/install/ for help installing.&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  Once Docker Desktop is installed rerun this script.&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="k">fi</span>
 <span class="o">}</span>
 </code></pre></div>
 
 <p>のexit 1を消す泥縄で対応。(エラーになっても終了させない)</p>
 <h3>またコケるが再度実行すると通る</h3>
 <p>その後コケるが，docker_dev_setup.logを見ても↓のような感じで原因不明だが，もう一度実行すると何故かエラーなく通る</p>
-<div class="highlight"><pre><span></span><code>Gem files will remain installed <span class="k">in</span> /home/docker/.gem/gems/ruby-debug-ide-0.7.2
-<span class="k">for</span> inspection.
-Results logged to
+<div class="highlight"><pre><span></span><code>Gem<span class="w"> </span>files<span class="w"> </span>will<span class="w"> </span>remain<span class="w"> </span>installed<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/docker/.gem/gems/ruby-debug-ide-0.7.2
+<span class="k">for</span><span class="w"> </span>inspection.
+Results<span class="w"> </span>logged<span class="w"> </span>to
 /home/docker/.gem/extensions/x86_64-linux/2.7.0/ruby-debug-ide-0.7.2/gem_make.out
 
-An error occurred <span class="k">while</span> installing ruby-debug-ide <span class="o">(</span><span class="m">0</span>.7.2<span class="o">)</span>, and Bundler cannot
+An<span class="w"> </span>error<span class="w"> </span>occurred<span class="w"> </span><span class="k">while</span><span class="w"> </span>installing<span class="w"> </span>ruby-debug-ide<span class="w"> </span><span class="o">(</span><span class="m">0</span>.7.2<span class="o">)</span>,<span class="w"> </span>and<span class="w"> </span>Bundler<span class="w"> </span>cannot
 <span class="k">continue</span>.
-Make sure that <span class="sb">`</span>gem install ruby-debug-ide -v <span class="s1">&#39;0.7.2&#39;</span> --source
-<span class="s1">&#39;https://rubygems.org/&#39;</span><span class="sb">`</span> succeeds before bundling.
+Make<span class="w"> </span>sure<span class="w"> </span>that<span class="w"> </span><span class="sb">`</span>gem<span class="w"> </span>install<span class="w"> </span>ruby-debug-ide<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;0.7.2&#39;</span><span class="w"> </span>--source
+<span class="s1">&#39;https://rubygems.org/&#39;</span><span class="sb">`</span><span class="w"> </span>succeeds<span class="w"> </span>before<span class="w"> </span>bundling.
 
-In Gemfile:
-  ruby-debug-ide
-  /o<span class="se">\ </span>Something went wrong. Check /xxxxxxxxx/sandbox/canvas-lms/log/docker_dev_setup.log <span class="k">for</span> details.
+In<span class="w"> </span>Gemfile:
+<span class="w">  </span>ruby-debug-ide
+<span class="w">  </span>/o<span class="se">\ </span>Something<span class="w"> </span>went<span class="w"> </span>wrong.<span class="w"> </span>Check<span class="w"> </span>/xxxxxxxxx/sandbox/canvas-lms/log/docker_dev_setup.log<span class="w"> </span><span class="k">for</span><span class="w"> </span>details.
 </code></pre></div>
 
 <p>ということでもう一度実行</p>
-<div class="highlight"><pre><span></span><code>./script/docker_dev_setup.sh --mutagen
+<div class="highlight"><pre><span></span><code>./script/docker_dev_setup.sh<span class="w"> </span>--mutagen
 </code></pre></div>
 
 <p>今度はセットアップが完了する。</p>
 <h3>mutagen-compose up</h3>
 <p>mutagen-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消える)。</p>
-<div class="highlight"><pre><span></span><code>mutagen-compose up
+<div class="highlight"><pre><span></span><code>mutagen-compose<span class="w"> </span>up
 </code></pre></div>
 
 <p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://canvas.docker/">http://canvas.docker</a>を開くとCanvasのログイン画面になれば順調。</p>
 <h3>Canvasのアカウント作成</h3>
 <p>この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。</p>
-<div class="highlight"><pre><span></span><code>docker ps
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps
 </code></pre></div>
 
 <p>で確認してIMAGEが<code>canvas-lms_web</code>のNAMESを見る(たぶんcanvas-lms_web_1)。</p>
-<div class="highlight"><pre><span></span><code>docker <span class="nb">exec</span> -u <span class="m">0</span> -it canvas-lms_web_1 /bin/bash
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-u<span class="w"> </span><span class="m">0</span><span class="w"> </span>-it<span class="w"> </span>canvas-lms_web_1<span class="w"> </span>/bin/bash
 </code></pre></div>
 
 <p>でコンテナに入ると</p>
@@ -136,35 +136,35 @@ In Gemfile:
 </code></pre></div>
 
 <p>のようなプロンプトになるので</p>
-<div class="highlight"><pre><span></span><code>rails db:initial_setup
+<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>db:initial_setup
 </code></pre></div>
 
 <p>を実行すると色々聞かれる。</p>
 <p>※アカウント名(the account name)なのだが，特殊な用語で大学-学部-学科のようなツリーを考えたときの大学に相当する</p>
-<div class="highlight"><pre><span></span><code><span class="m">1</span>: development:public
-What email address will the site administrator account use? &gt; <span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-Please confirm &gt; <span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-What password will the site administrator use? &gt; <span class="o">[</span>パスワードを入力<span class="o">]</span>
-Please confirm &gt; <span class="o">[</span>パスワードを入力<span class="o">]</span>
-What <span class="k">do</span> you want users to see as the account name? This should probably be the name of your organization. &gt; <span class="o">[</span>他のユーザーから見たアカウント名<span class="o">]</span>
-To <span class="nb">help</span> our developers better serve you, Instructure would like to collect some usage data about your Canvas installation. You can change this setting at any time.:
-<span class="m">1</span>. Opt <span class="k">in</span>
-<span class="m">2</span>. Only send anonymized data
-<span class="m">3</span>. Opt out completely
-&gt; <span class="o">[</span>開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難<span class="o">]</span>
-Thank you <span class="k">for</span> participating <span class="k">in</span> anonymous usage collection.
-You can change this feature at any <span class="nb">time</span> by running the rake task <span class="s1">&#39;rake db:configure_statistics_collection&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="m">1</span>:<span class="w"> </span>development:public
+What<span class="w"> </span>email<span class="w"> </span>address<span class="w"> </span>will<span class="w"> </span>the<span class="w"> </span>site<span class="w"> </span>administrator<span class="w"> </span>account<span class="w"> </span>use?<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
+Please<span class="w"> </span>confirm<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
+What<span class="w"> </span>password<span class="w"> </span>will<span class="w"> </span>the<span class="w"> </span>site<span class="w"> </span>administrator<span class="w"> </span>use?<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>パスワードを入力<span class="o">]</span>
+Please<span class="w"> </span>confirm<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>パスワードを入力<span class="o">]</span>
+What<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>users<span class="w"> </span>to<span class="w"> </span>see<span class="w"> </span>as<span class="w"> </span>the<span class="w"> </span>account<span class="w"> </span>name?<span class="w"> </span>This<span class="w"> </span>should<span class="w"> </span>probably<span class="w"> </span>be<span class="w"> </span>the<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>your<span class="w"> </span>organization.<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>他のユーザーから見たアカウント名<span class="o">]</span>
+To<span class="w"> </span><span class="nb">help</span><span class="w"> </span>our<span class="w"> </span>developers<span class="w"> </span>better<span class="w"> </span>serve<span class="w"> </span>you,<span class="w"> </span>Instructure<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>collect<span class="w"> </span>some<span class="w"> </span>usage<span class="w"> </span>data<span class="w"> </span>about<span class="w"> </span>your<span class="w"> </span>Canvas<span class="w"> </span>installation.<span class="w"> </span>You<span class="w"> </span>can<span class="w"> </span>change<span class="w"> </span>this<span class="w"> </span>setting<span class="w"> </span>at<span class="w"> </span>any<span class="w"> </span>time.:
+<span class="m">1</span>.<span class="w"> </span>Opt<span class="w"> </span><span class="k">in</span>
+<span class="m">2</span>.<span class="w"> </span>Only<span class="w"> </span>send<span class="w"> </span>anonymized<span class="w"> </span>data
+<span class="m">3</span>.<span class="w"> </span>Opt<span class="w"> </span>out<span class="w"> </span>completely
+&gt;<span class="w"> </span><span class="o">[</span>開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難<span class="o">]</span>
+Thank<span class="w"> </span>you<span class="w"> </span><span class="k">for</span><span class="w"> </span>participating<span class="w"> </span><span class="k">in</span><span class="w"> </span>anonymous<span class="w"> </span>usage<span class="w"> </span>collection.
+You<span class="w"> </span>can<span class="w"> </span>change<span class="w"> </span>this<span class="w"> </span>feature<span class="w"> </span>at<span class="w"> </span>any<span class="w"> </span><span class="nb">time</span><span class="w"> </span>by<span class="w"> </span>running<span class="w"> </span>the<span class="w"> </span>rake<span class="w"> </span>task<span class="w"> </span><span class="s1">&#39;rake db:configure_statistics_collection&#39;</span>
 ........................................................................................
-Notifications Loaded
-No notification files found <span class="k">for</span> Assignment Publishing Reminder
-No notification files found <span class="k">for</span> Assignment Grading Reminder
-No notification files found <span class="k">for</span> Assignment Due Date Reminder
-No notification files found <span class="k">for</span> Rubric Assessment Invitation
-No notification files found <span class="k">for</span> Migration Export Ready
-No notification files found <span class="k">for</span> Migration Import Finished
-No notification files found <span class="k">for</span> Migration Import Failed
+Notifications<span class="w"> </span>Loaded
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Publishing<span class="w"> </span>Reminder
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Grading<span class="w"> </span>Reminder
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Due<span class="w"> </span>Date<span class="w"> </span>Reminder
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Rubric<span class="w"> </span>Assessment<span class="w"> </span>Invitation
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Export<span class="w"> </span>Ready
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Import<span class="w"> </span>Finished
+No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Import<span class="w"> </span>Failed
 
-Initial data loaded
+Initial<span class="w"> </span>data<span class="w"> </span>loaded
 </code></pre></div>
 
 <p>で完了。doryのおかげで<a href="http://canvas.docker/">http://canvas.docker</a>でログインできるようになってる。</p>

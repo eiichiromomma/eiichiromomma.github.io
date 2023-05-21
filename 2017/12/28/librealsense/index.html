@@ -60,10 +60,10 @@
 <h1>インストール(macOS)</h1>
 <p><a href="https://github.com/IntelRealSense/librealsense">librealsense</a>は公式サポートではないがIntel謹製のライブラリらしい。
 Homebrewにも存在するがPython wrapperが欲しいので自前でビルドする。</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/IntelRealSense/librealsense.git
-mkdir build
-<span class="nb">cd</span> build
-ccmake ..
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/IntelRealSense/librealsense.git
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+ccmake<span class="w"> </span>..
 </code></pre></div>
 
 <p>で</p>
@@ -77,33 +77,33 @@ ccmake ..
 <li>BUILD_WITH_OPENMP: OpenMPだがmacOSだとエラーになる。動くようにしても大して速くならないとのこと</li>
 </ul>
 <p>をOFFにしておく。あとはOpenCVなりPCLなりが入っている環境なら問題無く動く。</p>
-<div class="highlight"><pre><span></span><code><span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librealsense</span><span class="o">-</span><span class="n">file</span><span class="o">.</span><span class="n">a</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">capture</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">save</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">disk</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">multicam</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">pointcloud</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">align</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">sensor</span><span class="o">-</span><span class="n">control</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">depth</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">color</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">distance</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">terminal</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">enumerate</span><span class="o">-</span><span class="n">devices</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">realsense</span><span class="o">-</span><span class="n">viewer</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">collect</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">depth</span><span class="o">-</span><span class="n">quality</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">live</span><span class="o">-</span><span class="n">test</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="mf">2.8</span><span class="o">.</span><span class="mf">3.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="mf">2.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="mf">2.8</span><span class="o">.</span><span class="mf">3.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="mf">2.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">imshow</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">grabcuts</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">latency</span><span class="o">-</span><span class="k">tool</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">dnn</span><span class="w"></span>
-<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">pcl</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librealsense</span><span class="o">-</span><span class="n">file</span><span class="o">.</span><span class="n">a</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">capture</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">save</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">disk</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">multicam</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">pointcloud</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">align</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">sensor</span><span class="o">-</span><span class="n">control</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">depth</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">color</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">distance</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">terminal</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">enumerate</span><span class="o">-</span><span class="n">devices</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">realsense</span><span class="o">-</span><span class="n">viewer</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">collect</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">depth</span><span class="o">-</span><span class="n">quality</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">live</span><span class="o">-</span><span class="n">test</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="mf">2.8</span><span class="o">.</span><span class="mf">3.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="mf">2.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pyrealsense2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="mf">2.8</span><span class="o">.</span><span class="mf">3.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="mf">2.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pybackend2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">darwin</span><span class="o">.</span><span class="n">so</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">imshow</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">grabcuts</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">latency</span><span class="o">-</span><span class="k">tool</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">dnn</span>
+<span class="o">--</span><span class="w"> </span><span class="n">Installing</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rs</span><span class="o">-</span><span class="n">pcl</span>
 </code></pre></div>
 
 <p>という感じに面白いサンプルも入る。</p>
@@ -112,9 +112,9 @@ ccmake ..
 realsense-viewerは至れり尽せり。</p>
 <h1>Pythonパッケージ</h1>
 <p>pythonのpyrealsense2は適切な場所に置く必要がある。例えば</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/lib/python3.6/site-packages/
-ln -s /usr/local/lib/pyrealsense2.cpython-36m-darwin.so pyrealsense2.so
-ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/usr/local/lib/python3.6/site-packages/
+ln<span class="w"> </span>-s<span class="w"> </span>/usr/local/lib/pyrealsense2.cpython-36m-darwin.so<span class="w"> </span>pyrealsense2.so
+ln<span class="w"> </span>-s<span class="w"> </span>/usr/local/lib/pybackend2.cpython-36m-darwin.so<span class="w"> </span>pybackend2.so
 </code></pre></div>
 
 <p>のような感じで使える。</p>
@@ -152,17 +152,17 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 <p>で距離画像をASCII Art化して表示してくれる。
 ローテク加減が面白い。
 ※固定長フォントでお楽しみ下さい</p>
-<div class="highlight"><pre><span></span><code>                                    .
-                                  nWBnBWWX:
-                               h :WWWWWWWWWn.
-                               WnWWWWWWWWWWWB
-                             .nXhWWWWWWWWWWWW:
-                         .:hWWWWhWWWWWWWWWWWW:
-                    :WXBXXWWWWWW:hWWWWWWWWWWn n: .
-                   nWWWWWWWWWWWWX.:hhBXXh:n. XWWXX
-                  hWWWWWWWWWWWWWWX: hWBh: .:WWWWWBB
-                 :WWWWWWWWWWWWWWXWWB:.. :BWWWWWXnXX
-                 XWWWWWBhWWWWWWWWWWWWWWWWWWWWWW:hB.
+<div class="highlight"><pre><span></span><code><span class="w">                                    </span>.
+<span class="w">                                  </span>nWBnBWWX:
+<span class="w">                               </span>h<span class="w"> </span>:WWWWWWWWWn.
+<span class="w">                               </span>WnWWWWWWWWWWWB
+<span class="w">                             </span>.nXhWWWWWWWWWWWW:
+<span class="w">                         </span>.:hWWWWhWWWWWWWWWWWW:
+<span class="w">                    </span>:WXBXXWWWWWW:hWWWWWWWWWWn<span class="w"> </span>n:<span class="w"> </span>.
+<span class="w">                   </span>nWWWWWWWWWWWWX.:hhBXXh:n.<span class="w"> </span>XWWXX
+<span class="w">                  </span>hWWWWWWWWWWWWWWX:<span class="w"> </span>hWBh:<span class="w"> </span>.:WWWWWBB
+<span class="w">                 </span>:WWWWWWWWWWWWWWXWWB:..<span class="w"> </span>:BWWWWWXnXX
+<span class="w">                 </span>XWWWWWBhWWWWWWWWWWWWWWWWWWWWWW:hB.
 
 
 
@@ -177,16 +177,16 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                  nWX:hWWX:
-                               B :WWWWWWWWWn.
-                               WnWWWWWWWWWWWB
-                             .:XhWWWWWWWWWWWW.
-                          .hWWWWnWWWWWWWWWWWW:
-                    :XBhBXWWWWWW:hWWWWWWWWWWn n.
-                   hWWWWWWWWWWWWB :BhBXXh:n: XWWXB
-                  hWWWWWWWWWWWXWWX: hWXhn .:WWWWWhX
-                 .WWWWWWWWWWWWWWWWWB:.  :BWWWWWWnBh
-                 BWWWWXBhWWWWWWWXWWWWWWWWWWWWWWhXB:
+<span class="w">                                  </span>nWX:hWWX:
+<span class="w">                               </span>B<span class="w"> </span>:WWWWWWWWWn.
+<span class="w">                               </span>WnWWWWWWWWWWWB
+<span class="w">                             </span>.:XhWWWWWWWWWWWW.
+<span class="w">                          </span>.hWWWWnWWWWWWWWWWWW:
+<span class="w">                    </span>:XBhBXWWWWWW:hWWWWWWWWWWn<span class="w"> </span>n.
+<span class="w">                   </span>hWWWWWWWWWWWWB<span class="w"> </span>:BhBXXh:n:<span class="w"> </span>XWWXB
+<span class="w">                  </span>hWWWWWWWWWWWXWWX:<span class="w"> </span>hWXhn<span class="w"> </span>.:WWWWWhX
+<span class="w">                 </span>.WWWWWWWWWWWWWWWWWB:.<span class="w">  </span>:BWWWWWWnBh
+<span class="w">                 </span>BWWWWXBhWWWWWWWXWWWWWWWWWWWWWWhXB:
 
 
 
@@ -201,16 +201,16 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                  BWnnBWWB
-                              :. hWWWWWWWWX.
-                               WnWWWWWWWWWWXh
-                              :XBWWWWWWWWWWWX.
-                          .BWWWXnWWWWWWWWWWWW
-                    nXBhBBWWWWWW.XWWWWWWWWWW..n.
-                   hWWWWWWWWWWWWn hhBBXXhnh.:WWWXB
-                  hWWWWWWWWWWWXWWh  WWXh: .nWWWWXBh
-                 :WWWWWWWWWWWWWXWWWh..  nXWWWWWXhWB.
-                 XWWWWWBhWWWWWWWXWWWWWWWWWWWWWXnBBn
+<span class="w">                                  </span>BWnnBWWB
+<span class="w">                              </span>:.<span class="w"> </span>hWWWWWWWWX.
+<span class="w">                               </span>WnWWWWWWWWWWXh
+<span class="w">                              </span>:XBWWWWWWWWWWWX.
+<span class="w">                          </span>.BWWWXnWWWWWWWWWWWW
+<span class="w">                    </span>nXBhBBWWWWWW.XWWWWWWWWWW..n.
+<span class="w">                   </span>hWWWWWWWWWWWWn<span class="w"> </span>hhBBXXhnh.:WWWXB
+<span class="w">                  </span>hWWWWWWWWWWWXWWh<span class="w">  </span>WWXh:<span class="w"> </span>.nWWWWXBh
+<span class="w">                 </span>:WWWWWWWWWWWWWXWWWh..<span class="w">  </span>nXWWWWWXhWB.
+<span class="w">                 </span>XWWWWWBhWWWWWWWXWWWWWWWWWWWWWXnBBn
 
 
 
@@ -225,16 +225,16 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                  XW.nBWWB
-                              n. BWWWWWWWWh:
-                              :WnWWWWWWWWWWXn
-                              hWBWWWWWWWWWWWX
-                          :BWWWBnWWWWWWWWWWWW
-                    nBhhBXWWWWWW:XWWWWWWWWWW.:n..
-                   BWWWWWWWWWWWWn hBBXXXnnh :WWWBB
-                  hWWWWWWWWWWWXWWh. WWXh. .nWWWWXBn
-                 .WWWWWWWWWWWWWXWWWh..  nBWWWWWXhXh
-                 XWWWWWXBWWWWWWWXWWWWWWWWWWWWWWnhn
+<span class="w">                                  </span>XW.nBWWB
+<span class="w">                              </span>n.<span class="w"> </span>BWWWWWWWWh:
+<span class="w">                              </span>:WnWWWWWWWWWWXn
+<span class="w">                              </span>hWBWWWWWWWWWWWX
+<span class="w">                          </span>:BWWWBnWWWWWWWWWWWW
+<span class="w">                    </span>nBhhBXWWWWWW:XWWWWWWWWWW.:n..
+<span class="w">                   </span>BWWWWWWWWWWWWn<span class="w"> </span>hBBXXXnnh<span class="w"> </span>:WWWBB
+<span class="w">                  </span>hWWWWWWWWWWWXWWh.<span class="w"> </span>WWXh.<span class="w"> </span>.nWWWWXBn
+<span class="w">                 </span>.WWWWWWWWWWWWWXWWWh..<span class="w">  </span>nBWWWWWXhXh
+<span class="w">                 </span>XWWWWWXBWWWWWWWXWWWWWWWWWWWWWWnhn
 
 
 
@@ -248,17 +248,17 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                       .
-                                 :WhnXWWW:
-                              n :WWWWWWWWWBn.
-                              BhBWWWWWWWWWWX:
-                              hhWWWWWWWWWWWWh
-                          :BWWXnBWWWWWWWXWWWn
-                    :BBhhWWWWWWX:XWWWWWWWWWB :n:
-                   hWWWWWWWWWWWWn hnBBXX::: hWWWBB
-                  hWWWWWWWWWWWXWWB..WWhn. nBWWWWWBh
-                 :WWWWWWWWWWWWWXWWWB:...hXWWWWWXhXh.
-                 XWWWWWXXWWWWWWWXWWWWWWWWWWWWWXhXB.
+<span class="w">                                       </span>.
+<span class="w">                                 </span>:WhnXWWW:
+<span class="w">                              </span>n<span class="w"> </span>:WWWWWWWWWBn.
+<span class="w">                              </span>BhBWWWWWWWWWWX:
+<span class="w">                              </span>hhWWWWWWWWWWWWh
+<span class="w">                          </span>:BWWXnBWWWWWWWXWWWn
+<span class="w">                    </span>:BBhhWWWWWWX:XWWWWWWWWWB<span class="w"> </span>:n:
+<span class="w">                   </span>hWWWWWWWWWWWWn<span class="w"> </span>hnBBXX:::<span class="w"> </span>hWWWBB
+<span class="w">                  </span>hWWWWWWWWWWWXWWB..WWhn.<span class="w"> </span>nBWWWWWBh
+<span class="w">                 </span>:WWWWWWWWWWWWWXWWWB:...hXWWWWWXhXh.
+<span class="w">                 </span>XWWWWWXXWWWWWWWXWWWWWWWWWWWWWXhXB.
 
 
 
@@ -270,19 +270,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                  BB:
-                              .hhWWWWWBn.
-                              XWWWWWWWWXh
-                            ..WWWWWWWWWWWW
-                            nBWWWWWWWWWWWW
-                             hBWWWWWWWWWWX
-                           :hB.nXXhXWWXnn
-                        :XWWWWX:. WWWWWn  XWB.
-                   .XWWWWWWWWWXWB. ::. .nWWWWWXh.
-                  .WWWWWWWWWWWXWWWWBhBXWWWWWWWWWWn.
-                 .WWWWWWWWWWWWWXWWWWWXWWWWWWWWWWWWX
-                 BWWWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWh.
-                 XWWWWh:BWWWWWWWWWWWWWWWWWWBhh:XWn
+<span class="w">                                  </span>BB:
+<span class="w">                              </span>.hhWWWWWBn.
+<span class="w">                              </span>XWWWWWWWWXh
+<span class="w">                            </span>..WWWWWWWWWWWW
+<span class="w">                            </span>nBWWWWWWWWWWWW
+<span class="w">                             </span>hBWWWWWWWWWWX
+<span class="w">                           </span>:hB.nXXhXWWXnn
+<span class="w">                        </span>:XWWWWX:.<span class="w"> </span>WWWWWn<span class="w">  </span>XWB.
+<span class="w">                   </span>.XWWWWWWWWWXWB.<span class="w"> </span>::.<span class="w"> </span>.nWWWWWXh.
+<span class="w">                  </span>.WWWWWWWWWWWXWWWWBhBXWWWWWWWWWWn.
+<span class="w">                 </span>.WWWWWWWWWWWWWXWWWWWXWWWWWWWWWWWWX
+<span class="w">                 </span>BWWWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWh.
+<span class="w">                 </span>XWWWWh:BWWWWWWWWWWWWWWWWWWBhh:XWn
 
 
 
@@ -294,19 +294,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                               nXX.
-                            :hXWWWWWBnn
-                            WWWWWWWWWWB:
-                          :nWWWWWWWWWWWW
-                           BWWWWWWWWWWWW
-                           nBWWWWWWWWWWX
-                         .nB.nWBXWWWBn:  :
-                      .hWWWWX: .WWWWW: .XWWXn.
-                  .XWWWXWWWWWWB:.::. :BBWWWWWWWn
-                 :WWWWWWWWWWXWWWWBBXWWWBWWWWWWWWWh
-                .WWWWWWWWWWWWWXWWWWXXWWWWWWWWWWWWW:
-                hWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWB
-                XWWWXnnXWWWWWWWWWWWWWWWWWWWXhhXWBh
+<span class="w">                               </span>nXX.
+<span class="w">                            </span>:hXWWWWWBnn
+<span class="w">                            </span>WWWWWWWWWWB:
+<span class="w">                          </span>:nWWWWWWWWWWWW
+<span class="w">                           </span>BWWWWWWWWWWWW
+<span class="w">                           </span>nBWWWWWWWWWWX
+<span class="w">                         </span>.nB.nWBXWWWBn:<span class="w">  </span>:
+<span class="w">                      </span>.hWWWWX:<span class="w"> </span>.WWWWW:<span class="w"> </span>.XWWXn.
+<span class="w">                  </span>.XWWWXWWWWWWB:.::.<span class="w"> </span>:BBWWWWWWWn
+<span class="w">                 </span>:WWWWWWWWWWXWWWWBBXWWWBWWWWWWWWWh
+<span class="w">                </span>.WWWWWWWWWWWWWXWWWWXXWWWWWWWWWWWWW:
+<span class="w">                </span>hWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWB
+<span class="w">                </span>XWWWXnnXWWWWWWWWWWWWWWWWWWWXhhXWBh
 
 
 
@@ -318,19 +318,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                              :Bh:
-                           .nBWWWWWXhh:
-                           BWWWWWWWWWXh
-                          :XWWWWWWWWWWWh
-                          .BWWWWWWWWWWWh
-                           :WWWWWWWWWWW:
-                         nBB.BBhXWWXB:  nh:
-                     .:hWWWWh. BWWWWh .BWWWXh:.
-                  .XWWWWWWWWXWB..:.  BWWWWWWWWWB
-                 :WWWWWWWWWWWWWWWBBBXWXWWWWWWWWWWh
-                .WWWWWWWWWWWWhXWWWWXXWWWWWWWWWWWWWh
-                hWWWWWWWWWWWWWWWWXWWWWWWWWWWWWWWWXh
-                BWWWX: hBWWWWWWWWWWWWWWWWWWX:hXWhn:
+<span class="w">                              </span>:Bh:
+<span class="w">                           </span>.nBWWWWWXhh:
+<span class="w">                           </span>BWWWWWWWWWXh
+<span class="w">                          </span>:XWWWWWWWWWWWh
+<span class="w">                          </span>.BWWWWWWWWWWWh
+<span class="w">                           </span>:WWWWWWWWWWW:
+<span class="w">                         </span>nBB.BBhXWWXB:<span class="w">  </span>nh:
+<span class="w">                     </span>.:hWWWWh.<span class="w"> </span>BWWWWh<span class="w"> </span>.BWWWXh:.
+<span class="w">                  </span>.XWWWWWWWWXWB..:.<span class="w">  </span>BWWWWWWWWWB
+<span class="w">                 </span>:WWWWWWWWWWWWWWWBBBXWXWWWWWWWWWWh
+<span class="w">                </span>.WWWWWWWWWWWWhXWWWWXXWWWWWWWWWWWWWh
+<span class="w">                </span>hWWWWWWWWWWWWWWWWXWWWWWWWWWWWWWWWXh
+<span class="w">                </span>BWWWX:<span class="w"> </span>hBWWWWWWWWWWWWWWWWWWX:hXWhn:
 
 
 
@@ -342,19 +342,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                :B:
-                              :hXWWWWh
-                             .hWWWWWWWX
-                             nhWWWWWWWW.
-                               nBBXXBn.
-                            . .. hWXX
-                        hB...XXWBn...nWh:. .n.
-                      hWWWWXWWWBWWWWWWWWWhBWW.
-                     :WWWWWWWWWWWWWWWWWWWWXWXn:
-                     hWWWWWWWWWWWWWWWWWWWWWhBXh
-                     nWWWWWWWWWWWWWWWWWWWXh.nBB
-                     BXBn :WWWWWWWXWWWXXWWWWB:
-                           nBhWWWWWWWXBWWWXhn:
+<span class="w">                                </span>:B:
+<span class="w">                              </span>:hXWWWWh
+<span class="w">                             </span>.hWWWWWWWX
+<span class="w">                             </span>nhWWWWWWWW.
+<span class="w">                               </span>nBBXXBn.
+<span class="w">                            </span>.<span class="w"> </span>..<span class="w"> </span>hWXX
+<span class="w">                        </span>hB...XXWBn...nWh:.<span class="w"> </span>.n.
+<span class="w">                      </span>hWWWWXWWWBWWWWWWWWWhBWW.
+<span class="w">                     </span>:WWWWWWWWWWWWWWWWWWWWXWXn:
+<span class="w">                     </span>hWWWWWWWWWWWWWWWWWWWWWhBXh
+<span class="w">                     </span>nWWWWWWWWWWWWWWWWWWWXh.nBB
+<span class="w">                     </span>BXBn<span class="w"> </span>:WWWWWWWXWWWXXWWWWB:
+<span class="w">                           </span>nBhWWWWWWWXBWWWXhn:
 
 
 
@@ -376,9 +376,9 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                               .  .h:..   .
-                            .   BXWWWB: .nBhn
-                           n:.   .:       ::.
+<span class="w">                               </span>.<span class="w">  </span>.h:..<span class="w">   </span>.
+<span class="w">                            </span>.<span class="w">   </span>BXWWWB:<span class="w"> </span>.nBhn
+<span class="w">                           </span>n:.<span class="w">   </span>.:<span class="w">       </span>::.
 
 
 
@@ -401,8 +401,8 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                 hXWh..    .
-                                   :.      .
+<span class="w">                                 </span>hXWh..<span class="w">    </span>.
+<span class="w">                                   </span>:.<span class="w">      </span>.
 
 
 
@@ -425,8 +425,8 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                :WWWn:.  ..
-                                  :.       .
+<span class="w">                                </span>:WWWn:.<span class="w">  </span>..
+<span class="w">                                  </span>:.<span class="w">       </span>.
 
 
 
@@ -449,8 +449,8 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                .BBX:.:.  ..
-                                  ::
+<span class="w">                                </span>.BBX:.:.<span class="w">  </span>..
+<span class="w">                                  </span>::
 
 
 
@@ -473,8 +473,8 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                .hBX       .
-                                  nn
+<span class="w">                                </span>.hBX<span class="w">       </span>.
+<span class="w">                                  </span>nn
 
 
 
@@ -496,9 +496,9 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                 n :.
-                                .:n:      .
-                                .hXh
+<span class="w">                                 </span>n<span class="w"> </span>:.
+<span class="w">                                </span>.:n:<span class="w">      </span>.
+<span class="w">                                </span>.hXh
 
 
 
@@ -512,17 +512,17 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                                hW:.:
-                               nXWWWXh:
-                               WWWWWWWn
-                               nWXXXXB.
-                           .   : .Bh: :B
-                         hhW: BWnn..:BWX
-                        .nXWnhWWWWWWWWWh.. ..
-                        nWWhBWWWWWWWWWX:nn
-                         :B:hWWWWWWWWWWhnn  .
-                             hhhXWWWWWWhn:
-                                .BXhBnh  ..
+<span class="w">                                </span>hW:.:
+<span class="w">                               </span>nXWWWXh:
+<span class="w">                               </span>WWWWWWWn
+<span class="w">                               </span>nWXXXXB.
+<span class="w">                           </span>.<span class="w">   </span>:<span class="w"> </span>.Bh:<span class="w"> </span>:B
+<span class="w">                         </span>hhW:<span class="w"> </span>BWnn..:BWX
+<span class="w">                        </span>.nXWnhWWWWWWWWWh..<span class="w"> </span>..
+<span class="w">                        </span>nWWhBWWWWWWWWWX:nn
+<span class="w">                         </span>:B:hWWWWWWWWWWhnn<span class="w">  </span>.
+<span class="w">                             </span>hhhXWWWWWWhn:
+<span class="w">                                </span>.BXhBnh<span class="w">  </span>..
 
 
 
@@ -535,18 +535,18 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                               :Bn.
-                              nXWWWWXh.
-                             nWWWWWWWWW
-                             :WWWWWWWWX
-                            ..:BXXXBhh. :
-                           :BWn .WBXn n:::.
-                       nBXBXWWWWh:.:nXWXnXWXW
-                      nWXWWWWWWhXWWWWWWWWWWXB:
-                     .WWWWWWWWWWWWWWWWWWWWXhWX:
-                     :WWWXXWWWWWWWWWWWWWWX nBn.
-                      BWBh:hWWWWWWWWWWWWWB.nnh.
-                        .   :hBBWWWWWWW::    .
+<span class="w">                               </span>:Bn.
+<span class="w">                              </span>nXWWWWXh.
+<span class="w">                             </span>nWWWWWWWWW
+<span class="w">                             </span>:WWWWWWWWX
+<span class="w">                            </span>..:BXXXBhh.<span class="w"> </span>:
+<span class="w">                           </span>:BWn<span class="w"> </span>.WBXn<span class="w"> </span>n:::.
+<span class="w">                       </span>nBXBXWWWWh:.:nXWXnXWXW
+<span class="w">                      </span>nWXWWWWWWhXWWWWWWWWWWXB:
+<span class="w">                     </span>.WWWWWWWWWWWWWWWWWWWWXhWX:
+<span class="w">                     </span>:WWWXXWWWWWWWWWWWWWWX<span class="w"> </span>nBn.
+<span class="w">                      </span>BWBh:hWWWWWWWWWWWWWB.nnh.
+<span class="w">                        </span>.<span class="w">   </span>:hBBWWWWWWW::<span class="w">    </span>.
 
 
 
@@ -558,19 +558,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                               nn
-                            .nWWWWhhnh:
-                            BWWWWWWWWXX
-                            WWWWWWWWWWWn
-                           .BWWWWWWWWWW
-                            .XWWWWWXXWn .
-                         nWWX ::WWWWn  :WB .
-                    .::hhWWWWXn.hhhn nWBWWWWXBn
-                    XWWWWWWWWWWWBhhBWWWBWWWWWWB:
-                   :WWWWWWWWWWXWWWWWWWWWWWWWWXWW
-                   hWWWWWWWWWWWWWWWWWWWWWWWXWWWX.
-                   nWXWh:WWWWWWWWWWWWWWWWWX.WWWX.
-                   :XXXn nBWWWWWWWWWWWWWWX.BWX:.
+<span class="w">                               </span>nn
+<span class="w">                            </span>.nWWWWhhnh:
+<span class="w">                            </span>BWWWWWWWWXX
+<span class="w">                            </span>WWWWWWWWWWWn
+<span class="w">                           </span>.BWWWWWWWWWW
+<span class="w">                            </span>.XWWWWWXXWn<span class="w"> </span>.
+<span class="w">                         </span>nWWX<span class="w"> </span>::WWWWn<span class="w">  </span>:WB<span class="w"> </span>.
+<span class="w">                    </span>.::hhWWWWXn.hhhn<span class="w"> </span>nWBWWWWXBn
+<span class="w">                    </span>XWWWWWWWWWWWBhhBWWWBWWWWWWB:
+<span class="w">                   </span>:WWWWWWWWWWXWWWWWWWWWWWWWWXWW
+<span class="w">                   </span>hWWWWWWWWWWWWWWWWWWWWWWWXWWWX.
+<span class="w">                   </span>nWXWh:WWWWWWWWWWWWWWWWWX.WWWX.
+<span class="w">                   </span>:XXXn<span class="w"> </span>nBWWWWWWWWWWWWWWX.BWX:.
 
 
 
@@ -582,19 +582,19 @@ ln -s /usr/local/lib/pybackend2.cpython-36m-darwin.so pybackend2.so
 
 
 
-                              hXB:
-                           :hWWWWWBBnhn
-                           WWWWWWWWWWWXh
-                           WWWWWWWWWWWWB
-                           WWWWWWWWWWWWn
-                           hWWWWWWWWWWW.
-                        nXWn:XBXWWXBhn  Xh:
-                     ::WWWWWn :WWWWW..nWWWWXh::
-                  :WWWWWWWWXWWn::...nWWXWWWWWWWB
-                  WWWWWWWWWWWWWWWWWWWWWXWWWWWWWWB
-                 nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
-                 :WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
-                  BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
+<span class="w">                              </span>hXB:
+<span class="w">                           </span>:hWWWWWBBnhn
+<span class="w">                           </span>WWWWWWWWWWWXh
+<span class="w">                           </span>WWWWWWWWWWWWB
+<span class="w">                           </span>WWWWWWWWWWWWn
+<span class="w">                           </span>hWWWWWWWWWWW.
+<span class="w">                        </span>nXWn:XBXWWXBhn<span class="w">  </span>Xh:
+<span class="w">                     </span>::WWWWWn<span class="w"> </span>:WWWWW..nWWWWXh::
+<span class="w">                  </span>:WWWWWWWWXWWn::...nWWXWWWWWWWB
+<span class="w">                  </span>WWWWWWWWWWWWWWWWWWWWWXWWWWWWWWB
+<span class="w">                 </span>nWWWWWWWWWWWXWWWWWWWWWWWWWWWWWWX
+<span class="w">                 </span>:WWWWXWWWWWWWWWWWWWWWWWWWWXWWWWX
+<span class="w">                  </span>BBnB:nXWWWWWWWWWWWWWWWWW.nWWWWB
 </code></pre></div>
 <p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 

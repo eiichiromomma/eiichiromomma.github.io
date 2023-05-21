@@ -57,13 +57,13 @@
 
 <h1>VSCodeの補完</h1>
 <p>代表的な補完拡張の中にclangを使ったものがあるが、CMakeが</p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span> <span class="p">(</span><span class="s">CMAKE_EXPORT_COMPILE_COMMANDS</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="p">(</span><span class="s">CMAKE_EXPORT_COMPILE_COMMANDS</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
 </code></pre></div>
 
 <p>で吐いてくれるcompile_commands.jsonに対応していない。
 <a href="https://marketplace.visualstudio.com/items?itemName=mitaki28.vscode-clang">C/C++ Clang Command Adapter</a>ではsettings.jsonの"clang.cxxflags"にコンパイラへのオプションを一つずつ並べないと有効にならない。</p>
 <p>CMakeの出力はアホみたいにオプションが多くて流石に手入力はやりたくないので</p>
-<div class="highlight"><pre><span></span><code>cat compile_commands.json <span class="p">|</span> gsed -e <span class="s1">&#39;s/ -/&quot;,\n&quot;-/g&#39;</span>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>compile_commands.json<span class="w"> </span><span class="p">|</span><span class="w"> </span>gsed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/ -/&quot;,\n&quot;-/g&#39;</span>
 </code></pre></div>
 
 <p>とすると良い感じに変換できる。-oから先は不要なのでそれまでをsetting.jsonに貼り付ければ良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>

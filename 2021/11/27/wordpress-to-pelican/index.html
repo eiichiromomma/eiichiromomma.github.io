@@ -79,7 +79,7 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 あとは/var/www/htmlにWordpressのフォルダがあるのでwp-contentsのuploadsフォルダをまるごと持ってくる(ここに画像等のデータが入ってる)</p>
 <h3>pelican-import</h3>
 <p>python環境でpelicanが使える前提。importツールも勝手に入る。</p>
-<div class="highlight"><pre><span></span><code>pelican-import --dir-cat --wpfile -o wpoutput -m markdown --disable-slugs ../cvmlab.WordPress.2021-11-27.xml
+<div class="highlight"><pre><span></span><code>pelican-import<span class="w"> </span>--dir-cat<span class="w"> </span>--wpfile<span class="w"> </span>-o<span class="w"> </span>wpoutput<span class="w"> </span>-m<span class="w"> </span>markdown<span class="w"> </span>--disable-slugs<span class="w"> </span>../cvmlab.WordPress.2021-11-27.xml
 </code></pre></div>
 
 <ul>
@@ -125,20 +125,20 @@ ifconfigなりip addressでIPアドレスを調べておく。</p>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><code>find . -type f <span class="p">|</span> xargs gsed -i.bak -e <span class="s2">&quot;s|https://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/|{static}/images/|g&quot;</span>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>gsed<span class="w"> </span>-i.bak<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;s|https://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/|{static}/images/|g&quot;</span>
 </code></pre></div>
 
 <p>で後は全ページチェックしておかしなところを直していくしか無いのだが，過去記事なので致命的な問題の指摘が来たら直すってことで。</p>
 <h3>あとはPelicanの通常作業</h3>
-<div class="highlight"><pre><span></span><code>make html
-make serve
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>html
+make<span class="w"> </span>serve
 </code></pre></div>
 
 <p>でlocalhost:8000を開いて確認。</p>
 <p>問題無ければリリースする。</p>
 <h3>theme</h3>
 <p>あちこちに載ってるので大した話は無いが適当な場所で</p>
-<div class="highlight"><pre><span></span><code>git clone --recursive https://github.com/getpelican/pelican-themes
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/getpelican/pelican-themes
 </code></pre></div>
 
 <p>でpelicanconf.pyに</p>
@@ -146,13 +146,13 @@ make serve
 </code></pre></div>
 
 <p>のような感じで書いて</p>
-<div class="highlight"><pre><span></span><code>make html
-make serve
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>html
+make<span class="w"> </span>serve
 </code></pre></div>
 
 <p>でlocalhost:8000を開いて確認する。</p>
 <p>このままでも良いのだが</p>
-<div class="highlight"><pre><span></span><code>pelican-themes -i /path/to/theme
+<div class="highlight"><pre><span></span><code>pelican-themes<span class="w"> </span>-i<span class="w"> </span>/path/to/theme
 </code></pre></div>
 
 <p>としてインストールすると，THEMEの記述をパス不要で名前だけにもできる。</p>

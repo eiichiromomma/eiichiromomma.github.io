@@ -67,29 +67,29 @@
 </code></pre></div>
 
 <p>でGithub Pagesを使う設定にしておく。あとはcontent内にmarkdown形式のファイルを置いてから</p>
-<div class="highlight"><pre><span></span><code>make html
-make serve
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>html
+make<span class="w"> </span>serve
 </code></pre></div>
 
 <p>で http://localhost:8000 から作業内容を確認できる。</p>
-<div class="highlight"><pre><span></span><code><span class="n">Title</span><span class="o">:</span><span class="w"> </span><span class="n">Hello</span><span class="w"> </span><span class="n">world</span><span class="w"></span>
-<span class="n">Date</span><span class="o">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">11</span><span class="o">:</span><span class="mi">45</span><span class="w"></span>
-<span class="n">Category</span><span class="o">:</span><span class="w"> </span><span class="n">Memo</span><span class="w"></span>
-<span class="n">Tags</span><span class="o">:</span><span class="w"> </span><span class="n">pelican</span><span class="o">,</span><span class="w"> </span><span class="n">python</span><span class="w"></span>
-<span class="n">Slug</span><span class="o">:</span><span class="w"> </span><span class="mi">20170212</span><span class="n">_post</span><span class="w"></span>
-<span class="n">Author</span><span class="o">:</span><span class="w"> </span><span class="n">eiichiromomma</span><span class="w"></span>
-<span class="n">Summary</span><span class="o">:</span><span class="w"> </span><span class="n">Hello</span><span class="w"> </span><span class="n">world</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">Title</span><span class="o">:</span><span class="w"> </span><span class="n">Hello</span><span class="w"> </span><span class="n">world</span>
+<span class="n">Date</span><span class="o">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">11</span><span class="o">:</span><span class="mi">45</span>
+<span class="n">Category</span><span class="o">:</span><span class="w"> </span><span class="n">Memo</span>
+<span class="n">Tags</span><span class="o">:</span><span class="w"> </span><span class="n">pelican</span><span class="o">,</span><span class="w"> </span><span class="n">python</span>
+<span class="n">Slug</span><span class="o">:</span><span class="w"> </span><span class="mi">20170212</span><span class="n">_post</span>
+<span class="n">Author</span><span class="o">:</span><span class="w"> </span><span class="n">eiichiromomma</span>
+<span class="n">Summary</span><span class="o">:</span><span class="w"> </span><span class="n">Hello</span><span class="w"> </span><span class="n">world</span>
 
 
-<span class="err">#</span><span class="w"> </span><span class="err">お試し</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="err">お試し</span>
 
-<span class="o">-</span><span class="w"> </span><span class="n">python</span><span class="w"></span>
-<span class="o">-</span><span class="w"> </span><span class="n">pelican</span><span class="w"></span>
-<span class="o">-</span><span class="w"> </span><span class="n">markdown</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="n">python</span>
+<span class="o">-</span><span class="w"> </span><span class="n">pelican</span>
+<span class="o">-</span><span class="w"> </span><span class="n">markdown</span>
 </code></pre></div>
 
 <p>確認したら</p>
-<div class="highlight"><pre><span></span><code>make github
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>github
 </code></pre></div>
 
 <p>でpushしてくれる。.gitignore云々を説明しているページもあるが、outputの中身だけpushされるので不要な気もする。</p>

@@ -87,14 +87,14 @@ GIFT FormatをCanvasで利用するには</p>
 <p><a href="https://www.tsugi.org/gift2qti/">デモサイト</a>もあるが常用はお勧めしない。</p>
 <h5>macOSでhomebrewのphp7を使った例</h5>
 <h6>php 7.xのインストールとソースの入手</h6>
-<div class="highlight"><pre><span></span><code>brew install php@7.4
-git clone https://github.com/csev/gift2qti.git
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>php@7.4
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/csev/gift2qti.git
 </code></pre></div>
 
 <p>でgift2qtiフォルダに移動してからサーバーとして起動すれば良い。強引だがrcファイルを書き換えなくとも下記でいける。</p>
 <h6>起動方法</h6>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> gift2qti
-<span class="nv">PATH</span><span class="o">=</span>/usr/local/opt/php@7.4/bin:<span class="nv">$PATH</span> php -S localhost:8000
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>gift2qti
+<span class="nv">PATH</span><span class="o">=</span>/usr/local/opt/php@7.4/bin:<span class="nv">$PATH</span><span class="w"> </span>php<span class="w"> </span>-S<span class="w"> </span>localhost:8000
 </code></pre></div>
 
 <p>あとは<a href="http://localhost:8000/">ローカルのサーバ(コマンドで指定したport 8000)</a>を開けば良い。</p>
