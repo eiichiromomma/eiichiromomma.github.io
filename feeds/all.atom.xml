@@ -1,5 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-05-21T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>WindowsでのオススメのPython環境</title><link href="https://eiichiromomma.github.io/2023/05/21/WinPython/" rel="alternate"></link><published>2023-05-21T19:20:00+09:00</published><updated>2023-05-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-05-21:/2023/05/21/WinPython/</id><summary type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-05-25T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Windows環境でGitとvenvを使ってみる</title><link href="https://eiichiromomma.github.io/2023/05/25/WinVenv/" rel="alternate"></link><published>2023-05-25T19:20:00+09:00</published><updated>2023-05-25T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-05-25:/2023/05/25/WinVenv/</id><summary type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
+&lt;h3&gt;やること&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;gitコマンドを使ってGitHubからソースを持ってくる&lt;/li&gt;
+&lt;li&gt;venvで専用の環境を作って動かす&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Gitについて雑な説明&lt;/h3&gt;
+&lt;p&gt;Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
+&lt;h3&gt;やること&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;gitコマンドを使ってGitHubからソースを持ってくる&lt;/li&gt;
+&lt;li&gt;venvで専用の環境を作って動かす&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Gitについて雑な説明&lt;/h3&gt;
+&lt;p&gt;Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる側の視点だと&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;プログラムを書く&lt;/li&gt;
+&lt;li&gt;Gitコマンドで更新内容を記録する&lt;/li&gt;
+&lt;li&gt;GitHubに送る(公開にも非公開にもできる)&lt;/li&gt;
+&lt;li&gt;開発を続けてプログラムを更新する&lt;/li&gt;
+&lt;li&gt;Gitコマンドで更新内容を記録する&lt;/li&gt;
+&lt;li&gt;GitHubに送る&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;みたいな感じで，手元にもGitHubにもプログラムと更新の記録が残るので，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;何かやらかしたので前のバージョンに戻す&lt;/li&gt;
+&lt;li&gt;本流には入れずに取り敢えず試しに実装してみる(ブランチ)&lt;/li&gt;
+&lt;li&gt;別ブランチの更新内容を取り入れる&lt;/li&gt;
+&lt;li&gt;区切りを付ける(タグ)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;のような感じで便利なためよく使われている。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;自分の考えた処理・手法を公開できる&lt;/li&gt;
+&lt;li&gt;他の人から「こう直してくれ」と要望を送って貰える(プルリク)&lt;/li&gt;
+&lt;li&gt;他の人が引き継いでそれに手を加える(fork)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;のような側面もあり，使う側にとっては&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;アルゴリズムしか公開されていない手法を再実装しないで済む&lt;/li&gt;
+&lt;li&gt;よく使うツールの開発に貢献できる&lt;/li&gt;
+&lt;li&gt;開発が停止してしまったツールを自分で更新できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;といった利点もある。&lt;/p&gt;
+&lt;p&gt;その他大量のサービスがあるので興味のある人は調べると良い。(このBlogっぽいWebもGitHubのサービスの一環)&lt;/p&gt;
+&lt;h4&gt;Git for Windows&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://git-scm.com/download/win"&gt;配布もと&lt;/a&gt;から64bitのstandaloneインストーラをダウンロードしてインストール。
+設定は全部デフォルトで問題ない。&lt;/p&gt;
+&lt;p&gt;PATHが自動的に設定されるが，インストール後に起動したプログラムにしか適用されないので，コマンドプロンプトのためにターミナルを起動している人は一旦閉じる。&lt;/p&gt;
+&lt;h4&gt;PySimpleGUIのソースを拾ってくる&lt;/h4&gt;
+&lt;p&gt;ここでは簡単にGUIなプログラムが作れるらしい&lt;a href="https://github.com/PySimpleGUI/PySimpleGUI"&gt;PySimpleGUI&lt;/a&gt; を試す。パッケージ自体はpipコマンドでインストールできるのだが、デモ等のソースも見ると勉強になるので拾ってくる。&lt;/p&gt;
+&lt;p&gt;cmdでコマンドプロンプトを起動したら，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;Documents
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/PySimpleGUI/PySimpleGUI.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で，PySimpleGUIフォルダにGitHubで公開されているソースコードがダウンロードできた(git pullコマンドで常に最新の状態に保つこともできるのが zipファイルでダウンロードする方法との違い)&lt;/p&gt;
+&lt;p&gt;PySimpleGUIは設定プログラム(?)をいきなり試せるので起動してみる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py&lt;span class="w"&gt; &lt;/span&gt;PySimpleGUI&lt;span class="se"&gt;\P&lt;/span&gt;ySimpleGUI.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でウィンドウが開いたら成功。
+ざっと試してウィンドウを閉じる。&lt;/p&gt;
+&lt;h3&gt;venv&lt;/h3&gt;
+&lt;p&gt;前回最後に触れたvenvを使って仮想環境を作る。
+↓のvenvのあとの&lt;code&gt;venvPySimpleGUI&lt;/code&gt;は仮想環境名なので、別のパッケージ用に仮想環境を作るときは都度名前を変える。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;PySimpleGUI
+py&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;venv&lt;span class="w"&gt; &lt;/span&gt;venvPySimpleGUI
+.&lt;span class="se"&gt;\v&lt;/span&gt;envPySimpleGUI&lt;span class="se"&gt;\S&lt;/span&gt;cripts&lt;span class="se"&gt;\a&lt;/span&gt;ctivate
+py&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-U&lt;span class="w"&gt; &lt;/span&gt;pip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;としたあとで本体とデモビューワ、あと使いそうなパッケージを入れる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;PySimpleGUI&lt;span class="w"&gt; &lt;/span&gt;psgdemos
+py&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;opencv-python&lt;span class="w"&gt; &lt;/span&gt;matplotlib&lt;span class="w"&gt; &lt;/span&gt;pymunk&lt;span class="w"&gt; &lt;/span&gt;psutil&lt;span class="w"&gt; &lt;/span&gt;prawn&lt;span class="w"&gt; &lt;/span&gt;weather2&lt;span class="w"&gt; &lt;/span&gt;mido&lt;span class="w"&gt; &lt;/span&gt;python-vlc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で完了。
+( python-vlcはコントロールだけなので、 &lt;a href="https://www.videolan.org/vlc/index.ja.html"&gt;VLC&lt;/a&gt;は別途インストールが必要。)&lt;/p&gt;
+&lt;p&gt;Windows+venvを使うと、ScriptsフォルダへPathが設定される利点もある。&lt;code&gt;psgdemos&lt;/code&gt;もその一例でvenvの中のScriptsフォルダの中にScriptsと言いつつ.exeファイルが置いてある。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;psgdemos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でデモの一覧が出てくるので色々試すと良い。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython09.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;OpenCV関係もあり，使い方は先程入手したソースの&lt;a href="DemoPrograms/Demo_OpenCV_4_Line_Program.py"&gt;DemoProgramsの中&lt;/a&gt;にあるので，参考にできる。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/PySimpleGUI/PySimpleGUI/blob/master/readme.ja.md"&gt;日本語のドキュメント&lt;/a&gt;もあるので恵まれている。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Windows"></category></entry><entry><title>WindowsでのオススメのPython環境</title><link href="https://eiichiromomma.github.io/2023/05/21/WinPython/" rel="alternate"></link><published>2023-05-21T19:20:00+09:00</published><updated>2023-05-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-05-21:/2023/05/21/WinPython/</id><summary type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
 &lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
 &lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。&lt;/p&gt;
 &lt;h3&gt;1. Pythonのインストール&lt;/h3&gt;

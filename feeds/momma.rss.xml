@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Sun, 21 May 2023 19:20:00 +0900</lastBuildDate><item><title>WindowsでのオススメのPython環境</title><link>https://eiichiromomma.github.io/2023/05/21/WinPython/</link><description>&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
+<rss version="2.0"><channel><title>CVMLAB Blog - momma</title><link>https://eiichiromomma.github.io/</link><description>Computer Vision and Measurement Lab.</description><lastBuildDate>Thu, 25 May 2023 19:20:00 +0900</lastBuildDate><item><title>Windows環境でGitとvenvを使ってみる</title><link>https://eiichiromomma.github.io/2023/05/25/WinVenv/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
+&lt;h3&gt;やること&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;gitコマンドを使ってGitHubからソースを持ってくる&lt;/li&gt;
+&lt;li&gt;venvで専用の環境を作って動かす&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Gitについて雑な説明&lt;/h3&gt;
+&lt;p&gt;Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Thu, 25 May 2023 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2023-05-25:/2023/05/25/WinVenv/</guid><category>Memo</category><category>Python</category><category>Windows</category></item><item><title>WindowsでのオススメのPython環境</title><link>https://eiichiromomma.github.io/2023/05/21/WinPython/</link><description>&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
 &lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Sun, 21 May 2023 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2023-05-21:/2023/05/21/WinPython/</guid><category>Memo</category><category>Python</category><category>Windows</category></item><item><title>cx_FreezeでPythonからexeファイル生成</title><link>https://eiichiromomma.github.io/2023/02/16/cx_Freeze/</link><description>&lt;p&gt;Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
 Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，&lt;a href="https://github.com/marcelotduarte/cx_Freeze"&gt;cx_Freeze&lt;/a&gt;はその一つ。&lt;/p&gt;
 &lt;p&gt;Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。

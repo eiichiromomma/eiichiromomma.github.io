@@ -5,36 +5,43 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/</loc>
-<lastmod>2023-05-21T21:19:17-00:00</lastmod>
+<lastmod>2023-05-25T21:36:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tags.html</loc>
-<lastmod>2023-05-21T21:19:17-00:00</lastmod>
+<lastmod>2023-05-25T21:36:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/categories.html</loc>
-<lastmod>2023-05-21T21:19:17-00:00</lastmod>
+<lastmod>2023-05-25T21:36:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/authors.html</loc>
-<lastmod>2023-05-21T21:19:17-00:00</lastmod>
+<lastmod>2023-05-25T21:36:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/archives.html</loc>
-<lastmod>2023-05-21T21:19:17-00:00</lastmod>
+<lastmod>2023-05-25T21:36:14-00:00</lastmod>
 <changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2023/05/25/WinVenv/</loc>
+<lastmod>2023-05-25T19:20:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -1391,7 +1398,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/category/memo.html</loc>
-<lastmod>2023-05-21T19:20:00+09:19</lastmod>
+<lastmod>2023-05-25T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1433,14 +1440,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/tag/python.html</loc>
-<lastmod>2023-05-21T19:20:00+09:19</lastmod>
+<lastmod>2023-05-25T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tag/windows.html</loc>
-<lastmod>2023-05-21T19:20:00+09:19</lastmod>
+<lastmod>2023-05-25T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1748,7 +1755,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/author/momma.html</loc>
-<lastmod>2023-05-21T19:20:00+09:19</lastmod>
+<lastmod>2023-05-25T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

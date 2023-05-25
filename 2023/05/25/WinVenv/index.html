@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
-    <title>CVMLAB Blog - Windows</title>
+    <title>Windows環境でGitとvenvを使ってみる</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2023/05/25/WinVenv/" rel="bookmark"
+        title="Permalink to Windows環境でGitとvenvを使ってみる">Windows環境でGitとvenvを使ってみる</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/05/25/WinVenv/"><h3 class="article-title">Windows環境でGitとvenvを使ってみる</h3></a>
 <h6 class="subheader" title="2023-05-25T19:20:00+09:00">2023-05-25(木)
 </h6>
 
 
-<p><a href="https://eiichiromomma.github.io/2023/05/21/WinPython/">前回のWindowsでのPython環境構築</a>をやった続き。</p>
+    <p><a href="https://eiichiromomma.github.io/2023/05/21/WinPython/">前回のWindowsでのPython環境構築</a>をやった続き。</p>
 <h3>やること</h3>
 <ul>
 <li>gitコマンドを使ってGitHubからソースを持ってくる</li>
@@ -133,7 +134,8 @@ py<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>i
 <p>でデモの一覧が出てくるので色々試すと良い。</p>
 <p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython09.png" width="600"></p>
 <p>OpenCV関係もあり，使い方は先程入手したソースの<a href="DemoPrograms/Demo_OpenCV_4_Line_Program.py">DemoProgramsの中</a>にあるので，参考にできる。</p>
-<p><a href="https://github.com/PySimpleGUI/PySimpleGUI/blob/master/readme.ja.md">日本語のドキュメント</a>もあるので恵まれている。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p><a href="https://github.com/PySimpleGUI/PySimpleGUI/blob/master/readme.ja.md">日本語のドキュメント</a>もあるので恵まれている。</p>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -142,120 +144,8 @@ py<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>i
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"><h3 class="article-title">WindowsでのオススメのPython環境</h3></a>
-<h6 class="subheader" title="2023-05-21T19:20:00+09:00">2023-05-21(日)
-</h6>
-
-
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/21/WinPython/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
-<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
-</h6>
-
-
-<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
-Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
-<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
-ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/"><h3 class="article-title">Windows11 Edu.でのローカルID</h3></a>
-<h6 class="subheader" title="2023-02-15T19:20:00+09:00">2023-02-15(水)
-</h6>
-
-
-<h3>初見殺しのWindows11</h3>
-<p>Windows11は初期セットアップではMicrosoft Accountがないと無理矢理作らされるが，その後はネット切断してから「設定」でアカウント追加を実行すればローカルアカウントが作れる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
-<h6 class="subheader" title="2022-05-25T22:00:00+09:00">2022-05-25(水)
-</h6>
-
-
-<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Gcenx/WineskinServer">WineskinServer</a>が使いやすかった。
-講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
-    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
-    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
-    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
-    <a href="https://eiichiromomma.github.io/tag/wineskinserver.html">WineskinServer </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
-
-<p>
-
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 

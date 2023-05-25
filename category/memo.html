@@ -50,217 +50,90 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"><h3 class="article-title">WindowsでのオススメのPython環境</h3></a>
-<h6 class="subheader" title="2023-05-21T19:20:00+09:00">2023-05-21(日)
+                <a href="https://eiichiromomma.github.io/2023/05/25/WinVenv/"><h3 class="article-title">Windows環境でGitとvenvを使ってみる</h3></a>
+<h6 class="subheader" title="2023-05-25T19:20:00+09:00">2023-05-25(木)
 </h6>
 
 
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。</p>
-<h3>1. Pythonのインストール</h3>
-<p><a href="https://www.python.org/downloads/windows/">公式の配布サイト</a>から3.11.xをダウンロードして実行。</p>
-<p>インストーラの画面は特に弄らずそのままInstall Nowを選ぶ。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython01.png" width="600"></p>
-<p>"Setup was successful"と出たらインストール完了。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython02.png" width="600"></p>
-<p>そのウィンドウに<em>Disable path length limit</em>という表示があったらそれを選択する。Windowsに限らず環境変数PATHという概念があり，そこに羅列したフォルダ内のプログラムはどこからでも呼び出せる，というOSの仕組みがある。macOSやUnixは問題ないのだが，Windowsは<code>C:\Program Files</code>または<code>C:\Program Files(x86)</code>みたいなアホ長いフォルダが標準的なインストール先なのでPATHに羅列しようとすると凄まじい長さになるのが明白にもかかわらず，環境変数に設定できるのが260文字までというアホな制限がある。それを回避する方法がこの選択肢。</p>
-<p>Windowsメニューの「すべてのアプリ」にPythonフォルダが出来ている。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython03.png" width="400"></p>
-<p>黒っぽいアイコンの<code>Python 3.xx(64-bit)</code>を選ぶとコマンドプロンプトの黒い画面が開き</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;
-</code></pre></div>
-
-<p>のような入力待ち(プロンプトと呼ぶ)になるので<code>quit()</code>と打って一旦終了させる。</p>
-<h3>2. パッケージのインストール</h3>
-<p>Windowsメニューの検索にcmdと打ってコマンドプロンプトを起動する。</p>
-<h4>pipのアップグレード</h4>
-<p>Pythonのインストール時にpy.exeというプログラムもインストールされていて，自動的に「今使うPython」を呼び出す仕組みになっている。Pythonはパッケージ(機能)を呼び出すときに</p>
-<div class="highlight"><pre><span></span><code>python -m パッケージ名 パッケージのオプション
-</code></pre></div>
-
-<p>とするか，パッケージによっては</p>
-<div class="highlight"><pre><span></span><code>パッケージ名 パッケージのオプション
-</code></pre></div>
-
-<p>のような感じで起動するのだが，後者はWindowsだと手間のかかるPathの設定が必要なので，py.exeと前者を組み合わせて使う。例えばよく</p>
-<div class="highlight"><pre><span></span><code>pip install -U pip
-</code></pre></div>
-
-<p>と実行しろと説明しているサイトが多いが，「パッケージ管理のpipを使ってpip自身をアップグレード(-U)しろ」というコマンドは</p>
-<div class="highlight"><pre><span></span><code>py -m pip install -U pip
-</code></pre></div>
-
-<p>と書く(.exeは付けなくて良い)。ということでまずは↑のコマンドをコマンドプロンプトで実行してpipをアップグレードする</p>
-<h4>無難なパッケージのインストール</h4>
-<p>何をやるにしろあった方が便利なものを一通り入れておく。コマンドプロンプトに以下をコピペする。(^は長いコマンドに途中改行させる方法)</p>
-<div class="highlight"><pre><span></span><code>py -m pip install jupyter notebook ipython opencv-python ^
- opencv-contrib-python numpy scipy scikit-image scikit-learn ^
- pillow pandas matplotlib seaborn mediapy pyqt5 ^
- qtconsole jupyterlab
-</code></pre></div>
-
-<p>ScriptsフォルダにPathを通さないと使えないぞ、という警告が出るが無視してよい。</p>
+<p><a href="https://eiichiromomma.github.io/2023/05/21/WinPython/">前回のWindowsでのPython環境構築</a>をやった続き。</p>
+<h3>やること</h3>
 <ul>
-<li>ipython: 普通のpythonより親切なPythonインタプリタIPython</li>
-<li>jupyter: NotebookとLabで使うエンジン</li>
-<li>jupyterlab: Jupyter Lab。MATLABっぽいNotebook+コマンド+インタプリタな何でもあり版な開発環境</li>
-<li>matplotlib: グラフや画像の表示に使う可視化</li>
-<li>mediapy: Notebookで画像や動画を楽に表示できる</li>
-<li>notebook: Jupyter Notebookというブラウザベースで動くPythonの開発環境(ノートを取りながらPythonを実行できるので人気)</li>
-<li>numpy: 行列演算ライブラリ</li>
-<li>opencv-python: コンピュータビジョンライブラリOpenCV</li>
-<li>opencv-contrib-python: OpenCVの正式版には含まれていない機能の追加</li>
-<li>scipy: 科学技術系ライブラリ</li>
-<li>scikit-image: SciPy toolkit=scikitでscipyのサブモジュールの一つで画像処理関係</li>
-<li>scikit-learn: scipyのサブモジュールの一つで機械学習関係</li>
-<li>pandas: データ解析でR言語っぽい動きをする</li>
-<li>pillow: PIL(Python Imaging Library)という古くからある画像処理ライブラリから派生した現代版で呼び出しはPILとして互換性が保てる</li>
-<li>pyqt5: Qt(キュート(Cute)と読む)のPython版でなぜかパイキューティーと読まれる。GUIアプリのベースとなるものでqtconsoleで使う</li>
-<li>qtconsole: コマンドプロンプトでもIPythonは使えるが，こっちだと画像が表示できる。</li>
-<li>seaborn: 可視化でmatplotlibよりダサくない</li>
+<li>gitコマンドを使ってGitHubからソースを持ってくる</li>
+<li>venvで専用の環境を作って動かす</li>
 </ul>
-<p>が入れるもの。</p>
-<h3>3. IPythonを使ってみる</h3>
-<p>IPython(アイパイソン)のように大文字小文字に注意。最初の文字はアイの大文字。IPythonは通常ipythonコマンドで起動するよう書かれているドキュメントが多いが，</p>
-<div class="highlight"><pre><span></span><code>py -m IPython
-</code></pre></div>
-
-<p>のようにPythonのモジュールとしてインストールされるものはScripts内のコマンドを使わなくてもpyに-mを付けてモジュール名を指定すれば使える(quitで終了)</p>
-<h4>QtConsole</h4>
-<p>qtconsoleの方が応用が効くので</p>
-<div class="highlight"><pre><span></span><code>py -m qtconsole
-</code></pre></div>
-
-<p>とすると、QtのUIを使ったIPythonが使える。ただし、mediapyのshow_*はインライン表示に使えないのでmatplotlibのimshowを使う必要がある。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span>
- <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>で入手したファイルをインライン表示したいが、</p>
-<div class="highlight"><pre><span></span><code><span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だと表示できない。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だと表示できる。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PIL</span>
-<span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>も表示できる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython05.png" width="600"></p>
-<h4>ipyエンジン専用の画像表示</h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だとIPythonかJupyter Notebook専用になるが表示できる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython07.png" width="600"></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="n">display</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だとndarrayと見做されて生データがドバーっと出る。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython06.png" width="600"></p>
-<p>quitでウィンドウが閉じる。</p>
-<h3>4. Jupyter Notebookを使ってみる</h3>
-<p>コマンドプロンプトでJupyter Notebookのサーバーを起動する命令なのだがデフォルトでそのページを開くようOSに命令を出すのでブラウザが起動する。</p>
+<h3>Gitについて雑な説明</h3>
+<p>Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる側の視点だと</p>
 <ol>
-<li>コマンドプロンプトを起動</li>
-<li>Jupyter Notebookのサーバーを起動</li>
-<li>色々作業</li>
-<li>Notebookで「閉じて終了」を選ぶ</li>
-<li>コマンドプロンプトでCtrl+Cを2回入力してサーバーを停止</li>
+<li>プログラムを書く</li>
+<li>Gitコマンドで更新内容を記録する</li>
+<li>GitHubに送る(公開にも非公開にもできる)</li>
+<li>開発を続けてプログラムを更新する</li>
+<li>Gitコマンドで更新内容を記録する</li>
+<li>GitHubに送る</li>
 </ol>
-<p>という流れになる。当たり前だがブラウザが開いた後にコマンドプロンプトを閉じると使えなくなるので注意。</p>
-<div class="highlight"><pre><span></span><code>py -m jupyter notebook
-</code></pre></div>
-
-<p>でブラウザが起動しJupyter Notebookが使える。
-<code>New</code>ボタンを押すと<code>Python3</code>が出るので選択するとNotebookが新規作成される。</p>
-<p>Notebookはセルという単位で分割されていて，セルにはコードセルとMarkdownセルがある(Markdownは<a href="https://ja.wikipedia.org/wiki/Markdown">Wikipedia</a>とかを参照)。</p>
-<p>Markdownで説明を書き，その下にコードセルでPythonプログラムを書くような流れで「実験ノート」が作れる。Markdownの表示やコードの実行はCtrl+EnterまたはShift+Enter。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span> <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
-<span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython04.png" width="600"></p>
-<p>保存した後で，ブラウザのJupyter Notebookで<code>Save</code>で保存してから<code>Close and Halt</code>でタブを閉じる(ブラウザのタブを閉じてもPythonのプロセスは停止してくれない。ファイル一覧で緑色のアイコンがそれを意味する)。
-その後コマンドプロンプトで「Ctrl+C」を打ってJupyter Notebookのサーバーを終了させる。</p>
-<p>ちなみに保存されるのは<code>.ipynb</code>(IPython Notebookと名乗っていた時代の名残り)という拡張子のファイルで，Visual Studio CodeやGoogle Colaboratoryでも開ける。</p>
-<p><code>New</code>ボタンでは<code>Text File</code>を選ぶとテキストエディタとなり，テキストエディタの<code>File-Rename</code>で.py付きのファイル名(例えばHello.py)にするとPython用のハイライト表示エディタになる。また，<code>New</code>から<code>Terminal</code>を選ぶとコマンドプロンプトの親戚のようなPower Shellが開くので，.pyファイルを編集して</p>
-<div class="highlight"><pre><span></span><code>py なんとか.py
-</code></pre></div>
-
-<p>みたいにPythonスクリプトを実行できる。</p>
-<h3>5. Jupyter Labを使ってみる</h3>
-<p>Notebookと同じノリで起動する。Notebookだとエディタもターミナルもブラウザの別タブになって鬱陶しいが，Jupyter Labは一つのウィンドウに収まる。</p>
-<p>サーバーとして起動するのはNotebookと同様で，</p>
-<div class="highlight"><pre><span></span><code>py -m jupyter lab
-</code></pre></div>
-
-<p>でブラウザが開き、JupyterLabが表示される。JupyterLabはJupyter Notebookの豪華版という感じで、</p>
+<p>みたいな感じで，手元にもGitHubにもプログラムと更新の記録が残るので，</p>
 <ul>
-<li>Notebookでのプログラミング</li>
-<li>IPythonでのコマンド実行</li>
-<li>.pyファイルを使ったプログラミング</li>
-<li>ターミナルでの作業(WindowsだとPowershellがデフォルト)</li>
+<li>何かやらかしたので前のバージョンに戻す</li>
+<li>本流には入れずに取り敢えず試しに実装してみる(ブランチ)</li>
+<li>別ブランチの更新内容を取り入れる</li>
+<li>区切りを付ける(タグ)</li>
 </ul>
-<p>が可能。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython08.png" width="600"></p>
-<p>とりあえずの開発環境としてはこれが無難。</p>
-<h3>6. その他</h3>
-<h4>(あくまでもWindowsのマシンで)PythonをLinuxで動かす</h4>
-<p>WindowsでPython(特に外部パッケージ)を扱うのは今はだいぶ良くなったとはいえ「動いたらラッキー。動かなかったらがんばりましょう」という認識でいた方が良い。できればUbuntu等のLinux系を使う方がトラブルが少ないので，もう少し凝った使い方としては以下がある。</p>
-<p>特に深層学習フレームワークを使う場合にはLinux系OSで扱う場合が殆どなので今のうちから慣れておくと良い。</p>
+<p>のような感じで便利なためよく使われている。</p>
 <ul>
-<li>WSL2</li>
-<li>Windows Subsystem for Linuxの略称で，Microsoftが提供していて，Winodws上でまんまLinuxが動くので，Ubuntu等のPython利用の解説がまんま使える</li>
-<li>NVIDIAがCUDA Driverも出してるのでNVIDIAのGPUを積んだマシンならWSL2上でTensorflowとかPyTorchが使える</li>
-<li>WSL2+Docker</li>
-<li>様々な環境を搭載したコンテナを拾ってきて直ぐに試せるうえにVMと違ってディスク容量をそこまで圧迫しない</li>
-<li>WSL2+Docker+VSCode</li>
-<li><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>はMicrosoft製のテキストエディタだが，拡張機能でコンテナ上の開発環境を使ってプログラミング，とかが楽にできる。</li>
-<li>VSCodeに慣れると，リモートホスト上のDockerコンテナ上で開発。のようなことも出来る。</li>
+<li>自分の考えた処理・手法を公開できる</li>
+<li>他の人から「こう直してくれ」と要望を送って貰える(プルリク)</li>
+<li>他の人が引き継いでそれに手を加える(fork)</li>
 </ul>
-<h4>他のバージョンのPython</h4>
-<p>LinuxやmacOSの場合はpyenvという便利な解決法があるのだが，Windowsの場合案外面倒そうなので素直に特定のマイナーバージョンのインストーラをPython.orgから持ってくるのが楽。その上で，</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=バージョン
-</code></pre></div>
-
-<p>を指定すると，そのコマンドプロンプト上では以後py.exeが勝手にそっちのバージョンを使ってくれる。例えば，3.11と3.10を入れている場合</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.10
-</code></pre></div>
-
-<p>と打てば以降3.10.xが使え，</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.11
-</code></pre></div>
-
-<p>とすれば3.11.xが使える。</p>
-<h4>仮想環境</h4>
-<p>ある特定のバージョンのopencv-pythonが必要(例えばOpenEXRがギリギリ使える4.5.4とか)だが，普段は最新のopencv-pythonを使いたい。とか，requirements.txtで指定されている環境を作りたい。とか，Pythonでのパッケージのバージョン環境は簡単に崩壊する。特に深層学習フレームワークについては後方互換性をバッサリ切っているものが多いので，色々試したい場合には環境を変えて作業した方が安全。</p>
-<p>安全な解決方法は</p>
+<p>のような側面もあり，使う側にとっては</p>
 <ul>
-<li>作業ごとにPCを用意する</li>
-<li>作業ごとにDockerでコンテナを作る</li>
+<li>アルゴリズムしか公開されていない手法を再実装しないで済む</li>
+<li>よく使うツールの開発に貢献できる</li>
+<li>開発が停止してしまったツールを自分で更新できる</li>
 </ul>
-<p>とかなのだが，Pythonの環境だけ切り替えて使える機能が仮想環境である。condaとかvirtualenvとかがよく使われてきたが，最近は公式のvenvを使うのがトレンドらしい。</p>
-<p>自分が作業をするフォルダで</p>
-<div class="highlight"><pre><span></span><code>py -m venv 仮想環境名
+<p>といった利点もある。</p>
+<p>その他大量のサービスがあるので興味のある人は調べると良い。(このBlogっぽいWebもGitHubのサービスの一環)</p>
+<h4>Git for Windows</h4>
+<p><a href="https://git-scm.com/download/win">配布もと</a>から64bitのstandaloneインストーラをダウンロードしてインストール。
+設定は全部デフォルトで問題ない。</p>
+<p>PATHが自動的に設定されるが，インストール後に起動したプログラムにしか適用されないので，コマンドプロンプトのためにターミナルを起動している人は一旦閉じる。</p>
+<h4>PySimpleGUIのソースを拾ってくる</h4>
+<p>ここでは簡単にGUIなプログラムが作れるらしい<a href="https://github.com/PySimpleGUI/PySimpleGUI">PySimpleGUI</a> を試す。パッケージ自体はpipコマンドでインストールできるのだが、デモ等のソースも見ると勉強になるので拾ってくる。</p>
+<p>cmdでコマンドプロンプトを起動したら，</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>Documents
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PySimpleGUI/PySimpleGUI.git
 </code></pre></div>
 
-<p>と打つと，「仮想環境名」のフォルダが出来る。そこのScriptsフォルダに<code>activate.bat</code>があるのでそれを実行する(PowerShellの場合はActivate.ps1)。例えばvenvHelloみたいな名前にすると，</p>
-<div class="highlight"><pre><span></span><code>py -m venv venvHello
-venvHello\Scripts\activate.bat
+<p>で，PySimpleGUIフォルダにGitHubで公開されているソースコードがダウンロードできた(git pullコマンドで常に最新の状態に保つこともできるのが zipファイルでダウンロードする方法との違い)</p>
+<p>PySimpleGUIは設定プログラム(?)をいきなり試せるので起動してみる。</p>
+<div class="highlight"><pre><span></span><code>py<span class="w"> </span>PySimpleGUI<span class="se">\P</span>ySimpleGUI.py
 </code></pre></div>
 
-<p>と打つと，プロンプトの頭に(venvHello)のように仮想環境名が表示されるので，あとはpipなりで環境構築すれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>でウィンドウが開いたら成功。
+ざっと試してウィンドウを閉じる。</p>
+<h3>venv</h3>
+<p>前回最後に触れたvenvを使って仮想環境を作る。
+↓のvenvのあとの<code>venvPySimpleGUI</code>は仮想環境名なので、別のパッケージ用に仮想環境を作るときは都度名前を変える。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>PySimpleGUI
+py<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venvPySimpleGUI
+.<span class="se">\v</span>envPySimpleGUI<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+py<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+</code></pre></div>
+
+<p>としたあとで本体とデモビューワ、あと使いそうなパッケージを入れる。</p>
+<div class="highlight"><pre><span></span><code>py<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PySimpleGUI<span class="w"> </span>psgdemos
+py<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>opencv-python<span class="w"> </span>matplotlib<span class="w"> </span>pymunk<span class="w"> </span>psutil<span class="w"> </span>prawn<span class="w"> </span>weather2<span class="w"> </span>mido<span class="w"> </span>python-vlc
+</code></pre></div>
+
+<p>で完了。
+( python-vlcはコントロールだけなので、 <a href="https://www.videolan.org/vlc/index.ja.html">VLC</a>は別途インストールが必要。)</p>
+<p>Windows+venvを使うと、ScriptsフォルダへPathが設定される利点もある。<code>psgdemos</code>もその一例でvenvの中のScriptsフォルダの中にScriptsと言いつつ.exeファイルが置いてある。</p>
+<div class="highlight"><pre><span></span><code>psgdemos
+</code></pre></div>
+
+<p>でデモの一覧が出てくるので色々試すと良い。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython09.png" width="600"></p>
+<p>OpenCV関係もあり，使い方は先程入手したソースの<a href="DemoPrograms/Demo_OpenCV_4_Line_Program.py">DemoProgramsの中</a>にあるので，参考にできる。</p>
+<p><a href="https://github.com/PySimpleGUI/PySimpleGUI/blob/master/readme.ja.md">日本語のドキュメント</a>もあるので恵まれている。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -274,6 +147,29 @@ venvHello\Scripts\activate.bat
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"><h3 class="article-title">WindowsでのオススメのPython環境</h3></a>
+<h6 class="subheader" title="2023-05-21T19:20:00+09:00">2023-05-21(日)
+</h6>
+
+
+<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
+<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/21/WinPython/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
@@ -478,28 +374,6 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/15/nfcpy/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/04/08/classroom/"><h3 class="article-title">Classroomから受講者名簿の生成</h3></a>
-<h6 class="subheader" title="2022-04-08T20:20:00+09:00">2022-04-08(金)
-</h6>
-
-
-<p>長期に渡り使われてきたCSTポータルIIが遂に廃止となりました。ClassroomとCanvasが乗り換え先な訳ですが，ClassroomはSIS (Student Information System)との連携前提なので学生番号という概念がなく，Web UIだけだと受講者を選択してメール送信を選んでようやくユニークな情報に到達する面倒な状態なのでGoogle Apps Scriptで特定の担当コースの学生情報(アドレス,氏名)を抽 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/classroom.html">Classroom </a>
-    <a href="https://eiichiromomma.github.io/tag/gas.html">GAS </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/08/classroom/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
