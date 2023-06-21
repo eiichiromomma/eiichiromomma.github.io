@@ -50,6 +50,355 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/"><h3 class="article-title">Windows+WSL2でGithubで配布されてるものを試す環境構築</h3></a>
+<h6 class="subheader" title="2023-06-21T19:20:00+09:00">2023-06-21(水)
+</h6>
+
+
+<h2>1. WSL2のインストール</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/windows/wsl/install">Microsoftのサイト</a>の説明に従いWSL2を入れる。</p>
+<p>PowerShellを管理者権限で起動して</p>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
+</code></pre></div>
+
+<p>再起動を促されるので、再起動すると勝手にインストールが始まり</p>
+<div class="highlight"><pre><span></span><code>Ubuntu<span class="w"> </span>は既にインストールされています。
+Ubuntu<span class="w"> </span>を起動しています...
+Installing,<span class="w"> </span>this<span class="w"> </span>may<span class="w"> </span>take<span class="w"> </span>a<span class="w"> </span>few<span class="w"> </span>minutes...
+Please<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>default<span class="w"> </span>UNIX<span class="w"> </span>user<span class="w"> </span>account.<span class="w"> </span>The<span class="w"> </span>username<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span>match<span class="w"> </span>your<span class="w"> </span>Windows<span class="w"> </span>username.
+For<span class="w"> </span>more<span class="w"> </span>information<span class="w"> </span>visit:<span class="w"> </span>https://aka.ms/wslusers
+Enter<span class="w"> </span>new<span class="w"> </span>UNIX<span class="w"> </span>username:
+</code></pre></div>
+
+<p>のようにWSL2上でのユーザー名を聞いてくるのでスペース無しの半角英字でユーザー名を入れる。
+その後パスワードも聞かれるので2回パスワードを入れる(あとでしょっちゅう使うので忘れないように)</p>
+<div class="highlight"><pre><span></span><code>Enter<span class="w"> </span>new<span class="w"> </span>UNIX<span class="w"> </span>username:<span class="w"> </span>momma
+New<span class="w"> </span>password:
+Retype<span class="w"> </span>new<span class="w"> </span>password:
+passwd:<span class="w"> </span>password<span class="w"> </span>updated<span class="w"> </span>successfully
+この操作を正しく終了しました。
+Installation<span class="w"> </span>successful!
+To<span class="w"> </span>run<span class="w"> </span>a<span class="w"> </span><span class="nb">command</span><span class="w"> </span>as<span class="w"> </span>administrator<span class="w"> </span><span class="o">(</span>user<span class="w"> </span><span class="s2">&quot;root&quot;</span><span class="o">)</span>,<span class="w"> </span>use<span class="w"> </span><span class="s2">&quot;sudo &lt;command&gt;&quot;</span>.
+See<span class="w"> </span><span class="s2">&quot;man sudo_root&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>details.
+
+Welcome<span class="w"> </span>to<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">22</span>.04.2<span class="w"> </span>LTS<span class="w"> </span><span class="o">(</span>GNU/Linux<span class="w"> </span><span class="m">5</span>.15.90.1-microsoft-standard-WSL2<span class="w"> </span>x86_64<span class="o">)</span>
+
+<span class="w"> </span>*<span class="w"> </span>Documentation:<span class="w">  </span>https://help.ubuntu.com
+<span class="w"> </span>*<span class="w"> </span>Management:<span class="w">     </span>https://landscape.canonical.com
+<span class="w"> </span>*<span class="w"> </span>Support:<span class="w">        </span>https://ubuntu.com/advantage
+
+
+This<span class="w"> </span>message<span class="w"> </span>is<span class="w"> </span>shown<span class="w"> </span>once<span class="w"> </span>a<span class="w"> </span>day.<span class="w"> </span>To<span class="w"> </span>disable<span class="w"> </span>it<span class="w"> </span>please<span class="w"> </span>create<span class="w"> </span>the
+/home/momma/.hushlogin<span class="w"> </span>file.
+momma@ASUS2022-0:~$
+</code></pre></div>
+
+<p>みたいな感じでUbuntuが使える状態になる。</p>
+<p>次回以降はWindowsのメニューから<code>Ubuntu</code>を選択すれば使える。</p>
+<h3>Error: 0xc004000dが出た場合</h3>
+<p>コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。</p>
+<h2>WSL2上でX11アプリの確認</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>x11-apps<span class="w"> </span>mesa-utils
+xeyes
+</code></pre></div>
+
+<p>でマウスカーソルを目玉が追うxeyesのウィンドウが開いたらGUIアプリケーションの実行は成功。</p>
+<div class="highlight"><pre><span></span><code>glxgears
+</code></pre></div>
+
+<p>で、ギアが回るアプリケーションが起動したらOpenGL関係のアプリケーションも使える。</p>
+<h2>2. Ubuntu上でpyenvを使えるようにする</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>git<span class="w"> </span><span class="se">\</span>
+python3-setuptools<span class="w"> </span>python3-pip<span class="w"> </span>libssl-dev<span class="w"> </span>libffi-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span>libbz2-dev<span class="w"> </span><span class="se">\</span>
+libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>wget<span class="w"> </span>llvm<span class="w"> </span><span class="se">\l</span>ibncurses5-dev<span class="w"> </span>xz-utils<span class="w"> </span>tk-dev<span class="w"> </span>libxml2-dev<span class="w"> </span><span class="se">\</span>
+libxmlsec1-dev<span class="w"> </span>liblzma-dev
+curl<span class="w"> </span>https://pyenv.run<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;command -v pyenv &gt;/dev/null || export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;eval &quot;$(pyenv init -)&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+</code></pre></div>
+
+<p>で.bashrcに設定が書き込まれるので、WSL2(というかWindowsメニューにUbuntuと出てくる)を開き直すか、</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+
+<p>を実行する。これで</p>
+<div class="highlight"><pre><span></span><code>pyenv
+</code></pre></div>
+
+<p>を実行すると実行時オプションが表示される。</p>
+<p>※Windows版のpyenvをインストールしていると、PATHの共有化でかなりややこしい話になるので、Windowsの方はPATHから外しておいた方が良い</p>
+<h2>3. 特定バージョンのPythonのインストール</h2>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
+</code></pre></div>
+
+<p>と打つと最初は" * system "しか出てこない。</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>global
+</code></pre></div>
+
+<p>や</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span><span class="nb">local</span>
+</code></pre></div>
+
+<p>でも"system"しか表示されない。これはUbuntuでインストールされるPythonを使う(というかそれしか存在していない)状態で、</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>install<span class="w"> </span>--list
+</code></pre></div>
+
+<p>とするとインストール可能なPythonのバージョン、配布形態の一覧が表示されるので、そこから選んで追加してから使うのがpyenvでのバージョン制御になる。例えば古いPython3.8を使いたい場合はその中で一番マイナーバージョンの数字が大きい3.8.17を入れることになる。(セキュリティパッチのタイミングでバージョンは更に上がる可能性があるのでちゃんと自分で確認すること)</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.8.17
+</code></pre></div>
+
+<p>でインストールが始まる。</p>
+<p>インストールが終わったらまた</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
+</code></pre></div>
+
+<p>を実行すると今入れた3.8.17が増えているので、</p>
+<ul>
+<li>pyenv global バージョン: システム全体で使うPythonのバージョンを指定(非推奨)</li>
+<li>pyenv local バージョン: 今いるディレクトリ以下で使うPythonのバージョンを指定</li>
+<li>venvで仮想環境のときにバージョンを指定 (推奨)</li>
+</ul>
+<p>のいずれかで扱うことになる。DockerのコンテナであるPythonのバージョン=その環境、という状況ならこれで問題ないが、Dockerを使わない場合には何かやるたびに環境が壊れるので注意。</p>
+<h2>4. venvとpyenvで特定バージョンの仮想環境を作る</h2>
+<p>用途としてはGithubで配布されているソースを試したいときが多い。
+無視リストの.gitignoreには</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pyenv</span>
+<span class="na">.python-version</span>
+
+<span class="c1"># Environments</span>
+<span class="na">.env</span>
+<span class="na">.venv</span>
+<span class="nf">env</span><span class="err">/</span>
+<span class="nf">venv</span><span class="err">/</span>
+<span class="nf">ENV</span><span class="err">/</span>
+<span class="nf">env.bak</span><span class="err">/</span>
+<span class="nf">venv.bak</span><span class="err">/</span>
+</code></pre></div>
+
+<p>が書かれている場合が殆どなので、</p>
+<ol>
+<li>githubからcloneして持ってくる</li>
+<li>そのディレクトリに移動</li>
+<li><code>pyenv local 特定バージョン</code></li>
+<li>venvで仮想環境を作成</li>
+<li>activateして環境構築</li>
+<li>終わったらdeactivate</li>
+</ol>
+<p>のような流れになる。venvで環境構築をする場合に、上のリストのどれかを使うとよい(ここではENV)。</p>
+<p>ここでは特定環境として https://github.com/atb033/multi_agent_path_planning を試してみる。</p>
+<p>条件はPython3.8.x だが色々入ったり別のソフトを使おうとしたときに環境が壊れるのを防ぐために仮想環境を使う。</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/atb033/multi_agent_path_planning
+<span class="nb">cd</span><span class="w"> </span>multi_agent_path_planning
+</code></pre></div>
+
+<p>でソースの場所に移動してから</p>
+<div class="highlight"><pre><span></span><code>pyenv local 3.8.17
+</code></pre></div>
+
+<p>でこのディレクトリでのPythonのバージョンを指定する。</p>
+<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
+</code></pre></div>
+
+<p>とすると今度は3.8.17にアスタリスクが付いている。</p>
+<p>続けて</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>ENV
+<span class="nb">source</span><span class="w"> </span>./ENV/bin/activate
+</code></pre></div>
+
+<p>とすればプロンプトの頭に(ENV)が付いて仮想環境になったことを教えてくれる。</p>
+<p>あとはrequirements.txtをインストールして実行するなり不足パッケージをpipで入れるなりすればよい。</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyyaml
+</code></pre></div>
+
+<p>(pyyamlがrequirements.txtで指定されていないので入れてる)</p>
+<p>あとは説明の通り</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>./centralized/sipp
+python3<span class="w"> </span>multi_sipp.py<span class="w"> </span>input.yaml<span class="w"> </span>output.yaml
+</code></pre></div>
+
+<p>でデモを試せる。</p>
+<p>WLS2上のファイルはWindowsのエクスプローラで<code>Linux</code>というペンギンアイコンのネットワークドライブが見えるようになっているのでそこから<code>\\wsl.localhost\Ubuntu\home\momma\multi_agent_path_planning\centralized\sipp\results</code>のように辿るとそのまま開ける。(mommaは各自のユーザー名に置き換える)</p>
+<p>試し終えたら必ず</p>
+<div class="highlight"><pre><span></span><code>deactivate
+</code></pre></div>
+
+<p>を実行して仮想環境から抜ける。</p>
+<p>次回以降使いたい場合には、WSL2で先程の場所のactivateを実行(source)すれば良い。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>multi_agent_path_planning/
+<span class="nb">source</span><span class="w"> </span>./ENV/bin/activate
+</code></pre></div>
+
+<p>またはダイレクトに</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>multi_agent_path_planning/ENV/bin/activate
+</code></pre></div>
+
+<p>でもよい。</p>
+<h2>5. WSL2上でDockerを使う (非Docker Desktop)</h2>
+<p>Ubuntuの流儀で入れるだけなので<a href="https://docs.docker.com/engine/install/ubuntu/">公式ドキュメント</a>の通りに入れる</p>
+<p>(Docker Desktopを使いたい場合は <a href="https://docs.docker.jp/desktop/windows/wsl.html">公式ドキュメントに従ってWSLバックエンドを有効化</a>すればこのインストール作業無しで使えた筈なのでここは飛ばして良い)</p>
+<p>DeepLearning系のものを試したいときかつNVIDIAのグラボを積んでいるマシンの場合には，Dockerを入れた後でNVIDIA CUDAも入れる。(やりかたはググると出てくる)</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
+sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>-d<span class="w"> </span>/etc/apt/keyrings
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://download.docker.com/linux/ubuntu/gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/docker.gpg
+sudo<span class="w"> </span>chmod<span class="w"> </span>a+r<span class="w"> </span>/etc/apt/keyrings/docker.gpg
+<span class="nb">echo</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;deb [arch=&quot;</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2">&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span>
+<span class="s2">  &quot;</span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VERSION_CODENAME</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot; stable&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/docker.list<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>docker-ce<span class="w"> </span>docker-ce-cli<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>containerd.io<span class="w"> </span>docker-buildx-plugin<span class="w"> </span>docker-compose-plugin
+sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
+</code></pre></div>
+
+<p>として</p>
+<div class="highlight"><pre><span></span><code>Hello<span class="w"> </span>from<span class="w"> </span>Docker!
+This<span class="w"> </span>message<span class="w"> </span>shows<span class="w"> </span>that<span class="w"> </span>your<span class="w"> </span>installation<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>working<span class="w"> </span>correctly.
+
+To<span class="w"> </span>generate<span class="w"> </span>this<span class="w"> </span>message,<span class="w"> </span>Docker<span class="w"> </span>took<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>steps:
+<span class="w"> </span><span class="m">1</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>client<span class="w"> </span>contacted<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>daemon.
+<span class="w"> </span><span class="m">2</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>pulled<span class="w"> </span>the<span class="w"> </span><span class="s2">&quot;hello-world&quot;</span><span class="w"> </span>image<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>Hub.
+<span class="w">    </span><span class="o">(</span>amd64<span class="o">)</span>
+<span class="w"> </span><span class="m">3</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>created<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>container<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>image<span class="w"> </span>which<span class="w"> </span>runs<span class="w"> </span>the
+<span class="w">    </span>executable<span class="w"> </span>that<span class="w"> </span>produces<span class="w"> </span>the<span class="w"> </span>output<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>currently<span class="w"> </span>reading.
+<span class="w"> </span><span class="m">4</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>streamed<span class="w"> </span>that<span class="w"> </span>output<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>client,<span class="w"> </span>which<span class="w"> </span>sent<span class="w"> </span>it
+<span class="w">    </span>to<span class="w"> </span>your<span class="w"> </span>terminal.
+
+To<span class="w"> </span>try<span class="w"> </span>something<span class="w"> </span>more<span class="w"> </span>ambitious,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>run<span class="w"> </span>an<span class="w"> </span>Ubuntu<span class="w"> </span>container<span class="w"> </span>with:
+<span class="w"> </span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
+
+Share<span class="w"> </span>images,<span class="w"> </span>automate<span class="w"> </span>workflows,<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>free<span class="w"> </span>Docker<span class="w"> </span>ID:
+<span class="w"> </span>https://hub.docker.com/
+
+For<span class="w"> </span>more<span class="w"> </span>examples<span class="w"> </span>and<span class="w"> </span>ideas,<span class="w"> </span>visit:
+<span class="w"> </span>https://docs.docker.com/get-started/
+</code></pre></div>
+
+<p>な表示が出ればコンテナの起動は成功。</p>
+<p>続けて</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>docker<span class="w"> </span>自分のユーザー名
+</code></pre></div>
+
+<p>としてdockerグループに自分を加えておくと、dockerの実行にsudoコマンドが不要になる。</p>
+<h2>6. WSL2のDockerでGUIアプリケーションを使う</h2>
+<p>WSL2上でGUIアプリケーションをそのまま実行するだけならWSLgがいい感じにWindowsで表示できるよう扱ってくれているが、Dockerコンテナ上のGUIアプリケーションを起動するには、Dockerのホスト(WSL2)に別ホスト(ここではコンテナ)のアプリケーションを表示させる細工が必要で、具体的には設定ファイルと環境変数の共有が必要となる。<a href="https://zenn.dev/holliy/articles/51012ef059aa9f">具体的なやりかた</a>はあちこちで紹介されているがDockerやWSLのアップデートによって変わることが多々あるので、極力新しい情報を参考にする。(英語だが公式サイトを見るのが正解)</p>
+<p>一旦Ubuntuを閉じて再度開いてから</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/tmp/.X11-unix,target<span class="o">=</span>/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/mnt/wslg,target<span class="o">=</span>/mnt/wslg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">DISPLAY</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">WAYLAND_DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">WAYLAND_DISPLAY</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">XDG_RUNTIME_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ubuntu:22.04
+</code></pre></div>
+
+<p>とすると</p>
+<div class="highlight"><pre><span></span><code>Status:<span class="w"> </span>Downloaded<span class="w"> </span>newer<span class="w"> </span>image<span class="w"> </span><span class="k">for</span><span class="w"> </span>ubuntu:22.04
+root@f4e906a0f041:/#
+</code></pre></div>
+
+<p>のような感じでコンテナが起動する。<code>--it</code>でインタラクティブな状態(コマンドを実行する場合)、<code>--rm</code>で使い終えたコンテナを削除することを意味するので、残したければ<code>--rm</code>は外して実行する。</p>
+<p>デフォルトだとユーザーはrootで動くのでsudoコマンドの付与は不要だが、ホストのアプリケーションのインストールは無関係な素の状態なのでアプリケーションは入れ直すか、諸々インストール済みのディスクイメージを探して使うか、環境構築のためのDockerfileを書くかになる。(Dockerfileを使う例は<a href="https://github.com/eiichiromomma/ros2docker">こっち</a>を参照)</p>
+<p>このままですんなりxeyesは入れれば動くのだが<a href="https://github.com/RobotLocomotion/drake/issues/18726">jammyにOpenGL関係のバグがあるらしい</a>のでglxgearsは動かないため、jammyを使いたい場合は一部パッケージをholdする。</p>
+<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>update
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libglapi-mesa<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="nv">libgbm1</span><span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libegl-mesa0<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libgl1-mesa-dri<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libglx-mesa0<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
+apt-mark<span class="w"> </span>hold<span class="w"> </span>libglapi-mesa<span class="w"> </span>libgbm1<span class="w"> </span>libegl-mesa0<span class="w">  </span>libgl1-mesa-dri<span class="w"> </span>libglx-mesa0<span class="w"> </span>
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mesa-utils
+glxgears
+</code></pre></div>
+
+<p>で歯車が周るアプリケーションが起動すれば成功。</p>
+<p>アプリケーションを閉じて</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+
+<p>コンテナを終了させる。<code>--rm</code>オプションを付けずに起動したコンテナは停止状態で保持される。プロセスは圧迫しないがディスクは圧迫するので</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>container<span class="w"> </span>ls<span class="w"> </span>-a
+</code></pre></div>
+
+<p>で時々確認すると良い。</p>
+<h3>古いROSのコンテナを使う</h3>
+<p>古い環境でも構築可能なのがDockerの利点だが、追加で何か入れようとするとapt関係がミラーサイトにもなく、apt updateだけでも結構遅い状態になるので、何か試すにしてもよく吟味してから選ぶとよい。</p>
+<p>https://github.com/hasauino/rrt_exploration を試してみる。環境としては<a href="http://wiki.ros.org/ja/kinetic/Installation/Ubuntu">kinetic</a>なので今から素で入れるのは面倒。</p>
+<p><a href="https://hub.docker.com/_/ros/tags?page=1&amp;name=kinetic">公式のコンテナ</a>を使う。</p>
+<div class="highlight"><pre><span></span><code>docker pull ros:kinetic-robot-xenial
+</code></pre></div>
+
+<p>でDocker Imageをpullしたらrunで起動。今度は<code>--rm</code>は付けずに<code>--name foxyTest</code>と名付けて起動する(exitしてもコンテナが残る)。</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>foxyTest<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/tmp/.X11-unix,target<span class="o">=</span>/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/mnt/wslg,target<span class="o">=</span>/mnt/wslg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">DISPLAY</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">WAYLAND_DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">WAYLAND_DISPLAY</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">XDG_RUNTIME_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros:kinetic-robot-xenial
+</code></pre></div>
+
+<p>でコンテナが起動するので<code>ros[TAB][TAB]</code>とするとROS周りが既にインストールされているのがわかる。
+ひとまずexitして</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>container<span class="w"> </span>ls<span class="w"> </span>-a
+</code></pre></div>
+
+<p>とするとfoxyTestが一覧に出てくる。</p>
+<p>再開するには</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>start<span class="w"> </span>-i<span class="w"> </span>foxyTest
+</code></pre></div>
+
+<p>でコンテナが起動するのでドキュメントの通り</p>
+<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>update
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-kinetic-gmapping<span class="w"> </span>ros-kinetic-navigation<span class="w"> </span>python-opencv<span class="w"> </span>python-numpy<span class="w"> </span>python-scikits-learn
+</code></pre></div>
+
+<p>で準備ができたら、catkinなWSを作る</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/catkin_ws/src
+<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
+catkin_make
+</code></pre></div>
+
+<p>WSのsrcにソースをcloneする</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>src
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hasauino/rrt_exploration.git
+<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
+catkin_make
+<span class="nb">source</span><span class="w"> </span>devel/setup.bash
+</code></pre></div>
+
+<p>でインストール完了。続けて<a href="https://github.com/hasauino/rrt_exploration_tutorials">Tutorials</a>を試す。</p>
+<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-kinetic-kobuki<span class="w"> </span>ros-kinetic-kobuki-core<span class="w"> </span>ros-kinetic-kobuki-gazebo<span class="w"> </span>
+<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hasauino/rrt_exploration_tutorials.git
+<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
+catkin_make
+<span class="nb">source</span><span class="w"> </span>devel/setup.bash
+roslaunch<span class="w"> </span>rrt_exploration_tutorials<span class="w"> </span>single_simulated_house.launch
+</code></pre></div>
+
+<p>で一応Gazeboも一部透明だったりUIが表示されなかったりするが起動して動いてそうな画面が出てくる。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
+    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
+    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/"><h3 class="article-title">CanvasのSandbox WSL2編</h3></a>
 <h6 class="subheader" title="2022-04-01T06:00:00+09:00">2022-04-01(金)
 </h6>
@@ -65,246 +414,7 @@
 </ul>
 <h3>まず時間を合わせとツール入れ</h3>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ntpdate<span class="w"> </span>time.google.com
-sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ruby<span class="w"> </span>build-essential<span class="w"> </span>git<span class="w"> </span>
-</code></pre></div>
-
-<h3>doryを入れる</h3>
-<p>doryは普通にgemで入る</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>gem<span class="w"> </span>install<span class="w"> </span>dory
-</code></pre></div>
-
-<h3>Canvasのソースを拾ってくる</h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/instructure/canvas-lms.git
-<span class="nb">cd</span><span class="w"> </span>canvas-lms
-</code></pre></div>
-
-<h3>依存アプリを入れて環境構築</h3>
-<p>要mutagenなのだが<a href="https://mutagen.io/documentation/introduction/installation">homebrewしか楽に入れる方法がない</a>。</p>
-<p><a href="https://brew.sh/">Homebrew</a>のコマンド</p>
-<div class="highlight"><pre><span></span><code>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
-</code></pre></div>
-
-<p>を実行するのだが，その後に設定が必要。admin不要としたいがために<a href="https://docs.brew.sh/Homebrew-on-Linux">/home/linuxbrewへインストールされる</a>らしい。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">test</span><span class="w"> </span>-d<span class="w"> </span>~/.linuxbrew<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>~/.linuxbrew/bin/brew<span class="w"> </span>shellenv<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">test</span><span class="w"> </span>-d<span class="w"> </span>/home/linuxbrew/.linuxbrew<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>/home/linuxbrew/.linuxbrew/bin/brew<span class="w"> </span>shellenv<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">test</span><span class="w"> </span>-r<span class="w"> </span>~/.bash_profile<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;eval \&quot;\$(</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="k">)</span><span class="s2">/bin/brew shellenv)\&quot;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;eval \&quot;\$(</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="k">)</span><span class="s2">/bin/brew shellenv)\&quot;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
-</code></pre></div>
-
-<p>とかやって</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.profile
-</code></pre></div>
-
-<p>の後に</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>hello
-</code></pre></div>
-
-<p>で確認できる。</p>
-<p>で</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>mutagen-io/mutagen/mutagen
-brew<span class="w"> </span>install<span class="w"> </span>mutagen-io/mutagen/mutagen-compose
-</code></pre></div>
-
-<p>でmutagenとmutagen-composeを入れる。</p>
-<h3>WSL2固有の作業</h3>
-<p>ここからはWSL2固有の問題で，IPv6優先の設定が災いしてgemsとyarnの導入で必ずコケる。後に載せたdiff通りDockerfileに記載するだけでは解決しない。( /etc/gai.confに <code>echo precedence ::ffff:0:0/96  100</code>とか書いてるのがそれ)</p>
-<div class="highlight"><pre><span></span><code>./script/docker_dev_setup.sh<span class="w"> </span>--mutagen
-</code></pre></div>
-
-<p>を実行するとまず</p>
-<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>Bundle<span class="w"> </span>install...
-</code></pre></div>
-
-<p>のところで<code>Gem::RemoteFetcher::UnknownHostError timed out</code>でコケる。これはhostsに rubygems.org に対応するIPを書いて解決する。また，その後で</p>
-<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>Yarn<span class="w"> </span>install....
-</code></pre></div>
-
-<p>のところで必ず <code>getaddrinfo EAI_AGAIN registry.yarnpkg.com</code>でコケるので 8.8.8.8 を /etc/resolv.conf に書き込んだりする。</p>
-<p>実際の対処方法は，この時点でコンテナは出来上がっているので，canvas-lms-web-1 に入り込んで上記を書き込む。</p>
-<p>まず，hostコマンドでrubygems.orgのIPを確認する</p>
-<div class="highlight"><pre><span></span><code>host<span class="w"> </span>rubygems.org
-</code></pre></div>
-
-<p>で</p>
-<div class="highlight"><pre><span></span><code><span class="nx">rubygems</span><span class="p">.</span><span class="nx">org</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="m m-Double">151.101.65.2</span><span class="mi">27</span>
-<span class="nx">rubygems</span><span class="p">.</span><span class="nx">org</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="m m-Double">151.101.193.2</span><span class="mi">27</span>
-<span class="nx">rubygems</span><span class="p">.</span><span class="nx">org</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="m m-Double">151.101.129.2</span><span class="mi">27</span>
-<span class="nx">rubygems</span><span class="p">.</span><span class="nx">org</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="m m-Double">151.101.1.2</span><span class="mi">27</span>
-</code></pre></div>
-
-<p>と出た例を以下に示す。</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>--user<span class="o">=</span>root<span class="w"> </span>canvas-lms-web-1<span class="w"> </span>/bin/bash
-</code></pre></div>
-
-<p>で canvas-lms-web-1 のコンテナにrootで入り</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;151.101.65.227    rubygems.org&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;151.101.193.227    rubygems.org&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;151.101.129.227    rubygems.org&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;151.101.1.227    rubygems.org&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;nameserver 8.8.8.8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/resolv.conf
-<span class="nb">exit</span>
-</code></pre></div>
-
-<p>で書き換え完了。このままscript/docker_dev_setup.shを再度実行するとまたbuildされてしまうので，同ファイルをコピーして</p>
-<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>script/docker_dev_setup.sh<span class="w"> </span>script/docker_dev_build_assets.sh
-</code></pre></div>
-
-<p>としたうえで，その中を</p>
-<div class="highlight"><pre><span></span><code>create_log_file
-init_log_file<span class="w"> </span><span class="s2">&quot;Docker Dev Setup&quot;</span>
-os_setup
-message<span class="w"> </span><span class="s1">&#39;Now we can set up Canvas!&#39;</span>
-<span class="c1"># copy_docker_config</span>
-<span class="c1"># setup_docker_compose_override</span>
-<span class="c1"># build_images</span>
-<span class="c1"># docker_compose_up</span>
-<span class="c1"># check_gemfile</span>
-build_assets
-create_db
-display_next_steps
-</code></pre></div>
-
-<p>のように コケたところから再開するようにコメントアウトして，そのスクリプトを実行する</p>
-<div class="highlight"><pre><span></span><code>./script/docker_dev_build_assets.sh
-</code></pre></div>
-
-<p>で Success !と出たら成功。</p>
-<h3>mutagen-compose up</h3>
-<p>mutagen-composeでupする(ちなみにupで開始だからdownとやるとcontainersが全部消える)。</p>
-<div class="highlight"><pre><span></span><code>mutagen-compose<span class="w"> </span>up
-</code></pre></div>
-
-<p>で，暫く待ってると<code>webpack_1</code>からのログが終わって<code>jobs_1</code>からのログが流れるので，ブラウザで <a href="http://localhost/">http://localhost</a>を開くとCanvasのログイン画面になれば順調。</p>
-<h3>Canvasのアカウント作成</h3>
-<p>この状態だとアカウントが無い状態なのでcontainerの中のrailsでアカウントを作成する。</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps
-</code></pre></div>
-
-<p>で確認してIMAGEが<code>canvas-lms_web</code>のNAMESを見る(たぶんcanvas-lms_web_1)。</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-u<span class="w"> </span><span class="m">0</span><span class="w"> </span>-it<span class="w"> </span>canvas-lms_web_1<span class="w"> </span>/bin/bash
-</code></pre></div>
-
-<p>でコンテナに入ると</p>
-<div class="highlight"><pre><span></span><code>root@xxxxxxxxxxx:/usr/src/app#
-</code></pre></div>
-
-<p>のようなプロンプトになるので</p>
-<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>db:initial_setup
-</code></pre></div>
-
-<p>を実行すると色々聞かれる。</p>
-<p>※アカウント名(the account name)なのだが，特殊な用語で大学-学部-学科のようなツリーを考えたときの大学に相当する</p>
-<div class="highlight"><pre><span></span><code><span class="m">1</span>:<span class="w"> </span>development:public
-What<span class="w"> </span>email<span class="w"> </span>address<span class="w"> </span>will<span class="w"> </span>the<span class="w"> </span>site<span class="w"> </span>administrator<span class="w"> </span>account<span class="w"> </span>use?<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-Please<span class="w"> </span>confirm<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>ログインIDになるメールアドレスを入力<span class="o">]</span>
-What<span class="w"> </span>password<span class="w"> </span>will<span class="w"> </span>the<span class="w"> </span>site<span class="w"> </span>administrator<span class="w"> </span>use?<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>パスワードを入力<span class="o">]</span>
-Please<span class="w"> </span>confirm<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>パスワードを入力<span class="o">]</span>
-What<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>users<span class="w"> </span>to<span class="w"> </span>see<span class="w"> </span>as<span class="w"> </span>the<span class="w"> </span>account<span class="w"> </span>name?<span class="w"> </span>This<span class="w"> </span>should<span class="w"> </span>probably<span class="w"> </span>be<span class="w"> </span>the<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>your<span class="w"> </span>organization.<span class="w"> </span>&gt;<span class="w"> </span><span class="o">[</span>他のユーザーから見たアカウント名<span class="o">]</span>
-To<span class="w"> </span><span class="nb">help</span><span class="w"> </span>our<span class="w"> </span>developers<span class="w"> </span>better<span class="w"> </span>serve<span class="w"> </span>you,<span class="w"> </span>Instructure<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>collect<span class="w"> </span>some<span class="w"> </span>usage<span class="w"> </span>data<span class="w"> </span>about<span class="w"> </span>your<span class="w"> </span>Canvas<span class="w"> </span>installation.<span class="w"> </span>You<span class="w"> </span>can<span class="w"> </span>change<span class="w"> </span>this<span class="w"> </span>setting<span class="w"> </span>at<span class="w"> </span>any<span class="w"> </span>time.:
-<span class="m">1</span>.<span class="w"> </span>Opt<span class="w"> </span><span class="k">in</span>
-<span class="m">2</span>.<span class="w"> </span>Only<span class="w"> </span>send<span class="w"> </span>anonymized<span class="w"> </span>data
-<span class="m">3</span>.<span class="w"> </span>Opt<span class="w"> </span>out<span class="w"> </span>completely
-&gt;<span class="w"> </span><span class="o">[</span>開発元に情報を送るかどうかなので2の匿名化か3の拒否が無難<span class="o">]</span>
-Thank<span class="w"> </span>you<span class="w"> </span><span class="k">for</span><span class="w"> </span>participating<span class="w"> </span><span class="k">in</span><span class="w"> </span>anonymous<span class="w"> </span>usage<span class="w"> </span>collection.
-You<span class="w"> </span>can<span class="w"> </span>change<span class="w"> </span>this<span class="w"> </span>feature<span class="w"> </span>at<span class="w"> </span>any<span class="w"> </span><span class="nb">time</span><span class="w"> </span>by<span class="w"> </span>running<span class="w"> </span>the<span class="w"> </span>rake<span class="w"> </span>task<span class="w"> </span><span class="s1">&#39;rake db:configure_statistics_collection&#39;</span>
-........................................................................................
-Notifications<span class="w"> </span>Loaded
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Publishing<span class="w"> </span>Reminder
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Grading<span class="w"> </span>Reminder
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Assignment<span class="w"> </span>Due<span class="w"> </span>Date<span class="w"> </span>Reminder
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Rubric<span class="w"> </span>Assessment<span class="w"> </span>Invitation
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Export<span class="w"> </span>Ready
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Import<span class="w"> </span>Finished
-No<span class="w"> </span>notification<span class="w"> </span>files<span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>Migration<span class="w"> </span>Import<span class="w"> </span>Failed
-
-Initial<span class="w"> </span>data<span class="w"> </span>loaded
-</code></pre></div>
-
-<p>で完了。が，doryのproxyはあくまでもWSL2上で機能していて，Windowsでは使えないので <a href="http://localhost/">http://localhost/</a> を開くとCanvasのログイン画面が出てくる。</p>
-<h3>git  diff</h3>
-<p>たぶん不要な情報もあるが動いてるからそのまま</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/Dockerfile b/Dockerfile</span>
-<span class="gh">index f973e5f232..f4c0d79620 100644</span>
-<span class="gd">--- a/Dockerfile</span>
-<span class="gi">+++ b/Dockerfile</span>
-<span class="gu">@@ -33,9 +33,11 @@ ARG USER_ID</span>
-<span class="w"> </span># Without it, some linux distributions are unable to write at all to the host mounted volume.
-<span class="w"> </span>RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \
-<span class="w"> </span>        &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
-<span class="gd">-</span>
-<span class="gi">+RUN echo &quot;precedence ::ffff:0:0/96  100&quot; &gt;&gt; /etc/gai.conf</span>
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
-<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gu">@@ -64,7 +66,12 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL=&quot;</span>
-<span class="w"> </span>  &amp;&amp; gem uninstall --all --ignore-dependencies --force $BUNDLER_INSTALL bundler \
-<span class="w"> </span>  &amp;&amp; gem install bundler --no-document -v $BUNDLER_VERSION \
-<span class="w"> </span>  &amp;&amp; find $GEM_HOME ! -user docker | xargs chown docker:docker
-<span class="gi">+# RUN gem update --system</span>
-<span class="w"> </span>RUN npm install -g npm@latest &amp;&amp; npm cache clean --force
-<span class="gi">+RUN echo &quot;151.101.193.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.1.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.129.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-<span class="gi">+RUN echo &quot;151.101.65.227 rubygems.org&quot; &gt;&gt; /etc/hosts</span>
-
-<span class="w"> </span>USER docker
-
-<span class="gh">diff --git a/Dockerfile.jenkins b/Dockerfile.jenkins</span>
-<span class="gh">index 9f5a765399..a4f2ca3520 100644</span>
-<span class="gd">--- a/Dockerfile.jenkins</span>
-<span class="gi">+++ b/Dockerfile.jenkins</span>
-<span class="gu">@@ -28,8 +28,10 @@ ENV BUNDLE_APP_CONFIG /home/docker/.bundle</span>
-<span class="w"> </span>WORKDIR $APP_HOME
-
-<span class="w"> </span>USER root
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
-<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gh">diff --git a/build/Dockerfile.template b/build/Dockerfile.template</span>
-<span class="gh">index 61e680d71b..ec0cde9222 100644</span>
-<span class="gd">--- a/build/Dockerfile.template</span>
-<span class="gi">+++ b/build/Dockerfile.template</span>
-<span class="gu">@@ -42,8 +42,10 @@ RUN if [ -n &quot;$USER_ID&quot; ]; then usermod -u &quot;${USER_ID}&quot; docker \</span>
-<span class="w"> </span>        &amp;&amp; chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
-
-<span class="w"> </span>&lt;% end -%&gt;
-<span class="gi">+RUN apt-get update; apt-get install wget -y</span>
-<span class="w"> </span>RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-<span class="gd">-  &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  &amp;&amp; wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="gi">+  # &amp;&amp; curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \</span>
-<span class="w"> </span>  &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; &gt; /etc/apt/sources.list.d/yarn.list \
-<span class="w"> </span>  &amp;&amp; printf &#39;path-exclude /usr/share/doc/*\npath-exclude /usr/share/man/*&#39; &gt; /etc/dpkg/dpkg.cfg.d/01_nodoc \
-<span class="w"> </span>  &amp;&amp; echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &gt; /etc/apt/sources.list.d/pgdg.list \
-<span class="gh">diff --git a/script/common/utils/dory_setup.sh b/script/common/utils/dory_setup.sh</span>
-<span class="gh">index e04d4165cf..10a6d1b3d9 100755</span>
-<span class="gd">--- a/script/common/utils/dory_setup.sh</span>
-<span class="gi">+++ b/script/common/utils/dory_setup.sh</span>
-<span class="gu">@@ -16,9 +16,9 @@ function check_for_dory {</span>
-
-<span class="w"> </span>function start_dory {
-<span class="w"> </span>  message &#39;Starting dory...&#39;
-<span class="gd">-  if dory status | grep -q &#39;not running&#39;; then</span>
-<span class="gd">-    confirm_command &#39;dory up&#39;</span>
-<span class="gd">-  elif ! dory status; then</span>
-<span class="gi">+  if sudo dory status | grep -q &#39;not running&#39;; then</span>
-<span class="gi">+    confirm_command &#39;sudo dory up&#39;</span>
-<span class="gi">+  elif ! sudo dory status; then</span>
-<span class="w"> </span>    message &quot;Something went wrong with dory! Exiting script.&quot;
-<span class="w"> </span>    exit 1
-<span class="w"> </span>  else
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+sudo<span class="w"> </span>apt<span class="w"> </span>update …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
@@ -315,11 +425,9 @@ Initial<span class="w"> </span>data<span class="w"> </span>loaded
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/01/Canvas-Sandbox-WSL2/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 

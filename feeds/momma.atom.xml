@@ -1,5 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-05-25T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Windows環境でGitとvenvを使ってみる</title><link href="https://eiichiromomma.github.io/2023/05/25/WinVenv/" rel="alternate"></link><published>2023-05-25T19:20:00+09:00</published><updated>2023-05-25T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-05-25:/2023/05/25/WinVenv/</id><summary type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-06-21T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Windows+WSL2でGithubで配布されてるものを試す環境構築</title><link href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/" rel="alternate"></link><published>2023-06-21T19:20:00+09:00</published><updated>2023-06-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</id><summary type="html">&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
+&lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;再起動を促されるので、再起動すると勝手にインストールが始まり&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Ubuntu&lt;span class="w"&gt; &lt;/span&gt;は既にインスト …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
+&lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;再起動を促されるので、再起動すると勝手にインストールが始まり&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Ubuntu&lt;span class="w"&gt; &lt;/span&gt;は既にインストールされています。
+Ubuntu&lt;span class="w"&gt; &lt;/span&gt;を起動しています...
+Installing,&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;may&lt;span class="w"&gt; &lt;/span&gt;take&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;few&lt;span class="w"&gt; &lt;/span&gt;minutes...
+Please&lt;span class="w"&gt; &lt;/span&gt;create&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;default&lt;span class="w"&gt; &lt;/span&gt;UNIX&lt;span class="w"&gt; &lt;/span&gt;user&lt;span class="w"&gt; &lt;/span&gt;account.&lt;span class="w"&gt; &lt;/span&gt;The&lt;span class="w"&gt; &lt;/span&gt;username&lt;span class="w"&gt; &lt;/span&gt;does&lt;span class="w"&gt; &lt;/span&gt;not&lt;span class="w"&gt; &lt;/span&gt;need&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;match&lt;span class="w"&gt; &lt;/span&gt;your&lt;span class="w"&gt; &lt;/span&gt;Windows&lt;span class="w"&gt; &lt;/span&gt;username.
+For&lt;span class="w"&gt; &lt;/span&gt;more&lt;span class="w"&gt; &lt;/span&gt;information&lt;span class="w"&gt; &lt;/span&gt;visit:&lt;span class="w"&gt; &lt;/span&gt;https://aka.ms/wslusers
+Enter&lt;span class="w"&gt; &lt;/span&gt;new&lt;span class="w"&gt; &lt;/span&gt;UNIX&lt;span class="w"&gt; &lt;/span&gt;username:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようにWSL2上でのユーザー名を聞いてくるのでスペース無しの半角英字でユーザー名を入れる。
+その後パスワードも聞かれるので2回パスワードを入れる(あとでしょっちゅう使うので忘れないように)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Enter&lt;span class="w"&gt; &lt;/span&gt;new&lt;span class="w"&gt; &lt;/span&gt;UNIX&lt;span class="w"&gt; &lt;/span&gt;username:&lt;span class="w"&gt; &lt;/span&gt;momma
+New&lt;span class="w"&gt; &lt;/span&gt;password:
+Retype&lt;span class="w"&gt; &lt;/span&gt;new&lt;span class="w"&gt; &lt;/span&gt;password:
+passwd:&lt;span class="w"&gt; &lt;/span&gt;password&lt;span class="w"&gt; &lt;/span&gt;updated&lt;span class="w"&gt; &lt;/span&gt;successfully
+この操作を正しく終了しました。
+Installation&lt;span class="w"&gt; &lt;/span&gt;successful!
+To&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;as&lt;span class="w"&gt; &lt;/span&gt;administrator&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;user&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;root&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;use&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sudo &amp;lt;command&amp;gt;&amp;quot;&lt;/span&gt;.
+See&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;man sudo_root&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;details.
+
+Welcome&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;Ubuntu&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.04.2&lt;span class="w"&gt; &lt;/span&gt;LTS&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;GNU/Linux&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;.15.90.1-microsoft-standard-WSL2&lt;span class="w"&gt; &lt;/span&gt;x86_64&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt; &lt;/span&gt;*&lt;span class="w"&gt; &lt;/span&gt;Documentation:&lt;span class="w"&gt;  &lt;/span&gt;https://help.ubuntu.com
+&lt;span class="w"&gt; &lt;/span&gt;*&lt;span class="w"&gt; &lt;/span&gt;Management:&lt;span class="w"&gt;     &lt;/span&gt;https://landscape.canonical.com
+&lt;span class="w"&gt; &lt;/span&gt;*&lt;span class="w"&gt; &lt;/span&gt;Support:&lt;span class="w"&gt;        &lt;/span&gt;https://ubuntu.com/advantage
+
+
+This&lt;span class="w"&gt; &lt;/span&gt;message&lt;span class="w"&gt; &lt;/span&gt;is&lt;span class="w"&gt; &lt;/span&gt;shown&lt;span class="w"&gt; &lt;/span&gt;once&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;day.&lt;span class="w"&gt; &lt;/span&gt;To&lt;span class="w"&gt; &lt;/span&gt;disable&lt;span class="w"&gt; &lt;/span&gt;it&lt;span class="w"&gt; &lt;/span&gt;please&lt;span class="w"&gt; &lt;/span&gt;create&lt;span class="w"&gt; &lt;/span&gt;the
+/home/momma/.hushlogin&lt;span class="w"&gt; &lt;/span&gt;file.
+momma@ASUS2022-0:~$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;みたいな感じでUbuntuが使える状態になる。&lt;/p&gt;
+&lt;p&gt;次回以降はWindowsのメニューから&lt;code&gt;Ubuntu&lt;/code&gt;を選択すれば使える。&lt;/p&gt;
+&lt;h3&gt;Error: 0xc004000dが出た場合&lt;/h3&gt;
+&lt;p&gt;コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。&lt;/p&gt;
+&lt;h2&gt;WSL2上でX11アプリの確認&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;x11-apps&lt;span class="w"&gt; &lt;/span&gt;mesa-utils
+xeyes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でマウスカーソルを目玉が追うxeyesのウィンドウが開いたらGUIアプリケーションの実行は成功。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;glxgears
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で、ギアが回るアプリケーションが起動したらOpenGL関係のアプリケーションも使える。&lt;/p&gt;
+&lt;h2&gt;2. Ubuntu上でpyenvを使えるようにする&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;upgrade&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;build-essential&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+python3-setuptools&lt;span class="w"&gt; &lt;/span&gt;python3-pip&lt;span class="w"&gt; &lt;/span&gt;libssl-dev&lt;span class="w"&gt; &lt;/span&gt;libffi-dev&lt;span class="w"&gt; &lt;/span&gt;zlib1g-dev&lt;span class="w"&gt; &lt;/span&gt;libbz2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+libreadline-dev&lt;span class="w"&gt; &lt;/span&gt;libsqlite3-dev&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;llvm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\l&lt;/span&gt;ibncurses5-dev&lt;span class="w"&gt; &lt;/span&gt;xz-utils&lt;span class="w"&gt; &lt;/span&gt;tk-dev&lt;span class="w"&gt; &lt;/span&gt;libxml2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+libxmlsec1-dev&lt;span class="w"&gt; &lt;/span&gt;liblzma-dev
+curl&lt;span class="w"&gt; &lt;/span&gt;https://pyenv.run&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bash
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;export PYENV_ROOT=&amp;quot;$HOME/.pyenv&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;command -v pyenv &amp;gt;/dev/null || export PATH=&amp;quot;$PYENV_ROOT/bin:$PATH&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;eval &amp;quot;$(pyenv init -)&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で.bashrcに設定が書き込まれるので、WSL2(というかWindowsメニューにUbuntuと出てくる)を開き直すか、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行する。これで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行すると実行時オプションが表示される。&lt;/p&gt;
+&lt;p&gt;※Windows版のpyenvをインストールしていると、PATHの共有化でかなりややこしい話になるので、Windowsの方はPATHから外しておいた方が良い&lt;/p&gt;
+&lt;h2&gt;3. 特定バージョンのPythonのインストール&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;versions
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打つと最初は" * system "しか出てこない。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;global
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;や&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でも"system"しか表示されない。これはUbuntuでインストールされるPythonを使う(というかそれしか存在していない)状態で、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--list
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とするとインストール可能なPythonのバージョン、配布形態の一覧が表示されるので、そこから選んで追加してから使うのがpyenvでのバージョン制御になる。例えば古いPython3.8を使いたい場合はその中で一番マイナーバージョンの数字が大きい3.8.17を入れることになる。(セキュリティパッチのタイミングでバージョンは更に上がる可能性があるのでちゃんと自分で確認すること)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.8.17
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でインストールが始まる。&lt;/p&gt;
+&lt;p&gt;インストールが終わったらまた&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;versions
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行すると今入れた3.8.17が増えているので、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pyenv global バージョン: システム全体で使うPythonのバージョンを指定(非推奨)&lt;/li&gt;
+&lt;li&gt;pyenv local バージョン: 今いるディレクトリ以下で使うPythonのバージョンを指定&lt;/li&gt;
+&lt;li&gt;venvで仮想環境のときにバージョンを指定 (推奨)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;のいずれかで扱うことになる。DockerのコンテナであるPythonのバージョン=その環境、という状況ならこれで問題ないが、Dockerを使わない場合には何かやるたびに環境が壊れるので注意。&lt;/p&gt;
+&lt;h2&gt;4. venvとpyenvで特定バージョンの仮想環境を作る&lt;/h2&gt;
+&lt;p&gt;用途としてはGithubで配布されているソースを試したいときが多い。
+無視リストの.gitignoreには&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# pyenv&lt;/span&gt;
+&lt;span class="na"&gt;.python-version&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Environments&lt;/span&gt;
+&lt;span class="na"&gt;.env&lt;/span&gt;
+&lt;span class="na"&gt;.venv&lt;/span&gt;
+&lt;span class="nf"&gt;env&lt;/span&gt;&lt;span class="err"&gt;/&lt;/span&gt;
+&lt;span class="nf"&gt;venv&lt;/span&gt;&lt;span class="err"&gt;/&lt;/span&gt;
+&lt;span class="nf"&gt;ENV&lt;/span&gt;&lt;span class="err"&gt;/&lt;/span&gt;
+&lt;span class="nf"&gt;env.bak&lt;/span&gt;&lt;span class="err"&gt;/&lt;/span&gt;
+&lt;span class="nf"&gt;venv.bak&lt;/span&gt;&lt;span class="err"&gt;/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;が書かれている場合が殆どなので、&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;githubからcloneして持ってくる&lt;/li&gt;
+&lt;li&gt;そのディレクトリに移動&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pyenv local 特定バージョン&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;venvで仮想環境を作成&lt;/li&gt;
+&lt;li&gt;activateして環境構築&lt;/li&gt;
+&lt;li&gt;終わったらdeactivate&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;のような流れになる。venvで環境構築をする場合に、上のリストのどれかを使うとよい(ここではENV)。&lt;/p&gt;
+&lt;p&gt;ここでは特定環境として https://github.com/atb033/multi_agent_path_planning を試してみる。&lt;/p&gt;
+&lt;p&gt;条件はPython3.8.x だが色々入ったり別のソフトを使おうとしたときに環境が壊れるのを防ぐために仮想環境を使う。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/atb033/multi_agent_path_planning
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;multi_agent_path_planning
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でソースの場所に移動してから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv local 3.8.17
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でこのディレクトリでのPythonのバージョンを指定する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;versions
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすると今度は3.8.17にアスタリスクが付いている。&lt;/p&gt;
+&lt;p&gt;続けて&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;venv&lt;span class="w"&gt; &lt;/span&gt;ENV
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;./ENV/bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすればプロンプトの頭に(ENV)が付いて仮想環境になったことを教えてくれる。&lt;/p&gt;
+&lt;p&gt;あとはrequirements.txtをインストールして実行するなり不足パッケージをpipで入れるなりすればよい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;requirements.txt
+python3&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;pyyaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;(pyyamlがrequirements.txtで指定されていないので入れてる)&lt;/p&gt;
+&lt;p&gt;あとは説明の通り&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;./centralized/sipp
+python3&lt;span class="w"&gt; &lt;/span&gt;multi_sipp.py&lt;span class="w"&gt; &lt;/span&gt;input.yaml&lt;span class="w"&gt; &lt;/span&gt;output.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でデモを試せる。&lt;/p&gt;
+&lt;p&gt;WLS2上のファイルはWindowsのエクスプローラで&lt;code&gt;Linux&lt;/code&gt;というペンギンアイコンのネットワークドライブが見えるようになっているのでそこから&lt;code&gt;\\wsl.localhost\Ubuntu\home\momma\multi_agent_path_planning\centralized\sipp\results&lt;/code&gt;のように辿るとそのまま開ける。(mommaは各自のユーザー名に置き換える)&lt;/p&gt;
+&lt;p&gt;試し終えたら必ず&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;deactivate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を実行して仮想環境から抜ける。&lt;/p&gt;
+&lt;p&gt;次回以降使いたい場合には、WSL2で先程の場所のactivateを実行(source)すれば良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;multi_agent_path_planning/
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;./ENV/bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;またはダイレクトに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;multi_agent_path_planning/ENV/bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でもよい。&lt;/p&gt;
+&lt;h2&gt;5. WSL2上でDockerを使う (非Docker Desktop)&lt;/h2&gt;
+&lt;p&gt;Ubuntuの流儀で入れるだけなので&lt;a href="https://docs.docker.com/engine/install/ubuntu/"&gt;公式ドキュメント&lt;/a&gt;の通りに入れる&lt;/p&gt;
+&lt;p&gt;(Docker Desktopを使いたい場合は &lt;a href="https://docs.docker.jp/desktop/windows/wsl.html"&gt;公式ドキュメントに従ってWSLバックエンドを有効化&lt;/a&gt;すればこのインストール作業無しで使えた筈なのでここは飛ばして良い)&lt;/p&gt;
+&lt;p&gt;DeepLearning系のものを試したいときかつNVIDIAのグラボを積んでいるマシンの場合には，Dockerを入れた後でNVIDIA CUDAも入れる。(やりかたはググると出てくる)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;update
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;ca-certificates&lt;span class="w"&gt; &lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;gnupg
+sudo&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0755&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;/etc/apt/keyrings
+curl&lt;span class="w"&gt; &lt;/span&gt;-fsSL&lt;span class="w"&gt; &lt;/span&gt;https://download.docker.com/linux/ubuntu/gpg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--dearmor&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;/etc/apt/keyrings/docker.gpg
+sudo&lt;span class="w"&gt; &lt;/span&gt;chmod&lt;span class="w"&gt; &lt;/span&gt;a+r&lt;span class="w"&gt; &lt;/span&gt;/etc/apt/keyrings/docker.gpg
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;deb [arch=&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dpkg&lt;span class="w"&gt; &lt;/span&gt;--print-architecture&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \&lt;/span&gt;
+&lt;span class="s2"&gt;  &amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;/etc/os-release&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$VERSION_CODENAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; stable&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;tee&lt;span class="w"&gt; &lt;/span&gt;/etc/apt/sources.list.d/docker.list&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/dev/null
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;update
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;docker-ce&lt;span class="w"&gt; &lt;/span&gt;docker-ce-cli&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;containerd.io&lt;span class="w"&gt; &lt;/span&gt;docker-buildx-plugin&lt;span class="w"&gt; &lt;/span&gt;docker-compose-plugin
+sudo&lt;span class="w"&gt; &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;として&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Hello&lt;span class="w"&gt; &lt;/span&gt;from&lt;span class="w"&gt; &lt;/span&gt;Docker!
+This&lt;span class="w"&gt; &lt;/span&gt;message&lt;span class="w"&gt; &lt;/span&gt;shows&lt;span class="w"&gt; &lt;/span&gt;that&lt;span class="w"&gt; &lt;/span&gt;your&lt;span class="w"&gt; &lt;/span&gt;installation&lt;span class="w"&gt; &lt;/span&gt;appears&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;be&lt;span class="w"&gt; &lt;/span&gt;working&lt;span class="w"&gt; &lt;/span&gt;correctly.
+
+To&lt;span class="w"&gt; &lt;/span&gt;generate&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;message,&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;took&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;following&lt;span class="w"&gt; &lt;/span&gt;steps:
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;The&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;client&lt;span class="w"&gt; &lt;/span&gt;contacted&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;daemon.
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;The&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;daemon&lt;span class="w"&gt; &lt;/span&gt;pulled&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hello-world&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;image&lt;span class="w"&gt; &lt;/span&gt;from&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;Hub.
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;amd64&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;The&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;daemon&lt;span class="w"&gt; &lt;/span&gt;created&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;new&lt;span class="w"&gt; &lt;/span&gt;container&lt;span class="w"&gt; &lt;/span&gt;from&lt;span class="w"&gt; &lt;/span&gt;that&lt;span class="w"&gt; &lt;/span&gt;image&lt;span class="w"&gt; &lt;/span&gt;which&lt;span class="w"&gt; &lt;/span&gt;runs&lt;span class="w"&gt; &lt;/span&gt;the
+&lt;span class="w"&gt;    &lt;/span&gt;executable&lt;span class="w"&gt; &lt;/span&gt;that&lt;span class="w"&gt; &lt;/span&gt;produces&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;output&lt;span class="w"&gt; &lt;/span&gt;you&lt;span class="w"&gt; &lt;/span&gt;are&lt;span class="w"&gt; &lt;/span&gt;currently&lt;span class="w"&gt; &lt;/span&gt;reading.
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;The&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;daemon&lt;span class="w"&gt; &lt;/span&gt;streamed&lt;span class="w"&gt; &lt;/span&gt;that&lt;span class="w"&gt; &lt;/span&gt;output&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;client,&lt;span class="w"&gt; &lt;/span&gt;which&lt;span class="w"&gt; &lt;/span&gt;sent&lt;span class="w"&gt; &lt;/span&gt;it
+&lt;span class="w"&gt;    &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;your&lt;span class="w"&gt; &lt;/span&gt;terminal.
+
+To&lt;span class="w"&gt; &lt;/span&gt;try&lt;span class="w"&gt; &lt;/span&gt;something&lt;span class="w"&gt; &lt;/span&gt;more&lt;span class="w"&gt; &lt;/span&gt;ambitious,&lt;span class="w"&gt; &lt;/span&gt;you&lt;span class="w"&gt; &lt;/span&gt;can&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;an&lt;span class="w"&gt; &lt;/span&gt;Ubuntu&lt;span class="w"&gt; &lt;/span&gt;container&lt;span class="w"&gt; &lt;/span&gt;with:
+&lt;span class="w"&gt; &lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;ubuntu&lt;span class="w"&gt; &lt;/span&gt;bash
+
+Share&lt;span class="w"&gt; &lt;/span&gt;images,&lt;span class="w"&gt; &lt;/span&gt;automate&lt;span class="w"&gt; &lt;/span&gt;workflows,&lt;span class="w"&gt; &lt;/span&gt;and&lt;span class="w"&gt; &lt;/span&gt;more&lt;span class="w"&gt; &lt;/span&gt;with&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;free&lt;span class="w"&gt; &lt;/span&gt;Docker&lt;span class="w"&gt; &lt;/span&gt;ID:
+&lt;span class="w"&gt; &lt;/span&gt;https://hub.docker.com/
+
+For&lt;span class="w"&gt; &lt;/span&gt;more&lt;span class="w"&gt; &lt;/span&gt;examples&lt;span class="w"&gt; &lt;/span&gt;and&lt;span class="w"&gt; &lt;/span&gt;ideas,&lt;span class="w"&gt; &lt;/span&gt;visit:
+&lt;span class="w"&gt; &lt;/span&gt;https://docs.docker.com/get-started/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;な表示が出ればコンテナの起動は成功。&lt;/p&gt;
+&lt;p&gt;続けて&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;usermod&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;-G&lt;span class="w"&gt; &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;自分のユーザー名
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;としてdockerグループに自分を加えておくと、dockerの実行にsudoコマンドが不要になる。&lt;/p&gt;
+&lt;h2&gt;6. WSL2のDockerでGUIアプリケーションを使う&lt;/h2&gt;
+&lt;p&gt;WSL2上でGUIアプリケーションをそのまま実行するだけならWSLgがいい感じにWindowsで表示できるよう扱ってくれているが、Dockerコンテナ上のGUIアプリケーションを起動するには、Dockerのホスト(WSL2)に別ホスト(ここではコンテナ)のアプリケーションを表示させる細工が必要で、具体的には設定ファイルと環境変数の共有が必要となる。&lt;a href="https://zenn.dev/holliy/articles/51012ef059aa9f"&gt;具体的なやりかた&lt;/a&gt;はあちこちで紹介されているがDockerやWSLのアップデートによって変わることが多々あるので、極力新しい情報を参考にする。(英語だが公式サイトを見るのが正解)&lt;/p&gt;
+&lt;p&gt;一旦Ubuntuを閉じて再度開いてから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;--rm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--mount&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bind,source&lt;span class="o"&gt;=&lt;/span&gt;/tmp/.X11-unix,target&lt;span class="o"&gt;=&lt;/span&gt;/tmp/.X11-unix&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--mount&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bind,source&lt;span class="o"&gt;=&lt;/span&gt;/mnt/wslg,target&lt;span class="o"&gt;=&lt;/span&gt;/mnt/wslg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;DISPLAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DISPLAY&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;WAYLAND_DISPLAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;WAYLAND_DISPLAY&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;XDG_RUNTIME_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;XDG_RUNTIME_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ubuntu:22.04
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすると&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Status:&lt;span class="w"&gt; &lt;/span&gt;Downloaded&lt;span class="w"&gt; &lt;/span&gt;newer&lt;span class="w"&gt; &lt;/span&gt;image&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;ubuntu:22.04
+root@f4e906a0f041:/#
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のような感じでコンテナが起動する。&lt;code&gt;--it&lt;/code&gt;でインタラクティブな状態(コマンドを実行する場合)、&lt;code&gt;--rm&lt;/code&gt;で使い終えたコンテナを削除することを意味するので、残したければ&lt;code&gt;--rm&lt;/code&gt;は外して実行する。&lt;/p&gt;
+&lt;p&gt;デフォルトだとユーザーはrootで動くのでsudoコマンドの付与は不要だが、ホストのアプリケーションのインストールは無関係な素の状態なのでアプリケーションは入れ直すか、諸々インストール済みのディスクイメージを探して使うか、環境構築のためのDockerfileを書くかになる。(Dockerfileを使う例は&lt;a href="https://github.com/eiichiromomma/ros2docker"&gt;こっち&lt;/a&gt;を参照)&lt;/p&gt;
+&lt;p&gt;このままですんなりxeyesは入れれば動くのだが&lt;a href="https://github.com/RobotLocomotion/drake/issues/18726"&gt;jammyにOpenGL関係のバグがあるらしい&lt;/a&gt;のでglxgearsは動かないため、jammyを使いたい場合は一部パッケージをholdする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;libglapi-mesa&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.0.1-1ubuntu2
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;libgbm1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.0.1-1ubuntu2
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;libegl-mesa0&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.0.1-1ubuntu2
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;libgl1-mesa-dri&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.0.1-1ubuntu2
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;libglx-mesa0&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.0.1-1ubuntu2
+apt-mark&lt;span class="w"&gt; &lt;/span&gt;hold&lt;span class="w"&gt; &lt;/span&gt;libglapi-mesa&lt;span class="w"&gt; &lt;/span&gt;libgbm1&lt;span class="w"&gt; &lt;/span&gt;libegl-mesa0&lt;span class="w"&gt;  &lt;/span&gt;libgl1-mesa-dri&lt;span class="w"&gt; &lt;/span&gt;libglx-mesa0&lt;span class="w"&gt; &lt;/span&gt;
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;mesa-utils
+glxgears
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で歯車が周るアプリケーションが起動すれば成功。&lt;/p&gt;
+&lt;p&gt;アプリケーションを閉じて&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;コンテナを終了させる。&lt;code&gt;--rm&lt;/code&gt;オプションを付けずに起動したコンテナは停止状態で保持される。プロセスは圧迫しないがディスクは圧迫するので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;container&lt;span class="w"&gt; &lt;/span&gt;ls&lt;span class="w"&gt; &lt;/span&gt;-a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で時々確認すると良い。&lt;/p&gt;
+&lt;h3&gt;古いROSのコンテナを使う&lt;/h3&gt;
+&lt;p&gt;古い環境でも構築可能なのがDockerの利点だが、追加で何か入れようとするとapt関係がミラーサイトにもなく、apt updateだけでも結構遅い状態になるので、何か試すにしてもよく吟味してから選ぶとよい。&lt;/p&gt;
+&lt;p&gt;https://github.com/hasauino/rrt_exploration を試してみる。環境としては&lt;a href="http://wiki.ros.org/ja/kinetic/Installation/Ubuntu"&gt;kinetic&lt;/a&gt;なので今から素で入れるのは面倒。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hub.docker.com/_/ros/tags?page=1&amp;amp;name=kinetic"&gt;公式のコンテナ&lt;/a&gt;を使う。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker pull ros:kinetic-robot-xenial
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でDocker Imageをpullしたらrunで起動。今度は&lt;code&gt;--rm&lt;/code&gt;は付けずに&lt;code&gt;--name foxyTest&lt;/code&gt;と名付けて起動する(exitしてもコンテナが残る)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;--name&lt;span class="w"&gt; &lt;/span&gt;foxyTest&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--mount&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bind,source&lt;span class="o"&gt;=&lt;/span&gt;/tmp/.X11-unix,target&lt;span class="o"&gt;=&lt;/span&gt;/tmp/.X11-unix&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--mount&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bind,source&lt;span class="o"&gt;=&lt;/span&gt;/mnt/wslg,target&lt;span class="o"&gt;=&lt;/span&gt;/mnt/wslg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;DISPLAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DISPLAY&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;WAYLAND_DISPLAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;WAYLAND_DISPLAY&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;--env&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;XDG_RUNTIME_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;XDG_RUNTIME_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ros:kinetic-robot-xenial
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でコンテナが起動するので&lt;code&gt;ros[TAB][TAB]&lt;/code&gt;とするとROS周りが既にインストールされているのがわかる。
+ひとまずexitして&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;container&lt;span class="w"&gt; &lt;/span&gt;ls&lt;span class="w"&gt; &lt;/span&gt;-a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とするとfoxyTestが一覧に出てくる。&lt;/p&gt;
+&lt;p&gt;再開するには&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;foxyTest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でコンテナが起動するのでドキュメントの通り&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update
+apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;ros-kinetic-gmapping&lt;span class="w"&gt; &lt;/span&gt;ros-kinetic-navigation&lt;span class="w"&gt; &lt;/span&gt;python-opencv&lt;span class="w"&gt; &lt;/span&gt;python-numpy&lt;span class="w"&gt; &lt;/span&gt;python-scikits-learn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で準備ができたら、catkinなWSを作る&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;~/catkin_ws/src
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/catkin_ws/
+catkin_make
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;WSのsrcにソースをcloneする&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;src
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/hasauino/rrt_exploration.git
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/catkin_ws/
+catkin_make
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;devel/setup.bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でインストール完了。続けて&lt;a href="https://github.com/hasauino/rrt_exploration_tutorials"&gt;Tutorials&lt;/a&gt;を試す。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;ros-kinetic-kobuki&lt;span class="w"&gt; &lt;/span&gt;ros-kinetic-kobuki-core&lt;span class="w"&gt; &lt;/span&gt;ros-kinetic-kobuki-gazebo&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/catkin_ws/src
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/hasauino/rrt_exploration_tutorials.git
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/catkin_ws/
+catkin_make
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;devel/setup.bash
+roslaunch&lt;span class="w"&gt; &lt;/span&gt;rrt_exploration_tutorials&lt;span class="w"&gt; &lt;/span&gt;single_simulated_house.launch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で一応Gazeboも一部透明だったりUIが表示されなかったりするが起動して動いてそうな画面が出てくる。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Ubuntu"></category><category term="WSL2"></category><category term="Github"></category></entry><entry><title>Windows環境でGitとvenvを使ってみる</title><link href="https://eiichiromomma.github.io/2023/05/25/WinVenv/" rel="alternate"></link><published>2023-05-25T19:20:00+09:00</published><updated>2023-05-25T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-05-25:/2023/05/25/WinVenv/</id><summary type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
 &lt;h3&gt;やること&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;gitコマンドを使ってGitHubからソースを持ってくる&lt;/li&gt;
