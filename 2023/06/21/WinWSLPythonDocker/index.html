@@ -62,13 +62,18 @@
 <div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
 </code></pre></div>
 
-<p>再起動を促されるので、再起動すると勝手にインストールが始まり</p>
-<div class="highlight"><pre><span></span><code>Ubuntu<span class="w"> </span>は既にインストールされています。
-Ubuntu<span class="w"> </span>を起動しています...
-Installing,<span class="w"> </span>this<span class="w"> </span>may<span class="w"> </span>take<span class="w"> </span>a<span class="w"> </span>few<span class="w"> </span>minutes...
-Please<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>default<span class="w"> </span>UNIX<span class="w"> </span>user<span class="w"> </span>account.<span class="w"> </span>The<span class="w"> </span>username<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span>match<span class="w"> </span>your<span class="w"> </span>Windows<span class="w"> </span>username.
-For<span class="w"> </span>more<span class="w"> </span>information<span class="w"> </span>visit:<span class="w"> </span>https://aka.ms/wslusers
-Enter<span class="w"> </span>new<span class="w"> </span>UNIX<span class="w"> </span>username:
+<p>ここでWSLは既に入っていてディストリビューションがどうこうと出てきたら
+```PowerShell!
+wsl --install -d Ubuntu</p>
+<div class="highlight"><pre><span></span><code>として<span class="nv">Ubuntu</span>を入れる
+
+```<span class="nv">bash</span>
+<span class="nv">Ubuntu</span><span class="w"> </span>は既にインストールされています。
+<span class="nv">Ubuntu</span><span class="w"> </span>を起動しています...
+<span class="nv">Installing</span>,<span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">may</span><span class="w"> </span><span class="nv">take</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">few</span><span class="w"> </span><span class="nv">minutes</span>...
+<span class="nv">Please</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="nv">UNIX</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">account</span>.<span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="nv">username</span><span class="w"> </span><span class="nv">does</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">need</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">match</span><span class="w"> </span><span class="nv">your</span><span class="w"> </span><span class="nv">Windows</span><span class="w"> </span><span class="nv">username</span>.
+<span class="k">For</span><span class="w"> </span><span class="nv">more</span><span class="w"> </span><span class="nv">information</span><span class="w"> </span><span class="nv">visit</span>:<span class="w"> </span><span class="nv">https</span>:<span class="o">//</span><span class="nv">aka</span>.<span class="nv">ms</span><span class="o">/</span><span class="nv">wslusers</span>
+<span class="nv">Enter</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">UNIX</span><span class="w"> </span><span class="nv">username</span>:
 </code></pre></div>
 
 <p>のようにWSL2上でのユーザー名を聞いてくるのでスペース無しの半角英字でユーザー名を入れる。

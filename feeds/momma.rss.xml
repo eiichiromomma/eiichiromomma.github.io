@@ -5,8 +5,14 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;再起動を促されるので、再起動すると勝手にインストールが始まり&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Ubuntu&lt;span class="w"&gt; &lt;/span&gt;は既にインスト …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 21 Jun 2023 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</guid><category>Memo</category><category>Python</category><category>Ubuntu</category><category>WSL2</category><category>Github</category></item><item><title>Windows環境でGitとvenvを使ってみる</title><link>https://eiichiromomma.github.io/2023/05/25/WinVenv/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
+&lt;p&gt;ここでWSLは既に入っていてディストリビューションがどうこうと出てきたら
+```PowerShell!
+wsl --install -d Ubuntu&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;として&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;を入れる
+
+```&lt;span class="nv"&gt;bash&lt;/span&gt;
+&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;は既にインストールされています。
+&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;を起 …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">momma</dc:creator><pubDate>Wed, 21 Jun 2023 19:20:00 +0900</pubDate><guid isPermaLink="false">tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</guid><category>Memo</category><category>Python</category><category>Ubuntu</category><category>WSL2</category><category>Github</category></item><item><title>Windows環境でGitとvenvを使ってみる</title><link>https://eiichiromomma.github.io/2023/05/25/WinVenv/</link><description>&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"&gt;前回のWindowsでのPython環境構築&lt;/a&gt;をやった続き。&lt;/p&gt;
 &lt;h3&gt;やること&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;gitコマンドを使ってGitHubからソースを持ってくる&lt;/li&gt;
