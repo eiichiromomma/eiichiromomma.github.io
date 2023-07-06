@@ -60,6 +60,7 @@ momma@ASUS2022-0:~$
 &lt;h3&gt;Error: 0xc004000dが出た場合&lt;/h3&gt;
 &lt;p&gt;コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。&lt;/p&gt;
 &lt;h2&gt;WSL2上でX11アプリの確認&lt;/h2&gt;
+&lt;p&gt;sudoコマンドをそのセッションで初めて使うときはパスワードを聞かれるのでsudoの行だけコピペする。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;x11-apps&lt;span class="w"&gt; &lt;/span&gt;mesa-utils
 xeyes
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -72,8 +73,9 @@ xeyes
 &lt;h2&gt;2. Ubuntu上でpyenvを使えるようにする&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;upgrade&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;build-essential&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
 python3-setuptools&lt;span class="w"&gt; &lt;/span&gt;python3-pip&lt;span class="w"&gt; &lt;/span&gt;libssl-dev&lt;span class="w"&gt; &lt;/span&gt;libffi-dev&lt;span class="w"&gt; &lt;/span&gt;zlib1g-dev&lt;span class="w"&gt; &lt;/span&gt;libbz2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
-libreadline-dev&lt;span class="w"&gt; &lt;/span&gt;libsqlite3-dev&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;llvm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\l&lt;/span&gt;ibncurses5-dev&lt;span class="w"&gt; &lt;/span&gt;xz-utils&lt;span class="w"&gt; &lt;/span&gt;tk-dev&lt;span class="w"&gt; &lt;/span&gt;libxml2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
-libxmlsec1-dev&lt;span class="w"&gt; &lt;/span&gt;liblzma-dev
+libreadline-dev&lt;span class="w"&gt; &lt;/span&gt;libsqlite3-dev&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;llvm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+libncurses5-dev&lt;span class="w"&gt; &lt;/span&gt;xz-utils&lt;span class="w"&gt; &lt;/span&gt;tk-dev&lt;span class="w"&gt; &lt;/span&gt;libxml2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+libxmlsec1-dev&lt;span class="w"&gt; &lt;/span&gt;liblzma-dev&lt;span class="w"&gt; &lt;/span&gt;python3-venv
 curl&lt;span class="w"&gt; &lt;/span&gt;https://pyenv.run&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bash
 &lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;export PYENV_ROOT=&amp;quot;$HOME/.pyenv&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
 &lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;command -v pyenv &amp;gt;/dev/null || export PATH=&amp;quot;$PYENV_ROOT/bin:$PATH&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc

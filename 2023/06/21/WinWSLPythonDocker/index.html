@@ -104,6 +104,7 @@ momma@ASUS2022-0:~$
 <h3>Error: 0xc004000dが出た場合</h3>
 <p>コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。</p>
 <h2>WSL2上でX11アプリの確認</h2>
+<p>sudoコマンドをそのセッションで初めて使うときはパスワードを聞かれるのでsudoの行だけコピペする。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>x11-apps<span class="w"> </span>mesa-utils
 xeyes
 </code></pre></div>
@@ -116,8 +117,9 @@ xeyes
 <h2>2. Ubuntu上でpyenvを使えるようにする</h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>git<span class="w"> </span><span class="se">\</span>
 python3-setuptools<span class="w"> </span>python3-pip<span class="w"> </span>libssl-dev<span class="w"> </span>libffi-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span>libbz2-dev<span class="w"> </span><span class="se">\</span>
-libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>wget<span class="w"> </span>llvm<span class="w"> </span><span class="se">\l</span>ibncurses5-dev<span class="w"> </span>xz-utils<span class="w"> </span>tk-dev<span class="w"> </span>libxml2-dev<span class="w"> </span><span class="se">\</span>
-libxmlsec1-dev<span class="w"> </span>liblzma-dev
+libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>wget<span class="w"> </span>llvm<span class="w"> </span><span class="se">\</span>
+libncurses5-dev<span class="w"> </span>xz-utils<span class="w"> </span>tk-dev<span class="w"> </span>libxml2-dev<span class="w"> </span><span class="se">\</span>
+libxmlsec1-dev<span class="w"> </span>liblzma-dev<span class="w"> </span>python3-venv
 curl<span class="w"> </span>https://pyenv.run<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 <span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
 <span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;command -v pyenv &gt;/dev/null || export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
