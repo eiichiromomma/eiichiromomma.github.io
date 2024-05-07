@@ -139,11 +139,13 @@
 </code></pre></div>
 
 <p>で入手したファイルをインライン表示したいが、</p>
-<div class="highlight"><pre><span></span><code><span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
+<span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
 </code></pre></div>
 
 <p>だと表示できない。</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
 </code></pre></div>
 
@@ -162,6 +164,7 @@
 <p>だとIPythonかJupyter Notebook専用になるが表示できる。</p>
 <p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython07.png" width="600"></p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
 <span class="n">display</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
 </code></pre></div>
 
