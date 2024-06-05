@@ -51,6 +51,89 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
+<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
+<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
+<h3>tex2imgの場合</h3>
+<p>PyPDF2でPDFファイルを開いてページを取得する。
+前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
+<h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
+</h6>
+
+
+<p>色々試した結果<a href="https://en.wikipedia.org/wiki/QTI">QTI形式</a>だとCanvasへのインポートは問題が発生しない(設定→インポートでQTI形式を選ぶ)。Moodleのコースエクスポートも使えるが，コースのインポートなのでミスると全部吹き飛ぶ。</p>
+<p>Quizの簡単な記述法としてはMoodleでのテキスト記述の<a href="https://docs.moodle.org/3x/ja/GIFT%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">GIFT Format</a>があるが，Canvasでは工夫しないと使えない。</p>
+<p>結論とし …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/markdown.html">Markdown </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/03/text2qti/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
+<h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
+</h6>
+
+
+<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
+<p>機能的にはエデ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
+    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
+    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
+    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/04/15/nfcpy/"><h3 class="article-title">Raspberry-pi+Slackで入退室管理</h3></a>
 <h6 class="subheader" title="2022-04-15T19:20:00+09:00">2022-04-15(金)
 </h6>
@@ -232,71 +315,6 @@ gitとかの基本的なツールはあって当たり前なので省略する�
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/28/librealsense/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/"><h3 class="article-title">KivyでOpenCV</h3></a>
-<h6 class="subheader" title="2017-12-05T08:00:00+09:00">2017-12-05(火)
-</h6>
-
-
-<p>OpenCV with Kivy</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/kivy.html">Kivy </a>
-    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/12/05/Kivy-OpenCV/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/"><h3 class="article-title">Google Drive File Stream</h3></a>
-<h6 class="subheader" title="2017-10-17T22:00:00+09:00">2017-10-17(火)
-</h6>
-
-
-<p>Google Drive File Stream</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/googledrive.html">GoogleDrive </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/17/Google-DriveFS/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2017/10/15/vcpkg/"><h3 class="article-title">ひき続きvcpkg</h3></a>
-<h6 class="subheader" title="2017-10-15T23:00:00+09:00">2017-10-15(日)
-</h6>
-
-
-<p>vcpkg</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/vc.html">VC </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2017/10/15/vcpkg/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

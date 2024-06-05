@@ -50,38 +50,40 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
-<h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
+                <a href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み) 2024版</h3></a>
+<h6 class="subheader" title="2024-06-05T19:20:00+09:00">2024-06-05(水)
 </h6>
 
 
-<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
-<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はDebianが動いている。</p>
+<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利。
+ただし<a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja">50時間/週の制限</a>がある。</p>
+<p>三の字のアイコンからTerminal-&gt;new terminalでターミナルを開く。</p>
+<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 22.04が動いている。</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/issue
-Debian<span class="w"> </span>GNU/Linux<span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="se">\n</span><span class="w"> </span><span class="se">\l</span>
+Ubuntu<span class="w"> </span><span class="m">22</span>.04.4<span class="w"> </span>LTS<span class="w"> </span><span class="se">\n</span><span class="w"> </span><span class="se">\l</span>
 </code></pre></div>
 
-<p>ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Debianの日本語化の方法を一通り実行。</p>
+<p>ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Ubuntuの日本語化の方法を一通り実行。</p>
 <h3>確認作業</h3>
 <p>ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。</p>
 <div class="highlight"><pre><span></span><code>locale<span class="w"> </span>-a
 </code></pre></div>
 
-<p>とやって<code>ja_JP.utf-8</code>が存在していれば作業不要。</p>
+<p>とやって<code>ja_JP.utf-8</code>が存在していれば作業不要だが，入ってない。</p>
 <h3>日本語化</h3>
-<p>以下をコピペする</p>
+<p>以下を1行ずつコピペする</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
 sudo<span class="w"> </span>locale-gen
 sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>task-japanese<span class="w"> </span>-y
-wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-11/gcc/po/ja.po
 msgfmt<span class="w"> </span>-o<span class="w"> </span>gcc.mo<span class="w"> </span>ja.po
-sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-11.mo
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
 <span class="nb">source</span><span class="w"> </span>~/.profile
 </code></pre></div>
 
 <p>わかりやすいかは疑問だが英語で思考停止する人には良い。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20220420-cse.png" width="600"></p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240605-cse.png" width="600"></p>
 <h4>分けて説明</h4>
 <p>localeとしてja_JP.utf-8が有効になっていないので<code>/etc/locale.gen</code>ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
@@ -91,19 +93,22 @@ sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</
 
 <p>gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>file<span class="w"> </span>/usr/bin/gcc
-/usr/bin/gcc:<span class="w"> </span>symbolic<span class="w"> </span>link<span class="w"> </span>to<span class="w"> </span>gcc-10
+/usr/bin/gcc:<span class="w"> </span>symbolic<span class="w"> </span>link<span class="w"> </span>to<span class="w"> </span>gcc-11
 </code></pre></div>
 
-<p>で出てきたgcc-10に合わせている。</p>
-<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-10/gcc/po/ja.po
+<p>で出てきたgcc-11に合わせている。</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-11/gcc/po/ja.po
 msgfmt<span class="w"> </span>-o<span class="w"> </span>gcc.mo<span class="w"> </span>ja.po
-sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-10.mo
+sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-11.mo
 </code></pre></div>
 
 <p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
 <span class="nb">source</span><span class="w"> </span>~/.profile
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+</code></pre></div>
+
+<h3>デバッガ</h3>
+<p>Cloud Shellエディタのデバッガは<a href="https://cloud.google.com/shell/docs/editor-overview?hl=ja">Go,Node.js,Python,Javaのみ対応</a>なのでC/C++は諦めてgdb(+TUIとか)を使う</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -119,6 +124,31 @@ sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </s
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み)</h3></a>
+<h6 class="subheader" title="2022-04-20T21:20:00+09:00">2022-04-20(水)
+</h6>
+
+
+<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利なので，夏季集中のコンピュータプログラミングで利用できないかと画策中。</p>
+<p>機能的にはエデ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
+    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
+    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
+    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/04/20/CloudShellEditor/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 

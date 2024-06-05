@@ -50,11 +50,387 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/"><h3 class="article-title">WindowsでのオススメのPython環境 2024版</h3></a>
+<h6 class="subheader" title="2024-06-05T20:20:00+09:00">2024-06-05(水)
+</h6>
+
+
+<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
+<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。</p>
+<h3>1. Pythonのインストール</h3>
+<p><a href="https://www.python.org/downloads/windows/">公式の配布サイト</a>から3.11.xをダウンロードして実行。</p>
+<p>インストーラの画面は特に弄らずそのままInstall Nowを選ぶ。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython01.png" width="600"></p>
+<p>"Setup was successful"と出たらインストール完了。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython02.png" width="600"></p>
+<p>そのウィンドウに<em>Disable path length limit</em>という表示があったらそれを選択する。Windowsに限らず環境変数PATHという概念があり，そこに羅列したフォルダ内のプログラムはどこからでも呼び出せる，というOSの仕組みがある。macOSやUnixは問題ないのだが，Windowsは<code>C:\Program Files</code>または<code>C:\Program Files(x86)</code>みたいなアホ長いフォルダが標準的なインストール先なのでPATHに羅列しようとすると凄まじい長さになるのが明白にもかかわらず，環境変数に設定できるのが260文字までというアホな制限がある。それを回避する方法がこの選択肢。</p>
+<p>Windowsメニューの「すべてのアプリ」にPythonフォルダが出来ている。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython03.png" width="400"></p>
+<p>黒っぽいアイコンの<code>Python 3.xx(64-bit)</code>を選ぶとコマンドプロンプトの黒い画面が開き</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;
+</code></pre></div>
+
+<p>のような入力待ち(プロンプトと呼ぶ)になるので<code>quit()</code>と打って一旦終了させる。</p>
+<h3>2. パッケージのインストール</h3>
+<p>Windowsメニューの検索にcmdと打ってコマンドプロンプトを起動する。</p>
+<h4>pipのアップグレード</h4>
+<p>Pythonのインストール時にpy.exeというプログラムもインストールされていて，自動的に「今使うPython」を呼び出す仕組みになっている。Pythonはパッケージ(機能)を呼び出すときに</p>
+<div class="highlight"><pre><span></span><code>python -m パッケージ名 パッケージのオプション
+</code></pre></div>
+
+<p>とするか，パッケージによっては</p>
+<div class="highlight"><pre><span></span><code>パッケージ名 パッケージのオプション
+</code></pre></div>
+
+<p>のような感じで起動するのだが，後者はWindowsだと手間のかかるPathの設定が必要なので，py.exeと前者を組み合わせて使う。例えばよく</p>
+<div class="highlight"><pre><span></span><code>pip install -U pip
+</code></pre></div>
+
+<p>と実行しろと説明しているサイトが多いが，「パッケージ管理のpipを使ってpip自身をアップグレード(-U)しろ」というコマンドは</p>
+<div class="highlight"><pre><span></span><code>py -m pip install -U pip
+</code></pre></div>
+
+<p>と書く(.exeは付けなくて良い)。ということでまずは↑のコマンドをコマンドプロンプトで実行してpipをアップグレードする</p>
+<h4>基本環境の作成 (venv)</h4>
+<p>Pythonのパッケージでインストールするもののなかで，<code>py ナントカ</code>ではなく<code>ナントカ</code>のようにコマンドとしてインストールされるものもあるが，それを有効にするには<code>C:\Users\username\AppData\Local\Programs\Python\Python311\Scripts</code>のような環境依存の場所へのPathの設定が必要になる。その代わりにvenvで基本環境も仮想環境として作成してしまう。</p>
+<p>ここではAnacondaを真似てbaseにすると紛らわしいのでdefaultという名前の仮想環境を作る。</p>
+<div class="highlight"><pre><span></span><code>py -m venv default
+</code></pre></div>
+
+<p><strong>以後，Pythonを使うときにはコマンドプロンプトを開き</strong></p>
+<div class="highlight"><pre><span></span><code>default\Scripts\activate
+</code></pre></div>
+
+<p><strong>を必ず実行してから使う。</strong></p>
+<p><code>(default) C:\Users\username&gt;</code>みたいなプロンプトになる。
+これの利点はactivateを実行するとその仮想環境のScriptsにPathが通ることで，たとえばipythonをインストールした後で</p>
+<div class="highlight"><pre><span></span><code>py -m IPython
+</code></pre></div>
+
+<p>とせずに</p>
+<div class="highlight"><pre><span></span><code>ipython
+</code></pre></div>
+
+<p>で起動できる。※まだインストールしてない
+(ipythonがScriptsにインストールされる)</p>
+<h4>無難なパッケージのインストール</h4>
+<p>何をやるにしろあった方が便利なものを一通り入れておく。コマンドプロンプトに以下をコピペする。(^は長いコマンドに途中改行させる方法)</p>
+<div class="highlight"><pre><span></span><code>py -m pip install jupyter notebook ipython opencv-python ^
+ opencv-contrib-python numpy scipy scikit-image scikit-learn ^
+ pillow pandas matplotlib seaborn mediapy pyqt5 ^
+ qtconsole jupyterlab
+</code></pre></div>
+
+<ul>
+<li>ipython: 普通のpythonより親切なPythonインタプリタIPython</li>
+<li>jupyter: NotebookとLabで使うエンジン</li>
+<li>jupyterlab: Jupyter Lab。MATLABっぽいNotebook+コマンド+インタプリタな何でもあり版な開発環境</li>
+<li>matplotlib: グラフや画像の表示に使う可視化</li>
+<li>mediapy: Notebookで画像や動画を楽に表示できる</li>
+<li>notebook: Jupyter Notebookというブラウザベースで動くPythonの開発環境(ノートを取りながらPythonを実行できるので人気)</li>
+<li>numpy: 行列演算ライブラリ</li>
+<li>opencv-python: コンピュータビジョンライブラリOpenCV</li>
+<li>opencv-contrib-python: OpenCVの正式版には含まれていない機能の追加</li>
+<li>scipy: 科学技術系ライブラリ</li>
+<li>scikit-image: SciPy toolkit=scikitでscipyのサブモジュールの一つで画像処理関係</li>
+<li>scikit-learn: scipyのサブモジュールの一つで機械学習関係</li>
+<li>pandas: データ解析でR言語っぽい動きをする</li>
+<li>pillow: PIL(Python Imaging Library)という古くからある画像処理ライブラリから派生した現代版で呼び出しはPILとして互換性が保てる</li>
+<li>pyqt5: Qt(キュート(Cute)と読む)のPython版でなぜかパイキューティーと読まれる。GUIアプリのベースとなるものでqtconsoleで使う</li>
+<li>qtconsole: コマンドプロンプトでもIPythonは使えるが，こっちだと画像が表示できる。</li>
+<li>seaborn: 可視化でmatplotlibよりダサくない</li>
+</ul>
+<p>が入れるもの。</p>
+<p><code>default\Scripts</code>フォルダには下記がインストールされる。</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">username</span>\<span class="n">default</span>\<span class="n">Scripts</span><span class="w"> </span><span class="err">のディレクトリ</span>
+
+<span class="p">[</span><span class="o">.</span><span class="p">]</span><span class="w">                        </span><span class="p">[</span><span class="o">..</span><span class="p">]</span><span class="w">                       </span><span class="n">activate</span><span class="w">                   </span><span class="n">activate</span><span class="o">.</span><span class="n">bat</span>
+<span class="n">Activate</span><span class="o">.</span><span class="n">ps1</span><span class="w">               </span><span class="n">deactivate</span><span class="o">.</span><span class="n">bat</span><span class="w">             </span><span class="n">f2py</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">fonttools</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">httpx</span><span class="o">.</span><span class="n">exe</span><span class="w">                  </span><span class="n">imageio_download_bin</span><span class="o">.</span><span class="n">exe</span><span class="w">   </span><span class="n">imageio_remove_bin</span><span class="o">.</span><span class="n">exe</span><span class="w">     </span><span class="n">ipython</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">ipython3</span><span class="o">.</span><span class="n">exe</span><span class="w">               </span><span class="n">jlpm</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">jsonpointer</span><span class="w">                </span><span class="n">jsonschema</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">console</span><span class="o">.</span><span class="n">exe</span><span class="w">        </span><span class="n">jupyter</span><span class="o">-</span><span class="n">dejavu</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">events</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">execute</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">kernel</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">kernelspec</span><span class="o">.</span><span class="n">exe</span><span class="w">     </span><span class="n">jupyter</span><span class="o">-</span><span class="n">lab</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">jupyter</span><span class="o">-</span><span class="n">labextension</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">labhub</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">migrate</span><span class="o">.</span><span class="n">exe</span><span class="w">        </span><span class="n">jupyter</span><span class="o">-</span><span class="n">nbconvert</span><span class="o">.</span><span class="n">exe</span><span class="w">      </span><span class="n">jupyter</span><span class="o">-</span><span class="n">notebook</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">qtconsole</span><span class="o">.</span><span class="n">exe</span><span class="w">      </span><span class="n">jupyter</span><span class="o">-</span><span class="n">run</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">jupyter</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">troubleshoot</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">trust</span><span class="o">.</span><span class="n">exe</span><span class="w">          </span><span class="n">jupyter</span><span class="o">.</span><span class="n">exe</span><span class="w">                </span><span class="n">lsm2bin</span><span class="o">.</span><span class="n">exe</span><span class="w">                </span><span class="n">normalizer</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">pip</span><span class="o">.</span><span class="n">exe</span><span class="w">                    </span><span class="n">pip3</span><span class="o">.</span><span class="mf">11.</span><span class="n">exe</span><span class="w">                </span><span class="n">pip3</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">pybabel</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">pyftmerge</span><span class="o">.</span><span class="n">exe</span><span class="w">              </span><span class="n">pyftsubset</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pygmentize</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pyjson5</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">pylupdate5</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pyrcc5</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">python</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">pythonw</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">pyuic5</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">pywin32_postinstall</span><span class="o">.</span><span class="n">py</span><span class="w">     </span><span class="n">pywin32_testall</span><span class="o">.</span><span class="n">py</span><span class="w">         </span><span class="n">qtpy</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">send2trash</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">tiff2fsspec</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">tiffcomment</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">tifffile</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">ttx</span><span class="o">.</span><span class="n">exe</span><span class="w">                    </span><span class="n">wsdump</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="p">[</span><span class="n">__pycache__</span><span class="p">]</span>
+</code></pre></div>
+
+<p>pip, ipython,jupyter-*あたりがよく使いそうなもの。</p>
+<h3>3. IPythonを使ってみる</h3>
+<div class="highlight"><pre><span></span><code>ipython
+</code></pre></div>
+
+<p>で起動する。exit, quitで終了できる(標準のインタプリタと異なり括弧()が要らない)</p>
+<p>ちなみに</p>
+<div class="highlight"><pre><span></span><code>py -m IPython
+</code></pre></div>
+
+<p>のようにPythonのモジュールとしてインストールされるものはScripts内のコマンドを使わなくてもpyに-mを付けてモジュール名を指定すれば使える(quitで終了)</p>
+<h4>%edit とエディタの変更</h4>
+<p>IPythonで</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">edit</span> <span class="n">hello</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>のように<code>%edit</code>の後にファイル名を付けるとMagicコマンドでエディタが起動して，エディタを閉じるとそのファイルが実行される。
+デフォルトはnotepad(メモ帳)で微妙な使い心地なので変更したい場合は下記のようにする。</p>
+<p>Windowsメニューから使いたいエディタのアイコンを右クリックして「詳細」→「ファイルの場所を開く」を選ぶ。ショートカットが置かれた場所のエクスプローラーが開くので，そのアイコンを右クリックして「プロパティ」を選ぶ。「リンク先」をコピーしておく。</p>
+<p>コマンドプロンプトで</p>
+<div class="highlight"><pre><span></span><code>ipython profile create
+</code></pre></div>
+
+<p>と打つと</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="n">ProfileCreate</span><span class="o">]</span><span class="w"> </span><span class="n">Generating</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="k">file</span><span class="err">:</span><span class="w"> </span><span class="n">WindowsPath</span><span class="p">(</span><span class="s1">&#39;C:/Users/username/.ipython/profile_default/ipython_config.py&#39;</span><span class="p">)</span>
+<span class="o">[</span><span class="n">ProfileCreate</span><span class="o">]</span><span class="w"> </span><span class="n">Generating</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="k">file</span><span class="err">:</span><span class="w"> </span><span class="n">WindowsPath</span><span class="p">(</span><span class="s1">&#39;C:/Users/username/.ipython/profile_default/ipython_kernel_config.py&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>と表示されるので最初の方を編集する。これもコマンドプロンプトで</p>
+<div class="highlight"><pre><span></span><code>notepad .ipython\profile_default\ipython_config.py
+</code></pre></div>
+
+<p>と打つ。するとIPythonの設定ファイルが開くので，editorという単語を検索する。このファイルは#が先頭にあるとコメントアウトされた状態なので，そこを編集する。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># c.TerminalInteractiveShell.editor = &#39;notepad&#39;</span>
+</code></pre></div>
+
+<p>とある<code>'notepad'</code>のところにさっきコピーしたリンク先を貼り付け，先頭の#とスペースを消してからバックスラッシュか￥を半角のスラッシュ<code>/</code>に書き換える。</p>
+<div class="highlight"><pre><span></span><code><span class="n">c</span><span class="o">.</span><span class="n">TerminalInteractiveShell</span><span class="o">.</span><span class="n">editor</span> <span class="o">=</span> <span class="s2">&quot;C:/Users/username/AppData/Local/Programs/Microsoft VS Code/Code.exe&quot;</span>
+</code></pre></div>
+
+<p>のような感じになる。「ファイル」「保存」して再びコマンドプロンプトでIPythonを起動してから</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">edit</span> <span class="n">hello</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>でvscodeが開くので</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>とでも書いて保存してvscodeを終了すると，IPython上で実行される。</p>
+<h4>QtConsole</h4>
+<p>qtconsoleの方が応用が効くので</p>
+<div class="highlight"><pre><span></span><code>jupyter-qtconsole
+</code></pre></div>
+
+<p>とすると、QtのUIを使ったIPythonが使える。ただし、mediapyのshow_*はインライン表示に使えないのでmatplotlibのimshowを使う必要がある。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>で入手したファイルをインライン表示するには</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p>とする。(matplotlibを使った場合)</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PIL</span>
+<span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>も表示できる。(PILを使った場合)</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython05.png" width="600"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p>だとIPythonかJupyter Notebook専用になるが表示できる。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython07.png" width="600"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
+<span class="n">display</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p>だとndarrayと見做されて生データがドバーっと出る。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython06.png" width="600"></p>
+<p>IPython同様にquitでウィンドウが閉じる。</p>
+<p>これもデフォルトのエディタの設定がnotepadになっているので変更が必要で，コマンドプロンプトで</p>
+<div class="highlight"><pre><span></span><code>jupyter-qtconsole --generate-config
+</code></pre></div>
+
+<p>で設定ファイルを <code>.jupyter\jupyter_qtconsole_config.py</code> に生成できるのだが，<code>c.JupyterWidget.editor = 'notepad'</code>を弄っても反映されない。</p>
+<h3>4. Jupyter Notebookを使ってみる</h3>
+<p>コマンドプロンプトでJupyter Notebookのサーバーを起動する命令なのだがデフォルトでそのページを開くようOSに命令を出すのでブラウザが起動する。</p>
+<ol>
+<li>コマンドプロンプトを起動</li>
+<li>Jupyter Notebookのサーバーを起動</li>
+<li>色々作業</li>
+<li>Notebookで「閉じて終了」を選ぶ</li>
+<li>コマンドプロンプトでCtrl+Cを2回入力してサーバーを停止</li>
+</ol>
+<p>という流れになる。当たり前だがブラウザが開いた後にコマンドプロンプトを閉じると使えなくなるので注意。</p>
+<div class="highlight"><pre><span></span><code>jupyter-notebook
+</code></pre></div>
+
+<p>でブラウザが起動しJupyter Notebookが使える。
+<code>New</code>ボタンを押すと<code>Python3</code>が出るので選択するとNotebookが新規作成される。</p>
+<p>Notebookはセルという単位で分割されていて，セルにはコードセルとMarkdownセルがある(Markdownは<a href="https://ja.wikipedia.org/wiki/Markdown">Wikipedia</a>とかを参照)。</p>
+<p>Markdownで説明を書き，その下にコードセルでPythonプログラムを書くような流れで「実験ノート」が作れる。Markdownの表示やコードの実行はCtrl+EnterまたはShift+Enter。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span> <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
+<span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython04.png" width="600"></p>
+<p>保存した後で，ブラウザのJupyter Notebookで<code>Save</code>で保存してから<code>Close and Halt</code>でタブを閉じる(ブラウザのタブを閉じてもPythonのプロセスは停止してくれない。ファイル一覧で緑色のアイコンがそれを意味する)。
+その後<code>File</code>-&gt;<code>Shut down</code>を選ぶか，コマンドプロンプトで「Ctrl+C」を打ってJupyter Notebookのサーバーを終了させる。</p>
+<p>ちなみに保存されるのは<code>.ipynb</code>(IPython Notebookと名乗っていた時代の名残り)という拡張子のファイルで，Visual Studio CodeやGoogle Colaboratoryでも開ける。</p>
+<p><code>New</code>ボタンでは<code>Text File</code>を選ぶとテキストエディタとなり，テキストエディタの<code>File-Rename</code>で.py付きのファイル名(例えばHello.py)にするとPython用のハイライト表示エディタになる。また，<code>New</code>から<code>Terminal</code>を選ぶとコマンドプロンプトの親戚のようなPower Shellが開くので，.pyファイルを編集して</p>
+<div class="highlight"><pre><span></span><code>py なんとか.py
+</code></pre></div>
+
+<p>みたいにPythonスクリプトを実行できる。</p>
+<h3>5. Jupyter Labを使ってみる</h3>
+<p>Notebookと同じノリで起動する。Notebookだとエディタもターミナルもブラウザの別タブになって鬱陶しいが，Jupyter Labは一つのウィンドウに収まる。</p>
+<p>サーバーとして起動するのはNotebookと同様で，</p>
+<div class="highlight"><pre><span></span><code>jupyter-lab
+</code></pre></div>
+
+<p>でブラウザが開き、JupyterLabが表示される。JupyterLabはJupyter Notebookの豪華版という感じで、</p>
+<ul>
+<li>Notebookでのプログラミング</li>
+<li>IPythonでのコマンド実行</li>
+<li>.pyファイルを使ったプログラミング</li>
+<li>ターミナルでの作業(WindowsだとPowershellがデフォルト)</li>
+</ul>
+<p>が可能。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython08.png" width="600"></p>
+<p>とりあえずの開発環境としてはこれが無難。</p>
+<h3>6. その他</h3>
+<h4>(あくまでもWindowsのマシンで)PythonをLinuxで動かす</h4>
+<p>WindowsでPython(特に外部パッケージ)を扱うのは今はだいぶ良くなったとはいえ「動いたらラッキー。動かなかったらがんばりましょう」という認識でいた方が良い。できればUbuntu等のLinux系を使う方がトラブルが少ないので，もう少し凝った使い方としては以下がある。</p>
+<p>特に深層学習フレームワークを使う場合にはLinux系OSで扱う場合が殆どなので今のうちから慣れておくと良い。</p>
+<ul>
+<li>WSL2</li>
+<li>Windows Subsystem for Linuxの略称で，Microsoftが提供していて，Winodws上でまんまLinuxが動くので，Ubuntu等のPython利用の解説がまんま使える</li>
+<li>NVIDIAがCUDA Driverも出してるのでNVIDIAのGPUを積んだマシンならWSL2上でTensorflowとかPyTorchが使える</li>
+<li>WSL2+Docker</li>
+<li>様々な環境を搭載したコンテナを拾ってきて直ぐに試せるうえにVMと違ってディスク容量をそこまで圧迫しない</li>
+<li>WSL2+Docker+VSCode</li>
+<li><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>はMicrosoft製のテキストエディタだが，拡張機能でコンテナ上の開発環境を使ってプログラミング，とかが楽にできる。</li>
+<li>VSCodeに慣れると，リモートホスト上のDockerコンテナ上で開発。のようなことも出来る。</li>
+</ul>
+<h4>他のバージョンのPython</h4>
+<p>LinuxやmacOSの場合はpyenvという便利な解決法があるのだが，Windowsの場合案外面倒そうなので素直に特定のマイナーバージョンのインストーラをPython.orgから持ってくるのが楽。その上で，</p>
+<div class="highlight"><pre><span></span><code>set PY_PYTHON=バージョン
+</code></pre></div>
+
+<p>を指定すると，そのコマンドプロンプト上では以後py.exeが勝手にそっちのバージョンを使ってくれる。例えば，3.11と3.10を入れている場合</p>
+<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.10
+</code></pre></div>
+
+<p>と打てば以降3.10.xが使え，</p>
+<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.11
+</code></pre></div>
+
+<p>とすれば3.11.xが使える。</p>
+<h4>仮想環境</h4>
+<p>ある特定のバージョンのopencv-pythonが必要だが，普段は最新のopencv-pythonを使いたい。とか，requirements.txtで指定されている環境を作りたい。とか，Pythonでのパッケージのバージョン環境は簡単に崩壊する。特に深層学習フレームワークについては後方互換性をバッサリ切っているものが多いので，色々試したい場合には環境を変えて作業した方が安全。</p>
+<p>安全な解決方法は</p>
+<ul>
+<li>作業ごとにPCを用意する</li>
+<li>作業ごとにDockerでコンテナを作る</li>
+</ul>
+<p>とかなのだが，Pythonの環境だけ切り替えて使える機能が仮想環境である。condaとかvirtualenvとかがよく使われてきたが，最近は公式のvenvを使うのがトレンドらしい。</p>
+<p>自分が作業をするフォルダで</p>
+<div class="highlight"><pre><span></span><code>py -m venv 仮想環境名
+</code></pre></div>
+
+<p>と打つと，「仮想環境名」のフォルダが出来る。そこのScriptsフォルダに<code>activate.bat</code>があるのでそれを実行する(PowerShellの場合はActivate.ps1)。上の方で基本環境としてdefaultという名前で作成したが，別の開発環境として例えばvenvHelloみたいな名前にすると，</p>
+<div class="highlight"><pre><span></span><code>py -m venv venvHello
+venvHello\Scripts\activate
+</code></pre></div>
+
+<p>と打つと，プロンプトの頭に(venvHello)のように仮想環境名が表示されるので，あとはpipなりで環境構築すれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み) 2024版</h3></a>
+<h6 class="subheader" title="2024-06-05T19:20:00+09:00">2024-06-05(水)
+</h6>
+
+
+<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利。
+ただし<a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja">50時間/週の制限</a>がある。</p>
+<p>三の字のアイコンからTerminal-&gt;new terminalでターミナルを開く。</p>
+<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 22.04が動いている。</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
+    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
+    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
+    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/"><h3 class="article-title">Windows11+WSL2+WSLg+Docker</h3></a>
+<h6 class="subheader" title="2024-06-05T08:20:00+09:00">2024-06-05(水)
+</h6>
+
+
+<h2>WSL2関係のまとめ</h2>
+<p>WSL2関連で色々様変りしていたので<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
+<ul>
+<li><a href="https://docs.docker.com/desktop/gpu/">Docker DesktopでのGPUサポート</a> (NVIDIA Docker toolkitは不要)</li>
+<li>WindowsのCUDAドライバ関係が入ってれば<a href="https://docs.nvidia.com/cuda/wsl-user-guide/index.html">WSL2用のLinuxドライバは不要</a></li>
+</ul>
+<h2>WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)</h2>
+<p><a href="https://zenn.dev/h4m4chi/articles/8627893de9cdc5">ここの記事</a>の手順で解決。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
+    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
+    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
+    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/"><h3 class="article-title">Windows+WSL2でGithubで配布されてるものを試す環境構築</h3></a>
 <h6 class="subheader" title="2023-06-21T19:20:00+09:00">2023-06-21(水)
 </h6>
 
 
+<p>※この情報は古いです。<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
 <h2>1. WSL2のインストール</h2>
 <p><a href="https://learn.microsoft.com/ja-jp/windows/wsl/install">Microsoftのサイト</a>の説明に従いWSL2を入れる。</p>
 <p>PowerShellを管理者権限で起動して</p>
@@ -67,325 +443,7 @@ wsl --install -d Ubuntu</p>
 <div class="highlight"><pre><span></span><code>として<span class="nv">Ubuntu</span>を入れる
 
 ```<span class="nv">bash</span>
-<span class="nv">Ubuntu</span><span class="w"> </span>は既にインストールされています。
-<span class="nv">Ubuntu</span><span class="w"> </span>を起動しています...
-<span class="nv">Installing</span>,<span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">may</span><span class="w"> </span><span class="nv">take</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">few</span><span class="w"> </span><span class="nv">minutes</span>...
-<span class="nv">Please</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="nv">UNIX</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">account</span>.<span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="nv">username</span><span class="w"> </span><span class="nv">does</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">need</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">match</span><span class="w"> </span><span class="nv">your</span><span class="w"> </span><span class="nv">Windows</span><span class="w"> </span><span class="nv">username</span>.
-<span class="k">For</span><span class="w"> </span><span class="nv">more</span><span class="w"> </span><span class="nv">information</span><span class="w"> </span><span class="nv">visit</span>:<span class="w"> </span><span class="nv">https</span>:<span class="o">//</span><span class="nv">aka</span>.<span class="nv">ms</span><span class="o">/</span><span class="nv">wslusers</span>
-<span class="nv">Enter</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">UNIX</span><span class="w"> </span><span class="nv">username</span>:
-</code></pre></div>
-
-<p>のようにWSL2上でのユーザー名を聞いてくるのでスペース無しの半角英字でユーザー名を入れる。
-その後パスワードも聞かれるので2回パスワードを入れる(あとでしょっちゅう使うので忘れないように)</p>
-<div class="highlight"><pre><span></span><code>Enter<span class="w"> </span>new<span class="w"> </span>UNIX<span class="w"> </span>username:<span class="w"> </span>momma
-New<span class="w"> </span>password:
-Retype<span class="w"> </span>new<span class="w"> </span>password:
-passwd:<span class="w"> </span>password<span class="w"> </span>updated<span class="w"> </span>successfully
-この操作を正しく終了しました。
-Installation<span class="w"> </span>successful!
-To<span class="w"> </span>run<span class="w"> </span>a<span class="w"> </span><span class="nb">command</span><span class="w"> </span>as<span class="w"> </span>administrator<span class="w"> </span><span class="o">(</span>user<span class="w"> </span><span class="s2">&quot;root&quot;</span><span class="o">)</span>,<span class="w"> </span>use<span class="w"> </span><span class="s2">&quot;sudo &lt;command&gt;&quot;</span>.
-See<span class="w"> </span><span class="s2">&quot;man sudo_root&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>details.
-
-Welcome<span class="w"> </span>to<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">22</span>.04.2<span class="w"> </span>LTS<span class="w"> </span><span class="o">(</span>GNU/Linux<span class="w"> </span><span class="m">5</span>.15.90.1-microsoft-standard-WSL2<span class="w"> </span>x86_64<span class="o">)</span>
-
-<span class="w"> </span>*<span class="w"> </span>Documentation:<span class="w">  </span>https://help.ubuntu.com
-<span class="w"> </span>*<span class="w"> </span>Management:<span class="w">     </span>https://landscape.canonical.com
-<span class="w"> </span>*<span class="w"> </span>Support:<span class="w">        </span>https://ubuntu.com/advantage
-
-
-This<span class="w"> </span>message<span class="w"> </span>is<span class="w"> </span>shown<span class="w"> </span>once<span class="w"> </span>a<span class="w"> </span>day.<span class="w"> </span>To<span class="w"> </span>disable<span class="w"> </span>it<span class="w"> </span>please<span class="w"> </span>create<span class="w"> </span>the
-/home/momma/.hushlogin<span class="w"> </span>file.
-momma@ASUS2022-0:~$
-</code></pre></div>
-
-<p>みたいな感じでUbuntuが使える状態になる。</p>
-<p>次回以降はWindowsのメニューから<code>Ubuntu</code>を選択すれば使える。</p>
-<h3>Error: 0xc004000dが出た場合</h3>
-<p>コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。</p>
-<h2>WSL2上でX11アプリの確認</h2>
-<p>sudoコマンドをそのセッションで初めて使うときはパスワードを聞かれるのでsudoの行だけコピペする。</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>x11-apps<span class="w"> </span>mesa-utils
-xeyes
-</code></pre></div>
-
-<p>でマウスカーソルを目玉が追うxeyesのウィンドウが開いたらGUIアプリケーションの実行は成功。</p>
-<div class="highlight"><pre><span></span><code>glxgears
-</code></pre></div>
-
-<p>で、ギアが回るアプリケーションが起動したらOpenGL関係のアプリケーションも使える。</p>
-<h2>2. Ubuntu上でpyenvを使えるようにする</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>git<span class="w"> </span><span class="se">\</span>
-python3-setuptools<span class="w"> </span>python3-pip<span class="w"> </span>libssl-dev<span class="w"> </span>libffi-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span>libbz2-dev<span class="w"> </span><span class="se">\</span>
-libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>wget<span class="w"> </span>llvm<span class="w"> </span><span class="se">\</span>
-libncurses5-dev<span class="w"> </span>xz-utils<span class="w"> </span>tk-dev<span class="w"> </span>libxml2-dev<span class="w"> </span><span class="se">\</span>
-libxmlsec1-dev<span class="w"> </span>liblzma-dev<span class="w"> </span>python3-venv
-curl<span class="w"> </span>https://pyenv.run<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;command -v pyenv &gt;/dev/null || export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;eval &quot;$(pyenv init -)&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
-</code></pre></div>
-
-<p>で.bashrcに設定が書き込まれるので、WSL2(というかWindowsメニューにUbuntuと出てくる)を開き直すか、</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc
-</code></pre></div>
-
-<p>を実行する。これで</p>
-<div class="highlight"><pre><span></span><code>pyenv
-</code></pre></div>
-
-<p>を実行すると実行時オプションが表示される。</p>
-<p>※Windows版のpyenvをインストールしていると、PATHの共有化でかなりややこしい話になるので、Windowsの方はPATHから外しておいた方が良い</p>
-<h2>3. 特定バージョンのPythonのインストール</h2>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
-</code></pre></div>
-
-<p>と打つと最初は" * system "しか出てこない。</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>global
-</code></pre></div>
-
-<p>や</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span><span class="nb">local</span>
-</code></pre></div>
-
-<p>でも"system"しか表示されない。これはUbuntuでインストールされるPythonを使う(というかそれしか存在していない)状態で、</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>install<span class="w"> </span>--list
-</code></pre></div>
-
-<p>とするとインストール可能なPythonのバージョン、配布形態の一覧が表示されるので、そこから選んで追加してから使うのがpyenvでのバージョン制御になる。例えば古いPython3.8を使いたい場合はその中で一番マイナーバージョンの数字が大きい3.8.17を入れることになる。(セキュリティパッチのタイミングでバージョンは更に上がる可能性があるのでちゃんと自分で確認すること)</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.8.17
-</code></pre></div>
-
-<p>でインストールが始まる。</p>
-<p>インストールが終わったらまた</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
-</code></pre></div>
-
-<p>を実行すると今入れた3.8.17が増えているので、</p>
-<ul>
-<li>pyenv global バージョン: システム全体で使うPythonのバージョンを指定(非推奨)</li>
-<li>pyenv local バージョン: 今いるディレクトリ以下で使うPythonのバージョンを指定</li>
-<li>venvで仮想環境のときにバージョンを指定 (推奨)</li>
-</ul>
-<p>のいずれかで扱うことになる。DockerのコンテナであるPythonのバージョン=その環境、という状況ならこれで問題ないが、Dockerを使わない場合には何かやるたびに環境が壊れるので注意。</p>
-<h2>4. venvとpyenvで特定バージョンの仮想環境を作る</h2>
-<p>用途としてはGithubで配布されているソースを試したいときが多い。
-無視リストの.gitignoreには</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># pyenv</span>
-<span class="na">.python-version</span>
-
-<span class="c1"># Environments</span>
-<span class="na">.env</span>
-<span class="na">.venv</span>
-<span class="nf">env</span><span class="err">/</span>
-<span class="nf">venv</span><span class="err">/</span>
-<span class="nf">ENV</span><span class="err">/</span>
-<span class="nf">env.bak</span><span class="err">/</span>
-<span class="nf">venv.bak</span><span class="err">/</span>
-</code></pre></div>
-
-<p>が書かれている場合が殆どなので、</p>
-<ol>
-<li>githubからcloneして持ってくる</li>
-<li>そのディレクトリに移動</li>
-<li><code>pyenv local 特定バージョン</code></li>
-<li>venvで仮想環境を作成</li>
-<li>activateして環境構築</li>
-<li>終わったらdeactivate</li>
-</ol>
-<p>のような流れになる。venvで環境構築をする場合に、上のリストのどれかを使うとよい(ここではENV)。</p>
-<p>ここでは特定環境として https://github.com/atb033/multi_agent_path_planning を試してみる。</p>
-<p>条件はPython3.8.x だが色々入ったり別のソフトを使おうとしたときに環境が壊れるのを防ぐために仮想環境を使う。</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/atb033/multi_agent_path_planning
-<span class="nb">cd</span><span class="w"> </span>multi_agent_path_planning
-</code></pre></div>
-
-<p>でソースの場所に移動してから</p>
-<div class="highlight"><pre><span></span><code>pyenv local 3.8.17
-</code></pre></div>
-
-<p>でこのディレクトリでのPythonのバージョンを指定する。</p>
-<div class="highlight"><pre><span></span><code>pyenv<span class="w"> </span>versions
-</code></pre></div>
-
-<p>とすると今度は3.8.17にアスタリスクが付いている。</p>
-<p>続けて</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>ENV
-<span class="nb">source</span><span class="w"> </span>./ENV/bin/activate
-</code></pre></div>
-
-<p>とすればプロンプトの頭に(ENV)が付いて仮想環境になったことを教えてくれる。</p>
-<p>あとはrequirements.txtをインストールして実行するなり不足パッケージをpipで入れるなりすればよい。</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyyaml
-</code></pre></div>
-
-<p>(pyyamlがrequirements.txtで指定されていないので入れてる)</p>
-<p>あとは説明の通り</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>./centralized/sipp
-python3<span class="w"> </span>multi_sipp.py<span class="w"> </span>input.yaml<span class="w"> </span>output.yaml
-</code></pre></div>
-
-<p>でデモを試せる。</p>
-<p>WLS2上のファイルはWindowsのエクスプローラで<code>Linux</code>というペンギンアイコンのネットワークドライブが見えるようになっているのでそこから<code>\\wsl.localhost\Ubuntu\home\momma\multi_agent_path_planning\centralized\sipp\results</code>のように辿るとそのまま開ける。(mommaは各自のユーザー名に置き換える)</p>
-<p>試し終えたら必ず</p>
-<div class="highlight"><pre><span></span><code>deactivate
-</code></pre></div>
-
-<p>を実行して仮想環境から抜ける。</p>
-<p>次回以降使いたい場合には、WSL2で先程の場所のactivateを実行(source)すれば良い。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>multi_agent_path_planning/
-<span class="nb">source</span><span class="w"> </span>./ENV/bin/activate
-</code></pre></div>
-
-<p>またはダイレクトに</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>multi_agent_path_planning/ENV/bin/activate
-</code></pre></div>
-
-<p>でもよい。</p>
-<h2>5. WSL2上でDockerを使う (非Docker Desktop)</h2>
-<p>Ubuntuの流儀で入れるだけなので<a href="https://docs.docker.com/engine/install/ubuntu/">公式ドキュメント</a>の通りに入れる</p>
-<p>(Docker Desktopを使いたい場合は <a href="https://docs.docker.jp/desktop/windows/wsl.html">公式ドキュメントに従ってWSLバックエンドを有効化</a>すればこのインストール作業無しで使えた筈なのでここは飛ばして良い)</p>
-<p>DeepLearning系のものを試したいときかつNVIDIAのグラボを積んでいるマシンの場合には，Dockerを入れた後でNVIDIA CUDAも入れる。(やりかたはググると出てくる)</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
-sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>-d<span class="w"> </span>/etc/apt/keyrings
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://download.docker.com/linux/ubuntu/gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/docker.gpg
-sudo<span class="w"> </span>chmod<span class="w"> </span>a+r<span class="w"> </span>/etc/apt/keyrings/docker.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;deb [arch=&quot;</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2">&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span>
-<span class="s2">  &quot;</span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VERSION_CODENAME</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot; stable&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/docker.list<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>docker-ce<span class="w"> </span>docker-ce-cli<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>containerd.io<span class="w"> </span>docker-buildx-plugin<span class="w"> </span>docker-compose-plugin
-sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
-</code></pre></div>
-
-<p>として</p>
-<div class="highlight"><pre><span></span><code>Hello<span class="w"> </span>from<span class="w"> </span>Docker!
-This<span class="w"> </span>message<span class="w"> </span>shows<span class="w"> </span>that<span class="w"> </span>your<span class="w"> </span>installation<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>working<span class="w"> </span>correctly.
-
-To<span class="w"> </span>generate<span class="w"> </span>this<span class="w"> </span>message,<span class="w"> </span>Docker<span class="w"> </span>took<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>steps:
-<span class="w"> </span><span class="m">1</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>client<span class="w"> </span>contacted<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>daemon.
-<span class="w"> </span><span class="m">2</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>pulled<span class="w"> </span>the<span class="w"> </span><span class="s2">&quot;hello-world&quot;</span><span class="w"> </span>image<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>Hub.
-<span class="w">    </span><span class="o">(</span>amd64<span class="o">)</span>
-<span class="w"> </span><span class="m">3</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>created<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>container<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>image<span class="w"> </span>which<span class="w"> </span>runs<span class="w"> </span>the
-<span class="w">    </span>executable<span class="w"> </span>that<span class="w"> </span>produces<span class="w"> </span>the<span class="w"> </span>output<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>currently<span class="w"> </span>reading.
-<span class="w"> </span><span class="m">4</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>streamed<span class="w"> </span>that<span class="w"> </span>output<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>client,<span class="w"> </span>which<span class="w"> </span>sent<span class="w"> </span>it
-<span class="w">    </span>to<span class="w"> </span>your<span class="w"> </span>terminal.
-
-To<span class="w"> </span>try<span class="w"> </span>something<span class="w"> </span>more<span class="w"> </span>ambitious,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>run<span class="w"> </span>an<span class="w"> </span>Ubuntu<span class="w"> </span>container<span class="w"> </span>with:
-<span class="w"> </span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
-
-Share<span class="w"> </span>images,<span class="w"> </span>automate<span class="w"> </span>workflows,<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>free<span class="w"> </span>Docker<span class="w"> </span>ID:
-<span class="w"> </span>https://hub.docker.com/
-
-For<span class="w"> </span>more<span class="w"> </span>examples<span class="w"> </span>and<span class="w"> </span>ideas,<span class="w"> </span>visit:
-<span class="w"> </span>https://docs.docker.com/get-started/
-</code></pre></div>
-
-<p>な表示が出ればコンテナの起動は成功。</p>
-<p>続けて</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>docker<span class="w"> </span>自分のユーザー名
-</code></pre></div>
-
-<p>としてdockerグループに自分を加えておくと、dockerの実行にsudoコマンドが不要になる。</p>
-<h2>6. WSL2のDockerでGUIアプリケーションを使う</h2>
-<p>WSL2上でGUIアプリケーションをそのまま実行するだけならWSLgがいい感じにWindowsで表示できるよう扱ってくれているが、Dockerコンテナ上のGUIアプリケーションを起動するには、Dockerのホスト(WSL2)に別ホスト(ここではコンテナ)のアプリケーションを表示させる細工が必要で、具体的には設定ファイルと環境変数の共有が必要となる。<a href="https://zenn.dev/holliy/articles/51012ef059aa9f">具体的なやりかた</a>はあちこちで紹介されているがDockerやWSLのアップデートによって変わることが多々あるので、極力新しい情報を参考にする。(英語だが公式サイトを見るのが正解)</p>
-<p>一旦Ubuntuを閉じて再度開いてから</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/tmp/.X11-unix,target<span class="o">=</span>/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/mnt/wslg,target<span class="o">=</span>/mnt/wslg<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">DISPLAY</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">WAYLAND_DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">WAYLAND_DISPLAY</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--env<span class="w"> </span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">XDG_RUNTIME_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ubuntu:22.04
-</code></pre></div>
-
-<p>とすると</p>
-<div class="highlight"><pre><span></span><code>Status:<span class="w"> </span>Downloaded<span class="w"> </span>newer<span class="w"> </span>image<span class="w"> </span><span class="k">for</span><span class="w"> </span>ubuntu:22.04
-root@f4e906a0f041:/#
-</code></pre></div>
-
-<p>のような感じでコンテナが起動する。<code>--it</code>でインタラクティブな状態(コマンドを実行する場合)、<code>--rm</code>で使い終えたコンテナを削除することを意味するので、残したければ<code>--rm</code>は外して実行する。</p>
-<p>デフォルトだとユーザーはrootで動くのでsudoコマンドの付与は不要だが、ホストのアプリケーションのインストールは無関係な素の状態なのでアプリケーションは入れ直すか、諸々インストール済みのディスクイメージを探して使うか、環境構築のためのDockerfileを書くかになる。(Dockerfileを使う例は<a href="https://github.com/eiichiromomma/ros2docker">こっち</a>を参照)</p>
-<p>このままですんなりxeyesは入れれば動くのだが<a href="https://github.com/RobotLocomotion/drake/issues/18726">jammyにOpenGL関係のバグがあるらしい</a>のでglxgearsは動かないため、jammyを使いたい場合は一部パッケージをholdする。</p>
-<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>update
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libglapi-mesa<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="nv">libgbm1</span><span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libegl-mesa0<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libgl1-mesa-dri<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libglx-mesa0<span class="o">=</span><span class="m">22</span>.0.1-1ubuntu2
-apt-mark<span class="w"> </span>hold<span class="w"> </span>libglapi-mesa<span class="w"> </span>libgbm1<span class="w"> </span>libegl-mesa0<span class="w">  </span>libgl1-mesa-dri<span class="w"> </span>libglx-mesa0<span class="w"> </span>
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mesa-utils
-glxgears
-</code></pre></div>
-
-<p>で歯車が周るアプリケーションが起動すれば成功。</p>
-<p>アプリケーションを閉じて</p>
-<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
-</code></pre></div>
-
-<p>コンテナを終了させる。<code>--rm</code>オプションを付けずに起動したコンテナは停止状態で保持される。プロセスは圧迫しないがディスクは圧迫するので</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>container<span class="w"> </span>ls<span class="w"> </span>-a
-</code></pre></div>
-
-<p>で時々確認すると良い。</p>
-<h3>古いROSのコンテナを使う</h3>
-<p>古い環境でも構築可能なのがDockerの利点だが、追加で何か入れようとするとapt関係がミラーサイトにもなく、apt updateだけでも結構遅い状態になるので、何か試すにしてもよく吟味してから選ぶとよい。</p>
-<p>https://github.com/hasauino/rrt_exploration を試してみる。環境としては<a href="http://wiki.ros.org/ja/kinetic/Installation/Ubuntu">kinetic</a>なので今から素で入れるのは面倒。</p>
-<p><a href="https://hub.docker.com/_/ros/tags?page=1&amp;name=kinetic">公式のコンテナ</a>を使う。</p>
-<div class="highlight"><pre><span></span><code>docker pull ros:kinetic-robot-xenial
-</code></pre></div>
-
-<p>でDocker Imageをpullしたらrunで起動。今度は<code>--rm</code>は付けずに<code>--name foxyTest</code>と名付けて起動する(exitしてもコンテナが残る)。</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>foxyTest<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/tmp/.X11-unix,target<span class="o">=</span>/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span>/mnt/wslg,target<span class="o">=</span>/mnt/wslg<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--env<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">DISPLAY</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">WAYLAND_DISPLAY</span><span class="o">=</span><span class="si">${</span><span class="nv">WAYLAND_DISPLAY</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--env<span class="w"> </span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">XDG_RUNTIME_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros:kinetic-robot-xenial
-</code></pre></div>
-
-<p>でコンテナが起動するので<code>ros[TAB][TAB]</code>とするとROS周りが既にインストールされているのがわかる。
-ひとまずexitして</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>container<span class="w"> </span>ls<span class="w"> </span>-a
-</code></pre></div>
-
-<p>とするとfoxyTestが一覧に出てくる。</p>
-<p>再開するには</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>start<span class="w"> </span>-i<span class="w"> </span>foxyTest
-</code></pre></div>
-
-<p>でコンテナが起動するのでドキュメントの通り</p>
-<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>update
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-kinetic-gmapping<span class="w"> </span>ros-kinetic-navigation<span class="w"> </span>python-opencv<span class="w"> </span>python-numpy<span class="w"> </span>python-scikits-learn
-</code></pre></div>
-
-<p>で準備ができたら、catkinなWSを作る</p>
-<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/catkin_ws/src
-<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
-catkin_make
-</code></pre></div>
-
-<p>WSのsrcにソースをcloneする</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>src
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hasauino/rrt_exploration.git
-<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
-catkin_make
-<span class="nb">source</span><span class="w"> </span>devel/setup.bash
-</code></pre></div>
-
-<p>でインストール完了。続けて<a href="https://github.com/hasauino/rrt_exploration_tutorials">Tutorials</a>を試す。</p>
-<div class="highlight"><pre><span></span><code>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-kinetic-kobuki<span class="w"> </span>ros-kinetic-kobuki-core<span class="w"> </span>ros-kinetic-kobuki-gazebo<span class="w"> </span>
-<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hasauino/rrt_exploration_tutorials.git
-<span class="nb">cd</span><span class="w"> </span>~/catkin_ws/
-catkin_make
-<span class="nb">source</span><span class="w"> </span>devel/setup.bash
-roslaunch<span class="w"> </span>rrt_exploration_tutorials<span class="w"> </span>single_simulated_house.launch
-</code></pre></div>
-
-<p>で一応Gazeboも一部透明だったりUIが表示されなかったりするが起動して動いてそうな画面が出てくる。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<span class="nv">Ubuntu</span><span class="w"> </span>は既にインストー …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -396,11 +454,9 @@ roslaunch<span class="w"> </span>rrt_exploration_tutorials<span class="w"> </spa
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -550,91 +606,6 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/colour-science/"><h3 class="article-title">colour-scienceで三刺激値のプロットとか</h3></a>
-<h6 class="subheader" title="2022-05-15T09:30:00+09:00">2022-05-15(日)
-</h6>
-
-
-<p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
-<h3>等色関数のプロット</h3>
-<h4>一つだけプロットする場合</h4>
-<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されて …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/colour-science/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
-<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
-</h6>
-
-
-<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
-<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
-<h3>tex2imgの場合</h3>
-<p>PyPDF2でPDFファイルを開いてページを取得する。
-前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</code></pre></div>
-
-<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/"><h3 class="article-title">書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</h3></a>
-<h6 class="subheader" title="2022-05-04T19:20:00+09:00">2022-05-04(水)
-</h6>
-
-
-<p>著者の方からご献本頂いたので早速読みました。</p>
-<ul>
-<li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
-</ul>
-<p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
-<p>情報の取捨選択 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/book.html">Book </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -51,6 +51,91 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/colour-science/"><h3 class="article-title">colour-scienceで三刺激値のプロットとか</h3></a>
+<h6 class="subheader" title="2022-05-15T09:30:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
+<h3>等色関数のプロット</h3>
+<h4>一つだけプロットする場合</h4>
+<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されて …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/colour-science/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
+<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
+<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
+<h3>tex2imgの場合</h3>
+<p>PyPDF2でPDFファイルを開いてページを取得する。
+前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/"><h3 class="article-title">書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</h3></a>
+<h6 class="subheader" title="2022-05-04T19:20:00+09:00">2022-05-04(水)
+</h6>
+
+
+<p>著者の方からご献本頂いたので早速読みました。</p>
+<ul>
+<li>技術評論社 <a href="https://gihyo.jp/book/2022/978-4-297-12775-6">OpenCVではじめよう ディープラーニングによる画像認識</a></li>
+</ul>
+<p><img alt="Book" class="alignnone" src="https://eiichiromomma.github.io/images/20220504-OpenCVBook.png" width="320"></p>
+<p>情報の取捨選択 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/ゼミ.html">ゼミ</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/opencv.html">OpenCV </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/book.html">Book </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/05/03/text2qti/"><h3 class="article-title">Canvas用のQuiz作成ツール</h3></a>
 <h6 class="subheader" title="2022-05-03T19:20:00+09:00">2022-05-03(火)
 </h6>
@@ -226,86 +311,9 @@ sudo<span class="w"> </span>apt<span class="w"> </span>update …</code></pre></
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/"><h3 class="article-title">CanvasのSandbox</h3></a>
-<h6 class="subheader" title="2022-03-24T20:00:00+09:00">2022-03-24(木)
-</h6>
-
-
-<p>LMSのCanvasのSandbox作成。やることは簡単でスクリプト一発の筈だったのだが結構面倒だった。
-gitとかの基本的なツールはあって当たり前なので省略するが</p>
-<ul>
-<li>この手順はmacOS (Monterey)</li>
-<li>doryが必要(Webサービスをlocal動作させる際，偽のFQDNをいい感じにmapしてくれるらしい)</li>
-<li>docker諸々必要</li>
-<li>mutagenが必要(dockerのバインドマウントを高速化)</li>
-</ul>
-<p>あたり …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-    <a href="https://eiichiromomma.github.io/tag/canvas.html">Canvas </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/03/24/Canvas-Sandbox/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/"><h3 class="article-title">研究室への問い合わせと2020-2021の状況について</h3></a>
-<h6 class="subheader" title="2021-11-28T10:59:00+09:00">2021-11-28(日)
-</h6>
-
-
-<h2>研究室への問い合わせ</h2>
-<p>12/2,3は<a href="http://view.tc-iaip.org/view/2021/">ViEW2021 ビジョン技術の実利用ワークショップ</a>の運営やってるので対応できません。スミマ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/news.html">News</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/28/研究室への問い合わせと2020-2021の状況について/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/"><h3 class="article-title">Wordpress to Pelican</h3></a>
-<h6 class="subheader" title="2021-11-27T19:20:00+09:00">2021-11-27(土)
-</h6>
-
-
-<p>WordpressからPelicanへの移行メモ</p>
-<h2>前置き</h2>
-<ul>
-<li>Wordpressサーバが停電から電源復旧せず。時々起動。本番物理環境(寒い8号館)で作業するのはダルい。</li>
-<li>本体は持ち運び可能なNUC</li>
-<li>IPは固定のグローバル</li>
-</ul>
-<h2>サーバが起動してるうちに …</h2><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2021/11/27/wordpress-to-pelican/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 18</h6>
+<h6 class="subheader">Page 2 of 19</h6>
 
 <p>
             <a href="https://eiichiromomma.github.io/author/momma.html">&laquo; Prev</a>

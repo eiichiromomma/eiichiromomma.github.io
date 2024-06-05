@@ -1,5 +1,362 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all-ja.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2023-06-21T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Windows+WSL2でGithubで配布されてるものを試す環境構築</title><link href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/" rel="alternate"></link><published>2023-06-21T19:20:00+09:00</published><updated>2023-06-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</id><summary type="html">&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all-ja.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-06-05T20:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>WindowsでのオススメのPython環境 2024版</title><link href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/" rel="alternate"></link><published>2024-06-05T20:20:00+09:00</published><updated>2024-06-05T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinPython2024/</id><summary type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
+&lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
+&lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。&lt;/p&gt;
+&lt;h3&gt;1. Pythonのインストール&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/downloads/windows/"&gt;公式の配布サイト&lt;/a&gt;から3.11.xをダウンロードして実行。&lt;/p&gt;
+&lt;p&gt;インストーラの画面は特に弄らずそのままInstall Nowを選ぶ。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython01.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;"Setup was successful"と出たらインストール完了。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython02.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;そのウィンドウに&lt;em&gt;Disable path length limit&lt;/em&gt;という表示があったらそれを選択する。Windowsに限らず環境変数PATHという概念があり，そこに羅列したフォルダ内のプログラムはどこからでも呼び出せる，というOSの仕組みがある。macOSやUnixは問題ないのだが，Windowsは&lt;code&gt;C:\Program Files&lt;/code&gt;または&lt;code&gt;C:\Program Files(x86)&lt;/code&gt;みたいなアホ長いフォルダが標準的なインストール先なのでPATHに羅列しようとすると凄まじい長さになるのが明白にもかかわらず，環境変数に設定できるのが260文字までというアホな制限がある。それを回避する方法がこの選択肢。&lt;/p&gt;
+&lt;p&gt;Windowsメニューの「すべてのアプリ」にPythonフォルダが出来ている。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython03.png" width="400"&gt;&lt;/p&gt;
+&lt;p&gt;黒っぽいアイコンの&lt;code&gt;Python 3.xx(64-bit)&lt;/code&gt;を選ぶとコマンドプロンプトの黒い画面が開き&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のような入力待ち(プロンプトと呼ぶ)になるので&lt;code&gt;quit()&lt;/code&gt;と打って一旦終了させる。&lt;/p&gt;
+&lt;h3&gt;2. パッケージのインストール&lt;/h3&gt;
+&lt;p&gt;Windowsメニューの検索にcmdと打ってコマンドプロンプトを起動する。&lt;/p&gt;
+&lt;h4&gt;pipのアップグレード&lt;/h4&gt;
+&lt;p&gt;Pythonのインストール時にpy.exeというプログラムもインストールされていて，自動的に「今使うPython」を呼び出す仕組みになっている。Pythonはパッケージ(機能)を呼び出すときに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python -m パッケージ名 パッケージのオプション
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とするか，パッケージによっては&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;パッケージ名 パッケージのオプション
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のような感じで起動するのだが，後者はWindowsだと手間のかかるPathの設定が必要なので，py.exeと前者を組み合わせて使う。例えばよく&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install -U pip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と実行しろと説明しているサイトが多いが，「パッケージ管理のpipを使ってpip自身をアップグレード(-U)しろ」というコマンドは&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m pip install -U pip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と書く(.exeは付けなくて良い)。ということでまずは↑のコマンドをコマンドプロンプトで実行してpipをアップグレードする&lt;/p&gt;
+&lt;h4&gt;基本環境の作成 (venv)&lt;/h4&gt;
+&lt;p&gt;Pythonのパッケージでインストールするもののなかで，&lt;code&gt;py ナントカ&lt;/code&gt;ではなく&lt;code&gt;ナントカ&lt;/code&gt;のようにコマンドとしてインストールされるものもあるが，それを有効にするには&lt;code&gt;C:\Users\username\AppData\Local\Programs\Python\Python311\Scripts&lt;/code&gt;のような環境依存の場所へのPathの設定が必要になる。その代わりにvenvで基本環境も仮想環境として作成してしまう。&lt;/p&gt;
+&lt;p&gt;ここではAnacondaを真似てbaseにすると紛らわしいのでdefaultという名前の仮想環境を作る。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m venv default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;以後，Pythonを使うときにはコマンドプロンプトを開き&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;default\Scripts\activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;を必ず実行してから使う。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(default) C:\Users\username&amp;gt;&lt;/code&gt;みたいなプロンプトになる。
+これの利点はactivateを実行するとその仮想環境のScriptsにPathが通ることで，たとえばipythonをインストールした後で&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m IPython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とせずに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ipython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で起動できる。※まだインストールしてない
+(ipythonがScriptsにインストールされる)&lt;/p&gt;
+&lt;h4&gt;無難なパッケージのインストール&lt;/h4&gt;
+&lt;p&gt;何をやるにしろあった方が便利なものを一通り入れておく。コマンドプロンプトに以下をコピペする。(^は長いコマンドに途中改行させる方法)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m pip install jupyter notebook ipython opencv-python ^
+ opencv-contrib-python numpy scipy scikit-image scikit-learn ^
+ pillow pandas matplotlib seaborn mediapy pyqt5 ^
+ qtconsole jupyterlab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ipython: 普通のpythonより親切なPythonインタプリタIPython&lt;/li&gt;
+&lt;li&gt;jupyter: NotebookとLabで使うエンジン&lt;/li&gt;
+&lt;li&gt;jupyterlab: Jupyter Lab。MATLABっぽいNotebook+コマンド+インタプリタな何でもあり版な開発環境&lt;/li&gt;
+&lt;li&gt;matplotlib: グラフや画像の表示に使う可視化&lt;/li&gt;
+&lt;li&gt;mediapy: Notebookで画像や動画を楽に表示できる&lt;/li&gt;
+&lt;li&gt;notebook: Jupyter Notebookというブラウザベースで動くPythonの開発環境(ノートを取りながらPythonを実行できるので人気)&lt;/li&gt;
+&lt;li&gt;numpy: 行列演算ライブラリ&lt;/li&gt;
+&lt;li&gt;opencv-python: コンピュータビジョンライブラリOpenCV&lt;/li&gt;
+&lt;li&gt;opencv-contrib-python: OpenCVの正式版には含まれていない機能の追加&lt;/li&gt;
+&lt;li&gt;scipy: 科学技術系ライブラリ&lt;/li&gt;
+&lt;li&gt;scikit-image: SciPy toolkit=scikitでscipyのサブモジュールの一つで画像処理関係&lt;/li&gt;
+&lt;li&gt;scikit-learn: scipyのサブモジュールの一つで機械学習関係&lt;/li&gt;
+&lt;li&gt;pandas: データ解析でR言語っぽい動きをする&lt;/li&gt;
+&lt;li&gt;pillow: PIL(Python Imaging Library)という古くからある画像処理ライブラリから派生した現代版で呼び出しはPILとして互換性が保てる&lt;/li&gt;
+&lt;li&gt;pyqt5: Qt(キュート(Cute)と読む)のPython版でなぜかパイキューティーと読まれる。GUIアプリのベースとなるものでqtconsoleで使う&lt;/li&gt;
+&lt;li&gt;qtconsole: コマンドプロンプトでもIPythonは使えるが，こっちだと画像が表示できる。&lt;/li&gt;
+&lt;li&gt;seaborn: 可視化でmatplotlibよりダサくない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;が入れるもの。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;default\Scripts&lt;/code&gt;フォルダには下記がインストールされる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;\&lt;span class="n"&gt;Users&lt;/span&gt;\&lt;span class="n"&gt;username&lt;/span&gt;\&lt;span class="n"&gt;default&lt;/span&gt;\&lt;span class="n"&gt;Scripts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;のディレクトリ&lt;/span&gt;
+
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;..&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;                       &lt;/span&gt;&lt;span class="n"&gt;activate&lt;/span&gt;&lt;span class="w"&gt;                   &lt;/span&gt;&lt;span class="n"&gt;activate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bat&lt;/span&gt;
+&lt;span class="n"&gt;Activate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ps1&lt;/span&gt;&lt;span class="w"&gt;               &lt;/span&gt;&lt;span class="n"&gt;deactivate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bat&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="n"&gt;f2py&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                   &lt;/span&gt;&lt;span class="n"&gt;fonttools&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;httpx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;imageio_download_bin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;imageio_remove_bin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;ipython3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;               &lt;/span&gt;&lt;span class="n"&gt;jlpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                   &lt;/span&gt;&lt;span class="n"&gt;jsonpointer&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;jsonschema&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dejavu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;events&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;kernelspec&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;labextension&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;labhub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;migrate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nbconvert&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;notebook&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;qtconsole&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;troubleshoot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;trust&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;jupyter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;lsm2bin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;normalizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;pip3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;11.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;pip3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                   &lt;/span&gt;&lt;span class="n"&gt;pybabel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;pyftmerge&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="n"&gt;pyftsubset&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="n"&gt;pygmentize&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="n"&gt;pyjson5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;pylupdate5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="n"&gt;pyrcc5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="n"&gt;pythonw&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;pyuic5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="n"&gt;pywin32_postinstall&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;pywin32_testall&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="n"&gt;qtpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;send2trash&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="n"&gt;tiff2fsspec&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;tiffcomment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;tifffile&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;span class="n"&gt;ttx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;wsdump&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;__pycache__&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;pip, ipython,jupyter-*あたりがよく使いそうなもの。&lt;/p&gt;
+&lt;h3&gt;3. IPythonを使ってみる&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ipython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で起動する。exit, quitで終了できる(標準のインタプリタと異なり括弧()が要らない)&lt;/p&gt;
+&lt;p&gt;ちなみに&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m IPython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようにPythonのモジュールとしてインストールされるものはScripts内のコマンドを使わなくてもpyに-mを付けてモジュール名を指定すれば使える(quitで終了)&lt;/p&gt;
+&lt;h4&gt;%edit とエディタの変更&lt;/h4&gt;
+&lt;p&gt;IPythonで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;edit&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のように&lt;code&gt;%edit&lt;/code&gt;の後にファイル名を付けるとMagicコマンドでエディタが起動して，エディタを閉じるとそのファイルが実行される。
+デフォルトはnotepad(メモ帳)で微妙な使い心地なので変更したい場合は下記のようにする。&lt;/p&gt;
+&lt;p&gt;Windowsメニューから使いたいエディタのアイコンを右クリックして「詳細」→「ファイルの場所を開く」を選ぶ。ショートカットが置かれた場所のエクスプローラーが開くので，そのアイコンを右クリックして「プロパティ」を選ぶ。「リンク先」をコピーしておく。&lt;/p&gt;
+&lt;p&gt;コマンドプロンプトで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ipython profile create
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打つと&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ProfileCreate&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Generating&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;file&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;WindowsPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C:/Users/username/.ipython/profile_default/ipython_config.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ProfileCreate&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Generating&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;file&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;WindowsPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C:/Users/username/.ipython/profile_default/ipython_kernel_config.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と表示されるので最初の方を編集する。これもコマンドプロンプトで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;notepad .ipython\profile_default\ipython_config.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打つ。するとIPythonの設定ファイルが開くので，editorという単語を検索する。このファイルは#が先頭にあるとコメントアウトされた状態なので，そこを編集する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# c.TerminalInteractiveShell.editor = &amp;#39;notepad&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とある&lt;code&gt;'notepad'&lt;/code&gt;のところにさっきコピーしたリンク先を貼り付け，先頭の#とスペースを消してからバックスラッシュか￥を半角のスラッシュ&lt;code&gt;/&lt;/code&gt;に書き換える。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TerminalInteractiveShell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;editor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;C:/Users/username/AppData/Local/Programs/Microsoft VS Code/Code.exe&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のような感じになる。「ファイル」「保存」して再びコマンドプロンプトでIPythonを起動してから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;edit&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でvscodeが開くので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello, world!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とでも書いて保存してvscodeを終了すると，IPython上で実行される。&lt;/p&gt;
+&lt;h4&gt;QtConsole&lt;/h4&gt;
+&lt;p&gt;qtconsoleの方が応用が効くので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;jupyter-qtconsole
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすると、QtのUIを使ったIPythonが使える。ただし、mediapyのshow_*はインライン表示に使えないのでmatplotlibのimshowを使う必要がある。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;urlretrieve&lt;/span&gt;
+&lt;span class="n"&gt;urlretrieve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://www.python.org/static/img/python-logo@2x.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+ &lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で入手したファイルをインライン表示するには&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mediapy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;media&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_image&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とする。(matplotlibを使った場合)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;PIL&lt;/span&gt;
+&lt;span class="n"&gt;PIL&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Image&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;も表示できる。(PILを使った場合)&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython05.png" width="600"&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;IPython.display&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Image&lt;/span&gt;
+&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Image&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;だとIPythonかJupyter Notebook専用になるが表示できる。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython07.png" width="600"&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;IPython.display&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mediapy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;media&lt;/span&gt;
+&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_image&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;だとndarrayと見做されて生データがドバーっと出る。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython06.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;IPython同様にquitでウィンドウが閉じる。&lt;/p&gt;
+&lt;p&gt;これもデフォルトのエディタの設定がnotepadになっているので変更が必要で，コマンドプロンプトで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;jupyter-qtconsole --generate-config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で設定ファイルを &lt;code&gt;.jupyter\jupyter_qtconsole_config.py&lt;/code&gt; に生成できるのだが，&lt;code&gt;c.JupyterWidget.editor = 'notepad'&lt;/code&gt;を弄っても反映されない。&lt;/p&gt;
+&lt;h3&gt;4. Jupyter Notebookを使ってみる&lt;/h3&gt;
+&lt;p&gt;コマンドプロンプトでJupyter Notebookのサーバーを起動する命令なのだがデフォルトでそのページを開くようOSに命令を出すのでブラウザが起動する。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;コマンドプロンプトを起動&lt;/li&gt;
+&lt;li&gt;Jupyter Notebookのサーバーを起動&lt;/li&gt;
+&lt;li&gt;色々作業&lt;/li&gt;
+&lt;li&gt;Notebookで「閉じて終了」を選ぶ&lt;/li&gt;
+&lt;li&gt;コマンドプロンプトでCtrl+Cを2回入力してサーバーを停止&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;という流れになる。当たり前だがブラウザが開いた後にコマンドプロンプトを閉じると使えなくなるので注意。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;jupyter-notebook
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でブラウザが起動しJupyter Notebookが使える。
+&lt;code&gt;New&lt;/code&gt;ボタンを押すと&lt;code&gt;Python3&lt;/code&gt;が出るので選択するとNotebookが新規作成される。&lt;/p&gt;
+&lt;p&gt;Notebookはセルという単位で分割されていて，セルにはコードセルとMarkdownセルがある(Markdownは&lt;a href="https://ja.wikipedia.org/wiki/Markdown"&gt;Wikipedia&lt;/a&gt;とかを参照)。&lt;/p&gt;
+&lt;p&gt;Markdownで説明を書き，その下にコードセルでPythonプログラムを書くような流れで「実験ノート」が作れる。Markdownの表示やコードの実行はCtrl+EnterまたはShift+Enter。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;urlretrieve&lt;/span&gt;
+&lt;span class="n"&gt;urlretrieve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://www.python.org/static/img/python-logo@2x.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mediapy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;media&lt;/span&gt;
+&lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show_image&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_image&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python-logo.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython04.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;保存した後で，ブラウザのJupyter Notebookで&lt;code&gt;Save&lt;/code&gt;で保存してから&lt;code&gt;Close and Halt&lt;/code&gt;でタブを閉じる(ブラウザのタブを閉じてもPythonのプロセスは停止してくれない。ファイル一覧で緑色のアイコンがそれを意味する)。
+その後&lt;code&gt;File&lt;/code&gt;-&amp;gt;&lt;code&gt;Shut down&lt;/code&gt;を選ぶか，コマンドプロンプトで「Ctrl+C」を打ってJupyter Notebookのサーバーを終了させる。&lt;/p&gt;
+&lt;p&gt;ちなみに保存されるのは&lt;code&gt;.ipynb&lt;/code&gt;(IPython Notebookと名乗っていた時代の名残り)という拡張子のファイルで，Visual Studio CodeやGoogle Colaboratoryでも開ける。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;New&lt;/code&gt;ボタンでは&lt;code&gt;Text File&lt;/code&gt;を選ぶとテキストエディタとなり，テキストエディタの&lt;code&gt;File-Rename&lt;/code&gt;で.py付きのファイル名(例えばHello.py)にするとPython用のハイライト表示エディタになる。また，&lt;code&gt;New&lt;/code&gt;から&lt;code&gt;Terminal&lt;/code&gt;を選ぶとコマンドプロンプトの親戚のようなPower Shellが開くので，.pyファイルを編集して&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py なんとか.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;みたいにPythonスクリプトを実行できる。&lt;/p&gt;
+&lt;h3&gt;5. Jupyter Labを使ってみる&lt;/h3&gt;
+&lt;p&gt;Notebookと同じノリで起動する。Notebookだとエディタもターミナルもブラウザの別タブになって鬱陶しいが，Jupyter Labは一つのウィンドウに収まる。&lt;/p&gt;
+&lt;p&gt;サーバーとして起動するのはNotebookと同様で，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;jupyter-lab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でブラウザが開き、JupyterLabが表示される。JupyterLabはJupyter Notebookの豪華版という感じで、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Notebookでのプログラミング&lt;/li&gt;
+&lt;li&gt;IPythonでのコマンド実行&lt;/li&gt;
+&lt;li&gt;.pyファイルを使ったプログラミング&lt;/li&gt;
+&lt;li&gt;ターミナルでの作業(WindowsだとPowershellがデフォルト)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;が可能。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython08.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;とりあえずの開発環境としてはこれが無難。&lt;/p&gt;
+&lt;h3&gt;6. その他&lt;/h3&gt;
+&lt;h4&gt;(あくまでもWindowsのマシンで)PythonをLinuxで動かす&lt;/h4&gt;
+&lt;p&gt;WindowsでPython(特に外部パッケージ)を扱うのは今はだいぶ良くなったとはいえ「動いたらラッキー。動かなかったらがんばりましょう」という認識でいた方が良い。できればUbuntu等のLinux系を使う方がトラブルが少ないので，もう少し凝った使い方としては以下がある。&lt;/p&gt;
+&lt;p&gt;特に深層学習フレームワークを使う場合にはLinux系OSで扱う場合が殆どなので今のうちから慣れておくと良い。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL2&lt;/li&gt;
+&lt;li&gt;Windows Subsystem for Linuxの略称で，Microsoftが提供していて，Winodws上でまんまLinuxが動くので，Ubuntu等のPython利用の解説がまんま使える&lt;/li&gt;
+&lt;li&gt;NVIDIAがCUDA Driverも出してるのでNVIDIAのGPUを積んだマシンならWSL2上でTensorflowとかPyTorchが使える&lt;/li&gt;
+&lt;li&gt;WSL2+Docker&lt;/li&gt;
+&lt;li&gt;様々な環境を搭載したコンテナを拾ってきて直ぐに試せるうえにVMと違ってディスク容量をそこまで圧迫しない&lt;/li&gt;
+&lt;li&gt;WSL2+Docker+VSCode&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code"&gt;Visual Studio Code&lt;/a&gt;はMicrosoft製のテキストエディタだが，拡張機能でコンテナ上の開発環境を使ってプログラミング，とかが楽にできる。&lt;/li&gt;
+&lt;li&gt;VSCodeに慣れると，リモートホスト上のDockerコンテナ上で開発。のようなことも出来る。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;他のバージョンのPython&lt;/h4&gt;
+&lt;p&gt;LinuxやmacOSの場合はpyenvという便利な解決法があるのだが，Windowsの場合案外面倒そうなので素直に特定のマイナーバージョンのインストーラをPython.orgから持ってくるのが楽。その上で，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;set PY_PYTHON=バージョン
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;を指定すると，そのコマンドプロンプト上では以後py.exeが勝手にそっちのバージョンを使ってくれる。例えば，3.11と3.10を入れている場合&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;set PY_PYTHON=3.10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打てば以降3.10.xが使え，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;set PY_PYTHON=3.11
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とすれば3.11.xが使える。&lt;/p&gt;
+&lt;h4&gt;仮想環境&lt;/h4&gt;
+&lt;p&gt;ある特定のバージョンのopencv-pythonが必要だが，普段は最新のopencv-pythonを使いたい。とか，requirements.txtで指定されている環境を作りたい。とか，Pythonでのパッケージのバージョン環境は簡単に崩壊する。特に深層学習フレームワークについては後方互換性をバッサリ切っているものが多いので，色々試したい場合には環境を変えて作業した方が安全。&lt;/p&gt;
+&lt;p&gt;安全な解決方法は&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;作業ごとにPCを用意する&lt;/li&gt;
+&lt;li&gt;作業ごとにDockerでコンテナを作る&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;とかなのだが，Pythonの環境だけ切り替えて使える機能が仮想環境である。condaとかvirtualenvとかがよく使われてきたが，最近は公式のvenvを使うのがトレンドらしい。&lt;/p&gt;
+&lt;p&gt;自分が作業をするフォルダで&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m venv 仮想環境名
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打つと，「仮想環境名」のフォルダが出来る。そこのScriptsフォルダに&lt;code&gt;activate.bat&lt;/code&gt;があるのでそれを実行する(PowerShellの場合はActivate.ps1)。上の方で基本環境としてdefaultという名前で作成したが，別の開発環境として例えばvenvHelloみたいな名前にすると，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;py -m venv venvHello
+venvHello\Scripts\activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;と打つと，プロンプトの頭に(venvHello)のように仮想環境名が表示されるので，あとはpipなりで環境構築すれば良い。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Windows"></category></entry><entry><title>Google Cloud Shellの日本語化(gcc込み) 2024版</title><link href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/" rel="alternate"></link><published>2024-06-05T19:20:00+09:00</published><updated>2024-06-05T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/CloudShellEditor2024/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利。
+ただし&lt;a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja"&gt;50時間/週の制限&lt;/a&gt;がある。&lt;/p&gt;
+&lt;p&gt;三の字のアイコンからTerminal-&amp;gt;new terminalでターミナルを開く。&lt;/p&gt;
+&lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 22.04が動いている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利。
+ただし&lt;a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja"&gt;50時間/週の制限&lt;/a&gt;がある。&lt;/p&gt;
+&lt;p&gt;三の字のアイコンからTerminal-&amp;gt;new terminalでターミナルを開く。&lt;/p&gt;
+&lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 22.04が動いている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;/etc/issue
+Ubuntu&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;.04.4&lt;span class="w"&gt; &lt;/span&gt;LTS&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\l&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Ubuntuの日本語化の方法を一通り実行。&lt;/p&gt;
+&lt;h3&gt;確認作業&lt;/h3&gt;
+&lt;p&gt;ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;locale&lt;span class="w"&gt; &lt;/span&gt;-a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とやって&lt;code&gt;ja_JP.utf-8&lt;/code&gt;が存在していれば作業不要だが，入ってない。&lt;/p&gt;
+&lt;h3&gt;日本語化&lt;/h3&gt;
+&lt;p&gt;以下を1行ずつコピペする&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;sh&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
+sudo&lt;span class="w"&gt; &lt;/span&gt;locale-gen
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;task-japanese&lt;span class="w"&gt; &lt;/span&gt;-y
+wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;https://github.com/gcc-mirror/gcc/raw/releases/gcc-11/gcc/po/ja.po
+msgfmt&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;gcc.mo&lt;span class="w"&gt; &lt;/span&gt;ja.po
+sudo&lt;span class="w"&gt; &lt;/span&gt;cp&lt;span class="w"&gt; &lt;/span&gt;gcc.mo&lt;span class="w"&gt; &lt;/span&gt;/usr/share/locale/ja/LC_MESSAGES/gcc-11.mo
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;export LANG=ja_JP.utf-8&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.profile
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;わかりやすいかは疑問だが英語で思考停止する人には良い。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240605-cse.png" width="600"&gt;&lt;/p&gt;
+&lt;h4&gt;分けて説明&lt;/h4&gt;
+&lt;p&gt;localeとしてja_JP.utf-8が有効になっていないので&lt;code&gt;/etc/locale.gen&lt;/code&gt;ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;sh&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echo &amp;#39;ja_JP.UTF-8 UTF-8&amp;#39; &amp;gt;&amp;gt;  /etc/locale.gen&amp;quot;&lt;/span&gt;
+sudo&lt;span class="w"&gt; &lt;/span&gt;locale-gen
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;task-japanese&lt;span class="w"&gt; &lt;/span&gt;-y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;file&lt;span class="w"&gt; &lt;/span&gt;/usr/bin/gcc
+/usr/bin/gcc:&lt;span class="w"&gt; &lt;/span&gt;symbolic&lt;span class="w"&gt; &lt;/span&gt;link&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;gcc-11
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で出てきたgcc-11に合わせている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;https://github.com/gcc-mirror/gcc/raw/releases/gcc-11/gcc/po/ja.po
+msgfmt&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;gcc.mo&lt;span class="w"&gt; &lt;/span&gt;ja.po
+sudo&lt;span class="w"&gt; &lt;/span&gt;cp&lt;span class="w"&gt; &lt;/span&gt;gcc.mo&lt;span class="w"&gt; &lt;/span&gt;/usr/share/locale/ja/LC_MESSAGES/gcc-11.mo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;export LANG=ja_JP.utf-8&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.profile
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;デバッガ&lt;/h3&gt;
+&lt;p&gt;Cloud Shellエディタのデバッガは&lt;a href="https://cloud.google.com/shell/docs/editor-overview?hl=ja"&gt;Go,Node.js,Python,Javaのみ対応&lt;/a&gt;なのでC/C++は諦めてgdb(+TUIとか)を使う&lt;/p&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Windows11+WSL2+WSLg+Docker</title><link href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/" rel="alternate"></link><published>2024-06-05T08:20:00+09:00</published><updated>2024-06-05T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinWSLDocker2024/</id><content type="html">&lt;h2&gt;WSL2関係のまとめ&lt;/h2&gt;
+&lt;p&gt;WSL2関連で色々様変りしていたので&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/desktop/gpu/"&gt;Docker DesktopでのGPUサポート&lt;/a&gt; (NVIDIA Docker toolkitは不要)&lt;/li&gt;
+&lt;li&gt;WindowsのCUDAドライバ関係が入ってれば&lt;a href="https://docs.nvidia.com/cuda/wsl-user-guide/index.html"&gt;WSL2用のLinuxドライバは不要&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zenn.dev/h4m4chi/articles/8627893de9cdc5"&gt;ここの記事&lt;/a&gt;の手順で解決。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Ubuntu"></category><category term="WSL2"></category><category term="Github"></category><category term="Docker"></category></entry><entry><title>Windows+WSL2でGithubで配布されてるものを試す環境構築</title><link href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/" rel="alternate"></link><published>2023-06-21T19:20:00+09:00</published><updated>2023-06-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</id><summary type="html">&lt;p&gt;※この情報は古いです。&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
+&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
 &lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
@@ -11,8 +368,8 @@ wsl --install -d Ubuntu&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;として&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;を入れる
 
 ```&lt;span class="nv"&gt;bash&lt;/span&gt;
-&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;は既にインストールされています。
-&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;を起 …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+&lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;は既にインストー …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;※この情報は古いです。&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
+&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
 &lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
@@ -3338,10 +3695,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;&lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322.jpg"&gt;&lt;img alt="IMG_0322" class="alignnone size-medium wp-image-502" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320.jpg"&gt;&lt;img alt="IMG_0320" class="alignnone size-medium wp-image-503" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>研修旅行2016</title><link href="https://eiichiromomma.github.io/2016/08/24/%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C2016/" rel="alternate"></link><published>2016-08-24T21:41:00+09:00</published><updated>2016-08-24T21:41:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-08-24:/2016/08/24/研修旅行2016/</id><summary type="html">&lt;p&gt;今年は日帰り研修旅行ということで，サッポロビール千葉工場の見学と，ビール園でジンギスカン食べ放題やってき …&lt;/p&gt;</summary><content type="html">&lt;p&gt;今年は日帰り研修旅行ということで，サッポロビール千葉工場の見学と，ビール園でジンギスカン食べ放題やってきました。&lt;/p&gt;
 &lt;p&gt;工場見学では思った以上にガッツリとビールを頂きましたが，その後も怯まず羊をひたすら食す会となりました。&lt;/p&gt;
 &lt;p&gt;工場見学はなかなか面白かったので次のネタを探したいところです。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157.jpg"&gt;&lt;img alt="CIMG2157" class="alignnone size-medium wp-image-498" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168.jpg"&gt;&lt;img alt="CIMG2168" class="alignnone size-medium wp-image-499" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>HTC Vive来ました</title><link href="https://eiichiromomma.github.io/2016/07/20/htc-vive%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2016-07-20T21:36:00+09:00</published><updated>2016-07-20T21:36:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-07-20:/2016/07/20/htc-vive来ました/</id><summary type="html">&lt;p&gt;新たなHMDのHTC Vive来ました。早速セットアップして貰って皆で試しているところです。思ったより視野が狭いかなと。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131.jpg"&gt;&lt;img alt="CIMG2131" class="alignnone size-medium wp-image-495" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;傍から見るとか …&lt;/p&gt;</summary><content type="html">&lt;p&gt;新たなHMDのHTC Vive来ました。早速セットアップして貰って皆で試しているところです。思ったより視野が狭いかなと。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131.jpg"&gt;&lt;img alt="CIMG2131" class="alignnone size-medium wp-image-495" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2131-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;傍から見るとかなりおマヌーです。&lt;/p&gt;</content><category term="News"></category></entry><entry><title>ゼミ&amp;自己紹介Lightning Talk&amp;飲み会</title><link href="https://eiichiromomma.github.io/2016/07/07/%E3%82%BC%E3%83%9F%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blightning-talk%E9%A3%B2%E3%81%BF%E4%BC%9A/" rel="alternate"></link><published>2016-07-07T21:31:00+09:00</published><updated>2016-07-07T21:31:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-07-07:/2016/07/07/ゼミ自己紹介lightning-talk飲み会/</id><content type="html">&lt;p&gt;真面目にゼミ発表が終わったところで全員集合するまでの飲み会&amp;amp;自己紹介Lightning Talk大会も2回目で達成です。写真は散々食い散らかした後の酷い有様。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2077.jpg"&gt;&lt;img alt="CIMG2077" class="alignnone size-medium wp-image-491" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2077-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2101.jpg"&gt;&lt;img alt="CIMG2101" class="alignnone size-medium wp-image-492" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2101-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>SSII2016に参加してきました</title><link href="https://eiichiromomma.github.io/2016/06/14/ssii2016%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2016-06-14T14:07:00+09:00</published><updated>2016-06-14T14:07:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-06-14:/2016/06/14/ssii2016に参加してきました/</id><summary type="html">&lt;p&gt;今年もSSII2016に運営として参加してきました。これだけチュートリアルの充実している学会も国内では珍しいかと思います。資料も一部公開されている …&lt;/p&gt;</summary><content type="html">&lt;p&gt;今年もSSII2016に運営として参加してきました。これだけチュートリアルの充実している学会も国内では珍しいかと思います。資料も一部公開されているので参照して下さい。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://confit.atlas.jp/guide/event/ssii2016/static/tutorial"&gt;https://confit.atlas.jp/guide/event/ssii2016/static/tutorial&lt;/a&gt;&lt;/p&gt;</content><category term="News"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157.jpg"&gt;&lt;img alt="CIMG2157" class="alignnone size-medium wp-image-498" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168.jpg"&gt;&lt;img alt="CIMG2168" class="alignnone size-medium wp-image-499" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
