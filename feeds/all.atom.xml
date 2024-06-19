@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-06-05T20:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>WindowsでのオススメのPython環境 2024版</title><link href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/" rel="alternate"></link><published>2024-06-05T20:20:00+09:00</published><updated>2024-06-05T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinPython2024/</id><summary type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-06-19T20:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>NumPy 2.0</title><link href="https://eiichiromomma.github.io/2024/06/19/NumPy2/" rel="alternate"></link><published>2024-06-19T20:20:00+09:00</published><updated>2024-06-19T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-19:/2024/06/19/NumPy2/</id><summary type="html">&lt;h3&gt;NumPy 2.0の混入&lt;/h3&gt;
+&lt;p&gt;2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
+依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しよ …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;NumPy 2.0の混入&lt;/h3&gt;
+&lt;p&gt;2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
+依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しようとしたときにNumPyのバージョン指定をしていないと確実に動かない状況で，インストール時にNumPyって2だっけか?と思って気付いて助かった。
+当面は&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;numpy&amp;lt;2&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とした方が良さそう。&lt;/p&gt;</content><category term="Wiki"></category><category term="Python"></category></entry><entry><title>WindowsでのオススメのPython環境 2024版</title><link href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/" rel="alternate"></link><published>2024-06-05T20:20:00+09:00</published><updated>2024-06-05T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinPython2024/</id><summary type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
 &lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;普通に&lt;a href="https://www.python.org/"&gt;Python.org&lt;/a&gt;からダウンロードして入れましょうという話。&lt;/p&gt;
 &lt;p&gt;これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で&lt;code&gt;py.exe&lt;/code&gt;の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。&lt;/p&gt;
 &lt;h3&gt;1. Pythonのインストール&lt;/h3&gt;
@@ -348,15 +357,15 @@ sudo&lt;span class="w"&gt; &lt;/span&gt;cp&lt;span class="w"&gt; &lt;/span&gt;gc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;デバッガ&lt;/h3&gt;
-&lt;p&gt;Cloud Shellエディタのデバッガは&lt;a href="https://cloud.google.com/shell/docs/editor-overview?hl=ja"&gt;Go,Node.js,Python,Javaのみ対応&lt;/a&gt;なのでC/C++は諦めてgdb(+TUIとか)を使う&lt;/p&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Windows11+WSL2+WSLg+Docker</title><link href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/" rel="alternate"></link><published>2024-06-05T08:20:00+09:00</published><updated>2024-06-05T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinWSLDocker2024/</id><content type="html">&lt;h2&gt;WSL2関係のまとめ&lt;/h2&gt;
+&lt;p&gt;Cloud Shellエディタのデバッガは&lt;a href="https://cloud.google.com/shell/docs/editor-overview?hl=ja"&gt;Go,Node.js,Python,Javaのみ対応&lt;/a&gt;なのでC/C++は諦めてgdb(+TUIとか)を使う&lt;/p&gt;</content><category term="Memo"></category><category term="C"></category><category term="Lecture"></category><category term="Debian"></category><category term="gcc"></category></entry><entry><title>Windows11+WSL2+WSLg+Docker</title><link href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/" rel="alternate"></link><published>2024-06-05T08:20:00+09:00</published><updated>2024-06-05T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-05:/2024/06/05/WinWSLDocker2024/</id><content type="html">&lt;h3&gt;WSL2関係のまとめ&lt;/h3&gt;
 &lt;p&gt;WSL2関連で色々様変りしていたので&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.docker.com/desktop/gpu/"&gt;Docker DesktopでのGPUサポート&lt;/a&gt; (NVIDIA Docker toolkitは不要)&lt;/li&gt;
 &lt;li&gt;WindowsのCUDAドライバ関係が入ってれば&lt;a href="https://docs.nvidia.com/cuda/wsl-user-guide/index.html"&gt;WSL2用のLinuxドライバは不要&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)&lt;/h2&gt;
+&lt;h3&gt;WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://zenn.dev/h4m4chi/articles/8627893de9cdc5"&gt;ここの記事&lt;/a&gt;の手順で解決。&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Ubuntu"></category><category term="WSL2"></category><category term="Github"></category><category term="Docker"></category></entry><entry><title>Windows+WSL2でGithubで配布されてるものを試す環境構築</title><link href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/" rel="alternate"></link><published>2023-06-21T19:20:00+09:00</published><updated>2023-06-21T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2023-06-21:/2023/06/21/WinWSLPythonDocker/</id><summary type="html">&lt;p&gt;※この情報は古いです。&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
-&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+&lt;h3&gt;1. WSL2のインストール&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
 &lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
@@ -369,7 +378,7 @@ wsl --install -d Ubuntu&lt;/p&gt;
 
 ```&lt;span class="nv"&gt;bash&lt;/span&gt;
 &lt;span class="nv"&gt;Ubuntu&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;は既にインストー …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;※この情報は古いです。&lt;a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2"&gt;wikiの方にまとめました&lt;/a&gt;。&lt;/p&gt;
-&lt;h2&gt;1. WSL2のインストール&lt;/h2&gt;
+&lt;h3&gt;1. WSL2のインストール&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://learn.microsoft.com/ja-jp/windows/wsl/install"&gt;Microsoftのサイト&lt;/a&gt;の説明に従いWSL2を入れる。&lt;/p&gt;
 &lt;p&gt;PowerShellを管理者権限で起動して&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wsl&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="n"&gt;-install&lt;/span&gt;
@@ -414,9 +423,9 @@ momma@ASUS2022-0:~$
 
 &lt;p&gt;みたいな感じでUbuntuが使える状態になる。&lt;/p&gt;
 &lt;p&gt;次回以降はWindowsのメニューから&lt;code&gt;Ubuntu&lt;/code&gt;を選択すれば使える。&lt;/p&gt;
-&lt;h3&gt;Error: 0xc004000dが出た場合&lt;/h3&gt;
+&lt;h4&gt;Error: 0xc004000dが出た場合&lt;/h4&gt;
 &lt;p&gt;コントロールパネルの「プログラム」で「プログラムと機能」の中に「Windowsの機能の有効化または無効化」があるのでそれを選んでから「仮想マシンプラットフォーム」にチェックを入れる(要再起動)。その後WSL2を再度インストールする。&lt;/p&gt;
-&lt;h2&gt;WSL2上でX11アプリの確認&lt;/h2&gt;
+&lt;h3&gt;WSL2上でX11アプリの確認&lt;/h3&gt;
 &lt;p&gt;sudoコマンドをそのセッションで初めて使うときはパスワードを聞かれるのでsudoの行だけコピペする。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;x11-apps&lt;span class="w"&gt; &lt;/span&gt;mesa-utils
 xeyes
@@ -427,7 +436,7 @@ xeyes
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で、ギアが回るアプリケーションが起動したらOpenGL関係のアプリケーションも使える。&lt;/p&gt;
-&lt;h2&gt;2. Ubuntu上でpyenvを使えるようにする&lt;/h2&gt;
+&lt;h3&gt;2. Ubuntu上でpyenvを使えるようにする&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;upgrade&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;build-essential&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
 python3-setuptools&lt;span class="w"&gt; &lt;/span&gt;python3-pip&lt;span class="w"&gt; &lt;/span&gt;libssl-dev&lt;span class="w"&gt; &lt;/span&gt;libffi-dev&lt;span class="w"&gt; &lt;/span&gt;zlib1g-dev&lt;span class="w"&gt; &lt;/span&gt;libbz2-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
 libreadline-dev&lt;span class="w"&gt; &lt;/span&gt;libsqlite3-dev&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;llvm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
@@ -449,7 +458,7 @@ curl&lt;span class="w"&gt; &lt;/span&gt;https://pyenv.run&lt;span class="w"&gt; 
 
 &lt;p&gt;を実行すると実行時オプションが表示される。&lt;/p&gt;
 &lt;p&gt;※Windows版のpyenvをインストールしていると、PATHの共有化でかなりややこしい話になるので、Windowsの方はPATHから外しておいた方が良い&lt;/p&gt;
-&lt;h2&gt;3. 特定バージョンのPythonのインストール&lt;/h2&gt;
+&lt;h3&gt;3. 特定バージョンのPythonのインストール&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv&lt;span class="w"&gt; &lt;/span&gt;versions
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -481,7 +490,7 @@ curl&lt;span class="w"&gt; &lt;/span&gt;https://pyenv.run&lt;span class="w"&gt; 
 &lt;li&gt;venvで仮想環境のときにバージョンを指定 (推奨)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;のいずれかで扱うことになる。DockerのコンテナであるPythonのバージョン=その環境、という状況ならこれで問題ないが、Dockerを使わない場合には何かやるたびに環境が壊れるので注意。&lt;/p&gt;
-&lt;h2&gt;4. venvとpyenvで特定バージョンの仮想環境を作る&lt;/h2&gt;
+&lt;h3&gt;4. venvとpyenvで特定バージョンの仮想環境を作る&lt;/h3&gt;
 &lt;p&gt;用途としてはGithubで配布されているソースを試したいときが多い。
 無視リストの.gitignoreには&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# pyenv&lt;/span&gt;
@@ -556,7 +565,7 @@ python3&lt;span class="w"&gt; &lt;/span&gt;multi_sipp.py&lt;span class="w"&gt; &
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;でもよい。&lt;/p&gt;
-&lt;h2&gt;5. WSL2上でDockerを使う (非Docker Desktop)&lt;/h2&gt;
+&lt;h3&gt;5. WSL2上でDockerを使う (非Docker Desktop)&lt;/h3&gt;
 &lt;p&gt;Ubuntuの流儀で入れるだけなので&lt;a href="https://docs.docker.com/engine/install/ubuntu/"&gt;公式ドキュメント&lt;/a&gt;の通りに入れる&lt;/p&gt;
 &lt;p&gt;(Docker Desktopを使いたい場合は &lt;a href="https://docs.docker.jp/desktop/windows/wsl.html"&gt;公式ドキュメントに従ってWSLバックエンドを有効化&lt;/a&gt;すればこのインストール作業無しで使えた筈なのでここは飛ばして良い)&lt;/p&gt;
 &lt;p&gt;DeepLearning系のものを試したいときかつNVIDIAのグラボを積んでいるマシンの場合には，Dockerを入れた後でNVIDIA CUDAも入れる。(やりかたはググると出てくる)&lt;/p&gt;
@@ -604,7 +613,7 @@ For&lt;span class="w"&gt; &lt;/span&gt;more&lt;span class="w"&gt; &lt;/span&gt;e
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;としてdockerグループに自分を加えておくと、dockerの実行にsudoコマンドが不要になる。&lt;/p&gt;
-&lt;h2&gt;6. WSL2のDockerでGUIアプリケーションを使う&lt;/h2&gt;
+&lt;h3&gt;6. WSL2のDockerでGUIアプリケーションを使う&lt;/h3&gt;
 &lt;p&gt;WSL2上でGUIアプリケーションをそのまま実行するだけならWSLgがいい感じにWindowsで表示できるよう扱ってくれているが、Dockerコンテナ上のGUIアプリケーションを起動するには、Dockerのホスト(WSL2)に別ホスト(ここではコンテナ)のアプリケーションを表示させる細工が必要で、具体的には設定ファイルと環境変数の共有が必要となる。&lt;a href="https://zenn.dev/holliy/articles/51012ef059aa9f"&gt;具体的なやりかた&lt;/a&gt;はあちこちで紹介されているがDockerやWSLのアップデートによって変わることが多々あるので、極力新しい情報を参考にする。(英語だが公式サイトを見るのが正解)&lt;/p&gt;
 &lt;p&gt;一旦Ubuntuを閉じて再度開いてから&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;--rm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
@@ -644,7 +653,7 @@ glxgears
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;で時々確認すると良い。&lt;/p&gt;
-&lt;h3&gt;古いROSのコンテナを使う&lt;/h3&gt;
+&lt;h4&gt;古いROSのコンテナを使う&lt;/h4&gt;
 &lt;p&gt;古い環境でも構築可能なのがDockerの利点だが、追加で何か入れようとするとapt関係がミラーサイトにもなく、apt updateだけでも結構遅い状態になるので、何か試すにしてもよく吟味してから選ぶとよい。&lt;/p&gt;
 &lt;p&gt;https://github.com/hasauino/rrt_exploration を試してみる。環境としては&lt;a href="http://wiki.ros.org/ja/kinetic/Installation/Ubuntu"&gt;kinetic&lt;/a&gt;なので今から素で入れるのは面倒。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://hub.docker.com/_/ros/tags?page=1&amp;amp;name=kinetic"&gt;公式のコンテナ&lt;/a&gt;を使う。&lt;/p&gt;
@@ -3692,7 +3701,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;そし …&lt;/p&gt;</summary><content type="html">&lt;p&gt;電気学会知覚情報・次世代産業システム合同研究会の座長で静岡大学浜松キャンパスにお邪魔してきました。&lt;/p&gt;
 &lt;p&gt;そして，M1吉瀬君のデビュー戦でもありました。緊張してスッ飛ばしてましたが，質疑はかなり頑張ってくれたかと思います。頑張った人には。。。ということで創業明治40年のうなぎ「あつみ」で打ち上げ。これだけのうなぎは滅多に食べられません。学生のうちからこういう味を知っておくことが大事です。(うちのモットー)&lt;/p&gt;
 &lt;p&gt;次回は3/27, 28に宮崎大学で開催です。地鶏に宮崎牛と旨いものいっぱいなので研究頑張りましょう。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322.jpg"&gt;&lt;img alt="IMG_0322" class="alignnone size-medium wp-image-502" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320.jpg"&gt;&lt;img alt="IMG_0320" class="alignnone size-medium wp-image-503" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>研修旅行2016</title><link href="https://eiichiromomma.github.io/2016/08/24/%E7%A0%94%E4%BF%AE%E6%97%85%E8%A1%8C2016/" rel="alternate"></link><published>2016-08-24T21:41:00+09:00</published><updated>2016-08-24T21:41:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-08-24:/2016/08/24/研修旅行2016/</id><summary type="html">&lt;p&gt;今年は日帰り研修旅行ということで，サッポロビール千葉工場の見学と，ビール園でジンギスカン食べ放題やってき …&lt;/p&gt;</summary><content type="html">&lt;p&gt;今年は日帰り研修旅行ということで，サッポロビール千葉工場の見学と，ビール園でジンギスカン食べ放題やってきました。&lt;/p&gt;
-&lt;p&gt;工場見学では思った以上にガッツリとビールを頂きましたが，その後も怯まず羊をひたすら食す会となりました。&lt;/p&gt;
-&lt;p&gt;工場見学はなかなか面白かったので次のネタを探したいところです。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157.jpg"&gt;&lt;img alt="CIMG2157" class="alignnone size-medium wp-image-498" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2157-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168.jpg"&gt;&lt;img alt="CIMG2168" class="alignnone size-medium wp-image-499" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/09/CIMG2168-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;p&gt;&lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322.jpg"&gt;&lt;img alt="IMG_0322" class="alignnone size-medium wp-image-502" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0322-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320.jpg"&gt;&lt;img alt="IMG_0320" class="alignnone size-medium wp-image-503" height="225" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2016/09/IMG_0320-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
