@@ -50,22 +50,50 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2024/06/19/NumPy2/"><h3 class="article-title">NumPy 2.0</h3></a>
-<h6 class="subheader" title="2024-06-19T20:20:00+09:00">2024-06-19(水)
+                <a href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/"><h3 class="article-title">Apple SiliconなマシンでROS2</h3></a>
+<h6 class="subheader" title="2024-07-10T21:20:00+09:00">2024-07-10(水)
 </h6>
 
 
-<h3>NumPy 2.0の混入</h3>
-<p>2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
-依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しようとしたときにNumPyのバージョン指定をしていないと確実に動かない状況で，インストール時にNumPyって2だっけか?と思って気付いて助かった。
-当面は</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;numpy&lt;2&quot;</span>
+<p>なんやかんやでROS2をmacOSで使えた方が便利なので導入してみる。</p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240710AppleSiliconROS2-01.png" width="600"></p>
+<p>基本的には<a href="https://github.com/TakanoTaiga/ros2_m1_native/blob/master/install_guide.md">ここの手順</a>なのだが</p>
+<ul>
+<li>SIPは無効にしなくてもとりあえずは動く(?)</li>
+<li>python3はHomebrewに限らず3.12を入れてるとハマるが3.11ならvenvでも問題なし</li>
+<li>/usr/local/libに余計なx86_64なdylibがあるとそっちを拾ってくるのでM1登場初期にbrew86を運用していた人は全部消した方が良い</li>
+<li>途中でよくわからんがfastcdrでコケるがbuildの中に入ってmake installして再度workspaceのビルドをかけると通る</li>
+<li>ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた)</li>
+</ul>
+<p>ちなみにhomebrewでpython3.12を消すとvimが使えなくなる(大損害)。問題なのはCMakeが呼ばれたとき(見境なくPython3.12を拾ってくる)なので，ビューワとかトピック監視用途とかで割り切ってしまうか，colcon buildの度に3.12とQt6を消せばたぶん使える。</p>
+<p>ビルドの最中何度かコケるが</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>build/fastcdr
+make
+make<span class="w"> </span>install
+<span class="nb">cd</span><span class="w"> </span>../fastrtps
+make<span class="w"> </span>-j8
+make<span class="w"> </span>install
+<span class="nb">cd</span><span class="w"> </span>../..
 </code></pre></div>
 
-<p>とした方が良さそう。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+<p>でまたビルドのコマンドを投げると通る。</p>
+<p>あとrosbag2_pyの<code>src/ros2/rosbag2/rosbag2_py/src/rosbag2_py/_reader.cpp</code>でコケるが</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb nb-Type">void</span><span class="w"> </span><span class="n">open</span><span class="p">(</span>
+<span class="w">    </span><span class="n">rosbag2_storage</span><span class="p">::</span><span class="n">StorageOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">storage_options</span><span class="p">,</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">rosbag2_cpp</span><span class="p">::</span><span class="n">ConverterOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">converter_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rosbag2_cpp</span><span class="p">::</span><span class="n">ConverterOptions</span><span class="p">())</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">reader_</span><span class="o">-&gt;</span><span class="n">open</span><span class="p">(</span><span class="n">storage_options</span><span class="p">,</span><span class="w"> </span><span class="n">converter_options</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+
+<p>のようにconstを追加すると通る。</p>
+<p>で，一通り入るがGazeboは別。あとcv_bridgeをビルドしようとするとOpenCV-&gt;boost-python(homebrewはpython3.12用)と芋蔓式に面倒臭さが増えていくので諦める。</p>
+<p>ROS_MASTER_URIとROS_IPさえちゃんと設定しておけばRaspberry Pi OSで<a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">MaixSense A010</a>なる100x100のToF Depthカメラでpublishしてるのを受け取れた。</p>
+<p>(ドキュメントにあるようにtopicで追加でPointCloud2とかImageとかでTFをtofにする)</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/ros2.html">ROS2 </a>
+    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
 </p>
 
 
@@ -75,6 +103,29 @@
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2024/06/19/NumPy2/"><h3 class="article-title">NumPy 2.0</h3></a>
+<h6 class="subheader" title="2024-06-19T20:20:00+09:00">2024-06-19(水)
+</h6>
+
+
+<h3>NumPy 2.0の混入</h3>
+<p>2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
+依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しよ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/19/NumPy2/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
@@ -294,33 +345,6 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
-<h6 class="subheader" title="2022-05-25T22:00:00+09:00">2022-05-25(水)
-</h6>
-
-
-<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Gcenx/WineskinServer">WineskinServer</a>が使いやすかった。
-講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
-    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
-    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
-    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
-    <a href="https://eiichiromomma.github.io/tag/wineskinserver.html">WineskinServer </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/25/WineskinServer/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

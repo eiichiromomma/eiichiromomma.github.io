@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-06-19T20:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>NumPy 2.0</title><link href="https://eiichiromomma.github.io/2024/06/19/NumPy2/" rel="alternate"></link><published>2024-06-19T20:20:00+09:00</published><updated>2024-06-19T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-19:/2024/06/19/NumPy2/</id><summary type="html">&lt;h3&gt;NumPy 2.0の混入&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-07-10T21:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Apple SiliconなマシンでROS2</title><link href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/" rel="alternate"></link><published>2024-07-10T21:20:00+09:00</published><updated>2024-07-10T21:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-07-10:/2024/07/10/AppleSiliconROS2/</id><summary type="html">&lt;p&gt;なんやかんやでROS2をmacOSで使えた方が便利なので導入してみる。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240710AppleSiliconROS2-01.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;基本的には&lt;a href="https://github.com/TakanoTaiga/ros2_m1_native/blob/master/install_guide.md"&gt;ここの手順&lt;/a&gt;なのだが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SIPは無効にしなくてもとりあえずは動く(?)&lt;/li&gt;
+&lt;li&gt;python3はHomebrewに限らず3.12を入れてるとハマるが3.11ならvenvでも問題なし&lt;/li&gt;
+&lt;li&gt;/usr/local/libに余計なx86_64なdylibがあるとそっちを拾ってくるのでM1登場初期にbrew86を運用していた人は全部消した方が良い&lt;/li&gt;
+&lt;li&gt;途中でよくわからんがfastcdrでコケるがbuildの中に入ってmake installして再度workspaceのビルドをかけると通る&lt;/li&gt;
+&lt;li&gt;ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;なんやかんやでROS2をmacOSで使えた方が便利なので導入してみる。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240710AppleSiliconROS2-01.png" width="600"&gt;&lt;/p&gt;
+&lt;p&gt;基本的には&lt;a href="https://github.com/TakanoTaiga/ros2_m1_native/blob/master/install_guide.md"&gt;ここの手順&lt;/a&gt;なのだが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SIPは無効にしなくてもとりあえずは動く(?)&lt;/li&gt;
+&lt;li&gt;python3はHomebrewに限らず3.12を入れてるとハマるが3.11ならvenvでも問題なし&lt;/li&gt;
+&lt;li&gt;/usr/local/libに余計なx86_64なdylibがあるとそっちを拾ってくるのでM1登場初期にbrew86を運用していた人は全部消した方が良い&lt;/li&gt;
+&lt;li&gt;途中でよくわからんがfastcdrでコケるがbuildの中に入ってmake installして再度workspaceのビルドをかけると通る&lt;/li&gt;
+&lt;li&gt;ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ちなみにhomebrewでpython3.12を消すとvimが使えなくなる(大損害)。問題なのはCMakeが呼ばれたとき(見境なくPython3.12を拾ってくる)なので，ビューワとかトピック監視用途とかで割り切ってしまうか，colcon buildの度に3.12とQt6を消せばたぶん使える。&lt;/p&gt;
+&lt;p&gt;ビルドの最中何度かコケるが&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;build/fastcdr
+make
+make&lt;span class="w"&gt; &lt;/span&gt;install
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;../fastrtps
+make&lt;span class="w"&gt; &lt;/span&gt;-j8
+make&lt;span class="w"&gt; &lt;/span&gt;install
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;../..
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でまたビルドのコマンドを投げると通る。&lt;/p&gt;
+&lt;p&gt;あとrosbag2_pyの&lt;code&gt;src/ros2/rosbag2/rosbag2_py/src/rosbag2_py/_reader.cpp&lt;/code&gt;でコケるが&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb nb-Type"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;rosbag2_storage&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;StorageOptions&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;storage_options&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rosbag2_cpp&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;ConverterOptions&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;converter_options&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rosbag2_cpp&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;ConverterOptions&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;reader_&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;storage_options&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;converter_options&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようにconstを追加すると通る。&lt;/p&gt;
+&lt;p&gt;で，一通り入るがGazeboは別。あとcv_bridgeをビルドしようとするとOpenCV-&amp;gt;boost-python(homebrewはpython3.12用)と芋蔓式に面倒臭さが増えていくので諦める。&lt;/p&gt;
+&lt;p&gt;ROS_MASTER_URIとROS_IPさえちゃんと設定しておけばRaspberry Pi OSで&lt;a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html"&gt;MaixSense A010&lt;/a&gt;なる100x100のToF Depthカメラでpublishしてるのを受け取れた。&lt;/p&gt;
+&lt;p&gt;(ドキュメントにあるようにtopicで追加でPointCloud2とかImageとかでTFをtofにする)&lt;/p&gt;</content><category term="Wiki"></category><category term="ROS2"></category><category term="Apple Silicon"></category></entry><entry><title>NumPy 2.0</title><link href="https://eiichiromomma.github.io/2024/06/19/NumPy2/" rel="alternate"></link><published>2024-06-19T20:20:00+09:00</published><updated>2024-06-19T20:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-06-19:/2024/06/19/NumPy2/</id><summary type="html">&lt;h3&gt;NumPy 2.0の混入&lt;/h3&gt;
 &lt;p&gt;2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
 依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しよ …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;NumPy 2.0の混入&lt;/h3&gt;
 &lt;p&gt;2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
@@ -1120,7 +1162,7 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 &lt;h3&gt;アプリ(Wineskin Wrapper)を消したい&lt;/h3&gt;
 &lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
 &lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="WineskinServer"></category></entry><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
+&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="Apple Silicon"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="WineskinServer"></category></entry><entry><title>CASIOっぽい関数電卓アプリ</title><link href="https://eiichiromomma.github.io/2022/05/21/ScientificCalcurator/" rel="alternate"></link><published>2022-05-21T08:20:00+09:00</published><updated>2022-05-21T08:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2022-05-21:/2022/05/21/ScientificCalcurator/</id><summary type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
 カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備してお …&lt;/p&gt;</summary><content type="html">&lt;p&gt;大学配布のCASIOの関数電卓を模擬したものを探してみた。
 カバンの中に入れっぱなしにしておくよう言ってはいるものの，忘れたときに使えるよう準備しておくと良い。&lt;/p&gt;
 &lt;h3&gt;Android&lt;/h3&gt;
@@ -2830,9 +2872,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902.jpg"&gt;&lt;img alt="CIMG1902" class="alignnone size-medium wp-image-445" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901.jpg"&gt;&lt;img alt="CIMG1901" class="alignnone size-medium wp-image-446" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903.jpg"&gt;&lt;img alt="CIMG1903" class="alignnone size-medium wp-image-447" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>お土産2015-12</title><link href="https://eiichiromomma.github.io/2015/12/28/%E3%81%8A%E5%9C%9F%E7%94%A32015-12/" rel="alternate"></link><published>2015-12-28T15:08:00+09:00</published><updated>2015-12-28T15:08:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-12-28:/2015/12/28/お土産2015-12/</id><content type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/image.jpeg"&gt;&lt;img alt="image" class="alignnone size-medium wp-image-442" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/image-300x225.jpeg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;共同研究先から頂きました差し入れです&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>仮着手者の自己紹介LT飲み会</title><link href="https://eiichiromomma.github.io/2015/12/13/%E4%BB%AE%E7%9D%80%E6%89%8B%E8%80%85%E3%81%AE%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/" rel="alternate"></link><published>2015-12-13T16:48:00+09:00</published><updated>2015-12-13T16:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-12-13:/2015/12/13/仮着手者の自己紹介lt飲み会/</id><content type="html">&lt;p&gt;ちょっと前ですが現3年生メインの仮着手者で本格的な顔合せをしました。恒例の自己紹介Lightning Talk飲み会です。今度のメンバーは飲み過ぎ注意ですね。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809.jpg"&gt;&lt;img alt="CIMG1809" class="alignnone size-medium wp-image-437" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849.jpg"&gt;&lt;img alt="CIMG1849" class="alignnone size-medium wp-image-438" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>Theta S来ました</title><link href="https://eiichiromomma.github.io/2015/11/27/theta-s%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2015-11-27T22:07:00+09:00</published><updated>2015-11-27T22:07:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-11-27:/2015/11/27/theta-s来ました/</id><content type="html">&lt;p&gt;実験環境の記録にも役立ちそうです。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW"&gt;https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>仮着手者への連絡です</title><link href="https://eiichiromomma.github.io/2015/11/04/%E4%BB%AE%E7%9D%80%E6%89%8B%E8%80%85%E3%81%B8%E3%81%AE%E9%80%A3%E7%B5%A1%E3%81%A7%E3%81%99/" rel="alternate"></link><published>2015-11-04T15:19:00+09:00</published><updated>2015-11-04T15:19:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-11-04:/2015/11/04/仮着手者への連絡です/</id><content type="html">&lt;p&gt;門馬研に仮着手が決定した者は、11/12(木) 15:30に812室に集合して下さい。面談も行ないますので&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;成績表&lt;/li&gt;
-&lt;li&gt;履修確認表&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;を持参して下さい。&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW"&gt;https://theta360.com/s/fKEgjSw4Xj1RHmX4YthZTcFiW&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
