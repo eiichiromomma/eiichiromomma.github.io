@@ -50,6 +50,112 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/"><h3 class="article-title">PythonとMaixSense A010</h3></a>
+<h6 class="subheader" title="2024-07-13T19:20:00+09:00">2024-07-13(土)
+</h6>
+
+
+<h3>MaixSense A010 ToFセンサーの続き</h3>
+<p>ROS2で使ってみた<a href="https://www.marutsu.co.jp/pc/i/43360161/">マルツで売ってる格安100x100 ToF</a> (Switch Scienceは売り切れ)を今度はPythonで動かす。</p>
+<ul>
+<li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">技術情報</a></li>
+<li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/at_command_en.html">ATコマンド一覧と説明</a></li>
+<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモのソース</a>(maixsense-010-20220909-examples.zipにmetasense.pyとutils.pyが含まれる)</li>
+</ul>
+<p>仕様的にPySerialでATコマンドを送れば使えて，実際<a href="https://elchika.com/article/fa84cf5a-54de-4f38-be1f-c12370960a45/">そうやってるサンプル</a>もネットに存在する。</p>
+<p>もうちょいMaixSense周りの処理は簡単に表現してに使いたいと思ったら，<a href="https://youtu.be/CPq58z2kVi8?si=J4qk5VMN4mzRyqg9">手のトラッキングのデモ</a>があった。
+そのソースは<a href="https://github.com/jumejume1/Python-hand-detect">Python-hand-detect</a>で公開されていてmediapipeにDepthを渡している。</p>
+<p>ソースを見ると<code>from metasense import MetaSense</code>とあるものの，pypiにもcondaにも存在せず。上のキーボードを使ったデモのソースに含まれていた。これが正式な配布なのか不明。</p>
+<p>pyserialは必要なので入れておく。
+上記のキーボードを使ったデモのソースに含まれる，utils.pyとmetasense.pyを一緒に置いて実行する。
+LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
+<p>USBのみ出力にしておけば実測はしてないが<a href="https://youtu.be/BpySY99Kixg">FPS=19でヌルヌル動く</a></p>
+<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240713A010Unit9.png" width="200"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">metasense</span> <span class="kn">import</span> <span class="n">MetaSense</span>
+
+<span class="n">COM_PORT</span> <span class="o">=</span> <span class="s2">&quot;/dev/tty.usbserial-202206_E8C25B0&quot;</span>
+<span class="n">BASE_BARTRATE</span> <span class="o">=</span> <span class="mi">115200</span>
+
+<span class="c1"># sendCmdはちゃんとsleepで待つと有効</span>
+<span class="c1"># 速いFPSを使いたい場合はDISPを絞る</span>
+<span class="c1"># DISP=2: USBのみ (FPS=19でヌルヌル動く)</span>
+<span class="c1"># DISP=3: USBとLCD (FPS=5くらいにしないと途中で固まる)</span>
+<span class="c1"># UNITは1-9のときは UNIT mm刻みの画素値(1なら255で255mm)</span>
+<span class="c1"># UNITは10まで良いと書いてあるが10にすると0の挙動になる</span>
+<span class="c1"># UNIT=0のときは可視化重視モードでToFが近場の解像度が良いことから5.1*sqrt(x)らしい</span>
+<span class="n">QUANTIZE</span> <span class="o">=</span> <span class="mi">9</span> <span class="c1"># mm が 濃度値1</span>
+<span class="n">DISP</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">FPS</span><span class="o">=</span><span class="mi">19</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># init metasense</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">metasense</span> <span class="o">=</span> <span class="n">MetaSense</span><span class="p">(</span><span class="n">COM_PORT</span><span class="p">,</span> <span class="n">BASE_BARTRATE</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">metasense</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+                <span class="k">break</span>
+    <span class="n">metasense</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+DISP=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DISP</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+UNIT=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">QUANTIZE</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+FPS=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FPS</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">metasense</span><span class="o">.</span><span class="n">tof_data_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameID&#39;</span><span class="p">]</span>
+            <span class="n">frame_res</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span>
+            <span class="n">frame_data</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># Depth</span>
+            <span class="n">frame_data0</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># 疑似カラー用</span>
+
+            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
+
+            <span class="c1"># 濃度値100より遠いのは0 (UNIT=0のときは (th/5.1)^2 で，th=100で384mm)</span>
+            <span class="c1"># UNIT:1-9のときは th*UNIT mm</span>
+            <span class="n">th</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frame_data</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">th</span><span class="p">):</span> <span class="n">frame_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># convert frame data to image</span>
+            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># rotate image 180 degree</span>
+            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">color_img</span> <span class="o">=</span>  <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
+            <span class="n">th_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">color_img</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
+            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;frame0&quot;</span><span class="p">,</span> <span class="n">frame_img0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">th_img</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">metasense</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="n">exit</span><span class="p">()</span>
+</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/"><h3 class="article-title">Apple SiliconなマシンでROS2</h3></a>
 <h6 class="subheader" title="2024-07-10T21:20:00+09:00">2024-07-10(水)
 </h6>
@@ -63,33 +169,7 @@
 <li>python3はHomebrewに限らず3.12を入れてるとハマるが3.11ならvenvでも問題なし</li>
 <li>/usr/local/libに余計なx86_64なdylibがあるとそっちを拾ってくるのでM1登場初期にbrew86を運用していた人は全部消した方が良い</li>
 <li>途中でよくわからんがfastcdrでコケるがbuildの中に入ってmake installして再度workspaceのビルドをかけると通る</li>
-<li>ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた)</li>
-</ul>
-<p>ちなみにhomebrewでpython3.12を消すとvimが使えなくなる(大損害)。問題なのはCMakeが呼ばれたとき(見境なくPython3.12を拾ってくる)なので，ビューワとかトピック監視用途とかで割り切ってしまうか，colcon buildの度に3.12とQt6を消せばたぶん使える。</p>
-<p>ビルドの最中何度かコケるが</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>build/fastcdr
-make
-make<span class="w"> </span>install
-<span class="nb">cd</span><span class="w"> </span>../fastrtps
-make<span class="w"> </span>-j8
-make<span class="w"> </span>install
-<span class="nb">cd</span><span class="w"> </span>../..
-</code></pre></div>
-
-<p>でまたビルドのコマンドを投げると通る。</p>
-<p>あとrosbag2_pyの<code>src/ros2/rosbag2/rosbag2_py/src/rosbag2_py/_reader.cpp</code>でコケるが</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb nb-Type">void</span><span class="w"> </span><span class="n">open</span><span class="p">(</span>
-<span class="w">    </span><span class="n">rosbag2_storage</span><span class="p">::</span><span class="n">StorageOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">storage_options</span><span class="p">,</span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">rosbag2_cpp</span><span class="p">::</span><span class="n">ConverterOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">converter_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rosbag2_cpp</span><span class="p">::</span><span class="n">ConverterOptions</span><span class="p">())</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="n">reader_</span><span class="o">-&gt;</span><span class="n">open</span><span class="p">(</span><span class="n">storage_options</span><span class="p">,</span><span class="w"> </span><span class="n">converter_options</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-</code></pre></div>
-
-<p>のようにconstを追加すると通る。</p>
-<p>で，一通り入るがGazeboは別。あとcv_bridgeをビルドしようとするとOpenCV-&gt;boost-python(homebrewはpython3.12用)と芋蔓式に面倒臭さが増えていくので諦める。</p>
-<p>ROS_MASTER_URIとROS_IPさえちゃんと設定しておけばRaspberry Pi OSで<a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">MaixSense A010</a>なる100x100のToF Depthカメラでpublishしてるのを受け取れた。</p>
-<p>(ドキュメントにあるようにtopicで追加でPointCloud2とかImageとかでTFをtofにする)</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+<li>ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/ros2.html">ROS2 </a>
@@ -98,11 +178,9 @@ make<span class="w"> </span>install
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -326,31 +404,9 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/"><h3 class="article-title">Windows11 Edu.でのローカルID</h3></a>
-<h6 class="subheader" title="2023-02-15T19:20:00+09:00">2023-02-15(水)
-</h6>
-
-
-<h3>初見殺しのWindows11</h3>
-<p>Windows11は初期セットアップではMicrosoft Accountがないと無理矢理作らされるが，その後はネット切断してから「設定」でアカウント追加を実行すればローカルアカウントが作れる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/15/Windows11LocalAccount/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 1 of 20</h6>
+<h6 class="subheader">Page 1 of 21</h6>
 
 <p>
 

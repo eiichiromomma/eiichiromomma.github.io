@@ -5,36 +5,43 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/</loc>
-<lastmod>2024-07-11T08:38:33-00:00</lastmod>
+<lastmod>2024-07-13T23:14:45-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tags.html</loc>
-<lastmod>2024-07-11T08:38:33-00:00</lastmod>
+<lastmod>2024-07-13T23:14:45-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/categories.html</loc>
-<lastmod>2024-07-11T08:38:33-00:00</lastmod>
+<lastmod>2024-07-13T23:14:45-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/authors.html</loc>
-<lastmod>2024-07-11T08:38:33-00:00</lastmod>
+<lastmod>2024-07-13T23:14:45-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/archives.html</loc>
-<lastmod>2024-07-11T08:38:33-00:00</lastmod>
+<lastmod>2024-07-13T23:14:45-00:00</lastmod>
 <changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2024/07/13/MetaSense/</loc>
+<lastmod>2024-07-13T19:20:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -1454,7 +1461,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/category/wiki.html</loc>
-<lastmod>2024-07-10T21:20:00+09:19</lastmod>
+<lastmod>2024-07-13T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1481,6 +1488,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://eiichiromomma.github.io/tag/python.html</loc>
+<lastmod>2024-07-13T19:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://eiichiromomma.github.io/tag/ros2.html</loc>
 <lastmod>2024-07-10T21:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
@@ -1490,13 +1504,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://eiichiromomma.github.io/tag/apple-silicon.html</loc>
 <lastmod>2024-07-10T21:20:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/python.html</loc>
-<lastmod>2024-06-19T20:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1811,7 +1818,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/author/momma.html</loc>
-<lastmod>2024-07-10T21:20:00+09:19</lastmod>
+<lastmod>2024-07-13T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

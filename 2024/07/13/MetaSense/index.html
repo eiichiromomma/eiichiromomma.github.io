@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
-    <title>CVMLAB Blog - Python</title>
+    <title>PythonとMaixSense A010</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/" rel="bookmark"
+        title="Permalink to PythonとMaixSense A010">PythonとMaixSense A010</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/"><h3 class="article-title">PythonとMaixSense A010</h3></a>
 <h6 class="subheader" title="2024-07-13T19:20:00+09:00">2024-07-13(土)
 </h6>
 
 
-<h3>MaixSense A010 ToFセンサーの続き</h3>
+    <h3>MaixSense A010 ToFセンサーの続き</h3>
 <p>ROS2で使ってみた<a href="https://www.marutsu.co.jp/pc/i/43360161/">マルツで売ってる格安100x100 ToF</a> (Switch Scienceは売り切れ)を今度はPythonで動かす。</p>
 <ul>
 <li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">技術情報</a></li>
@@ -138,227 +139,8 @@ LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="n">metasense</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
         <span class="n">exit</span><span class="p">()</span>
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-            </article>
-
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/19/NumPy2/"><h3 class="article-title">NumPy 2.0</h3></a>
-<h6 class="subheader" title="2024-06-19T20:20:00+09:00">2024-06-19(水)
-</h6>
-
-
-<h3>NumPy 2.0の混入</h3>
-<p>2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
-依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しよ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/19/NumPy2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/"><h3 class="article-title">WindowsでのオススメのPython環境 2024版</h3></a>
-<h6 class="subheader" title="2024-06-05T20:20:00+09:00">2024-06-05(水)
-</h6>
-
-
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/"><h3 class="article-title">Windows11+WSL2+WSLg+Docker</h3></a>
-<h6 class="subheader" title="2024-06-05T08:20:00+09:00">2024-06-05(水)
-</h6>
-
-
-<h3>WSL2関係のまとめ</h3>
-<p>WSL2関連で色々様変りしていたので<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
-<ul>
-<li><a href="https://docs.docker.com/desktop/gpu/">Docker DesktopでのGPUサポート</a> (NVIDIA Docker toolkitは不要)</li>
-<li>WindowsのCUDAドライバ関係が入ってれば<a href="https://docs.nvidia.com/cuda/wsl-user-guide/index.html">WSL2用のLinuxドライバは不要</a></li>
-</ul>
-<h3>WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)</h3>
-<p><a href="https://zenn.dev/h4m4chi/articles/8627893de9cdc5">ここの記事</a>の手順で解決。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/"><h3 class="article-title">Windows+WSL2でGithubで配布されてるものを試す環境構築</h3></a>
-<h6 class="subheader" title="2023-06-21T19:20:00+09:00">2023-06-21(水)
-</h6>
-
-
-<p>※この情報は古いです。<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
-<h3>1. WSL2のインストール</h3>
-<p><a href="https://learn.microsoft.com/ja-jp/windows/wsl/install">Microsoftのサイト</a>の説明に従いWSL2を入れる。</p>
-<p>PowerShellを管理者権限で起動して</p>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
 </code></pre></div>
-
-<p>ここでWSLは既に入っていてディストリビューションがどうこうと出てきたら
-```PowerShell!
-wsl --install -d Ubuntu</p>
-<div class="highlight"><pre><span></span><code>として<span class="nv">Ubuntu</span>を入れる
-
-```<span class="nv">bash</span>
-<span class="nv">Ubuntu</span><span class="w"> </span>は既にインストー …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/05/25/WinVenv/"><h3 class="article-title">Windows環境でGitとvenvを使ってみる</h3></a>
-<h6 class="subheader" title="2023-05-25T19:20:00+09:00">2023-05-25(木)
-</h6>
-
-
-<p><a href="https://eiichiromomma.github.io/2023/05/21/WinPython/">前回のWindowsでのPython環境構築</a>をやった続き。</p>
-<h3>やること</h3>
-<ul>
-<li>gitコマンドを使ってGitHubからソースを持ってくる</li>
-<li>venvで専用の環境を作って動かす</li>
-</ul>
-<h3>Gitについて雑な説明</h3>
-<p>Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/25/WinVenv/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/05/21/WinPython/"><h3 class="article-title">WindowsでのオススメのPython環境</h3></a>
-<h6 class="subheader" title="2023-05-21T19:20:00+09:00">2023-05-21(日)
-</h6>
-
-
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/21/WinPython/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
-<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
-</h6>
-
-
-<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
-Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
-<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
-ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/colour-science/"><h3 class="article-title">colour-scienceで三刺激値のプロットとか</h3></a>
-<h6 class="subheader" title="2022-05-15T09:30:00+09:00">2022-05-15(日)
-</h6>
-
-
-<p>色彩工学・光学関係で便利そうな<a href="https://www.colour-science.org/">colour-science</a>なのだが，Tutorialに載ってないことをやろうとした途端に破綻する初見殺し。</p>
-<h3>等色関数のプロット</h3>
-<h4>一つだけプロットする場合</h4>
-<p><a href="https://colour.readthedocs.io/en/develop/generated/colour.MSDS_CMFS.html">colour.MSDS_CMFS</a>で定義されて …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -366,53 +148,8 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 
 
 
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/colour-science/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
 
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
-<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
-</h6>
-
-
-<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
-<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
-<h3>tex2imgの場合</h3>
-<p>PyPDF2でPDFファイルを開いてページを取得する。
-前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</code></pre></div>
-
-<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 2</h6>
-
-<p>
-
-        <a href="https://eiichiromomma.github.io/tag/python2.html">Next &raquo;</a>
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 
