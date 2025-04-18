@@ -63,9 +63,10 @@
 容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
 <p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
 <h3>Kegworksで動作確認したソフト</h3>
+<p>コツとしてはUsers以下にインストールさせると階層がややこしくなるので，基本的にAdmin権限が必要となるAll Users向けで<code>Program Files</code>にインストールさせると良い。</p>
 <ul>
 <li><a href="http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10</a></li>
-<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい)</li>
+<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい) ※All Usersを選び<code>C:/Program Files/ADI/LTspice/LTspice.exe</code>を使う</li>
 <li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
 <li><a href="https://hp.giesselink.com/v41.htm">V41</a> (追記)</li>
 <li>Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)</li>
