@@ -50,307 +50,73 @@
         
 
             <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/"><h3 class="article-title">WindowsでのオススメのPython環境 2024版</h3></a>
-<h6 class="subheader" title="2024-06-05T20:20:00+09:00">2024-06-05(水)
+                <a href="https://eiichiromomma.github.io/2025/04/18/Keworks/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
+<h6 class="subheader" title="2025-04-18T22:00:00+09:00">2025-04-18(金)
 </h6>
 
 
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決定的。macOSでもAnacondaではなく標準+pyenv+venvになってる。</p>
-<h3>1. Pythonのインストール</h3>
-<p><a href="https://www.python.org/downloads/windows/">公式の配布サイト</a>から3.11.xをダウンロードして実行。</p>
-<p>インストーラの画面は特に弄らずそのままInstall Nowを選ぶ。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython01.png" width="600"></p>
-<p>"Setup was successful"と出たらインストール完了。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython02.png" width="600"></p>
-<p>そのウィンドウに<em>Disable path length limit</em>という表示があったらそれを選択する。Windowsに限らず環境変数PATHという概念があり，そこに羅列したフォルダ内のプログラムはどこからでも呼び出せる，というOSの仕組みがある。macOSやUnixは問題ないのだが，Windowsは<code>C:\Program Files</code>または<code>C:\Program Files(x86)</code>みたいなアホ長いフォルダが標準的なインストール先なのでPATHに羅列しようとすると凄まじい長さになるのが明白にもかかわらず，環境変数に設定できるのが260文字までというアホな制限がある。それを回避する方法がこの選択肢。</p>
-<p>Windowsメニューの「すべてのアプリ」にPythonフォルダが出来ている。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython03.png" width="400"></p>
-<p>黒っぽいアイコンの<code>Python 3.xx(64-bit)</code>を選ぶとコマンドプロンプトの黒い画面が開き</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;
-</code></pre></div>
-
-<p>のような入力待ち(プロンプトと呼ぶ)になるので<code>quit()</code>と打って一旦終了させる。</p>
-<h3>2. パッケージのインストール</h3>
-<p>Windowsメニューの検索にcmdと打ってコマンドプロンプトを起動する。</p>
-<h4>pipのアップグレード</h4>
-<p>Pythonのインストール時にpy.exeというプログラムもインストールされていて，自動的に「今使うPython」を呼び出す仕組みになっている。Pythonはパッケージ(機能)を呼び出すときに</p>
-<div class="highlight"><pre><span></span><code>python -m パッケージ名 パッケージのオプション
-</code></pre></div>
-
-<p>とするか，パッケージによっては</p>
-<div class="highlight"><pre><span></span><code>パッケージ名 パッケージのオプション
-</code></pre></div>
-
-<p>のような感じで起動するのだが，後者はWindowsだと手間のかかるPathの設定が必要なので，py.exeと前者を組み合わせて使う。例えばよく</p>
-<div class="highlight"><pre><span></span><code>pip install -U pip
-</code></pre></div>
-
-<p>と実行しろと説明しているサイトが多いが，「パッケージ管理のpipを使ってpip自身をアップグレード(-U)しろ」というコマンドは</p>
-<div class="highlight"><pre><span></span><code>py -m pip install -U pip
-</code></pre></div>
-
-<p>と書く(.exeは付けなくて良い)。ということでまずは↑のコマンドをコマンドプロンプトで実行してpipをアップグレードする</p>
-<h4>基本環境の作成 (venv)</h4>
-<p>Pythonのパッケージでインストールするもののなかで，<code>py ナントカ</code>ではなく<code>ナントカ</code>のようにコマンドとしてインストールされるものもあるが，それを有効にするには<code>C:\Users\username\AppData\Local\Programs\Python\Python311\Scripts</code>のような環境依存の場所へのPathの設定が必要になる。その代わりにvenvで基本環境も仮想環境として作成してしまう。</p>
-<p>ここではAnacondaを真似てbaseにすると紛らわしいのでdefaultという名前の仮想環境を作る。</p>
-<div class="highlight"><pre><span></span><code>py -m venv default
-</code></pre></div>
-
-<p><strong>以後，Pythonを使うときにはコマンドプロンプトを開き</strong></p>
-<div class="highlight"><pre><span></span><code>default\Scripts\activate
-</code></pre></div>
-
-<p><strong>を必ず実行してから使う。</strong></p>
-<p><code>(default) C:\Users\username&gt;</code>みたいなプロンプトになる。
-これの利点はactivateを実行するとその仮想環境のScriptsにPathが通ることで，たとえばipythonをインストールした後で</p>
-<div class="highlight"><pre><span></span><code>py -m IPython
-</code></pre></div>
-
-<p>とせずに</p>
-<div class="highlight"><pre><span></span><code>ipython
-</code></pre></div>
-
-<p>で起動できる。※まだインストールしてない
-(ipythonがScriptsにインストールされる)</p>
-<h4>無難なパッケージのインストール</h4>
-<p>何をやるにしろあった方が便利なものを一通り入れておく。コマンドプロンプトに以下をコピペする。(^は長いコマンドに途中改行させる方法)</p>
-<div class="highlight"><pre><span></span><code>py -m pip install jupyter notebook ipython opencv-python ^
- opencv-contrib-python numpy scipy scikit-image scikit-learn ^
- pillow pandas matplotlib seaborn mediapy pyqt5 ^
- qtconsole jupyterlab
-</code></pre></div>
-
+<p>※WineskinServerが知らぬ間にKegworksになってた</p>
+<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Kegworks-App/Kegworks">Kegworks</a>が使いやすかった。
+講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。</p>
+<p>Kegworksは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
+<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
+<h3>Kegworksで動作確認したソフト</h3>
 <ul>
-<li>ipython: 普通のpythonより親切なPythonインタプリタIPython</li>
-<li>jupyter: NotebookとLabで使うエンジン</li>
-<li>jupyterlab: Jupyter Lab。MATLABっぽいNotebook+コマンド+インタプリタな何でもあり版な開発環境</li>
-<li>matplotlib: グラフや画像の表示に使う可視化</li>
-<li>mediapy: Notebookで画像や動画を楽に表示できる</li>
-<li>notebook: Jupyter Notebookというブラウザベースで動くPythonの開発環境(ノートを取りながらPythonを実行できるので人気)</li>
-<li>numpy: 行列演算ライブラリ</li>
-<li>opencv-python: コンピュータビジョンライブラリOpenCV</li>
-<li>opencv-contrib-python: OpenCVの正式版には含まれていない機能の追加</li>
-<li>scipy: 科学技術系ライブラリ</li>
-<li>scikit-image: SciPy toolkit=scikitでscipyのサブモジュールの一つで画像処理関係</li>
-<li>scikit-learn: scipyのサブモジュールの一つで機械学習関係</li>
-<li>pandas: データ解析でR言語っぽい動きをする</li>
-<li>pillow: PIL(Python Imaging Library)という古くからある画像処理ライブラリから派生した現代版で呼び出しはPILとして互換性が保てる</li>
-<li>pyqt5: Qt(キュート(Cute)と読む)のPython版でなぜかパイキューティーと読まれる。GUIアプリのベースとなるものでqtconsoleで使う</li>
-<li>qtconsole: コマンドプロンプトでもIPythonは使えるが，こっちだと画像が表示できる。</li>
-<li>seaborn: 可視化でmatplotlibよりダサくない</li>
+<li><a href="http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10</a></li>
+<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい)</li>
+<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
+<li><a href="https://hp.giesselink.com/v41.htm">V41</a> (追記)</li>
+<li>Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)</li>
+<li>キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)</li>
 </ul>
-<p>が入れるもの。</p>
-<p><code>default\Scripts</code>フォルダには下記がインストールされる。</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">username</span>\<span class="n">default</span>\<span class="n">Scripts</span><span class="w"> </span><span class="err">のディレクトリ</span>
-
-<span class="p">[</span><span class="o">.</span><span class="p">]</span><span class="w">                        </span><span class="p">[</span><span class="o">..</span><span class="p">]</span><span class="w">                       </span><span class="n">activate</span><span class="w">                   </span><span class="n">activate</span><span class="o">.</span><span class="n">bat</span>
-<span class="n">Activate</span><span class="o">.</span><span class="n">ps1</span><span class="w">               </span><span class="n">deactivate</span><span class="o">.</span><span class="n">bat</span><span class="w">             </span><span class="n">f2py</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">fonttools</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">httpx</span><span class="o">.</span><span class="n">exe</span><span class="w">                  </span><span class="n">imageio_download_bin</span><span class="o">.</span><span class="n">exe</span><span class="w">   </span><span class="n">imageio_remove_bin</span><span class="o">.</span><span class="n">exe</span><span class="w">     </span><span class="n">ipython</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">ipython3</span><span class="o">.</span><span class="n">exe</span><span class="w">               </span><span class="n">jlpm</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">jsonpointer</span><span class="w">                </span><span class="n">jsonschema</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">jupyter</span><span class="o">-</span><span class="n">console</span><span class="o">.</span><span class="n">exe</span><span class="w">        </span><span class="n">jupyter</span><span class="o">-</span><span class="n">dejavu</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">events</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">execute</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">jupyter</span><span class="o">-</span><span class="n">kernel</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">kernelspec</span><span class="o">.</span><span class="n">exe</span><span class="w">     </span><span class="n">jupyter</span><span class="o">-</span><span class="n">lab</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">jupyter</span><span class="o">-</span><span class="n">labextension</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">jupyter</span><span class="o">-</span><span class="n">labhub</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">migrate</span><span class="o">.</span><span class="n">exe</span><span class="w">        </span><span class="n">jupyter</span><span class="o">-</span><span class="n">nbconvert</span><span class="o">.</span><span class="n">exe</span><span class="w">      </span><span class="n">jupyter</span><span class="o">-</span><span class="n">notebook</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">jupyter</span><span class="o">-</span><span class="n">qtconsole</span><span class="o">.</span><span class="n">exe</span><span class="w">      </span><span class="n">jupyter</span><span class="o">-</span><span class="n">run</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">jupyter</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">exe</span><span class="w">         </span><span class="n">jupyter</span><span class="o">-</span><span class="n">troubleshoot</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">jupyter</span><span class="o">-</span><span class="n">trust</span><span class="o">.</span><span class="n">exe</span><span class="w">          </span><span class="n">jupyter</span><span class="o">.</span><span class="n">exe</span><span class="w">                </span><span class="n">lsm2bin</span><span class="o">.</span><span class="n">exe</span><span class="w">                </span><span class="n">normalizer</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">pip</span><span class="o">.</span><span class="n">exe</span><span class="w">                    </span><span class="n">pip3</span><span class="o">.</span><span class="mf">11.</span><span class="n">exe</span><span class="w">                </span><span class="n">pip3</span><span class="o">.</span><span class="n">exe</span><span class="w">                   </span><span class="n">pybabel</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">pyftmerge</span><span class="o">.</span><span class="n">exe</span><span class="w">              </span><span class="n">pyftsubset</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pygmentize</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pyjson5</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">pylupdate5</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">pyrcc5</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">python</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">pythonw</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">pyuic5</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="n">pywin32_postinstall</span><span class="o">.</span><span class="n">py</span><span class="w">     </span><span class="n">pywin32_testall</span><span class="o">.</span><span class="n">py</span><span class="w">         </span><span class="n">qtpy</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">send2trash</span><span class="o">.</span><span class="n">exe</span><span class="w">             </span><span class="n">tiff2fsspec</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">tiffcomment</span><span class="o">.</span><span class="n">exe</span><span class="w">            </span><span class="n">tifffile</span><span class="o">.</span><span class="n">exe</span>
-<span class="n">ttx</span><span class="o">.</span><span class="n">exe</span><span class="w">                    </span><span class="n">wsdump</span><span class="o">.</span><span class="n">exe</span><span class="w">                 </span><span class="p">[</span><span class="n">__pycache__</span><span class="p">]</span>
-</code></pre></div>
-
-<p>pip, ipython,jupyter-*あたりがよく使いそうなもの。</p>
-<h3>3. IPythonを使ってみる</h3>
-<div class="highlight"><pre><span></span><code>ipython
-</code></pre></div>
-
-<p>で起動する。exit, quitで終了できる(標準のインタプリタと異なり括弧()が要らない)</p>
-<p>ちなみに</p>
-<div class="highlight"><pre><span></span><code>py -m IPython
-</code></pre></div>
-
-<p>のようにPythonのモジュールとしてインストールされるものはScripts内のコマンドを使わなくてもpyに-mを付けてモジュール名を指定すれば使える(quitで終了)</p>
-<h4>%edit とエディタの変更</h4>
-<p>IPythonで</p>
-<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">edit</span> <span class="n">hello</span><span class="o">.</span><span class="n">py</span>
-</code></pre></div>
-
-<p>のように<code>%edit</code>の後にファイル名を付けるとMagicコマンドでエディタが起動して，エディタを閉じるとそのファイルが実行される。
-デフォルトはnotepad(メモ帳)で微妙な使い心地なので変更したい場合は下記のようにする。</p>
-<p>Windowsメニューから使いたいエディタのアイコンを右クリックして「詳細」→「ファイルの場所を開く」を選ぶ。ショートカットが置かれた場所のエクスプローラーが開くので，そのアイコンを右クリックして「プロパティ」を選ぶ。「リンク先」をコピーしておく。</p>
-<p>コマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><code>ipython profile create
-</code></pre></div>
-
-<p>と打つと</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="n">ProfileCreate</span><span class="o">]</span><span class="w"> </span><span class="n">Generating</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="k">file</span><span class="err">:</span><span class="w"> </span><span class="n">WindowsPath</span><span class="p">(</span><span class="s1">&#39;C:/Users/username/.ipython/profile_default/ipython_config.py&#39;</span><span class="p">)</span>
-<span class="o">[</span><span class="n">ProfileCreate</span><span class="o">]</span><span class="w"> </span><span class="n">Generating</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="k">file</span><span class="err">:</span><span class="w"> </span><span class="n">WindowsPath</span><span class="p">(</span><span class="s1">&#39;C:/Users/username/.ipython/profile_default/ipython_kernel_config.py&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>と表示されるので最初の方を編集する。これもコマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><code>notepad .ipython\profile_default\ipython_config.py
-</code></pre></div>
-
-<p>と打つ。するとIPythonの設定ファイルが開くので，editorという単語を検索する。このファイルは#が先頭にあるとコメントアウトされた状態なので，そこを編集する。</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># c.TerminalInteractiveShell.editor = &#39;notepad&#39;</span>
-</code></pre></div>
-
-<p>とある<code>'notepad'</code>のところにさっきコピーしたリンク先を貼り付け，先頭の#とスペースを消してからバックスラッシュか￥を半角のスラッシュ<code>/</code>に書き換える。</p>
-<div class="highlight"><pre><span></span><code><span class="n">c</span><span class="o">.</span><span class="n">TerminalInteractiveShell</span><span class="o">.</span><span class="n">editor</span> <span class="o">=</span> <span class="s2">&quot;C:/Users/username/AppData/Local/Programs/Microsoft VS Code/Code.exe&quot;</span>
-</code></pre></div>
-
-<p>のような感じになる。「ファイル」「保存」して再びコマンドプロンプトでIPythonを起動してから</p>
-<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">edit</span> <span class="n">hello</span><span class="o">.</span><span class="n">py</span>
-</code></pre></div>
-
-<p>でvscodeが開くので</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>とでも書いて保存してvscodeを終了すると，IPython上で実行される。</p>
-<h4>QtConsole</h4>
-<p>qtconsoleの方が応用が効くので</p>
-<div class="highlight"><pre><span></span><code>jupyter-qtconsole
-</code></pre></div>
-
-<p>とすると、QtのUIを使ったIPythonが使える。ただし、mediapyのshow_*はインライン表示に使えないのでmatplotlibのimshowを使う必要がある。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span>
- <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>で入手したファイルをインライン表示するには</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>とする。(matplotlibを使った場合)</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PIL</span>
-<span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>も表示できる。(PILを使った場合)</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython05.png" width="600"></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だとIPythonかJupyter Notebook専用になるが表示できる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython07.png" width="600"></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
-<span class="n">display</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p>だとndarrayと見做されて生データがドバーっと出る。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython06.png" width="600"></p>
-<p>IPython同様にquitでウィンドウが閉じる。</p>
-<p>これもデフォルトのエディタの設定がnotepadになっているので変更が必要で，コマンドプロンプトで</p>
-<div class="highlight"><pre><span></span><code>jupyter-qtconsole --generate-config
-</code></pre></div>
-
-<p>で設定ファイルを <code>.jupyter\jupyter_qtconsole_config.py</code> に生成できるのだが，<code>c.JupyterWidget.editor = 'notepad'</code>を弄っても反映されない。</p>
-<h3>4. Jupyter Notebookを使ってみる</h3>
-<p>コマンドプロンプトでJupyter Notebookのサーバーを起動する命令なのだがデフォルトでそのページを開くようOSに命令を出すのでブラウザが起動する。</p>
+<h3>Kegworksの導入</h3>
 <ol>
-<li>コマンドプロンプトを起動</li>
-<li>Jupyter Notebookのサーバーを起動</li>
-<li>色々作業</li>
-<li>Notebookで「閉じて終了」を選ぶ</li>
-<li>コマンドプロンプトでCtrl+Cを2回入力してサーバーを停止</li>
+<li>Homebrewでインストール</li>
 </ol>
-<p>という流れになる。当たり前だがブラウザが開いた後にコマンドプロンプトを閉じると使えなくなるので注意。</p>
-<div class="highlight"><pre><span></span><code>jupyter-notebook
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>upgrade
+brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>--no-quarantine<span class="w"> </span>Kegworks-App/kegworks/kegworks
 </code></pre></div>
 
-<p>でブラウザが起動しJupyter Notebookが使える。
-<code>New</code>ボタンを押すと<code>Python3</code>が出るので選択するとNotebookが新規作成される。</p>
-<p>Notebookはセルという単位で分割されていて，セルにはコードセルとMarkdownセルがある(Markdownは<a href="https://ja.wikipedia.org/wiki/Markdown">Wikipedia</a>とかを参照)。</p>
-<p>Markdownで説明を書き，その下にコードセルでPythonプログラムを書くような流れで「実験ノート」が作れる。Markdownの表示やコードの実行はCtrl+EnterまたはShift+Enter。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-<span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;https://www.python.org/static/img/python-logo@2x.png&#39;</span><span class="p">,</span> <span class="s1">&#39;python-logo.png&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">mediapy</span> <span class="k">as</span> <span class="nn">media</span>
-<span class="n">media</span><span class="o">.</span><span class="n">show_image</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;python-logo.png&#39;</span><span class="p">))</span>
-</code></pre></div>
-
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython04.png" width="600"></p>
-<p>保存した後で，ブラウザのJupyter Notebookで<code>Save</code>で保存してから<code>Close and Halt</code>でタブを閉じる(ブラウザのタブを閉じてもPythonのプロセスは停止してくれない。ファイル一覧で緑色のアイコンがそれを意味する)。
-その後<code>File</code>-&gt;<code>Shut down</code>を選ぶか，コマンドプロンプトで「Ctrl+C」を打ってJupyter Notebookのサーバーを終了させる。</p>
-<p>ちなみに保存されるのは<code>.ipynb</code>(IPython Notebookと名乗っていた時代の名残り)という拡張子のファイルで，Visual Studio CodeやGoogle Colaboratoryでも開ける。</p>
-<p><code>New</code>ボタンでは<code>Text File</code>を選ぶとテキストエディタとなり，テキストエディタの<code>File-Rename</code>で.py付きのファイル名(例えばHello.py)にするとPython用のハイライト表示エディタになる。また，<code>New</code>から<code>Terminal</code>を選ぶとコマンドプロンプトの親戚のようなPower Shellが開くので，.pyファイルを編集して</p>
-<div class="highlight"><pre><span></span><code>py なんとか.py
-</code></pre></div>
-
-<p>みたいにPythonスクリプトを実行できる。</p>
-<h3>5. Jupyter Labを使ってみる</h3>
-<p>Notebookと同じノリで起動する。Notebookだとエディタもターミナルもブラウザの別タブになって鬱陶しいが，Jupyter Labは一つのウィンドウに収まる。</p>
-<p>サーバーとして起動するのはNotebookと同様で，</p>
-<div class="highlight"><pre><span></span><code>jupyter-lab
-</code></pre></div>
-
-<p>でブラウザが開き、JupyterLabが表示される。JupyterLabはJupyter Notebookの豪華版という感じで、</p>
-<ul>
-<li>Notebookでのプログラミング</li>
-<li>IPythonでのコマンド実行</li>
-<li>.pyファイルを使ったプログラミング</li>
-<li>ターミナルでの作業(WindowsだとPowershellがデフォルト)</li>
-</ul>
-<p>が可能。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/2023WinPython08.png" width="600"></p>
-<p>とりあえずの開発環境としてはこれが無難。</p>
-<h3>6. その他</h3>
-<h4>(あくまでもWindowsのマシンで)PythonをLinuxで動かす</h4>
-<p>WindowsでPython(特に外部パッケージ)を扱うのは今はだいぶ良くなったとはいえ「動いたらラッキー。動かなかったらがんばりましょう」という認識でいた方が良い。できればUbuntu等のLinux系を使う方がトラブルが少ないので，もう少し凝った使い方としては以下がある。</p>
-<p>特に深層学習フレームワークを使う場合にはLinux系OSで扱う場合が殆どなので今のうちから慣れておくと良い。</p>
-<ul>
-<li>WSL2</li>
-<li>Windows Subsystem for Linuxの略称で，Microsoftが提供していて，Winodws上でまんまLinuxが動くので，Ubuntu等のPython利用の解説がまんま使える</li>
-<li>NVIDIAがCUDA Driverも出してるのでNVIDIAのGPUを積んだマシンならWSL2上でTensorflowとかPyTorchが使える</li>
-<li>WSL2+Docker</li>
-<li>様々な環境を搭載したコンテナを拾ってきて直ぐに試せるうえにVMと違ってディスク容量をそこまで圧迫しない</li>
-<li>WSL2+Docker+VSCode</li>
-<li><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>はMicrosoft製のテキストエディタだが，拡張機能でコンテナ上の開発環境を使ってプログラミング，とかが楽にできる。</li>
-<li>VSCodeに慣れると，リモートホスト上のDockerコンテナ上で開発。のようなことも出来る。</li>
-</ul>
-<h4>他のバージョンのPython</h4>
-<p>LinuxやmacOSの場合はpyenvという便利な解決法があるのだが，Windowsの場合案外面倒そうなので素直に特定のマイナーバージョンのインストーラをPython.orgから持ってくるのが楽。その上で，</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=バージョン
-</code></pre></div>
-
-<p>を指定すると，そのコマンドプロンプト上では以後py.exeが勝手にそっちのバージョンを使ってくれる。例えば，3.11と3.10を入れている場合</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.10
-</code></pre></div>
-
-<p>と打てば以降3.10.xが使え，</p>
-<div class="highlight"><pre><span></span><code>set PY_PYTHON=3.11
-</code></pre></div>
-
-<p>とすれば3.11.xが使える。</p>
-<h4>仮想環境</h4>
-<p>ある特定のバージョンのopencv-pythonが必要だが，普段は最新のopencv-pythonを使いたい。とか，requirements.txtで指定されている環境を作りたい。とか，Pythonでのパッケージのバージョン環境は簡単に崩壊する。特に深層学習フレームワークについては後方互換性をバッサリ切っているものが多いので，色々試したい場合には環境を変えて作業した方が安全。</p>
-<p>安全な解決方法は</p>
-<ul>
-<li>作業ごとにPCを用意する</li>
-<li>作業ごとにDockerでコンテナを作る</li>
-</ul>
-<p>とかなのだが，Pythonの環境だけ切り替えて使える機能が仮想環境である。condaとかvirtualenvとかがよく使われてきたが，最近は公式のvenvを使うのがトレンドらしい。</p>
-<p>自分が作業をするフォルダで</p>
-<div class="highlight"><pre><span></span><code>py -m venv 仮想環境名
-</code></pre></div>
-
-<p>と打つと，「仮想環境名」のフォルダが出来る。そこのScriptsフォルダに<code>activate.bat</code>があるのでそれを実行する(PowerShellの場合はActivate.ps1)。上の方で基本環境としてdefaultという名前で作成したが，別の開発環境として例えばvenvHelloみたいな名前にすると，</p>
-<div class="highlight"><pre><span></span><code>py -m venv venvHello
-venvHello\Scripts\activate
-</code></pre></div>
-
-<p>と打つと，プロンプトの頭に(venvHello)のように仮想環境名が表示されるので，あとはpipなりで環境構築すれば良い。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<ol>
+<li>Kegworks Wineryがアプリケーションにあるので起動</li>
+<li>"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
+<li>Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする</li>
+</ol>
+<p>これで本体の導入は終わり。</p>
+<h3>Wrapperの作成</h3>
+<p>KegworksはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。</p>
+<ol>
+<li>Kegworks Wineryを起動</li>
+<li>"Create New Blank Wrapper"を選ぶ</li>
+<li>Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
+<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Kegworks"フォルダがあるのでそれを開く</li>
+<li>3で指定した名前のアプリを開く(アイコンはKegworksという茶色いもの)</li>
+<li>"Advanced"を選ぶ</li>
+<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
+<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
+<li>" Winetricks Commands Finished!!"と出たらClose</li>
+<li>左下の"Install Software"を選ぶ</li>
+<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)</li>
+<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
+</ol>
+<p>6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Kegworks"アプリがあるのでそれを実行する。</p>
+<h3>字が小さい</h3>
+<p>KegworksのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。</p>
+<h3>アプリ(Kegworks Wrapper)を消したい</h3>
+<p>システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
+<h3>アイコンを変えたい場合</h3>
+<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
     <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
+    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
+    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
+    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
+    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
+    <a href="https://eiichiromomma.github.io/tag/kegworks.html">Kegworks </a>
 </p>
 
 
@@ -360,6 +126,29 @@ venvHello\Scripts\activate
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/"><h3 class="article-title">WindowsでのオススメのPython環境 2024版</h3></a>
+<h6 class="subheader" title="2024-06-05T20:20:00+09:00">2024-06-05(水)
+</h6>
+
+
+<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
+<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 

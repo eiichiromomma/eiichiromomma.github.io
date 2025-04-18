@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-07-13T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>PythonとMaixSense A010</title><link href="https://eiichiromomma.github.io/2024/07/13/MetaSense/" rel="alternate"></link><published>2024-07-13T19:20:00+09:00</published><updated>2024-07-13T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-07-13:/2024/07/13/MetaSense/</id><summary type="html">&lt;h3&gt;MaixSense A010 ToFセンサーの続き&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2025-04-18T22:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>M1 MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2025/04/18/Keworks/" rel="alternate"></link><published>2025-04-18T22:00:00+09:00</published><updated>2025-04-18T22:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2025-04-18:/2025/04/18/Keworks/</id><summary type="html">&lt;p&gt;※WineskinServerが知らぬ間にKegworksになってた&lt;/p&gt;
+&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Kegworks-App/Kegworks"&gt;Kegworks&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;※WineskinServerが知らぬ間にKegworksになってた&lt;/p&gt;
+&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Kegworks-App/Kegworks"&gt;Kegworks&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
+&lt;p&gt;Kegworksは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;Kegworksで動作確認したソフト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/v41.htm"&gt;V41&lt;/a&gt; (追記)&lt;/li&gt;
+&lt;li&gt;Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)&lt;/li&gt;
+&lt;li&gt;キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Kegworksの導入&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Homebrewでインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;upgrade
+brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--cask&lt;span class="w"&gt; &lt;/span&gt;--no-quarantine&lt;span class="w"&gt; &lt;/span&gt;Kegworks-App/kegworks/kegworks
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Kegworks Wineryがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;これで本体の導入は終わり。&lt;/p&gt;
+&lt;h3&gt;Wrapperの作成&lt;/h3&gt;
+&lt;p&gt;KegworksはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Kegworks Wineryを起動&lt;/li&gt;
+&lt;li&gt;"Create New Blank Wrapper"を選ぶ&lt;/li&gt;
+&lt;li&gt;Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)&lt;/li&gt;
+&lt;li&gt;暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Kegworks"フォルダがあるのでそれを開く&lt;/li&gt;
+&lt;li&gt;3で指定した名前のアプリを開く(アイコンはKegworksという茶色いもの)&lt;/li&gt;
+&lt;li&gt;"Advanced"を選ぶ&lt;/li&gt;
+&lt;li&gt;"Tools"タブを選び"Winetricks"ボタンを押す&lt;/li&gt;
+&lt;li&gt;Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ&lt;/li&gt;
+&lt;li&gt;" Winetricks Commands Finished!!"と出たらClose&lt;/li&gt;
+&lt;li&gt;左下の"Install Software"を選ぶ&lt;/li&gt;
+&lt;li&gt;インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)&lt;/li&gt;
+&lt;li&gt;最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Kegworks"アプリがあるのでそれを実行する。&lt;/p&gt;
+&lt;h3&gt;字が小さい&lt;/h3&gt;
+&lt;p&gt;KegworksのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。&lt;/p&gt;
+&lt;h3&gt;アプリ(Kegworks Wrapper)を消したい&lt;/h3&gt;
+&lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
+&lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="Apple Silicon"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="Kegworks"></category></entry><entry><title>PythonとMaixSense A010</title><link href="https://eiichiromomma.github.io/2024/07/13/MetaSense/" rel="alternate"></link><published>2024-07-13T19:20:00+09:00</published><updated>2024-07-13T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-07-13:/2024/07/13/MetaSense/</id><summary type="html">&lt;h3&gt;MaixSense A010 ToFセンサーの続き&lt;/h3&gt;
 &lt;p&gt;ROS2で使ってみた&lt;a href="https://www.marutsu.co.jp/pc/i/43360161/"&gt;マルツで売ってる格安100x100 ToF&lt;/a&gt; (Switch Scienceは売り切れ)を今度はPythonで動かす。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html"&gt;技術情報&lt;/a&gt;&lt;/li&gt;
@@ -3819,11 +3873,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/CIMG2284.jpg" width="600"&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>隅田川からの夜景</title><link href="https://eiichiromomma.github.io/2016/10/14/%E9%9A%85%E7%94%B0%E5%B7%9D%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%9C%E6%99%AF/" rel="alternate"></link><published>2016-10-14T20:43:00+09:00</published><updated>2016-10-14T20:43:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-10-14:/2016/10/14/隅田川からの夜景/</id><content type="html">&lt;p&gt;照明学会東京支部で企画・開催した見学会です。&lt;/p&gt;
 &lt;p&gt;[cardboard id="516"]&lt;/p&gt;
 &lt;p&gt;&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/02/SDIM1008.jpg" width="600"&gt;
-&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/02/SDIM1021.jpg" width="600"&gt;&lt;/p&gt;</content><category term="News"></category></entry><entry><title>研究室見学の受付時間について2016</title><link href="https://eiichiromomma.github.io/2016/09/20/%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%A6%8B%E5%AD%A6%E3%81%AE%E5%8F%97%E4%BB%98%E6%99%82%E9%96%93%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A62016/" rel="alternate"></link><published>2016-09-20T21:46:00+09:00</published><updated>2016-09-20T21:46:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-09-20:/2016/09/20/研究室見学の受付時間について2016/</id><summary type="html">&lt;p&gt;仮配属の季節になりました。下記が研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u …&lt;/p&gt;</summary><content type="html">&lt;p&gt;仮配属の季節になりました。下記が研究室見学並びに質問の受付時間です。希望する方は下記日時に8号館812室へ来て下さい。事前に momma.eiichiro\@nihon-u.ac.jp まで連絡貰えると助かります。下記以外で希望する場合には必ずメールで事前に連絡をお願いします。&lt;/p&gt;
-&lt;p&gt;9/24(土) 15:00-17:00&lt;br&gt;
-9/26(月) 15:00-16:30&lt;br&gt;
-9/29(木) 15:00-17:00&lt;br&gt;
-10/1(土) 12:00-13:00, 15:00-17:00&lt;br&gt;
-10/3(月) 15:00-16:30&lt;br&gt;
-10/6(木) 15:00-17:00&lt;br&gt;
-※ 時間は急用により変更する可能性があるので小まめにこのページを確認をして下さい&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;img alt="None" class="alignnone" src="http://www.cvm.ele.cst.nihon-u.ac.jp/wp/wp-content/uploads/2017/02/SDIM1021.jpg" width="600"&gt;&lt;/p&gt;</content><category term="News"></category></entry></feed>

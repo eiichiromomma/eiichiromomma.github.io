@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2024-07-13T19:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>PythonとMaixSense A010</title><link href="https://eiichiromomma.github.io/2024/07/13/MetaSense/" rel="alternate"></link><published>2024-07-13T19:20:00+09:00</published><updated>2024-07-13T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-07-13:/2024/07/13/MetaSense/</id><summary type="html">&lt;h3&gt;MaixSense A010 ToFセンサーの続き&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2025-04-18T22:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>M1 MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2025/04/18/Keworks/" rel="alternate"></link><published>2025-04-18T22:00:00+09:00</published><updated>2025-04-18T22:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2025-04-18:/2025/04/18/Keworks/</id><summary type="html">&lt;p&gt;※WineskinServerが知らぬ間にKegworksになってた&lt;/p&gt;
+&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Kegworks-App/Kegworks"&gt;Kegworks&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;※WineskinServerが知らぬ間にKegworksになってた&lt;/p&gt;
+&lt;p&gt;PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、&lt;a href="https://github.com/Kegworks-App/Kegworks"&gt;Kegworks&lt;/a&gt;が使いやすかった。
+講義で示すような用途の場合は&lt;a href="https://mac.getutm.app/"&gt;UTM&lt;/a&gt; とか &lt;a href="https://www.parallels.com/jp/"&gt;Parallels&lt;/a&gt;の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。&lt;/p&gt;
+&lt;p&gt;Kegworksは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;Kegworksで動作確認したソフト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/v41.htm"&gt;V41&lt;/a&gt; (追記)&lt;/li&gt;
+&lt;li&gt;Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)&lt;/li&gt;
+&lt;li&gt;キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Kegworksの導入&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Homebrewでインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;upgrade
+brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--cask&lt;span class="w"&gt; &lt;/span&gt;--no-quarantine&lt;span class="w"&gt; &lt;/span&gt;Kegworks-App/kegworks/kegworks
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Kegworks Wineryがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;これで本体の導入は終わり。&lt;/p&gt;
+&lt;h3&gt;Wrapperの作成&lt;/h3&gt;
+&lt;p&gt;KegworksはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Kegworks Wineryを起動&lt;/li&gt;
+&lt;li&gt;"Create New Blank Wrapper"を選ぶ&lt;/li&gt;
+&lt;li&gt;Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)&lt;/li&gt;
+&lt;li&gt;暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Kegworks"フォルダがあるのでそれを開く&lt;/li&gt;
+&lt;li&gt;3で指定した名前のアプリを開く(アイコンはKegworksという茶色いもの)&lt;/li&gt;
+&lt;li&gt;"Advanced"を選ぶ&lt;/li&gt;
+&lt;li&gt;"Tools"タブを選び"Winetricks"ボタンを押す&lt;/li&gt;
+&lt;li&gt;Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ&lt;/li&gt;
+&lt;li&gt;" Winetricks Commands Finished!!"と出たらClose&lt;/li&gt;
+&lt;li&gt;左下の"Install Software"を選ぶ&lt;/li&gt;
+&lt;li&gt;インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)&lt;/li&gt;
+&lt;li&gt;最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Kegworks"アプリがあるのでそれを実行する。&lt;/p&gt;
+&lt;h3&gt;字が小さい&lt;/h3&gt;
+&lt;p&gt;KegworksのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。&lt;/p&gt;
+&lt;h3&gt;アプリ(Kegworks Wrapper)を消したい&lt;/h3&gt;
+&lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
+&lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="Apple Silicon"></category><category term="M1 mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="Kegworks"></category></entry><entry><title>PythonとMaixSense A010</title><link href="https://eiichiromomma.github.io/2024/07/13/MetaSense/" rel="alternate"></link><published>2024-07-13T19:20:00+09:00</published><updated>2024-07-13T19:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2024-07-13:/2024/07/13/MetaSense/</id><summary type="html">&lt;h3&gt;MaixSense A010 ToFセンサーの続き&lt;/h3&gt;
 &lt;p&gt;ROS2で使ってみた&lt;a href="https://www.marutsu.co.jp/pc/i/43360161/"&gt;マルツで売ってる格安100x100 ToF&lt;/a&gt; (Switch Scienceは売り切れ)を今度はPythonで動かす。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html"&gt;技術情報&lt;/a&gt;&lt;/li&gt;
@@ -2958,5 +3012,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ.png"&gt;&lt;img alt="2015ImageQ" class="alignnone size-medium wp-image-455" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA.png"&gt;&lt;img alt="2015ImageQA" class="alignnone size-medium wp-image-456" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB.png"&gt;&lt;img alt="2015ImageQB" class="alignnone size-medium wp-image-457" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB-287x300.png" width="287"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="講義"></category></entry><entry><title>GitHub Education</title><link href="https://eiichiromomma.github.io/2016/01/12/github-education/" rel="alternate"></link><published>2016-01-12T21:46:00+09:00</published><updated>2016-01-12T21:46:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-01-12:/2016/01/12/github-education/</id><content type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0.png"&gt;&lt;img alt="スクリーンショット 2016-01-12 21.44.48" class="alignnone size-medium wp-image-451" height="128" src="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0-300x128.png" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;GitHub Educationの申請が通りました。これで研究単位でプライベートリポジトリが立てられます。&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>大掃除+納会</title><link href="https://eiichiromomma.github.io/2015/12/28/%E5%A4%A7%E6%8E%83%E9%99%A4%E7%B4%8D%E4%BC%9A/" rel="alternate"></link><published>2015-12-28T17:05:00+09:00</published><updated>2015-12-28T17:05:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-12-28:/2015/12/28/大掃除納会/</id><summary type="html">&lt;p&gt;急遽ですが大掃除で書籍類とカメラ関係の整理をしてもらいました。その後納会です。急な呼び掛けにも関わらず多 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;急遽ですが大掃除で書籍類とカメラ関係の整理をしてもらいました。その後納会です。急な呼び掛けにも関わらず多数参加して貰えました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902.jpg"&gt;&lt;img alt="CIMG1902" class="alignnone size-medium wp-image-445" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1902-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901.jpg"&gt;&lt;img alt="CIMG1901" class="alignnone size-medium wp-image-446" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1901-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903.jpg"&gt;&lt;img alt="CIMG1903" class="alignnone size-medium wp-image-447" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1903-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>お土産2015-12</title><link href="https://eiichiromomma.github.io/2015/12/28/%E3%81%8A%E5%9C%9F%E7%94%A32015-12/" rel="alternate"></link><published>2015-12-28T15:08:00+09:00</published><updated>2015-12-28T15:08:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-12-28:/2015/12/28/お土産2015-12/</id><content type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/image.jpeg"&gt;&lt;img alt="image" class="alignnone size-medium wp-image-442" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/image-300x225.jpeg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;共同研究先から頂きました差し入れです&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>仮着手者の自己紹介LT飲み会</title><link href="https://eiichiromomma.github.io/2015/12/13/%E4%BB%AE%E7%9D%80%E6%89%8B%E8%80%85%E3%81%AE%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8Blt%E9%A3%B2%E3%81%BF%E4%BC%9A/" rel="alternate"></link><published>2015-12-13T16:48:00+09:00</published><updated>2015-12-13T16:48:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2015-12-13:/2015/12/13/仮着手者の自己紹介lt飲み会/</id><content type="html">&lt;p&gt;ちょっと前ですが現3年生メインの仮着手者で本格的な顔合せをしました。恒例の自己紹介Lightning Talk飲み会です。今度のメンバーは飲み過ぎ注意ですね。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809.jpg"&gt;&lt;img alt="CIMG1809" class="alignnone size-medium wp-image-437" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1809-300x225.jpg" width="300"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849.jpg"&gt;&lt;img alt="CIMG1849" class="alignnone size-medium wp-image-438" height="225" src="https://eiichiromomma.github.io/images/uploads/2015/12/CIMG1849-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;p&gt;共同研究先から頂きました差し入れです&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>

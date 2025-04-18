@@ -50,6 +50,87 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2025/04/18/Keworks/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
+<h6 class="subheader" title="2025-04-18T22:00:00+09:00">2025-04-18(金)
+</h6>
+
+
+<p>※WineskinServerが知らぬ間にKegworksになってた</p>
+<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Kegworks-App/Kegworks">Kegworks</a>が使いやすかった。
+講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッキー程度ならWineという感じになる。Wineは仮想マシンではなく、Windowsと互換性を持つシステムを作ったもので対応外のアプリも多数あるし日本語の表示も微妙だったりするのでハードルは高い。</p>
+<p>Kegworksは単一の互換システムにアプリケーションをぶら下げるのではなく、Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが、WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
+<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
+<h3>Kegworksで動作確認したソフト</h3>
+<ul>
+<li><a href="http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10</a></li>
+<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい)</li>
+<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
+<li><a href="https://hp.giesselink.com/v41.htm">V41</a> (追記)</li>
+<li>Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Wineskin"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)</li>
+<li>キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)</li>
+</ul>
+<h3>Kegworksの導入</h3>
+<ol>
+<li>Homebrewでインストール</li>
+</ol>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>upgrade
+brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>--no-quarantine<span class="w"> </span>Kegworks-App/kegworks/kegworks
+</code></pre></div>
+
+<ol>
+<li>Kegworks Wineryがアプリケーションにあるので起動</li>
+<li>"Installed Engines"が空なので、+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
+<li>Wrapper Versionのところで"Update"が有効になっていたらそれもアップデートする</li>
+</ol>
+<p>これで本体の導入は終わり。</p>
+<h3>Wrapperの作成</h3>
+<p>KegworksはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。</p>
+<ol>
+<li>Kegworks Wineryを起動</li>
+<li>"Create New Blank Wrapper"を選ぶ</li>
+<li>Create a Wrapperというウィンドウが開くので、そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
+<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Kegworks"フォルダがあるのでそれを開く</li>
+<li>3で指定した名前のアプリを開く(アイコンはKegworksという茶色いもの)</li>
+<li>"Advanced"を選ぶ</li>
+<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
+<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
+<li>" Winetricks Commands Finished!!"と出たらClose</li>
+<li>左下の"Install Software"を選ぶ</li>
+<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが、フォルダ名はシンプルにした方が良さそう)</li>
+<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
+</ol>
+<p>6からのカスタマイズは後からも実行可能で、Wrapperアプリ上で右クリックして、"パッケージの内容を表示"で、"Kegworks"アプリがあるのでそれを実行する。</p>
+<h3>字が小さい</h3>
+<p>KegworksのAdvancedからToolsタブで"Config Utility(winecfg)"を選び、"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが、ちゃんと適用されるかはアプリの仕様次第。</p>
+<h3>アプリ(Kegworks Wrapper)を消したい</h3>
+<p>システムで重要なファイルそのものはWrapperに含まれないので、macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが、ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
+<h3>アイコンを変えたい場合</h3>
+<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが、リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
+    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
+    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
+    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
+    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
+    <a href="https://eiichiromomma.github.io/tag/kegworks.html">Kegworks </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/"><h3 class="article-title">PythonとMaixSense A010</h3></a>
 <h6 class="subheader" title="2024-07-13T19:20:00+09:00">2024-07-13(土)
 </h6>
@@ -60,85 +141,7 @@
 <ul>
 <li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">技術情報</a></li>
 <li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/at_command_en.html">ATコマンド一覧と説明</a></li>
-<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモのソース</a>(maixsense-010-20220909-examples.zipにmetasense.pyとutils.pyが含まれる)</li>
-</ul>
-<p>仕様的にPySerialでATコマンドを送れば使えて，実際<a href="https://elchika.com/article/fa84cf5a-54de-4f38-be1f-c12370960a45/">そうやってるサンプル</a>もネットに存在する。</p>
-<p>もうちょいMaixSense周りの処理は簡単に表現してに使いたいと思ったら，<a href="https://youtu.be/CPq58z2kVi8?si=J4qk5VMN4mzRyqg9">手のトラッキングのデモ</a>があった。
-そのソースは<a href="https://github.com/jumejume1/Python-hand-detect">Python-hand-detect</a>で公開されていてmediapipeにDepthを渡している。</p>
-<p>ソースを見ると<code>from metasense import MetaSense</code>とあるものの，pypiにもcondaにも存在せず。上のキーボードを使ったデモのソースに含まれていた。これが正式な配布なのか不明。</p>
-<p>pyserialは必要なので入れておく。
-上記のキーボードを使ったデモのソースに含まれる，utils.pyとmetasense.pyを一緒に置いて実行する。
-LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
-<p>USBのみ出力にしておけば実測はしてないが<a href="https://youtu.be/BpySY99Kixg">FPS=19でヌルヌル動く</a></p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240713A010Unit9.png" width="200"></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">metasense</span> <span class="kn">import</span> <span class="n">MetaSense</span>
-
-<span class="n">COM_PORT</span> <span class="o">=</span> <span class="s2">&quot;/dev/tty.usbserial-202206_E8C25B0&quot;</span>
-<span class="n">BASE_BARTRATE</span> <span class="o">=</span> <span class="mi">115200</span>
-
-<span class="c1"># sendCmdはちゃんとsleepで待つと有効</span>
-<span class="c1"># 速いFPSを使いたい場合はDISPを絞る</span>
-<span class="c1"># DISP=2: USBのみ (FPS=19でヌルヌル動く)</span>
-<span class="c1"># DISP=3: USBとLCD (FPS=5くらいにしないと途中で固まる)</span>
-<span class="c1"># UNITは1-9のときは UNIT mm刻みの画素値(1なら255で255mm)</span>
-<span class="c1"># UNITは10まで良いと書いてあるが10にすると0の挙動になる</span>
-<span class="c1"># UNIT=0のときは可視化重視モードでToFが近場の解像度が良いことから5.1*sqrt(x)らしい</span>
-<span class="n">QUANTIZE</span> <span class="o">=</span> <span class="mi">9</span> <span class="c1"># mm が 濃度値1</span>
-<span class="n">DISP</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">FPS</span><span class="o">=</span><span class="mi">19</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="c1"># init metasense</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">metasense</span> <span class="o">=</span> <span class="n">MetaSense</span><span class="p">(</span><span class="n">COM_PORT</span><span class="p">,</span> <span class="n">BASE_BARTRATE</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">metasense</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
-                <span class="k">break</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+DISP=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DISP</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+UNIT=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">QUANTIZE</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+FPS=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FPS</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">frame</span> <span class="o">=</span> <span class="n">metasense</span><span class="o">.</span><span class="n">tof_data_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-            <span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameID&#39;</span><span class="p">]</span>
-            <span class="n">frame_res</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span>
-            <span class="n">frame_data</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># Depth</span>
-            <span class="n">frame_data0</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># 疑似カラー用</span>
-
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
-
-            <span class="c1"># 濃度値100より遠いのは0 (UNIT=0のときは (th/5.1)^2 で，th=100で384mm)</span>
-            <span class="c1"># UNIT:1-9のときは th*UNIT mm</span>
-            <span class="n">th</span> <span class="o">=</span> <span class="mi">100</span>
-            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frame_data</span><span class="p">):</span>
-                <span class="k">if</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">th</span><span class="p">):</span> <span class="n">frame_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="c1"># convert frame data to image</span>
-            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="c1"># rotate image 180 degree</span>
-            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">color_img</span> <span class="o">=</span>  <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
-            <span class="n">th_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">color_img</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;frame0&quot;</span><span class="p">,</span> <span class="n">frame_img0</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">th_img</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="n">metasense</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
-        <span class="n">exit</span><span class="p">()</span>
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモ …</a></li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -146,11 +149,9 @@ LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/07/13/MetaSense/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -374,33 +375,6 @@ wsl --install -d Ubuntu</p>
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/21/WinPython/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/"><h3 class="article-title">cx_FreezeでPythonからexeファイル生成</h3></a>
-<h6 class="subheader" title="2023-02-16T19:20:00+09:00">2023-02-16(木)
-</h6>
-
-
-<p>Pythonはスクリプト記述なので開発環境の無いところで利用しようとすると面倒ごとが多い。
-Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手段で，<a href="https://github.com/marcelotduarte/cx_Freeze">cx_Freeze</a>はその一つ。</p>
-<p>Pythonのスクリプトから実行形式を生成できるパッケージで，元のスクリプトにはほぼ手を入れる必要が無さそうなのが良い点。
-ただしWindowsならWindows，macOSならmacOSでの作業が必要。クロスプ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/macos.html">macOS </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/cx_freeze.html">cx_Freeze </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/02/16/cx_Freeze/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
