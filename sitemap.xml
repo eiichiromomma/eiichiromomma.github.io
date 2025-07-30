@@ -5,36 +5,43 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/</loc>
-<lastmod>2025-04-18T23:34:44-00:00</lastmod>
+<lastmod>2025-07-30T23:19:06-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tags.html</loc>
-<lastmod>2025-04-18T23:34:44-00:00</lastmod>
+<lastmod>2025-07-30T23:19:06-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/categories.html</loc>
-<lastmod>2025-04-18T23:34:44-00:00</lastmod>
+<lastmod>2025-07-30T23:19:06-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/authors.html</loc>
-<lastmod>2025-04-18T23:34:44-00:00</lastmod>
+<lastmod>2025-07-30T23:19:06-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/archives.html</loc>
-<lastmod>2025-04-18T23:34:44-00:00</lastmod>
+<lastmod>2025-07-30T23:19:06-00:00</lastmod>
 <changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/</loc>
+<lastmod>2025-07-30T22:20:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -1454,7 +1461,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/category/memo.html</loc>
-<lastmod>2025-04-18T22:00:00+09:19</lastmod>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1490,6 +1497,34 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://eiichiromomma.github.io/category/講義.html</loc>
 <lastmod>2022-05-21T08:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/c.html</loc>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/lecture.html</loc>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/debian.html</loc>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/gcc.html</loc>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1553,34 +1588,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://eiichiromomma.github.io/tag/ros2.html</loc>
 <lastmod>2024-07-10T21:20:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/c.html</loc>
-<lastmod>2024-06-05T19:20:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/lecture.html</loc>
-<lastmod>2024-06-05T19:20:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/debian.html</loc>
-<lastmod>2024-06-05T19:20:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/gcc.html</loc>
-<lastmod>2024-06-05T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1832,7 +1839,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/author/momma.html</loc>
-<lastmod>2025-04-18T22:00:00+09:19</lastmod>
+<lastmod>2025-07-30T22:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
