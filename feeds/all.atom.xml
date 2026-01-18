@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2025-07-30T22:20:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Google Cloud Shellの日本語化(gcc+デバッグ込み) 2025版</title><link href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/" rel="alternate"></link><published>2025-07-30T22:20:00+09:00</published><updated>2025-07-30T22:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2025-07-30:/2025/07/30/CloudShellEditor2025/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2026-01-19T07:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Apple Silicon MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/" rel="alternate"></link><published>2026-01-19T07:00:00+09:00</published><updated>2026-01-19T07:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2026-01-19:/2026/01/19/Sikarugir/</id><summary type="html">&lt;p&gt;※KegworksからSikarugirになってた&lt;/p&gt;
+&lt;p&gt;WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は&lt;a href="https://github.com/Sikarugir-App/Sikarugir"&gt;Sikarugir&lt;/a&gt;へ。&lt;/p&gt;
+&lt;p&gt;Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのフ …&lt;/p&gt;</summary><content type="html">&lt;p&gt;※KegworksからSikarugirになってた&lt;/p&gt;
+&lt;p&gt;WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は&lt;a href="https://github.com/Sikarugir-App/Sikarugir"&gt;Sikarugir&lt;/a&gt;へ。&lt;/p&gt;
+&lt;p&gt;Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。&lt;/p&gt;
+&lt;p&gt;使い方の詳しい説明は&lt;a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html"&gt;ここ&lt;/a&gt;に載ってるのでそちらを参照すると良い。&lt;/p&gt;
+&lt;h3&gt;Sikarugirで動作確認したソフト&lt;/h3&gt;
+&lt;p&gt;コツとしてはUsers以下にインストールさせると階層がややこしくなるので，基本的にAdmin権限が必要となるAll Users向けで&lt;code&gt;Program Files&lt;/code&gt;にインストールさせると良い。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://web.archive.org/web/20200301041025/http://www.spectrum-soft.com/download/download.shtm"&gt;Micro-CAP 10(archive.org)&lt;/a&gt;: Spectrum-software社のクローズからパブリックドメイン化，Webの閉鎖という流れでarchive.orgから&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html"&gt;LTspice&lt;/a&gt; (macOS版もあるが使いにくいのでWindows版を使いたい) ※All Usersを選び&lt;code&gt;C:/Program Files/ADI/LTspice/LTspice.exe&lt;/code&gt;を使う&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/emu48.htm"&gt;Emu48&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hp.giesselink.com/v41.htm"&gt;V41&lt;/a&gt; (追記)&lt;/li&gt;
+&lt;li&gt;Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)&lt;/li&gt;
+&lt;li&gt;キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Sikarugirの導入&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;upgrade
+brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--cask&lt;span class="w"&gt; &lt;/span&gt;Sikarugir-App/sikarugir/sikarugir
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;上記コマンドを使いHomebrewでインストール&lt;/li&gt;
+&lt;li&gt;Sikarugir Creatorがアプリケーションにあるので起動&lt;/li&gt;
+&lt;li&gt;"Installed Engines"が空なので，+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする&lt;/li&gt;
+&lt;li&gt;Wrapper Versionのところで"No Wrapper Installed"または"Update"が有効になっていたらそれもアップデートする&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;これで本体の導入は終わり。&lt;/p&gt;
+&lt;h3&gt;Wrapperの作成&lt;/h3&gt;
+&lt;p&gt;SikarugirはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。先にfakejapaneseを入れないと豆腐文字のインストーラと格闘する羽目になる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Sikarugirを起動&lt;/li&gt;
+&lt;li&gt;"Create New Blank Wrapper"を選ぶ&lt;/li&gt;
+&lt;li&gt;Create a Wrapperというウィンドウが開くので，そこに英数字で使う予定のアプリ名を書く(例えばLTspice)&lt;/li&gt;
+&lt;li&gt;暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Sikarugir"フォルダがあるのでそれを開く&lt;/li&gt;
+&lt;li&gt;3で指定した名前のアプリを開く(アイコンはSikarugirという茶色いもの)&lt;/li&gt;
+&lt;li&gt;"Advanced"を選ぶ&lt;/li&gt;
+&lt;li&gt;"Tools"タブを選び"Winetricks"ボタンを押す&lt;/li&gt;
+&lt;li&gt;Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ&lt;/li&gt;
+&lt;li&gt;" Winetricks Commands Finished!!"と出たらClose&lt;/li&gt;
+&lt;li&gt;左下の"Install Software"を選ぶ&lt;/li&gt;
+&lt;li&gt;インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが，フォルダ名はシンプルにした方が良さそう)&lt;/li&gt;
+&lt;li&gt;最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;6からのカスタマイズは後からも実行可能で，Wrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリがあるのでそれを実行する。&lt;/p&gt;
+&lt;h2&gt;インストール後の設定&lt;/h2&gt;
+&lt;p&gt;登録されたアプリで右クリックして内容を表示させ，Contentsの中にある.appを起動するとセットアップと同じウィンドウが開くので設定が可能&lt;/p&gt;
+&lt;h3&gt;字が小さい&lt;/h3&gt;
+&lt;p&gt;SikarugirのAdvancedからToolsタブで"Config Utility(winecfg)"を選び，"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが，ちゃんと適用されるかはアプリの仕様次第。高解像度に対応できないソフトは実用上120くらいが限度。&lt;/p&gt;
+&lt;h2&gt;アプリ(Sikarugir Wrapper)を消したい&lt;/h2&gt;
+&lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので，macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが，ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
+&lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが，リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="Apple Silicon"></category><category term="mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="Sikarugir"></category></entry><entry><title>Google Cloud Shellの日本語化(gcc+デバッグ込み) 2025版</title><link href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/" rel="alternate"></link><published>2025-07-30T22:20:00+09:00</published><updated>2025-07-30T22:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2025-07-30:/2025/07/30/CloudShellEditor2025/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利。
 ただし&lt;a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja"&gt;50時間/週の制限&lt;/a&gt;がある。&lt;/p&gt;
 &lt;p&gt;三の字のアイコンからTerminal-&amp;gt;new terminalでターミナルを開く。&lt;/p&gt;
 &lt;p&gt;機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 24.04が動いている。&lt;/p&gt;
@@ -3960,7 +4016,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;li&gt;markdown&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello World!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="pelican"></category><category term="python"></category></entry><entry><title>9月~12月</title><link href="https://eiichiromomma.github.io/2016/12/06/9%E6%9C%8812%E6%9C%88/" rel="alternate"></link><published>2016-12-06T20:52:00+09:00</published><updated>2016-12-06T20:52:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-12-06:/2016/12/06/9月12月/</id><summary type="html">&lt;p&gt;学会関係やら講義関係やら、あとサーバのSSLの問題で更新を止めていました。写真は上から照明学会全国大会で演奏して頂いた&lt;a href="http://elegantpeoplemusic.web.fc2.com/"&gt;清水雅人GROUP&lt;/a&gt;の皆様、半 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;学会関係やら講義関係やら、あとサーバのSSLの問題で更新を止めていました。写真は上から照明学会全国大会で演奏して頂いた&lt;a href="http://elegantpeoplemusic.web.fc2.com/"&gt;清水雅人GROUP&lt;/a&gt;の皆様、半期の学生さんの歓迎飲み会&amp;amp;自己紹介LT、来年度の研究室メンバーの顔合せ飲み会&amp;amp;自己紹介LTです。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/SDIM0129.jpg" width="600"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/CIMG2210.jpg" width="600"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/uploads/2017/02/CIMG2284.jpg" width="600"&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Memo"></category><category term="pelican"></category><category term="python"></category></entry></feed>

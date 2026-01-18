@@ -50,6 +50,87 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/"><h3 class="article-title">Apple Silicon MacでWindowsアプリを使う</h3></a>
+<h6 class="subheader" title="2026-01-19T07:00:00+09:00">2026-01-19(月)
+</h6>
+
+
+<p>※KegworksからSikarugirになってた</p>
+<p>WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は<a href="https://github.com/Sikarugir-App/Sikarugir">Sikarugir</a>へ。</p>
+<p>Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
+デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
+容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
+<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
+<h3>Sikarugirで動作確認したソフト</h3>
+<p>コツとしてはUsers以下にインストールさせると階層がややこしくなるので，基本的にAdmin権限が必要となるAll Users向けで<code>Program Files</code>にインストールさせると良い。</p>
+<ul>
+<li><a href="https://web.archive.org/web/20200301041025/http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10(archive.org)</a>: Spectrum-software社のクローズからパブリックドメイン化，Webの閉鎖という流れでarchive.orgから</li>
+<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい) ※All Usersを選び<code>C:/Program Files/ADI/LTspice/LTspice.exe</code>を使う</li>
+<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
+<li><a href="https://hp.giesselink.com/v41.htm">V41</a> (追記)</li>
+<li>Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)</li>
+<li>キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)</li>
+</ul>
+<h3>Sikarugirの導入</h3>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>upgrade
+brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>Sikarugir-App/sikarugir/sikarugir
+</code></pre></div>
+
+<ol>
+<li>上記コマンドを使いHomebrewでインストール</li>
+<li>Sikarugir Creatorがアプリケーションにあるので起動</li>
+<li>"Installed Engines"が空なので，+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
+<li>Wrapper Versionのところで"No Wrapper Installed"または"Update"が有効になっていたらそれもアップデートする</li>
+</ol>
+<p>これで本体の導入は終わり。</p>
+<h3>Wrapperの作成</h3>
+<p>SikarugirはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。先にfakejapaneseを入れないと豆腐文字のインストーラと格闘する羽目になる。</p>
+<ol>
+<li>Sikarugirを起動</li>
+<li>"Create New Blank Wrapper"を選ぶ</li>
+<li>Create a Wrapperというウィンドウが開くので，そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
+<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Sikarugir"フォルダがあるのでそれを開く</li>
+<li>3で指定した名前のアプリを開く(アイコンはSikarugirという茶色いもの)</li>
+<li>"Advanced"を選ぶ</li>
+<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
+<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
+<li>" Winetricks Commands Finished!!"と出たらClose</li>
+<li>左下の"Install Software"を選ぶ</li>
+<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが，フォルダ名はシンプルにした方が良さそう)</li>
+<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
+</ol>
+<p>6からのカスタマイズは後からも実行可能で，Wrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリがあるのでそれを実行する。</p>
+<h2>インストール後の設定</h2>
+<p>登録されたアプリで右クリックして内容を表示させ，Contentsの中にある.appを起動するとセットアップと同じウィンドウが開くので設定が可能</p>
+<h3>字が小さい</h3>
+<p>SikarugirのAdvancedからToolsタブで"Config Utility(winecfg)"を選び，"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが，ちゃんと適用されるかはアプリの仕様次第。高解像度に対応できないソフトは実用上120くらいが限度。</p>
+<h2>アプリ(Sikarugir Wrapper)を消したい</h2>
+<p>システムで重要なファイルそのものはWrapperに含まれないので，macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが，ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
+<h3>アイコンを変えたい場合</h3>
+<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが，リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
+    <a href="https://eiichiromomma.github.io/tag/mac.html">mac </a>
+    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
+    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
+    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
+    <a href="https://eiichiromomma.github.io/tag/sikarugir.html">Sikarugir </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc+デバッグ込み) 2025版</h3></a>
 <h6 class="subheader" title="2025-07-30T22:20:00+09:00">2025-07-30(水)
 </h6>
@@ -59,91 +140,7 @@
 ただし<a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja">50時間/週の制限</a>がある。</p>
 <p>三の字のアイコンからTerminal-&gt;new terminalでターミナルを開く。</p>
 <p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 24.04が動いている。</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/issue
-Ubuntu<span class="w"> </span><span class="m">24</span>.04.2<span class="w"> </span>LTS<span class="w"> </span><span class="se">\n</span><span class="w"> </span><span class="se">\l</span>
-</code></pre></div>
-
-<p>ただし，どちらも日本語は表示は可能でもメニュー等は英語のまま。せめてShellのメッセージやmanを日本語化しようということで，Ubuntuの日本語化の方法を一通り実行。</p>
-<h3>確認作業</h3>
-<p>ここで説明している作業を実施しても，セッションが切れると環境がリセットされるが，短時間ブラウザを閉じた程度だと継続してくれている。</p>
-<div class="highlight"><pre><span></span><code>locale<span class="w"> </span>-a
-</code></pre></div>
-
-<p>とやって<code>ja_JP.utf-8</code>が存在していれば作業不要だが，入ってない。</p>
-<h3>日本語化</h3>
-<p>以下を1行ずつコピペする</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
-sudo<span class="w"> </span>locale-gen
-sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>task-japanese<span class="w"> </span>-y
-wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-13/gcc/po/ja.po
-msgfmt<span class="w"> </span>-o<span class="w"> </span>gcc.mo<span class="w"> </span>ja.po
-sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-13.mo
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
-<span class="nb">source</span><span class="w"> </span>~/.profile
-</code></pre></div>
-
-<p>わかりやすいかは疑問だが英語で思考停止する人には良い。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240605-cse.png" width="600"></p>
-<h4>分けて説明</h4>
-<p>localeとしてja_JP.utf-8が有効になっていないので<code>/etc/locale.gen</code>ファイルに追記し，locale-genで生成する。あとtask-japaneseは日本語manとか。</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;ja_JP.UTF-8 UTF-8&#39; &gt;&gt;  /etc/locale.gen&quot;</span>
-sudo<span class="w"> </span>locale-gen
-sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="p">;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>task-japanese<span class="w"> </span>-y
-</code></pre></div>
-
-<p>gccの.moファイル(メッセージのローカライゼーションファイル)が無いのでgccのソースミラーから拾って生成する。moファイルは実体と一致しないとダメなので</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>file<span class="w"> </span>/usr/bin/gcc
-/usr/bin/gcc:<span class="w"> </span>symbolic<span class="w"> </span>link<span class="w"> </span>to<span class="w"> </span>gcc-13
-</code></pre></div>
-
-<p>で出てきたgcc-11に合わせている。</p>
-<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-c<span class="w"> </span>https://github.com/gcc-mirror/gcc/raw/releases/gcc-13/gcc/po/ja.po
-msgfmt<span class="w"> </span>-o<span class="w"> </span>gcc.mo<span class="w"> </span>ja.po
-sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </span>/usr/share/locale/ja/LC_MESSAGES/gcc-13.mo
-</code></pre></div>
-
-<p>シェルを開いたときにja_JP.utf-8が環境変数LANGになるよう設定して読み込み</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export LANG=ja_JP.utf-8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
-<span class="nb">source</span><span class="w"> </span>~/.profile
-</code></pre></div>
-
-<h3>デバッガ</h3>
-<p>拡張機能にExtension Pack for C/C++がある。これを入れるとデバッガ拡張だけ入るので，launch.jsonでデバッガが使える。自動ビルドは出来ない。</p>
-<p>まず，「ファイル」アイコンからOpen Folderを選んでファイル置き場を開く。次にエディタで.cなファイルを開いた状態で，"Run"-&gt;"Add Configuration"で勝手にlaunch.jsonが出来るが以下のような内容にする。</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Use IntelliSense to learn about possible attributes.</span>
-<span class="w">    </span><span class="c1">// Hover to view descriptions of existing attributes.</span>
-<span class="w">    </span><span class="c1">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span>
-<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C/C++ Debug (gdb Launch)&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cppdbg&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${fileDirname}/${fileBasenameNoExtension}&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">            </span><span class="nt">&quot;stopAtEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">            </span><span class="nt">&quot;MIMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gdb&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;setupCommands&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable pretty-printing for gdb&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-enable-pretty-printing&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;ignoreFailures&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>コンパイルするときにソースと同じ名称のプログラムを<code>-g</code>オプション付きでコンパイルする必要がある。たとえばhelloworld.cだったら</p>
-<div class="highlight"><pre><span></span><code>gcc<span class="w"> </span>-g<span class="w"> </span>helloworld.c<span class="w"> </span>-o<span class="w"> </span>helloworld
-</code></pre></div>
-
-<p>あとは左のデバッグアイコンを選び，ブレークポイントを設定しておけば▶C/C++ Debugでデバッガが動く。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
@@ -154,11 +151,9 @@ sudo<span class="w"> </span>cp<span class="w"> </span>gcc.mo<span class="w"> </s
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -385,35 +380,6 @@ wsl --install -d Ubuntu</p>
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/05/25/WinVenv/"><h3 class="article-title">Windows環境でGitとvenvを使ってみる</h3></a>
-<h6 class="subheader" title="2023-05-25T19:20:00+09:00">2023-05-25(木)
-</h6>
-
-
-<p><a href="https://eiichiromomma.github.io/2023/05/21/WinPython/">前回のWindowsでのPython環境構築</a>をやった続き。</p>
-<h3>やること</h3>
-<ul>
-<li>gitコマンドを使ってGitHubからソースを持ってくる</li>
-<li>venvで専用の環境を作って動かす</li>
-</ul>
-<h3>Gitについて雑な説明</h3>
-<p>Gitは何かしらのプロジェクトで作成したプログラムのソース(とデータ)を管理するツールで，GitHubはGitに対応したサーバーを提供するサービス。程度の認識でよい。プログラムを作ってる …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/05/25/WinVenv/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
