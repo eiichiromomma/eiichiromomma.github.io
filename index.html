@@ -50,6 +50,190 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2026/01/19/WinPython2026/"><h3 class="article-title">WindowsでのオススメのPython環境 2026版</h3></a>
+<h6 class="subheader" title="2026-01-19T08:00:00+09:00">2026-01-19(月)
+</h6>
+
+
+<p>Python環境をuvにする</p>
+<ul>
+<li><a href="https://github.com/astral-sh/uv">uvの配布元</a></li>
+</ul>
+<p>利点としては以下が挙げられる</p>
+<ul>
+<li>pyenv不要で複数バージョンのPythonがシステムに同居できる</li>
+<li>これまではpyenvによるアクロバチックな切り替えが必要(mac, Linux)，各バージョンのインストールは自前でpy.exeでがんばる(Windows)</li>
+<li>複数バージョンのPythonおよび，パッケージがプロジェクト間で重複してもディスク占有容量が増えない</li>
+<li>仮想環境の数だけGBオーダーでディスクが圧迫される</li>
+<li><code>uvx --with xxx</code>の機構で仮想環境を作らずにpythonスクリプト(.pyだけでなくipythonのようなインタプリタやjupyterlabも)が実行できる</li>
+<li>特にLLM関係はuvxで書かれた実行サンプルが多い</li>
+<li><code>uv add</code>(pyproject.toml, uv.lock)でのパッケージ管理の方がpipやcondaより圧倒的に速く賢い</li>
+<li>開発環境のシェアが楽</li>
+<li>pipでのインストール順を守らないと入らないような問題が起きにくい</li>
+</ul>
+<p>ネガティブな点としては</p>
+<ul>
+<li>なんでもuv経由なのでpython的に気持ち悪い</li>
+<li>「pythonなんだけどuvコマンド」をどう説明するか悩む</li>
+</ul>
+<h3>1. インストール</h3>
+<p>uvについては配布元に記載されているスクリプトによるインストールが，自身のアップデートにも対応できるのでオススメ．</p>
+<p>Windowsの場合はコマンドプロンプトまたはPowerShellで下記を実行</p>
+<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">ByPass</span> <span class="n">-c</span> <span class="s2">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span>
+</code></pre></div>
+
+<p>MacやLinuxの場合</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+
+<p>で,WindowsやMac, Linuxで一旦そのウィンドウを閉じて再度開くとuvがパスに入った状態になる.</p>
+<p>uvは感覚としてはPython Launcherのpy.exeに近いようなもんだが,より実体が隠蔽された形式になりpython本体もuvを経由して起動することになる.</p>
+<p>例えば</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python
+</code></pre></div>
+
+<p>という感じで実行すると勝手に最新版のPythonをダウンロードしてインタプリタが開く.バージョンを指定したい場合は</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>python
+</code></pre></div>
+
+<p>のようにオプションで指定する.</p>
+<h3>2. プロジェクトの作成とパッケージ管理</h3>
+<p>uvでの開発についてはフォルダが単位となるプロジェクトとして扱う．従来のvenvみたいなもんだが，uvが実体を一括管理してくれて各プロジェクトにはHardLinkやRefLinkやBlockClone等でディスク容量を圧迫しない仕組みになっている．</p>
+<p>例えばPython 3.12のプロジェクト pj1 を作る場合</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>pj1
+<span class="nb">cd</span><span class="w"> </span>pj1
+uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </span><span class="m">3</span>.12
+uv<span class="w"> </span>init
+</code></pre></div>
+
+<p>でpyproject.tomlが作られ，3.12に固定される．パッケージの追加はuv addで行う．pipは使わない．</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span>numpy
+</code></pre></div>
+
+<p>とか</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;numpy&gt;2.0&quot;</span>
+</code></pre></div>
+
+<p>とか，<code>pip install</code>を<code>uv add</code>に置き換えたと考えればよい．
+依存関係はpyproject.tomlに保存され，実際に入ったパッケージの情報がOSに依存しないような方法でuv.lockに保存される．</p>
+<h3>3. プロジェクト内での実行</h3>
+<h4>スクリプトの実行</h4>
+<p>hello.pyを実行したい場合</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>hello.py
+</code></pre></div>
+
+<h4>ipython, python, jupyterlabの実行</h4>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>ipython
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab
+</code></pre></div>
+
+<p>みたいな感じでインストールされるスクリプトもuv runできる</p>
+<h3>4. プロジェクトに特定パッケージをインストールさせずに実行</h3>
+<ul>
+<li><code>--with package</code>付きで<code>uv run</code></li>
+<li><code>uvx scriptname</code>で実行(ipythonとかスクリプトが同時にインストールされるタイプのものでwithを省略できる)</li>
+</ul>
+<p><code>--with</code>は現プロジェクトでとりあえず任意のパッケージを追加して実行してみたい場合に有効で，そのパッケージ以外はプロジェクトが使われる．</p>
+<p><code>uvx</code> を使えば環境を汚さずに実行できる.これは<code>uvx scriptname</code>が実行されたときに暗黙で<code>--with scriptname</code>を指定する挙動になるため，重複しないコマンドが書ける．パッケージ名とスクリプト名が一致しない場合は<code>--from</code>を書く．</p>
+<p>ということで，<code>uvx</code>はお作法としてipythonとか<code>uv add</code>したときに実行形式ファイルも一緒に入るタイプのものの実行に使う．ただしpythonのバージョンは指定しないと</p>
+<ul>
+<li><code>--python</code>で指定したバージョン</li>
+<li>環境変数</li>
+<li>過去にpinしたバージョン</li>
+<li>uvで使っているPythonの中で最新のもの</li>
+<li>システムのPython</li>
+</ul>
+<p>の順で決まるらしい．</p>
+<h4>インタプリタにワンライナーで命令を食わせる場合</h4>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>--with<span class="w"> </span>numpy<span class="w"> </span>--with<span class="w"> </span>libsvm-official<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from libsvm.svmutil import *; y, x = [1,-1], [{1:1, 3:1}, {1:-1,3:-1}]; prob  = svm_problem(y, x); param = svm_parameter(&#39;-t 0 -c 4 -b 1&#39;); m = svm_train(prob, param)&quot;</span>
+</code></pre></div>
+
+<h4>numpy入りのipythonを後腐れ無く使う場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--with<span class="w"> </span>numpy<span class="w"> </span>ipython
+</code></pre></div>
+
+<h4>open3d入りのmarimoを後腐れなく使う場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>--with<span class="w"> </span>open3d<span class="w">  </span>marimo<span class="w"> </span>new
+</code></pre></div>
+
+<h4>uvxで実行スクリプトとパッケージ名が異なる場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span>httpie<span class="w"> </span>http<span class="w"> </span>https://google.com
+</code></pre></div>
+
+<h4>Ultralytics yoloで推論する</h4>
+<p>Macなので device=mps と書いてるが他は削るかcuda使う</p>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span>ultralytics<span class="w"> </span>yolo<span class="w"> </span>predict<span class="w"> </span><span class="nv">model</span><span class="o">=</span>yolo26n.pt<span class="w"> </span><span class="nv">source</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">show</span><span class="o">=</span>True<span class="w"> </span><span class="nv">device</span><span class="o">=</span>mps
+</code></pre></div>
+
+<h4>ファイルサーバを立てたい場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>updog
+</code></pre></div>
+
+<h3>5. プロジェクトの開発環境の複製</h3>
+<p>プロジェクト用のフォルダを作り，フォルダ内に別のプロジェクトで生成されたpyproject.tomlとuv.lockを置いて使いたいバージョンでpinしてから<code>uv sync</code>するだけ．例えば上のpj1で作った2ファイルを用意して</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>..
+mkdir<span class="w"> </span>pj2
+<span class="nb">cd</span><span class="w"> </span>pj2
+uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </span><span class="m">3</span>.12
+</code></pre></div>
+
+<p>で，何らかの手段でファイルをpj2にコピーしてから</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>sync
+</code></pre></div>
+
+<p>で同じ環境を作ってくれる.condaみたいにos依存のゴミも入らないのでプラットフォームに依存しない.</p>
+<h3>6. venvで作った仮想環境の移行</h3>
+<p>とりあえず捨てる前の仮想環境でactivateしておいて</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
+</code></pre></div>
+
+<p>で使ってるパッケージのバージョン入り一覧が保存できるのでdeactivateして仮想環境のフォルダごと消して良い(パッチ当ててるときは当然その差分も取っておく)</p>
+<p>pipの継ぎ足しソースのような状態だと大抵の場合バージョン衝突が起きるので，バージョンをとっぱらって入れてしまうのが早い．クリティカルな問題がある場合は特定パッケージだけ後で指定すれば直してくれる．</p>
+<p>Windowsの場合コマンドプロンプトから</p>
+<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-Command</span> <span class="s2">&quot;Get-Content requirements.txt | % { uv add ($_ -split &#39;=&#39;)[0] }&quot;</span>
+</code></pre></div>
+
+<p>Mac やLinuxは</p>
+<div class="highlight"><pre><span></span><code>cut<span class="w"> </span>-d<span class="s1">&#39;=&#39;</span><span class="w"> </span>-f1<span class="w"> </span>requirements.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>uv<span class="w"> </span>add
+</code></pre></div>
+
+<p>ただ，pipでインストール順のお陰で奇跡的に動く組合せも存在し，コケることも多々あるので，pythonのバージョンに対して明らかに古いパッケージは外した方が良い．(横着せずにひとつずつuv addすると確実)</p>
+<h3>7. クラウドストレージとの相性</h3>
+<p>uvはUV_CACHE_DIRに実体を置いてハードリンクで仮想環境の容量増加を防いでくれるが，クラウドストレージとの相性を考えるとイマイチ．
+プロジェクトを作ると.venvを作ってしまうのが問題となるが回避策はある．</p>
+<ul>
+<li>Dropbox: .venvフォルダに属性付与して無視させるのは可能．ただし無視させる命令より前に処理が始まるし，空のフォルダは残る</li>
+<li>Box: 無視させる機構は無し</li>
+</ul>
+<p>一番無難な解決法はクラウドストレージがシンボリックリンクを解釈できないことを利用して，予め.venvというシンボリックリンクをクラウドストレージ外に設定すること．ただし，各PC環境でリンク設定が必要．Windowsの場合でも<code>mklink</code>かPowerShellなら</p>
+<div class="highlight"><pre><span></span><code><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Junction</span> <span class="n">-Path</span> <span class="s2">&quot;.venv&quot;</span> <span class="n">-Target</span> <span class="s2">&quot;$Home\uv_envs\PJA&quot;</span>
+</code></pre></div>
+
+<p>のようにディレクトリジャンクションを使うとよい．</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/uv.html">uv </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/"><h3 class="article-title">Apple Silicon MacでWindowsアプリを使う</h3></a>
 <h6 class="subheader" title="2026-01-19T07:00:00+09:00">2026-01-19(月)
 </h6>
@@ -59,55 +243,7 @@
 <p>WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は<a href="https://github.com/Sikarugir-App/Sikarugir">Sikarugir</a>へ。</p>
 <p>Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
 デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
-容量としては1アプリあたり1GB+そのアプリのファイルと考えると良さそう。</p>
-<p>使い方の詳しい説明は<a href="https://www.storange.jp/2021/11/how-to-use-wineskin.html">ここ</a>に載ってるのでそちらを参照すると良い。</p>
-<h3>Sikarugirで動作確認したソフト</h3>
-<p>コツとしてはUsers以下にインストールさせると階層がややこしくなるので，基本的にAdmin権限が必要となるAll Users向けで<code>Program Files</code>にインストールさせると良い。</p>
-<ul>
-<li><a href="https://web.archive.org/web/20200301041025/http://www.spectrum-soft.com/download/download.shtm">Micro-CAP 10(archive.org)</a>: Spectrum-software社のクローズからパブリックドメイン化，Webの閉鎖という流れでarchive.orgから</li>
-<li><a href="https://www.analog.com/jp/design-center/design-tools-and-calculators/ltspice-simulator.html">LTspice</a> (macOS版もあるが使いにくいのでWindows版を使いたい) ※All Usersを選び<code>C:/Program Files/ADI/LTspice/LTspice.exe</code>を使う</li>
-<li><a href="https://hp.giesselink.com/emu48.htm">Emu48</a></li>
-<li><a href="https://hp.giesselink.com/v41.htm">V41</a> (追記)</li>
-<li>Visual Studioの再頒布ファイル(Redist)が必要な場合でも一度インストールした後でWrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリを起動してからInstall Softwareで追加インストールできる(その後もExeファイルがV41.exeのままになっていれば問題ない)</li>
-<li>キーコードがハードコードされてるプログラムで普通にキーを打っても応答しないが，何故かCmdキーを押しっぱなしだと入力できる(Wineの機能なのかは不明)</li>
-</ul>
-<h3>Sikarugirの導入</h3>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>upgrade
-brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>Sikarugir-App/sikarugir/sikarugir
-</code></pre></div>
-
-<ol>
-<li>上記コマンドを使いHomebrewでインストール</li>
-<li>Sikarugir Creatorがアプリケーションにあるので起動</li>
-<li>"Installed Engines"が空なので，+ボタンでWineのエンジンを追加する。押せば最新版が推奨されるのでそれをインストールする</li>
-<li>Wrapper Versionのところで"No Wrapper Installed"または"Update"が有効になっていたらそれもアップデートする</li>
-</ol>
-<p>これで本体の導入は終わり。</p>
-<h3>Wrapperの作成</h3>
-<p>SikarugirはWindowsアプリをmacOSのアプリのように見せ掛けるのでWrapperと呼んでいる。先にfakejapaneseを入れないと豆腐文字のインストーラと格闘する羽目になる。</p>
-<ol>
-<li>Sikarugirを起動</li>
-<li>"Create New Blank Wrapper"を選ぶ</li>
-<li>Create a Wrapperというウィンドウが開くので，そこに英数字で使う予定のアプリ名を書く(例えばLTspice)</li>
-<li>暫く待つとWrapper Creation Finishedと出るので自分のApplicationフォルダ(通常 /Users/unername/Application でFinderの"移動"→"ホーム"からApplicationまたは"アプリケーション")に"Sikarugir"フォルダがあるのでそれを開く</li>
-<li>3で指定した名前のアプリを開く(アイコンはSikarugirという茶色いもの)</li>
-<li>"Advanced"を選ぶ</li>
-<li>"Tools"タブを選び"Winetricks"ボタンを押す</li>
-<li>Search for packagesのところにfakejと入れるとfontsの中にfakejapaneseがあるのでチェックを入れてRun→Yesを押して暫く待つ</li>
-<li>" Winetricks Commands Finished!!"と出たらClose</li>
-<li>左下の"Install Software"を選ぶ</li>
-<li>インストーラがある場合は"Choose Setup Executable"を選ぶ。(単にzipを展開しただけで使えるソフトの場合は"Copy a Folder Inside"で良いが，フォルダ名はシンプルにした方が良さそう)</li>
-<li>最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")</li>
-</ol>
-<p>6からのカスタマイズは後からも実行可能で，Wrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリがあるのでそれを実行する。</p>
-<h2>インストール後の設定</h2>
-<p>登録されたアプリで右クリックして内容を表示させ，Contentsの中にある.appを起動するとセットアップと同じウィンドウが開くので設定が可能</p>
-<h3>字が小さい</h3>
-<p>SikarugirのAdvancedからToolsタブで"Config Utility(winecfg)"を選び，"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが，ちゃんと適用されるかはアプリの仕様次第。高解像度に対応できないソフトは実用上120くらいが限度。</p>
-<h2>アプリ(Sikarugir Wrapper)を消したい</h2>
-<p>システムで重要なファイルそのものはWrapperに含まれないので，macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが，ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。</p>
-<h3>アイコンを変えたい場合</h3>
-<p><a href="https://github.com/jlu5/icoextract">icoextract</a>みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが，リバースエンジニアリングの類な気もするので要注意。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+容量としては1アプリあたり1GB+そのアプリのフ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
@@ -121,11 +257,9 @@ brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -343,43 +477,6 @@ brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/"><h3 class="article-title">Windows+WSL2でGithubで配布されてるものを試す環境構築</h3></a>
-<h6 class="subheader" title="2023-06-21T19:20:00+09:00">2023-06-21(水)
-</h6>
-
-
-<p>※この情報は古いです。<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
-<h3>1. WSL2のインストール</h3>
-<p><a href="https://learn.microsoft.com/ja-jp/windows/wsl/install">Microsoftのサイト</a>の説明に従いWSL2を入れる。</p>
-<p>PowerShellを管理者権限で起動して</p>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
-</code></pre></div>
-
-<p>ここでWSLは既に入っていてディストリビューションがどうこうと出てきたら
-```PowerShell!
-wsl --install -d Ubuntu</p>
-<div class="highlight"><pre><span></span><code>として<span class="nv">Ubuntu</span>を入れる
-
-```<span class="nv">bash</span>
-<span class="nv">Ubuntu</span><span class="w"> </span>は既にインストー …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2023/06/21/WinWSLPythonDocker/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

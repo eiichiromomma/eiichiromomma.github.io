@@ -1,5 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2026-01-19T07:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>Apple Silicon MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/" rel="alternate"></link><published>2026-01-19T07:00:00+09:00</published><updated>2026-01-19T07:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2026-01-19:/2026/01/19/Sikarugir/</id><summary type="html">&lt;p&gt;※KegworksからSikarugirになってた&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CVMLAB Blog - momma</title><link href="https://eiichiromomma.github.io/" rel="alternate"></link><link href="https://eiichiromomma.github.io/feeds/momma.atom.xml" rel="self"></link><id>https://eiichiromomma.github.io/</id><updated>2026-01-19T08:00:00+09:00</updated><subtitle>Computer Vision and Measurement Lab.</subtitle><entry><title>WindowsでのオススメのPython環境 2026版</title><link href="https://eiichiromomma.github.io/2026/01/19/WinPython2026/" rel="alternate"></link><published>2026-01-19T08:00:00+09:00</published><updated>2026-01-19T08:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2026-01-19:/2026/01/19/WinPython2026/</id><summary type="html">&lt;p&gt;Python環境をuvにする&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/astral-sh/uv"&gt;uvの配布元&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;利点としては以下が挙げられる&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pyenv不要で複数バージョンのPythonがシステムに同居できる&lt;/li&gt;
+&lt;li&gt;これまではpyenvによるアクロバチックな切り替えが必要(mac, Linux)，各バージョンのインストールは自前でpy.exeでがんばる(Windows)&lt;/li&gt;
+&lt;li&gt;複数バージ …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;Python環境をuvにする&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/astral-sh/uv"&gt;uvの配布元&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;利点としては以下が挙げられる&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pyenv不要で複数バージョンのPythonがシステムに同居できる&lt;/li&gt;
+&lt;li&gt;これまではpyenvによるアクロバチックな切り替えが必要(mac, Linux)，各バージョンのインストールは自前でpy.exeでがんばる(Windows)&lt;/li&gt;
+&lt;li&gt;複数バージョンのPythonおよび，パッケージがプロジェクト間で重複してもディスク占有容量が増えない&lt;/li&gt;
+&lt;li&gt;仮想環境の数だけGBオーダーでディスクが圧迫される&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uvx --with xxx&lt;/code&gt;の機構で仮想環境を作らずにpythonスクリプト(.pyだけでなくipythonのようなインタプリタやjupyterlabも)が実行できる&lt;/li&gt;
+&lt;li&gt;特にLLM関係はuvxで書かれた実行サンプルが多い&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uv add&lt;/code&gt;(pyproject.toml, uv.lock)でのパッケージ管理の方がpipやcondaより圧倒的に速く賢い&lt;/li&gt;
+&lt;li&gt;開発環境のシェアが楽&lt;/li&gt;
+&lt;li&gt;pipでのインストール順を守らないと入らないような問題が起きにくい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ネガティブな点としては&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;なんでもuv経由なのでpython的に気持ち悪い&lt;/li&gt;
+&lt;li&gt;「pythonなんだけどuvコマンド」をどう説明するか悩む&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;1. インストール&lt;/h3&gt;
+&lt;p&gt;uvについては配布元に記載されているスクリプトによるインストールが，自身のアップデートにも対応できるのでオススメ．&lt;/p&gt;
+&lt;p&gt;Windowsの場合はコマンドプロンプトまたはPowerShellで下記を実行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;powershell&lt;/span&gt; &lt;span class="n"&gt;-ExecutionPolicy&lt;/span&gt; &lt;span class="n"&gt;ByPass&lt;/span&gt; &lt;span class="n"&gt;-c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;irm https://astral.sh/uv/install.ps1 | iex&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;MacやLinuxの場合&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-LsSf&lt;span class="w"&gt; &lt;/span&gt;https://astral.sh/uv/install.sh&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で,WindowsやMac, Linuxで一旦そのウィンドウを閉じて再度開くとuvがパスに入った状態になる.&lt;/p&gt;
+&lt;p&gt;uvは感覚としてはPython Launcherのpy.exeに近いようなもんだが,より実体が隠蔽された形式になりpython本体もuvを経由して起動することになる.&lt;/p&gt;
+&lt;p&gt;例えば&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;python
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;という感じで実行すると勝手に最新版のPythonをダウンロードしてインタプリタが開く.バージョンを指定したい場合は&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;--python&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.12&lt;span class="w"&gt; &lt;/span&gt;python
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようにオプションで指定する.&lt;/p&gt;
+&lt;h3&gt;2. プロジェクトの作成とパッケージ管理&lt;/h3&gt;
+&lt;p&gt;uvでの開発についてはフォルダが単位となるプロジェクトとして扱う．従来のvenvみたいなもんだが，uvが実体を一括管理してくれて各プロジェクトにはHardLinkやRefLinkやBlockClone等でディスク容量を圧迫しない仕組みになっている．&lt;/p&gt;
+&lt;p&gt;例えばPython 3.12のプロジェクト pj1 を作る場合&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;pj1
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pj1
+uv&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;pin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.12
+uv&lt;span class="w"&gt; &lt;/span&gt;init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;でpyproject.tomlが作られ，3.12に固定される．パッケージの追加はuv addで行う．pipは使わない．&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;numpy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とか&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;numpy&amp;gt;2.0&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;とか，&lt;code&gt;pip install&lt;/code&gt;を&lt;code&gt;uv add&lt;/code&gt;に置き換えたと考えればよい．
+依存関係はpyproject.tomlに保存され，実際に入ったパッケージの情報がOSに依存しないような方法でuv.lockに保存される．&lt;/p&gt;
+&lt;h3&gt;3. プロジェクト内での実行&lt;/h3&gt;
+&lt;h4&gt;スクリプトの実行&lt;/h4&gt;
+&lt;p&gt;hello.pyを実行したい場合&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;hello.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;ipython, python, jupyterlabの実行&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;ipython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;python
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;jupyter&lt;span class="w"&gt; &lt;/span&gt;lab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;みたいな感じでインストールされるスクリプトもuv runできる&lt;/p&gt;
+&lt;h3&gt;4. プロジェクトに特定パッケージをインストールさせずに実行&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--with package&lt;/code&gt;付きで&lt;code&gt;uv run&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uvx scriptname&lt;/code&gt;で実行(ipythonとかスクリプトが同時にインストールされるタイプのものでwithを省略できる)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;--with&lt;/code&gt;は現プロジェクトでとりあえず任意のパッケージを追加して実行してみたい場合に有効で，そのパッケージ以外はプロジェクトが使われる．&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;uvx&lt;/code&gt; を使えば環境を汚さずに実行できる.これは&lt;code&gt;uvx scriptname&lt;/code&gt;が実行されたときに暗黙で&lt;code&gt;--with scriptname&lt;/code&gt;を指定する挙動になるため，重複しないコマンドが書ける．パッケージ名とスクリプト名が一致しない場合は&lt;code&gt;--from&lt;/code&gt;を書く．&lt;/p&gt;
+&lt;p&gt;ということで，&lt;code&gt;uvx&lt;/code&gt;はお作法としてipythonとか&lt;code&gt;uv add&lt;/code&gt;したときに実行形式ファイルも一緒に入るタイプのものの実行に使う．ただしpythonのバージョンは指定しないと&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--python&lt;/code&gt;で指定したバージョン&lt;/li&gt;
+&lt;li&gt;環境変数&lt;/li&gt;
+&lt;li&gt;過去にpinしたバージョン&lt;/li&gt;
+&lt;li&gt;uvで使っているPythonの中で最新のもの&lt;/li&gt;
+&lt;li&gt;システムのPython&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;の順で決まるらしい．&lt;/p&gt;
+&lt;h4&gt;インタプリタにワンライナーで命令を食わせる場合&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;--python&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.12&lt;span class="w"&gt; &lt;/span&gt;--with&lt;span class="w"&gt; &lt;/span&gt;numpy&lt;span class="w"&gt; &lt;/span&gt;--with&lt;span class="w"&gt; &lt;/span&gt;libsvm-official&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;from libsvm.svmutil import *; y, x = [1,-1], [{1:1, 3:1}, {1:-1,3:-1}]; prob  = svm_problem(y, x); param = svm_parameter(&amp;#39;-t 0 -c 4 -b 1&amp;#39;); m = svm_train(prob, param)&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;numpy入りのipythonを後腐れ無く使う場合&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uvx&lt;span class="w"&gt; &lt;/span&gt;--with&lt;span class="w"&gt; &lt;/span&gt;numpy&lt;span class="w"&gt; &lt;/span&gt;ipython
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;open3d入りのmarimoを後腐れなく使う場合&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uvx&lt;span class="w"&gt; &lt;/span&gt;--python&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.12&lt;span class="w"&gt; &lt;/span&gt;--with&lt;span class="w"&gt; &lt;/span&gt;open3d&lt;span class="w"&gt;  &lt;/span&gt;marimo&lt;span class="w"&gt; &lt;/span&gt;new
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;uvxで実行スクリプトとパッケージ名が異なる場合&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uvx&lt;span class="w"&gt; &lt;/span&gt;--from&lt;span class="w"&gt; &lt;/span&gt;httpie&lt;span class="w"&gt; &lt;/span&gt;http&lt;span class="w"&gt; &lt;/span&gt;https://google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;Ultralytics yoloで推論する&lt;/h4&gt;
+&lt;p&gt;Macなので device=mps と書いてるが他は削るかcuda使う&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uvx&lt;span class="w"&gt; &lt;/span&gt;--from&lt;span class="w"&gt; &lt;/span&gt;ultralytics&lt;span class="w"&gt; &lt;/span&gt;yolo&lt;span class="w"&gt; &lt;/span&gt;predict&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yolo26n.pt&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;source&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;show&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;device&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;mps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;ファイルサーバを立てたい場合&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uvx&lt;span class="w"&gt; &lt;/span&gt;updog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;5. プロジェクトの開発環境の複製&lt;/h3&gt;
+&lt;p&gt;プロジェクト用のフォルダを作り，フォルダ内に別のプロジェクトで生成されたpyproject.tomlとuv.lockを置いて使いたいバージョンでpinしてから&lt;code&gt;uv sync&lt;/code&gt;するだけ．例えば上のpj1で作った2ファイルを用意して&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;..
+mkdir&lt;span class="w"&gt; &lt;/span&gt;pj2
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pj2
+uv&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;pin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.12
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で，何らかの手段でファイルをpj2にコピーしてから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;uv&lt;span class="w"&gt; &lt;/span&gt;sync
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で同じ環境を作ってくれる.condaみたいにos依存のゴミも入らないのでプラットフォームに依存しない.&lt;/p&gt;
+&lt;h3&gt;6. venvで作った仮想環境の移行&lt;/h3&gt;
+&lt;p&gt;とりあえず捨てる前の仮想環境でactivateしておいて&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip&lt;span class="w"&gt; &lt;/span&gt;freeze&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;で使ってるパッケージのバージョン入り一覧が保存できるのでdeactivateして仮想環境のフォルダごと消して良い(パッチ当ててるときは当然その差分も取っておく)&lt;/p&gt;
+&lt;p&gt;pipの継ぎ足しソースのような状態だと大抵の場合バージョン衝突が起きるので，バージョンをとっぱらって入れてしまうのが早い．クリティカルな問題がある場合は特定パッケージだけ後で指定すれば直してくれる．&lt;/p&gt;
+&lt;p&gt;Windowsの場合コマンドプロンプトから&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;powershell&lt;/span&gt; &lt;span class="n"&gt;-Command&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Get-Content requirements.txt | % { uv add ($_ -split &amp;#39;=&amp;#39;)[0] }&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Mac やLinuxは&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cut&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="s1"&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-f1&lt;span class="w"&gt; &lt;/span&gt;requirements.txt&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;xargs&lt;span class="w"&gt; &lt;/span&gt;uv&lt;span class="w"&gt; &lt;/span&gt;add
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ただ，pipでインストール順のお陰で奇跡的に動く組合せも存在し，コケることも多々あるので，pythonのバージョンに対して明らかに古いパッケージは外した方が良い．(横着せずにひとつずつuv addすると確実)&lt;/p&gt;
+&lt;h3&gt;7. クラウドストレージとの相性&lt;/h3&gt;
+&lt;p&gt;uvはUV_CACHE_DIRに実体を置いてハードリンクで仮想環境の容量増加を防いでくれるが，クラウドストレージとの相性を考えるとイマイチ．
+プロジェクトを作ると.venvを作ってしまうのが問題となるが回避策はある．&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dropbox: .venvフォルダに属性付与して無視させるのは可能．ただし無視させる命令より前に処理が始まるし，空のフォルダは残る&lt;/li&gt;
+&lt;li&gt;Box: 無視させる機構は無し&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一番無難な解決法はクラウドストレージがシンボリックリンクを解釈できないことを利用して，予め.venvというシンボリックリンクをクラウドストレージ外に設定すること．ただし，各PC環境でリンク設定が必要．Windowsの場合でも&lt;code&gt;mklink&lt;/code&gt;かPowerShellなら&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;New-Item&lt;/span&gt; &lt;span class="n"&gt;-ItemType&lt;/span&gt; &lt;span class="n"&gt;Junction&lt;/span&gt; &lt;span class="n"&gt;-Path&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;.venv&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;-Target&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$Home\uv_envs\PJA&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;のようにディレクトリジャンクションを使うとよい．&lt;/p&gt;</content><category term="Memo"></category><category term="Python"></category><category term="Windows"></category><category term="uv"></category></entry><entry><title>Apple Silicon MacでWindowsアプリを使う</title><link href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/" rel="alternate"></link><published>2026-01-19T07:00:00+09:00</published><updated>2026-01-19T07:00:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2026-01-19:/2026/01/19/Sikarugir/</id><summary type="html">&lt;p&gt;※KegworksからSikarugirになってた&lt;/p&gt;
 &lt;p&gt;WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は&lt;a href="https://github.com/Sikarugir-App/Sikarugir"&gt;Sikarugir&lt;/a&gt;へ。&lt;/p&gt;
 &lt;p&gt;Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
 デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
@@ -48,13 +215,13 @@ brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&
 &lt;li&gt;最後に実行するexeファイルを聞いてくるので適切なものを選ぶ(分からない場合は片っ端から選んで"Test Run")&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;6からのカスタマイズは後からも実行可能で，Wrapperアプリ上で右クリックして，"パッケージの内容を表示"で，"Sikarugir"アプリがあるのでそれを実行する。&lt;/p&gt;
-&lt;h2&gt;インストール後の設定&lt;/h2&gt;
+&lt;h3&gt;インストール後の設定&lt;/h3&gt;
 &lt;p&gt;登録されたアプリで右クリックして内容を表示させ，Contentsの中にある.appを起動するとセットアップと同じウィンドウが開くので設定が可能&lt;/p&gt;
-&lt;h3&gt;字が小さい&lt;/h3&gt;
+&lt;h4&gt;字が小さい&lt;/h4&gt;
 &lt;p&gt;SikarugirのAdvancedからToolsタブで"Config Utility(winecfg)"を選び，"画面"で96dpiとなっているものを変える。今のMacだと168dpiあたりだが，ちゃんと適用されるかはアプリの仕様次第。高解像度に対応できないソフトは実用上120くらいが限度。&lt;/p&gt;
-&lt;h2&gt;アプリ(Sikarugir Wrapper)を消したい&lt;/h2&gt;
+&lt;h3&gt;アプリ(Sikarugir Wrapper)を消したい&lt;/h3&gt;
 &lt;p&gt;システムで重要なファイルそのものはWrapperに含まれないので，macOSのアプリと同様に単にそのアプリをゴミ箱に捨てれば良いが，ToolsメニューにUninstallerがあるので恐らくそれを使った方がマナーは良いかも知れない。&lt;/p&gt;
-&lt;h3&gt;アイコンを変えたい場合&lt;/h3&gt;
+&lt;h4&gt;アイコンを変えたい場合&lt;/h4&gt;
 &lt;p&gt;&lt;a href="https://github.com/jlu5/icoextract"&gt;icoextract&lt;/a&gt;みたいなexeやdllからアイコンを引っこ抜くツールを使えば変更可能だが，リバースエンジニアリングの類な気もするので要注意。&lt;/p&gt;</content><category term="Memo"></category><category term="Windows"></category><category term="Apple Silicon"></category><category term="mac"></category><category term="Micro-CAP"></category><category term="LTspice"></category><category term="Wine"></category><category term="Sikarugir"></category></entry><entry><title>Google Cloud Shellの日本語化(gcc+デバッグ込み) 2025版</title><link href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/" rel="alternate"></link><published>2025-07-30T22:20:00+09:00</published><updated>2025-07-30T22:20:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2025-07-30:/2025/07/30/CloudShellEditor2025/</id><summary type="html">&lt;p&gt;Webブラウザ上でコーディングとshellによる操作が可能な&lt;a href="https://ide.cloud.google.com/?hl=ja"&gt;Cloud Shell Editor&lt;/a&gt;がとても便利。
 ただし&lt;a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja"&gt;50時間/週の制限&lt;/a&gt;がある。&lt;/p&gt;
 &lt;p&gt;三の字のアイコンからTerminal-&amp;gt;new terminalでターミナルを開く。&lt;/p&gt;
@@ -3158,5 +3325,4 @@ make&lt;span class="w"&gt; &lt;/span&gt;serve
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/03/CIMG1938-1.jpg"&gt;&lt;img alt="CIMG1938" class="alignnone size-medium wp-image-467" height="225" src="https://eiichiromomma.github.io/images/uploads/2016/03/CIMG1938-1-300x225.jpg" width="300"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>本が来ました</title><link href="https://eiichiromomma.github.io/2016/02/04/%E6%9C%AC%E3%81%8C%E6%9D%A5%E3%81%BE%E3%81%97%E3%81%9F/" rel="alternate"></link><published>2016-02-04T21:45:00+09:00</published><updated>2016-02-04T21:45:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-02-04:/2016/02/04/本が来ました/</id><content type="html">&lt;p&gt;Deep Learningや機械学習関係，あとPythonが主ですね。Gems JP 2015もやっと買いました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/02/IMG_0114.jpg"&gt;&lt;img alt="IMG_0114" class="alignnone size-medium wp-image-461" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/02/IMG_0114-225x300.jpg" width="225"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="ゼミ"></category></entry><entry><title>授業アンケート結果</title><link href="https://eiichiromomma.github.io/2016/01/21/%E6%8E%88%E6%A5%AD%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E7%B5%90%E6%9E%9C/" rel="alternate"></link><published>2016-01-21T22:09:00+09:00</published><updated>2016-01-21T22:09:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-01-21:/2016/01/21/授業アンケート結果/</id><summary type="html">&lt;p&gt;今年度の「電気回路I及び演習」の授業アンケート結果がほぼ出ました(回答率95%)。回答形式，質問が変わったので単純に比較はで …&lt;/p&gt;</summary><content type="html">&lt;p&gt;今年度の「電気回路I及び演習」の授業アンケート結果がほぼ出ました(回答率95%)。回答形式，質問が変わったので単純に比較はできませんが去年より若干下がった項目もありますね。&lt;/p&gt;
 &lt;p&gt;今年はスライドの縮小版を試しに配布して講義したので講義の説明が速いという指摘はかなり減りましたが，自由記述欄に「演習の解説が速い」との指摘も。解答のスライドは後でPDFでも配布していますがそれも紙ベースで配布した方が良いのか悩みます。その他は概ね好評で安心しました。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ.png"&gt;&lt;img alt="2015ImageQ" class="alignnone size-medium wp-image-455" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA.png"&gt;&lt;img alt="2015ImageQA" class="alignnone size-medium wp-image-456" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB.png"&gt;&lt;img alt="2015ImageQB" class="alignnone size-medium wp-image-457" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB-287x300.png" width="287"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="講義"></category></entry><entry><title>GitHub Education</title><link href="https://eiichiromomma.github.io/2016/01/12/github-education/" rel="alternate"></link><published>2016-01-12T21:46:00+09:00</published><updated>2016-01-12T21:46:00+09:00</updated><author><name>momma</name></author><id>tag:eiichiromomma.github.io,2016-01-12:/2016/01/12/github-education/</id><content type="html">&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0.png"&gt;&lt;img alt="スクリーンショット 2016-01-12 21.44.48" class="alignnone size-medium wp-image-451" height="128" src="https://eiichiromomma.github.io/images/uploads/2016/01/a08dd1ad0a9a4c8459df49be178576e0-300x128.png" width="300"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;GitHub Educationの申請が通りました。これで研究単位でプライベートリポジトリが立てられます。&lt;/p&gt;</content><category term="ゼミ"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ.png"&gt;&lt;img alt="2015ImageQ" class="alignnone size-medium wp-image-455" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQ-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA.png"&gt;&lt;img alt="2015ImageQA" class="alignnone size-medium wp-image-456" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQA-287x300.png" width="287"&gt;&lt;/a&gt; &lt;a href="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB.png"&gt;&lt;img alt="2015ImageQB" class="alignnone size-medium wp-image-457" height="300" src="https://eiichiromomma.github.io/images/uploads/2016/01/2015ImageQB-287x300.png" width="287"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="講義"></category></entry></feed>

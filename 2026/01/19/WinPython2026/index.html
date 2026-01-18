@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="Th_1lazb2bqttkJuB5f3gSfoh5mUyxl1K_LxjddE7aU" />
-    <title>CVMLAB Blog - momma</title>
+    <title>WindowsでのオススメのPython環境 2026版</title>
 
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://eiichiromomma.github.io/theme/css/foundation.min.css" />
@@ -46,16 +46,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://eiichiromomma.github.io/2026/01/19/WinPython2026/" rel="bookmark"
+        title="Permalink to WindowsでのオススメのPython環境 2026版">WindowsでのオススメのPython環境 2026版</a></h3>
+    </header>
 
-            <article>
-                <a href="https://eiichiromomma.github.io/2026/01/19/WinPython2026/"><h3 class="article-title">WindowsでのオススメのPython環境 2026版</h3></a>
 <h6 class="subheader" title="2026-01-19T08:00:00+09:00">2026-01-19(月)
 </h6>
 
 
-<p>Python環境をuvにする</p>
+    <p>Python環境をuvにする</p>
 <ul>
 <li><a href="https://github.com/astral-sh/uv">uvの配布元</a></li>
 </ul>
@@ -214,7 +215,8 @@ uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </sp
 <div class="highlight"><pre><span></span><code><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Junction</span> <span class="n">-Path</span> <span class="s2">&quot;.venv&quot;</span> <span class="n">-Target</span> <span class="s2">&quot;$Home\uv_envs\PJA&quot;</span>
 </code></pre></div>
 
-<p>のようにディレクトリジャンクションを使うとよい．</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+<p>のようにディレクトリジャンクションを使うとよい．</p>
+<p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -224,272 +226,8 @@ uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </sp
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/"><h3 class="article-title">Apple Silicon MacでWindowsアプリを使う</h3></a>
-<h6 class="subheader" title="2026-01-19T07:00:00+09:00">2026-01-19(月)
-</h6>
-
-
-<p>※KegworksからSikarugirになってた</p>
-<p>WindowsアプリをMacでVMを通さずに使うにはPlayOnMacとかHomebrewからのCrossover Wineとかあるようだが，Kegworksが使いやすかった。で，今度は<a href="https://github.com/Sikarugir-App/Sikarugir">Sikarugir</a>へ。</p>
-<p>Sikarugirは単一の互換システムにアプリケーションをぶら下げるのではなく，Windowsアプリケーションごとに.appを作成する(.appフォルダはmacOSから見たアプリケーション本体)。(Wrapperと呼ぶ)
-デメリットは容量を食うところ。共通のWindowsリソースは一応共有しているが，WrapperごとにWine Engineを任意のバージョンから選べるようにした仕組みのためWine関係のファイルについては独立して.app内に置かれている。
-容量としては1アプリあたり1GB+そのアプリのフ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
-    <a href="https://eiichiromomma.github.io/tag/mac.html">mac </a>
-    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
-    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
-    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
-    <a href="https://eiichiromomma.github.io/tag/sikarugir.html">Sikarugir </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2026/01/19/Sikarugir/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc+デバッグ込み) 2025版</h3></a>
-<h6 class="subheader" title="2025-07-30T22:20:00+09:00">2025-07-30(水)
-</h6>
-
-
-<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利。
-ただし<a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja">50時間/週の制限</a>がある。</p>
-<p>三の字のアイコンからTerminal-&gt;new terminalでターミナルを開く。</p>
-<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 24.04が動いている。</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
-    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
-    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
-    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2025/07/30/CloudShellEditor2025/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2025/04/18/Keworks/"><h3 class="article-title">M1 MacでWindowsアプリを使う</h3></a>
-<h6 class="subheader" title="2025-04-18T22:00:00+09:00">2025-04-18(金)
-</h6>
-
-
-<p>※WineskinServerが知らぬ間にKegworksになってた</p>
-<p>PlayOnMacとかHomebrewからのCrossover Wineとかあるようだが、<a href="https://github.com/Kegworks-App/Kegworks">Kegworks</a>が使いやすかった。
-講義で示すような用途の場合は<a href="https://mac.getutm.app/">UTM</a> とか <a href="https://www.parallels.com/jp/">Parallels</a>の仮想マシンで、とりあえず単発で動けばラッ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
-    <a href="https://eiichiromomma.github.io/tag/m1-mac.html">M1 mac </a>
-    <a href="https://eiichiromomma.github.io/tag/micro-cap.html">Micro-CAP </a>
-    <a href="https://eiichiromomma.github.io/tag/ltspice.html">LTspice </a>
-    <a href="https://eiichiromomma.github.io/tag/wine.html">Wine </a>
-    <a href="https://eiichiromomma.github.io/tag/kegworks.html">Kegworks </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2025/04/18/Keworks/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/"><h3 class="article-title">PythonとMaixSense A010</h3></a>
-<h6 class="subheader" title="2024-07-13T19:20:00+09:00">2024-07-13(土)
-</h6>
-
-
-<h3>MaixSense A010 ToFセンサーの続き</h3>
-<p>ROS2で使ってみた<a href="https://www.marutsu.co.jp/pc/i/43360161/">マルツで売ってる格安100x100 ToF</a> (Switch Scienceは売り切れ)を今度はPythonで動かす。</p>
-<ul>
-<li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">技術情報</a></li>
-<li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/at_command_en.html">ATコマンド一覧と説明</a></li>
-<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモ …</a></li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/07/13/MetaSense/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/"><h3 class="article-title">Apple SiliconなマシンでROS2</h3></a>
-<h6 class="subheader" title="2024-07-10T21:20:00+09:00">2024-07-10(水)
-</h6>
-
-
-<p>なんやかんやでROS2をmacOSで使えた方が便利なので導入してみる。</p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240710AppleSiliconROS2-01.png" width="600"></p>
-<p>基本的には<a href="https://github.com/TakanoTaiga/ros2_m1_native/blob/master/install_guide.md">ここの手順</a>なのだが</p>
-<ul>
-<li>SIPは無効にしなくてもとりあえずは動く(?)</li>
-<li>python3はHomebrewに限らず3.12を入れてるとハマるが3.11ならvenvでも問題なし</li>
-<li>/usr/local/libに余計なx86_64なdylibがあるとそっちを拾ってくるのでM1登場初期にbrew86を運用していた人は全部消した方が良い</li>
-<li>途中でよくわからんがfastcdrでコケるがbuildの中に入ってmake installして再度workspaceのビルドをかけると通る</li>
-<li>ここで入らないros2関係のインストールはたぶん苦行(cv_bridgeも諦めた …</li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/ros2.html">ROS2 </a>
-    <a href="https://eiichiromomma.github.io/tag/apple-silicon.html">Apple Silicon </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/07/10/AppleSiliconROS2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/19/NumPy2/"><h3 class="article-title">NumPy 2.0</h3></a>
-<h6 class="subheader" title="2024-06-19T20:20:00+09:00">2024-06-19(水)
-</h6>
-
-
-<h3>NumPy 2.0の混入</h3>
-<p>2024-6-17にNumPy2.0がリリースされたらしく，その前後でpipでのデフォルトバージョンが2.0に置き換わった模様。
-依存関係でインストールされる場合にも2.0が適用されるので，今迄動いていた環境をpip -r で再構築しよ …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/19/NumPy2/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/"><h3 class="article-title">WindowsでのオススメのPython環境 2024版</h3></a>
-<h6 class="subheader" title="2024-06-05T20:20:00+09:00">2024-06-05(水)
-</h6>
-
-
-<p>普通に<a href="https://www.python.org/">Python.org</a>からダウンロードして入れましょうという話。</p>
-<p>これまでオススメのPython環境はAnacondaだったもののNavigatorでトラブルが発生するとかなり面倒だったり，condaがいつまでたっても依存関係を解決してくれなかったりとイマイチな状況が増えてきたのと，結局のところpip使わないで済むことは無いのでcondaではなくpipで統一してしまった方が楽だというのが動機で<code>py.exe</code>の存在が決 …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinPython2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/"><h3 class="article-title">Google Cloud Shellの日本語化(gcc込み) 2024版</h3></a>
-<h6 class="subheader" title="2024-06-05T19:20:00+09:00">2024-06-05(水)
-</h6>
-
-
-<p>Webブラウザ上でコーディングとshellによる操作が可能な<a href="https://ide.cloud.google.com/?hl=ja">Cloud Shell Editor</a>がとても便利。
-ただし<a href="https://cloud.google.com/shell/docs/quotas-limits?hl=ja">50時間/週の制限</a>がある。</p>
-<p>三の字のアイコンからTerminal-&gt;new terminalでターミナルを開く。</p>
-<p>機能的にはエディタはVS Codeの拡張機能組込み版みたいな感じで，Shellの方はUbuntu 22.04が動いている。</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat …</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/c.html">C </a>
-    <a href="https://eiichiromomma.github.io/tag/lecture.html">Lecture </a>
-    <a href="https://eiichiromomma.github.io/tag/debian.html">Debian </a>
-    <a href="https://eiichiromomma.github.io/tag/gcc.html">gcc </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/CloudShellEditor2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/"><h3 class="article-title">Windows11+WSL2+WSLg+Docker</h3></a>
-<h6 class="subheader" title="2024-06-05T08:20:00+09:00">2024-06-05(水)
-</h6>
-
-
-<h3>WSL2関係のまとめ</h3>
-<p>WSL2関連で色々様変りしていたので<a href="https://github.com/eiichiromomma/CVMLAB/wiki/WSL2">wikiの方にまとめました</a>。</p>
-<ul>
-<li><a href="https://docs.docker.com/desktop/gpu/">Docker DesktopでのGPUサポート</a> (NVIDIA Docker toolkitは不要)</li>
-<li>WindowsのCUDAドライバ関係が入ってれば<a href="https://docs.nvidia.com/cuda/wsl-user-guide/index.html">WSL2用のLinuxドライバは不要</a></li>
-</ul>
-<h3>WSL2を入れてもエラーが出る (WslRegisterDistribution failed with error)</h3>
-<p><a href="https://zenn.dev/h4m4chi/articles/8627893de9cdc5">ここの記事</a>の手順で解決。</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-    <a href="https://eiichiromomma.github.io/tag/ubuntu.html">Ubuntu </a>
-    <a href="https://eiichiromomma.github.io/tag/wsl2.html">WSL2 </a>
-    <a href="https://eiichiromomma.github.io/tag/github.html">Github </a>
-    <a href="https://eiichiromomma.github.io/tag/docker.html">Docker </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/06/05/WinWSLDocker2024/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 19</h6>
-
-<p>
-
-        <a href="https://eiichiromomma.github.io/author/momma2.html">Next &raquo;</a>
-</p>
-</div>
-
+</article>
     </div>
     <!-- End Main Content -->
 

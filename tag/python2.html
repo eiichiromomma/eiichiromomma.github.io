@@ -51,6 +51,39 @@
 
 
             <article>
+                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
+<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
+</h6>
+
+
+<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
+<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
+<h3>tex2imgの場合</h3>
+<p>PyPDF2でPDFファイルを開いてページを取得する。
+前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2022/05/04/OpenCV-Book/"><h3 class="article-title">書籍紹介 "OpenCVではじめよう ディープラーニングによる画像認識"</h3></a>
 <h6 class="subheader" title="2022-05-04T19:20:00+09:00">2022-05-04(水)
 </h6>

@@ -5,36 +5,43 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/</loc>
-<lastmod>2026-01-19T07:53:38-00:00</lastmod>
+<lastmod>2026-01-19T08:08:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/tags.html</loc>
-<lastmod>2026-01-19T07:53:38-00:00</lastmod>
+<lastmod>2026-01-19T08:08:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/categories.html</loc>
-<lastmod>2026-01-19T07:53:38-00:00</lastmod>
+<lastmod>2026-01-19T08:08:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/authors.html</loc>
-<lastmod>2026-01-19T07:53:38-00:00</lastmod>
+<lastmod>2026-01-19T08:08:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://eiichiromomma.github.io/archives.html</loc>
-<lastmod>2026-01-19T07:53:38-00:00</lastmod>
+<lastmod>2026-01-19T08:08:29-00:00</lastmod>
 <changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/2026/01/19/WinPython2026/</loc>
+<lastmod>2026-01-19T08:00:00+09:00</lastmod>
+<changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -1468,7 +1475,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/category/memo.html</loc>
-<lastmod>2026-01-19T07:00:00+09:19</lastmod>
+<lastmod>2026-01-19T08:00:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1509,8 +1516,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://eiichiromomma.github.io/tag/python.html</loc>
+<lastmod>2026-01-19T08:00:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://eiichiromomma.github.io/tag/windows.html</loc>
-<lastmod>2026-01-19T07:00:00+09:19</lastmod>
+<lastmod>2026-01-19T08:00:00+09:19</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://eiichiromomma.github.io/tag/uv.html</loc>
+<lastmod>2026-01-19T08:00:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1595,13 +1616,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://eiichiromomma.github.io/tag/kegworks.html</loc>
 <lastmod>2025-04-18T22:00:00+09:19</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://eiichiromomma.github.io/tag/python.html</loc>
-<lastmod>2024-07-13T19:20:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1860,7 +1874,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://eiichiromomma.github.io/author/momma.html</loc>
-<lastmod>2026-01-19T07:00:00+09:19</lastmod>
+<lastmod>2026-01-19T08:00:00+09:19</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

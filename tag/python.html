@@ -50,6 +50,190 @@
         
 
             <article>
+                <a href="https://eiichiromomma.github.io/2026/01/19/WinPython2026/"><h3 class="article-title">WindowsでのオススメのPython環境 2026版</h3></a>
+<h6 class="subheader" title="2026-01-19T08:00:00+09:00">2026-01-19(月)
+</h6>
+
+
+<p>Python環境をuvにする</p>
+<ul>
+<li><a href="https://github.com/astral-sh/uv">uvの配布元</a></li>
+</ul>
+<p>利点としては以下が挙げられる</p>
+<ul>
+<li>pyenv不要で複数バージョンのPythonがシステムに同居できる</li>
+<li>これまではpyenvによるアクロバチックな切り替えが必要(mac, Linux)，各バージョンのインストールは自前でpy.exeでがんばる(Windows)</li>
+<li>複数バージョンのPythonおよび，パッケージがプロジェクト間で重複してもディスク占有容量が増えない</li>
+<li>仮想環境の数だけGBオーダーでディスクが圧迫される</li>
+<li><code>uvx --with xxx</code>の機構で仮想環境を作らずにpythonスクリプト(.pyだけでなくipythonのようなインタプリタやjupyterlabも)が実行できる</li>
+<li>特にLLM関係はuvxで書かれた実行サンプルが多い</li>
+<li><code>uv add</code>(pyproject.toml, uv.lock)でのパッケージ管理の方がpipやcondaより圧倒的に速く賢い</li>
+<li>開発環境のシェアが楽</li>
+<li>pipでのインストール順を守らないと入らないような問題が起きにくい</li>
+</ul>
+<p>ネガティブな点としては</p>
+<ul>
+<li>なんでもuv経由なのでpython的に気持ち悪い</li>
+<li>「pythonなんだけどuvコマンド」をどう説明するか悩む</li>
+</ul>
+<h3>1. インストール</h3>
+<p>uvについては配布元に記載されているスクリプトによるインストールが，自身のアップデートにも対応できるのでオススメ．</p>
+<p>Windowsの場合はコマンドプロンプトまたはPowerShellで下記を実行</p>
+<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">ByPass</span> <span class="n">-c</span> <span class="s2">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span>
+</code></pre></div>
+
+<p>MacやLinuxの場合</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+
+<p>で,WindowsやMac, Linuxで一旦そのウィンドウを閉じて再度開くとuvがパスに入った状態になる.</p>
+<p>uvは感覚としてはPython Launcherのpy.exeに近いようなもんだが,より実体が隠蔽された形式になりpython本体もuvを経由して起動することになる.</p>
+<p>例えば</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python
+</code></pre></div>
+
+<p>という感じで実行すると勝手に最新版のPythonをダウンロードしてインタプリタが開く.バージョンを指定したい場合は</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>python
+</code></pre></div>
+
+<p>のようにオプションで指定する.</p>
+<h3>2. プロジェクトの作成とパッケージ管理</h3>
+<p>uvでの開発についてはフォルダが単位となるプロジェクトとして扱う．従来のvenvみたいなもんだが，uvが実体を一括管理してくれて各プロジェクトにはHardLinkやRefLinkやBlockClone等でディスク容量を圧迫しない仕組みになっている．</p>
+<p>例えばPython 3.12のプロジェクト pj1 を作る場合</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>pj1
+<span class="nb">cd</span><span class="w"> </span>pj1
+uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </span><span class="m">3</span>.12
+uv<span class="w"> </span>init
+</code></pre></div>
+
+<p>でpyproject.tomlが作られ，3.12に固定される．パッケージの追加はuv addで行う．pipは使わない．</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span>numpy
+</code></pre></div>
+
+<p>とか</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;numpy&gt;2.0&quot;</span>
+</code></pre></div>
+
+<p>とか，<code>pip install</code>を<code>uv add</code>に置き換えたと考えればよい．
+依存関係はpyproject.tomlに保存され，実際に入ったパッケージの情報がOSに依存しないような方法でuv.lockに保存される．</p>
+<h3>3. プロジェクト内での実行</h3>
+<h4>スクリプトの実行</h4>
+<p>hello.pyを実行したい場合</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>hello.py
+</code></pre></div>
+
+<h4>ipython, python, jupyterlabの実行</h4>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>ipython
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab
+</code></pre></div>
+
+<p>みたいな感じでインストールされるスクリプトもuv runできる</p>
+<h3>4. プロジェクトに特定パッケージをインストールさせずに実行</h3>
+<ul>
+<li><code>--with package</code>付きで<code>uv run</code></li>
+<li><code>uvx scriptname</code>で実行(ipythonとかスクリプトが同時にインストールされるタイプのものでwithを省略できる)</li>
+</ul>
+<p><code>--with</code>は現プロジェクトでとりあえず任意のパッケージを追加して実行してみたい場合に有効で，そのパッケージ以外はプロジェクトが使われる．</p>
+<p><code>uvx</code> を使えば環境を汚さずに実行できる.これは<code>uvx scriptname</code>が実行されたときに暗黙で<code>--with scriptname</code>を指定する挙動になるため，重複しないコマンドが書ける．パッケージ名とスクリプト名が一致しない場合は<code>--from</code>を書く．</p>
+<p>ということで，<code>uvx</code>はお作法としてipythonとか<code>uv add</code>したときに実行形式ファイルも一緒に入るタイプのものの実行に使う．ただしpythonのバージョンは指定しないと</p>
+<ul>
+<li><code>--python</code>で指定したバージョン</li>
+<li>環境変数</li>
+<li>過去にpinしたバージョン</li>
+<li>uvで使っているPythonの中で最新のもの</li>
+<li>システムのPython</li>
+</ul>
+<p>の順で決まるらしい．</p>
+<h4>インタプリタにワンライナーで命令を食わせる場合</h4>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>--with<span class="w"> </span>numpy<span class="w"> </span>--with<span class="w"> </span>libsvm-official<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from libsvm.svmutil import *; y, x = [1,-1], [{1:1, 3:1}, {1:-1,3:-1}]; prob  = svm_problem(y, x); param = svm_parameter(&#39;-t 0 -c 4 -b 1&#39;); m = svm_train(prob, param)&quot;</span>
+</code></pre></div>
+
+<h4>numpy入りのipythonを後腐れ無く使う場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--with<span class="w"> </span>numpy<span class="w"> </span>ipython
+</code></pre></div>
+
+<h4>open3d入りのmarimoを後腐れなく使う場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>--with<span class="w"> </span>open3d<span class="w">  </span>marimo<span class="w"> </span>new
+</code></pre></div>
+
+<h4>uvxで実行スクリプトとパッケージ名が異なる場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span>httpie<span class="w"> </span>http<span class="w"> </span>https://google.com
+</code></pre></div>
+
+<h4>Ultralytics yoloで推論する</h4>
+<p>Macなので device=mps と書いてるが他は削るかcuda使う</p>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span>ultralytics<span class="w"> </span>yolo<span class="w"> </span>predict<span class="w"> </span><span class="nv">model</span><span class="o">=</span>yolo26n.pt<span class="w"> </span><span class="nv">source</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">show</span><span class="o">=</span>True<span class="w"> </span><span class="nv">device</span><span class="o">=</span>mps
+</code></pre></div>
+
+<h4>ファイルサーバを立てたい場合</h4>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>updog
+</code></pre></div>
+
+<h3>5. プロジェクトの開発環境の複製</h3>
+<p>プロジェクト用のフォルダを作り，フォルダ内に別のプロジェクトで生成されたpyproject.tomlとuv.lockを置いて使いたいバージョンでpinしてから<code>uv sync</code>するだけ．例えば上のpj1で作った2ファイルを用意して</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>..
+mkdir<span class="w"> </span>pj2
+<span class="nb">cd</span><span class="w"> </span>pj2
+uv<span class="w"> </span>python<span class="w"> </span>pin<span class="w"> </span><span class="m">3</span>.12
+</code></pre></div>
+
+<p>で，何らかの手段でファイルをpj2にコピーしてから</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>sync
+</code></pre></div>
+
+<p>で同じ環境を作ってくれる.condaみたいにos依存のゴミも入らないのでプラットフォームに依存しない.</p>
+<h3>6. venvで作った仮想環境の移行</h3>
+<p>とりあえず捨てる前の仮想環境でactivateしておいて</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
+</code></pre></div>
+
+<p>で使ってるパッケージのバージョン入り一覧が保存できるのでdeactivateして仮想環境のフォルダごと消して良い(パッチ当ててるときは当然その差分も取っておく)</p>
+<p>pipの継ぎ足しソースのような状態だと大抵の場合バージョン衝突が起きるので，バージョンをとっぱらって入れてしまうのが早い．クリティカルな問題がある場合は特定パッケージだけ後で指定すれば直してくれる．</p>
+<p>Windowsの場合コマンドプロンプトから</p>
+<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-Command</span> <span class="s2">&quot;Get-Content requirements.txt | % { uv add ($_ -split &#39;=&#39;)[0] }&quot;</span>
+</code></pre></div>
+
+<p>Mac やLinuxは</p>
+<div class="highlight"><pre><span></span><code>cut<span class="w"> </span>-d<span class="s1">&#39;=&#39;</span><span class="w"> </span>-f1<span class="w"> </span>requirements.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>uv<span class="w"> </span>add
+</code></pre></div>
+
+<p>ただ，pipでインストール順のお陰で奇跡的に動く組合せも存在し，コケることも多々あるので，pythonのバージョンに対して明らかに古いパッケージは外した方が良い．(横着せずにひとつずつuv addすると確実)</p>
+<h3>7. クラウドストレージとの相性</h3>
+<p>uvはUV_CACHE_DIRに実体を置いてハードリンクで仮想環境の容量増加を防いでくれるが，クラウドストレージとの相性を考えるとイマイチ．
+プロジェクトを作ると.venvを作ってしまうのが問題となるが回避策はある．</p>
+<ul>
+<li>Dropbox: .venvフォルダに属性付与して無視させるのは可能．ただし無視させる命令より前に処理が始まるし，空のフォルダは残る</li>
+<li>Box: 無視させる機構は無し</li>
+</ul>
+<p>一番無難な解決法はクラウドストレージがシンボリックリンクを解釈できないことを利用して，予め.venvというシンボリックリンクをクラウドストレージ外に設定すること．ただし，各PC環境でリンク設定が必要．Windowsの場合でも<code>mklink</code>かPowerShellなら</p>
+<div class="highlight"><pre><span></span><code><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Junction</span> <span class="n">-Path</span> <span class="s2">&quot;.venv&quot;</span> <span class="n">-Target</span> <span class="s2">&quot;$Home\uv_envs\PJA&quot;</span>
+</code></pre></div>
+
+<p>のようにディレクトリジャンクションを使うとよい．</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
+
+    Tagged: 
+    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
+    <a href="https://eiichiromomma.github.io/tag/windows.html">Windows </a>
+    <a href="https://eiichiromomma.github.io/tag/uv.html">uv </a>
+</p>
+
+
+
+            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://eiichiromomma.github.io/2024/07/13/MetaSense/"><h3 class="article-title">PythonとMaixSense A010</h3></a>
 <h6 class="subheader" title="2024-07-13T19:20:00+09:00">2024-07-13(土)
 </h6>
@@ -60,85 +244,7 @@
 <ul>
 <li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/maixsense-a010.html">技術情報</a></li>
 <li><a href="https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a010/at_command_en.html">ATコマンド一覧と説明</a></li>
-<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモのソース</a>(maixsense-010-20220909-examples.zipにmetasense.pyとutils.pyが含まれる)</li>
-</ul>
-<p>仕様的にPySerialでATコマンドを送れば使えて，実際<a href="https://elchika.com/article/fa84cf5a-54de-4f38-be1f-c12370960a45/">そうやってるサンプル</a>もネットに存在する。</p>
-<p>もうちょいMaixSense周りの処理は簡単に表現してに使いたいと思ったら，<a href="https://youtu.be/CPq58z2kVi8?si=J4qk5VMN4mzRyqg9">手のトラッキングのデモ</a>があった。
-そのソースは<a href="https://github.com/jumejume1/Python-hand-detect">Python-hand-detect</a>で公開されていてmediapipeにDepthを渡している。</p>
-<p>ソースを見ると<code>from metasense import MetaSense</code>とあるものの，pypiにもcondaにも存在せず。上のキーボードを使ったデモのソースに含まれていた。これが正式な配布なのか不明。</p>
-<p>pyserialは必要なので入れておく。
-上記のキーボードを使ったデモのソースに含まれる，utils.pyとmetasense.pyを一緒に置いて実行する。
-LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
-<p>USBのみ出力にしておけば実測はしてないが<a href="https://youtu.be/BpySY99Kixg">FPS=19でヌルヌル動く</a></p>
-<p><img alt="None" class="alignnone" src="https://eiichiromomma.github.io/images/20240713A010Unit9.png" width="200"></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">metasense</span> <span class="kn">import</span> <span class="n">MetaSense</span>
-
-<span class="n">COM_PORT</span> <span class="o">=</span> <span class="s2">&quot;/dev/tty.usbserial-202206_E8C25B0&quot;</span>
-<span class="n">BASE_BARTRATE</span> <span class="o">=</span> <span class="mi">115200</span>
-
-<span class="c1"># sendCmdはちゃんとsleepで待つと有効</span>
-<span class="c1"># 速いFPSを使いたい場合はDISPを絞る</span>
-<span class="c1"># DISP=2: USBのみ (FPS=19でヌルヌル動く)</span>
-<span class="c1"># DISP=3: USBとLCD (FPS=5くらいにしないと途中で固まる)</span>
-<span class="c1"># UNITは1-9のときは UNIT mm刻みの画素値(1なら255で255mm)</span>
-<span class="c1"># UNITは10まで良いと書いてあるが10にすると0の挙動になる</span>
-<span class="c1"># UNIT=0のときは可視化重視モードでToFが近場の解像度が良いことから5.1*sqrt(x)らしい</span>
-<span class="n">QUANTIZE</span> <span class="o">=</span> <span class="mi">9</span> <span class="c1"># mm が 濃度値1</span>
-<span class="n">DISP</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">FPS</span><span class="o">=</span><span class="mi">19</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="c1"># init metasense</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">metasense</span> <span class="o">=</span> <span class="n">MetaSense</span><span class="p">(</span><span class="n">COM_PORT</span><span class="p">,</span> <span class="n">BASE_BARTRATE</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">metasense</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
-                <span class="k">break</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+DISP=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DISP</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+UNIT=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">QUANTIZE</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="n">metasense</span><span class="o">.</span><span class="n">sendCmd</span><span class="p">(</span><span class="s2">&quot;AT+FPS=</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FPS</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">frame</span> <span class="o">=</span> <span class="n">metasense</span><span class="o">.</span><span class="n">tof_data_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-            <span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameID&#39;</span><span class="p">]</span>
-            <span class="n">frame_res</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span>
-            <span class="n">frame_data</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># Depth</span>
-            <span class="n">frame_data0</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;frameData&#39;</span><span class="p">]</span> <span class="c1"># 疑似カラー用</span>
-
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
-
-            <span class="c1"># 濃度値100より遠いのは0 (UNIT=0のときは (th/5.1)^2 で，th=100で384mm)</span>
-            <span class="c1"># UNIT:1-9のときは th*UNIT mm</span>
-            <span class="n">th</span> <span class="o">=</span> <span class="mi">100</span>
-            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frame_data</span><span class="p">):</span>
-                <span class="k">if</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">th</span><span class="p">):</span> <span class="n">frame_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="c1"># convert frame data to image</span>
-            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frame_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="c1"># rotate image 180 degree</span>
-            <span class="n">frame_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">color_img</span> <span class="o">=</span>  <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">(</span><span class="n">frame_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
-            <span class="n">th_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">color_img</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
-            <span class="n">frame_img0</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame_img0</span><span class="p">,</span> <span class="p">(</span><span class="n">frame_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">frame_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;frame0&quot;</span><span class="p">,</span> <span class="n">frame_img0</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">th_img</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="n">metasense</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
-        <span class="n">exit</span><span class="p">()</span>
-</code></pre></div><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
+<li>技術情報のページにある<a href="https://dl.sipeed.com/shareURL/others/maixsense_example">キーボードを使ったデモ …</a></li></ul><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/wiki.html">Wiki</a>
 
     Tagged: 
     <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
@@ -146,11 +252,9 @@ LCDやUARTに出すか出さないかで安定度がだいぶ変わる。</p>
 
 
 
-            </article>
-
-
+                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2024/07/13/MetaSense/">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -367,39 +471,6 @@ Windowsなら.exe，macOSなら.appに変換するのがよく用いられる手
 
 
                 <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/colour-science/">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/"><h3 class="article-title">TeXでPDFに埋め込んだ数式情報の救出</h3></a>
-<h6 class="subheader" title="2022-05-15T09:20:00+09:00">2022-05-15(日)
-</h6>
-
-
-<p>LaTeXiTとかTeX2imgでPDFに埋め込んだTeXソースを拾い出したい。</p>
-<p>結論から言うと TeX2imgは<a href="https://github.com/py-pdf/PyPDF2">PyPDF2</a>で読める。LaTeXiTは面倒過ぎて放棄。</p>
-<h3>tex2imgの場合</h3>
-<p>PyPDF2でPDFファイルを開いてページを取得する。
-前提として1ページもので数式が出力されてるPDFの equation.pdf を扱う。</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">PyPDF2</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;equation.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</code></pre></div>
-
-<p>pageは<code>PyPDF2._page.PageObject</code>だがdictと考えて良い …</p><p class="subheader">Category: <a href="https://eiichiromomma.github.io/category/memo.html">Memo</a>
-
-    Tagged: 
-    <a href="https://eiichiromomma.github.io/tag/tex.html">TeX </a>
-    <a href="https://eiichiromomma.github.io/tag/python.html">Python </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="https://eiichiromomma.github.io/2022/05/15/PyPDF2/">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
